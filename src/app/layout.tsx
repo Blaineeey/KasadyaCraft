@@ -21,9 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#00FF00" />
       </head>
-      <body className={inter.className} style={{ margin: 0, padding: 0 }}>
+      <body className={`${inter.className} body-reset`}>
         {children}
       </body>
     </html>

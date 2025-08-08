@@ -4,133 +4,102 @@ export default function CreateTownPage() {
   const steps = [
     {
       step: 1,
-      title: "Gather Resources",
-      description: "You'll need money to create and maintain your town",
-      requirements: [
-        "$1,000 - Town creation fee",
-        "$50/day - Daily upkeep cost",
-        "Choose a good location away from other towns"
-      ],
-      command: "/bal",
-      commandDesc: "Check your current balance"
+      title: "Join the Server",
+      description: "Connect to play.kasadyacraft.online and find a good location for your town",
+      commands: ["Connect to: play.kasadyacraft.online"],
+      tips: "Look for a flat area with resources nearby. Avoid building too close to other towns unless you plan to be allies."
     },
     {
       step: 2,
-      title: "Create Your Town",
-      description: "Use the town creation command while standing where you want your town center",
-      requirements: [
-        "Stand in the chunk where you want your town hall",
-        "Make sure you're not too close to existing towns",
-        "Choose a unique town name (no spaces)"
-      ],
-      command: "/town new [TownName]",
-      commandDesc: "Creates a new town with you as mayor"
+      title: "Gather Resources",
+      description: "Collect the required money and materials to create your town",
+      commands: ["/balance - Check your current money"],
+      tips: "You need $1000 to create a town. Mine, trade, or complete jobs to earn money. The spawn area usually has job boards."
     },
     {
       step: 3,
-      title: "Claim Additional Chunks",
-      description: "Expand your town by claiming more chunks around your town center",
-      requirements: [
-        "$25 per chunk claimed",
-        "Chunks must be adjacent to existing claims",
-        "Maximum claims based on residents"
-      ],
-      command: "/town claim",
-      commandDesc: "Claims the chunk you're standing in"
+      title: "Create Your Town",
+      description: "Use the town creation command with your chosen name",
+      commands: ["/town new [TownName]"],
+      tips: "Choose a unique name that represents your town's identity. You can't change it later without admin help!"
     },
     {
       step: 4,
-      title: "Set Town Permissions",
-      description: "Configure who can build, destroy, and interact in your town",
-      requirements: [
-        "Decide on public vs private areas",
-        "Set permissions for residents vs outsiders",
-        "Configure PvP settings"
+      title: "Claim Your Land",
+      description: "Protect your town by claiming chunks of land",
+      commands: [
+        "/town claim - Claim the chunk you're standing in",
+        "/town claim auto - Auto-claim as you walk",
+        "/town unclaim - Remove a claim"
       ],
-      command: "/town toggle [setting]",
-      commandDesc: "Toggle various town settings"
+      tips: "Each chunk is 16x16 blocks. Plan your layout before claiming. You get free claims based on residents, but extra claims cost money."
     },
     {
       step: 5,
+      title: "Set Your Town Spawn",
+      description: "Create a spawn point where residents and visitors will teleport",
+      commands: ["/town set spawn"],
+      tips: "Set this in a central, safe location like your town hall. This is where new residents will first appear."
+    },
+    {
+      step: 6,
       title: "Invite Residents",
       description: "Grow your town by inviting other players to join",
-      requirements: [
-        "Players must accept your invitation",
-        "More residents = more chunks you can claim",
-        "Residents help pay upkeep costs"
+      commands: [
+        "/town invite [PlayerName]",
+        "/town add [PlayerName] - Force add (if they accept)",
+        "/town kick [PlayerName] - Remove a resident"
       ],
-      command: "/town invite [PlayerName]",
-      commandDesc: "Invites a player to join your town"
+      tips: "More residents = more daily money and more free land claims. Be selective and invite trustworthy players."
+    },
+    {
+      step: 7,
+      title: "Manage Your Town",
+      description: "Configure settings, permissions, and town features",
+      commands: [
+        "/town - View town information",
+        "/town set board [message] - Set town message",
+        "/town toggle [setting] - Change town settings",
+        "/town set taxes [amount] - Set daily taxes"
+      ],
+      tips: "Explore all the town settings. You can control PvP, explosions, mob spawning, and more for your town."
+    },
+    {
+      step: 8,
+      title: "Create Plots (Optional)",
+      description: "Divide your town into plots that residents can own",
+      commands: [
+        "/plot forsale [price] - Sell the plot you're standing in",
+        "/plot set [type] - Set plot type (shop, embassy, etc.)",
+        "/town set plotprice [price] - Set default plot price"
+      ],
+      tips: "Plots let residents own specific areas. Great for organized towns and generating income through plot sales."
     }
-  ]
-
-  const importantCommands = [
-    { command: "/town", desc: "View your town information" },
-    { command: "/town spawn", desc: "Teleport to your town spawn" },
-    { command: "/town set spawn", desc: "Set your town's spawn point" },
-    { command: "/town set name [NewName]", desc: "Change your town's name" },
-    { command: "/town deposit [amount]", desc: "Deposit money into town bank" },
-    { command: "/town withdraw [amount]", desc: "Withdraw money from town bank" },
-    { command: "/town kick [PlayerName]", desc: "Remove a resident from your town" },
-    { command: "/town unclaim", desc: "Unclaim the chunk you're standing in" },
-    { command: "/town set board [message]", desc: "Set your town's message board" },
-    { command: "/town set mayor [PlayerName]", desc: "Transfer mayorship to another resident" }
-  ]
-
-  const townSettings = [
-    { setting: "public", desc: "Allow anyone to join without invitation" },
-    { setting: "pvp", desc: "Enable/disable PvP in your town" },
-    { setting: "explosion", desc: "Allow/prevent explosions in town" },
-    { setting: "fire", desc: "Allow/prevent fire spread in town" },
-    { setting: "mobs", desc: "Allow/prevent mob spawning in town" },
-    { setting: "taxpercent", desc: "Set tax as percentage vs flat rate" }
   ]
 
   return (
     <div className="minecraft-bg">
       {/* Navigation */}
-      <nav style={{
-        background: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '16px 0',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50
-      }}>
+      <nav className="nav-container">
         <div className="container">
-          <div className="flex" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-            <div className="flex" style={{ alignItems: 'center', gap: '12px' }}>
-              <Link href="/towny" style={{ 
-                color: '#888', 
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny" className="nav-back">
                 ← Back to Towny
               </Link>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(45deg, #00FF00, #00CC00)',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px'
-              }}>
+              <div className="nav-logo nav-logo-towny">
                 🏗️
               </div>
               <div>
-                <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Create a Town</h1>
-                <p style={{ fontSize: '14px', color: '#888' }}>Step-by-step guide</p>
+                <h1 className="nav-title">Create a Town Guide</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
               </div>
             </div>
-            <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
-              <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-              <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none' }}>Towny</Link>
-              <Link href="/towny/wiki" style={{ color: 'white', textDecoration: 'none' }}>Wiki</Link>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
@@ -140,131 +109,73 @@ export default function CreateTownPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16">
+      <section className="hero-section">
         <div className="container text-center">
-          <h1 style={{ 
-            fontSize: 'clamp(3rem, 8vw, 5rem)', 
-            fontWeight: 'bold', 
-            marginBottom: '24px',
-            background: 'linear-gradient(45deg, #00FF00, #FFAA00)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
-            🏗️ Create Your Town
+          <h1 className="hero-title-towny">
+            🏗️ Create Your First Town
           </h1>
-          <p style={{ 
-            fontSize: '20px', 
-            color: '#ccc', 
-            marginBottom: '32px', 
-            maxWidth: '600px', 
-            margin: '0 auto 32px' 
-          }}>
-            Follow this comprehensive guide to establish your own town and become a mayor in our Towny world!
+          <p className="hero-description">
+            Follow this step-by-step guide to create and manage your own town in KasadyaCraft's Towny server. Build your community and establish your legacy!
           </p>
           
-          <div style={{
-            background: 'rgba(255, 170, 0, 0.1)',
-            border: '2px solid #FFAA00',
-            borderRadius: '12px',
-            padding: '20px',
-            maxWidth: '600px',
-            margin: '0 auto',
-            marginBottom: '32px'
-          }}>
-            <h3 style={{ color: '#FFAA00', marginBottom: '12px', fontSize: '18px' }}>⚠️ Before You Start</h3>
-            <p style={{ color: '#ccc', fontSize: '16px', lineHeight: '1.5' }}>
-              Make sure you have at least <strong style={{ color: '#00FF00' }}>$1,000</strong> and have chosen a good location 
-              away from existing towns. Town creation is permanent, so choose wisely!
+          <div className="hero-info-box">
+            <h3 className="hero-box-title hero-box-title-towny">💰 Requirements: $1000 in-game money</h3>
+            <p className="hero-box-text">
+              Make sure you have enough money before starting. You can earn money through mining, jobs, trading, or asking other players for help.
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a 
-              href="minecraft://play.kasadyacraft.online" 
-              className="btn btn-primary"
-              style={{ textDecoration: 'none' }}
-            >
-              🎮 Join Server to Start
+          <div className="hero-buttons">
+            <a href="minecraft://play.kasadyacraft.online" className="btn btn-primary">
+              🎮 Join Server
             </a>
-            <a 
-              href="https://discord.gg/kasadyacraft" 
-              className="btn btn-secondary"
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none' }}
-            >
-              💬 Get Help on Discord
-            </a>
+            <Link href="/towny/wiki" className="btn btn-secondary">
+              📚 Full Wiki
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Step-by-Step Guide */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#00FF00'
-          }}>
+          <h2 className="section-title section-title-green">
             📋 Step-by-Step Guide
           </h2>
           
-          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-            {steps.map((step, index) => (
-              <div key={index} className="card" style={{ marginBottom: '32px', position: 'relative' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-10px',
-                  left: '20px',
-                  background: '#00FF00',
-                  color: 'black',
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 'bold',
-                  fontSize: '18px'
-                }}>
-                  {step.step}
+          <div className="grid grid-auto-400">
+            {steps.map((stepData, index) => (
+              <div key={index} className="card">
+                <div className="mb-16">
+                  <div className="text-towny text-20 mb-8">
+                    Step {stepData.step}
+                  </div>
+                  <h3 className="card-title-20 mb-8">
+                    {stepData.title}
+                  </h3>
+                  <p className="text-gray text-14 mb-16">
+                    {stepData.description}
+                  </p>
                 </div>
                 
-                <div style={{ paddingTop: '20px' }}>
-                  <h3 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white', marginBottom: '12px' }}>
-                    {step.title}
-                  </h3>
-                  <p style={{ color: '#ccc', marginBottom: '16px', lineHeight: '1.5' }}>
-                    {step.description}
+                <div className="mb-16">
+                  <h4 className="text-white mb-8 text-16">Commands:</h4>
+                  <div className="command-list">
+                    {stepData.commands.map((command, cmdIndex) => (
+                      <div key={cmdIndex} className="command-item">
+                        <div className="command-name">
+                          {command}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="tip-box">
+                  <h4 className="text-white mb-8 text-16">💡 Pro Tip:</h4>
+                  <p className="text-gray text-14">
+                    {stepData.tips}
                   </p>
-                  
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ color: '#FFAA00', marginBottom: '8px', fontSize: '16px' }}>Requirements:</h4>
-                    <ul style={{ color: '#ccc', paddingLeft: '20px' }}>
-                      {step.requirements.map((req, reqIndex) => (
-                        <li key={reqIndex} style={{ marginBottom: '4px' }}>{req}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div style={{
-                    background: 'rgba(0, 0, 0, 0.5)',
-                    border: '1px solid #00FF00',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    fontFamily: 'monospace'
-                  }}>
-                    <div style={{ color: '#00FF00', fontWeight: 'bold', marginBottom: '4px' }}>
-                      Command: <span style={{ color: '#FFAA00' }}>{step.command}</span>
-                    </div>
-                    <div style={{ color: '#ccc', fontSize: '14px' }}>
-                      {step.commandDesc}
-                    </div>
-                  </div>
                 </div>
               </div>
             ))}
@@ -272,170 +183,147 @@ export default function CreateTownPage() {
         </div>
       </section>
 
-      {/* Important Commands */}
-      <section className="py-16">
+      {/* Quick Reference */}
+      <section className="section-py">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FFAA00'
-          }}>
-            ⌨️ Essential Town Commands
+          <h2 className="section-title section-title-blue">
+            ⚡ Quick Command Reference
           </h2>
-          
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '16px' }}>
-            {importantCommands.map((cmd, index) => (
-              <div key={index} style={{
-                background: 'rgba(0, 0, 0, 0.3)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '8px',
-                padding: '16px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <div>
-                  <div style={{ 
-                    color: '#00FF00', 
-                    fontFamily: 'monospace', 
-                    fontWeight: 'bold',
-                    marginBottom: '4px'
-                  }}>
-                    {cmd.command}
-                  </div>
-                  <div style={{ color: '#ccc', fontSize: '14px' }}>
-                    {cmd.desc}
-                  </div>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🏘️ Essential Town Commands</h3>
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/town new [name]</div>
+                  <div className="command-description">Create a new town</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town claim</div>
+                  <div className="command-description">Claim land for your town</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town invite [player]</div>
+                  <div className="command-description">Invite a player to your town</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town set spawn</div>
+                  <div className="command-description">Set your town's spawn point</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town</div>
+                  <div className="command-description">View your town information</div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Town Settings */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
-        <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FF6A00'
-          }}>
-            ⚙️ Town Settings
-          </h2>
-          
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            </div>
+            
             <div className="card">
-              <h3 style={{ color: 'white', marginBottom: '20px', fontSize: '20px' }}>
-                Available Toggle Settings
-              </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Use <code style={{ background: 'rgba(0,0,0,0.5)', padding: '2px 6px', borderRadius: '4px', color: '#00FF00' }}>/town toggle [setting]</code> to change these options:
-              </p>
-              
-              <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
-                {townSettings.map((setting, index) => (
-                  <div key={index} style={{
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    padding: '12px'
-                  }}>
-                    <div style={{ 
-                      color: '#FFAA00', 
-                      fontWeight: 'bold',
-                      marginBottom: '4px'
-                    }}>
-                      {setting.setting}
-                    </div>
-                    <div style={{ color: '#ccc', fontSize: '14px' }}>
-                      {setting.desc}
-                    </div>
-                  </div>
-                ))}
+              <h3 className="card-title">🔧 Town Management</h3>
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/town set board [message]</div>
+                  <div className="command-description">Set town message board</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town toggle [setting]</div>
+                  <div className="command-description">Toggle town settings</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town set taxes [amount]</div>
+                  <div className="command-description">Set daily resident taxes</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town deposit [amount]</div>
+                  <div className="command-description">Add money to town bank</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/town rank add [player] [rank]</div>
+                  <div className="command-description">Give ranks to residents</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Tips Section */}
-      <section className="py-16">
+      {/* Tips and Warnings */}
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#5555FF'
-          }}>
-            💡 Pro Tips
+          <h2 className="section-title section-title-orange">
+            ⚠️ Important Tips & Warnings
           </h2>
-          
-          <div className="grid grid-3">
+          <div className="grid grid-2">
             <div className="card">
-              <div style={{ fontSize: '48px', marginBottom: '16px', textAlign: 'center' }}>💰</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Manage Your Economy
-              </h3>
-              <ul style={{ color: '#ccc', paddingLeft: '20px', lineHeight: '1.6' }}>
-                <li>Set up shops to generate income</li>
-                <li>Collect taxes from residents</li>
-                <li>Keep enough in town bank for upkeep</li>
-                <li>Consider joining a nation for protection</li>
-              </ul>
+              <h3 className="card-title">✅ Best Practices</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Choose your town location carefully - you can't move it later</div>
+                <div className="mb-8">• Keep your town bank funded for daily upkeep costs</div>
+                <div className="mb-8">• Set reasonable taxes - too high and residents will leave</div>
+                <div className="mb-8">• Create clear rules and communicate them to residents</div>
+                <div className="mb-8">• Plan your town layout before claiming lots of land</div>
+                <div className="mb-8">• Be active - inactive mayors can lose their towns</div>
+                <div className="mb-8">• Join or create a nation for protection and benefits</div>
+                <div className="mb-8">• Build relationships with neighboring towns</div>
+              </div>
             </div>
+            
+            <div className="card">
+              <h3 className="card-title">❌ Common Mistakes</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Don't create a town without enough money for upkeep</div>
+                <div className="mb-8">• Don't claim random chunks - plan your expansion</div>
+                <div className="mb-8">• Don't invite players you don't trust</div>
+                <div className="mb-8">• Don't set taxes too high initially</div>
+                <div className="mb-8">• Don't forget to set your town spawn point</div>
+                <div className="mb-8">• Don't ignore your town bank balance</div>
+                <div className="mb-8">• Don't build too close to hostile neighbors</div>
+                <div className="mb-8">• Don't abandon your town without transferring ownership</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="card">
-              <div style={{ fontSize: '48px', marginBottom: '16px', textAlign: 'center' }}>🏘️</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Grow Your Population
-              </h3>
-              <ul style={{ color: '#ccc', paddingLeft: '20px', lineHeight: '1.6' }}>
-                <li>Advertise your town in chat</li>
-                <li>Offer free plots to new residents</li>
-                <li>Create community buildings</li>
-                <li>Host events and competitions</li>
-              </ul>
-            </div>
-
-            <div className="card">
-              <div style={{ fontSize: '48px', marginBottom: '16px', textAlign: 'center' }}>🛡️</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Protect Your Town
-              </h3>
-              <ul style={{ color: '#ccc', paddingLeft: '20px', lineHeight: '1.6' }}>
-                <li>Set appropriate permissions</li>
-                <li>Consider disabling PvP for safety</li>
-                <li>Join a peaceful nation</li>
-                <li>Build walls and defenses</li>
-              </ul>
-            </div>
+      {/* Next Steps */}
+      <section className="section-py">
+        <div className="container text-center">
+          <h2 className="section-title section-title-purple">
+            🚀 What's Next?
+          </h2>
+          <p className="hero-description">
+            Congratulations on creating your town! Now it's time to grow your community and explore advanced features.
+          </p>
+          <div className="hero-buttons">
+            <Link href="/towny/wiki" className="btn btn-primary">
+              📚 Advanced Guides
+            </Link>
+            <a href="minecraft://play.kasadyacraft.online" className="btn btn-towny">
+              🎮 Start Building
+            </a>
+            <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+              💬 Get Help
+            </a>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ 
-        background: 'rgba(0, 0, 0, 0.8)', 
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '32px 0'
-      }}>
+      <footer className="footer">
         <div className="container text-center">
-          <div style={{ marginBottom: '16px' }}>
-            <Link href="/towny" style={{ color: '#00FF00', textDecoration: 'none', marginRight: '24px' }}>
-              ← Back to Towny Hub
-            </Link>
-            <Link href="/towny/wiki" style={{ color: '#FFAA00', textDecoration: 'none' }}>
-              Visit Wiki →
-            </Link>
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny" className="footer-link footer-link-orange">
+                ← Back to Towny
+              </Link>
+              <Link href="/towny/wiki" className="footer-link footer-link-green">
+                Towny Wiki →
+              </Link>
+            </div>
           </div>
-          <p style={{ color: '#666', fontSize: '14px' }}>
-            Need help? Ask in our Discord or use /help in-game!
+          <p className="footer-server">
+            play.kasadyacraft.online
+          </p>
+          <p className="footer-copyright">
+            Good luck with your new town, Mayor!
           </p>
         </div>
       </footer>

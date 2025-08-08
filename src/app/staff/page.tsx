@@ -3,153 +3,101 @@ import Link from "next/link"
 export default function StaffPage() {
   const staffMembers = [
     {
-      name: "KasadyaOwner",
+      name: "ServerOwner",
       role: "Server Owner",
-      description: "Founder and main developer of KasadyaCraft. Handles server management and major updates.",
-      avatar: "👑",
-      color: "#FF0000",
-      discord: "KasadyaOwner#0001",
-      joinDate: "January 2020"
+      description: "Founder and lead administrator of KasadyaCraft. Handles server management, major decisions, and community leadership.",
+      contact: [
+        { type: "Discord", value: "serverowner#1234" },
+        { type: "In-Game", value: "/msg ServerOwner" }
+      ]
     },
     {
-      name: "AdminCraft",
+      name: "AdminPlayer",
       role: "Head Administrator",
-      description: "Oversees daily operations and manages the admin team. Expert in Towny mechanics.",
-      avatar: "⚡",
-      color: "#FF6A00",
-      discord: "AdminCraft#0002",
-      joinDate: "March 2020"
+      description: "Senior administrator responsible for staff management, plugin configuration, and handling complex player issues.",
+      contact: [
+        { type: "Discord", value: "adminplayer#5678" },
+        { type: "In-Game", value: "/msg AdminPlayer" }
+      ]
     },
     {
-      name: "ModeratorPro",
+      name: "ModeratorOne",
       role: "Senior Moderator",
-      description: "Handles player disputes and maintains server peace. Specializes in nation politics.",
-      avatar: "🛡️",
-      color: "#FFAA00",
-      discord: "ModeratorPro#0003",
-      joinDate: "June 2020"
+      description: "Experienced moderator specializing in Towny disputes, nation conflicts, and maintaining server peace.",
+      contact: [
+        { type: "Discord", value: "moderatorone#9012" },
+        { type: "In-Game", value: "/msg ModeratorOne" }
+      ]
     },
     {
-      name: "BuildMaster",
-      role: "Build Team Lead",
-      description: "Creates amazing spawn builds and helps with server infrastructure projects.",
-      avatar: "🏗️",
-      color: "#00FF00",
-      discord: "BuildMaster#0004",
-      joinDate: "August 2020"
+      name: "ModeratorTwo",
+      role: "Moderator",
+      description: "Handles player reports, enforces server rules, and assists with general player support and questions.",
+      contact: [
+        { type: "Discord", value: "moderatortwo#3456" },
+        { type: "In-Game", value: "/msg ModeratorTwo" }
+      ]
     },
     {
-      name: "EventHost",
-      role: "Event Coordinator",
-      description: "Organizes weekly events, competitions, and community activities.",
-      avatar: "🎉",
-      color: "#5555FF",
-      discord: "EventHost#0005",
-      joinDate: "October 2020"
+      name: "HelperOne",
+      role: "Helper",
+      description: "Community helper focused on assisting new players, answering questions, and providing Towny guidance.",
+      contact: [
+        { type: "Discord", value: "helperone#7890" },
+        { type: "In-Game", value: "/msg HelperOne" }
+      ]
     },
     {
-      name: "SupportHelper",
-      role: "Support Specialist",
-      description: "Helps new players learn Towny mechanics and resolves technical issues.",
-      avatar: "💬",
-      color: "#AA00AA",
-      discord: "SupportHelper#0006",
-      joinDate: "December 2020"
+      name: "HelperTwo",
+      role: "Helper",
+      description: "Friendly helper who specializes in building advice, server features, and community event organization.",
+      contact: [
+        { type: "Discord", value: "helpertwo#2345" },
+        { type: "In-Game", value: "/msg HelperTwo" }
+      ]
     }
   ]
 
   const departments = [
     {
-      name: "🏛️ Administration",
-      description: "Server management and policy enforcement",
-      members: ["KasadyaOwner", "AdminCraft"],
-      responsibilities: [
-        "Server maintenance and updates",
-        "Policy creation and enforcement",
-        "Major dispute resolution",
-        "Plugin configuration"
-      ]
+      name: "🛡️ Administration",
+      description: "Server management, major decisions, and policy enforcement",
+      members: ["ServerOwner", "AdminPlayer"]
     },
     {
-      name: "🛡️ Moderation",
-      description: "Player safety and community management",
-      members: ["ModeratorPro", "SupportHelper"],
-      responsibilities: [
-        "Chat moderation",
-        "Player report handling",
-        "Rule enforcement",
-        "New player assistance"
-      ]
+      name: "⚖️ Moderation",
+      description: "Rule enforcement, dispute resolution, and player discipline",
+      members: ["ModeratorOne", "ModeratorTwo"]
     },
     {
-      name: "🎨 Build Team",
-      description: "Server infrastructure and aesthetic improvements",
-      members: ["BuildMaster"],
-      responsibilities: [
-        "Spawn area construction",
-        "Server decoration",
-        "Infrastructure projects",
-        "Build competitions judging"
-      ]
-    },
-    {
-      name: "🎪 Events Team",
-      description: "Community engagement and entertainment",
-      members: ["EventHost"],
-      responsibilities: [
-        "Weekly event planning",
-        "Competition organization",
-        "Community activities",
-        "Prize distribution"
-      ]
+      name: "🤝 Community Support",
+      description: "Player assistance, questions, and new player guidance",
+      members: ["HelperOne", "HelperTwo"]
     }
   ]
 
   return (
     <div className="minecraft-bg">
       {/* Navigation */}
-      <nav style={{
-        background: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '16px 0',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50
-      }}>
+      <nav className="nav-container">
         <div className="container">
-          <div className="flex" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-            <div className="flex" style={{ alignItems: 'center', gap: '12px' }}>
-              <Link href="/" style={{ 
-                color: '#888', 
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/" className="nav-back">
                 ← Back to Home
               </Link>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(45deg, #AA00AA, #8E24AA)',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px'
-              }}>
+              <div className="nav-logo nav-logo-staff">
                 👥
               </div>
               <div>
-                <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Server Staff</h1>
-                <p style={{ fontSize: '14px', color: '#888' }}>Meet our team</p>
+                <h1 className="nav-title">Staff Team</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
               </div>
             </div>
-            <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
-              <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-              <Link href="/towny" style={{ color: 'white', textDecoration: 'none' }}>Towny</Link>
-              <Link href="/staff" style={{ color: '#AA00AA', textDecoration: 'none', fontWeight: '600' }}>Staff</Link>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link">Towny</Link>
+              <Link href="/staff" className="nav-link-staff">Staff</Link>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
@@ -159,120 +107,43 @@ export default function StaffPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16">
+      <section className="hero-section">
         <div className="container text-center">
-          <h1 style={{ 
-            fontSize: 'clamp(3rem, 8vw, 5rem)', 
-            fontWeight: 'bold', 
-            marginBottom: '24px',
-            background: 'linear-gradient(45deg, #AA00AA, #FF6A00, #00FF00)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          <h1 className="hero-title-staff">
             👥 Meet Our Staff Team
           </h1>
-          <p style={{ 
-            fontSize: '20px', 
-            color: '#ccc', 
-            marginBottom: '32px', 
-            maxWidth: '600px', 
-            margin: '0 auto 32px' 
-          }}>
-            Our dedicated team works around the clock to ensure you have the best Towny experience possible!
+          <p className="hero-description">
+            Our dedicated team of administrators, moderators, and helpers work around the clock to ensure KasadyaCraft remains a fun, fair, and welcoming community for all players.
           </p>
           
-          <div style={{
-            background: 'rgba(170, 0, 170, 0.1)',
-            border: '2px solid #AA00AA',
-            borderRadius: '12px',
-            padding: '20px',
-            maxWidth: '600px',
-            margin: '0 auto',
-            marginBottom: '32px'
-          }}>
-            <h3 style={{ color: '#AA00AA', marginBottom: '12px', fontSize: '18px' }}>📞 Need Help?</h3>
-            <p style={{ color: '#ccc', fontSize: '16px', lineHeight: '1.5' }}>
-              Contact any staff member in-game or join our Discord for immediate assistance. 
-              We're here to help make your KasadyaCraft experience amazing!
+          <div className="hero-info-box">
+            <h3 className="hero-box-title hero-box-title-info">🎮 Server: play.kasadyacraft.online</h3>
+            <p className="hero-box-text">
+              Need help? Our staff team is here to assist you! Contact us in-game, through Discord, or use the methods listed below.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Staff Members */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      {/* Staff Departments */}
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#00FF00'
-          }}>
-            🌟 Our Team Members
+          <h2 className="section-title section-title-purple">
+            🏢 Staff Departments
           </h2>
-          
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
-            {staffMembers.map((member, index) => (
-              <div key={index} className="card" style={{ position: 'relative' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  background: member.color,
-                  color: 'white'
-                }}>
-                  ONLINE
-                </div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-                  <div style={{
-                    width: '60px',
-                    height: '60px',
-                    background: `linear-gradient(45deg, ${member.color}, ${member.color}80)`,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '24px'
-                  }}>
-                    {member.avatar}
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: 'white', marginBottom: '4px' }}>
-                      {member.name}
-                    </h3>
-                    <p style={{ color: member.color, fontSize: '14px', fontWeight: '600' }}>
-                      {member.role}
-                    </p>
-                  </div>
-                </div>
-                
-                <p style={{ color: '#ccc', marginBottom: '16px', lineHeight: '1.5' }}>
-                  {member.description}
-                </p>
-                
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  padding: '12px',
-                  background: 'rgba(0, 0, 0, 0.3)',
-                  borderRadius: '8px',
-                  fontSize: '14px'
-                }}>
-                  <div>
-                    <div style={{ color: '#888', marginBottom: '4px' }}>Discord:</div>
-                    <div style={{ color: 'white', fontFamily: 'monospace' }}>{member.discord}</div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ color: '#888', marginBottom: '4px' }}>Joined:</div>
-                    <div style={{ color: '#00FF00' }}>{member.joinDate}</div>
+          <div className="grid grid-3">
+            {departments.map((dept, index) => (
+              <div key={index} className="card text-center">
+                <h3 className="card-title">{dept.name}</h3>
+                <p className="card-description mb-16">{dept.description}</p>
+                <div className="text-center">
+                  <strong className="text-white">Team Members:</strong>
+                  <div className="mt-8">
+                    {dept.members.map((member, memberIndex) => (
+                      <div key={memberIndex} className="text-gray text-14 mb-4">
+                        {member}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -281,66 +152,27 @@ export default function StaffPage() {
         </div>
       </section>
 
-      {/* Departments */}
-      <section className="py-16">
+      {/* Staff Members */}
+      <section className="section-py">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FFAA00'
-          }}>
-            🏢 Staff Departments
+          <h2 className="section-title section-title-green">
+            👤 Staff Members
           </h2>
-          
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-            {departments.map((dept, index) => (
-              <div key={index} className="card">
-                <h3 style={{ 
-                  fontSize: '20px', 
-                  fontWeight: 'bold', 
-                  color: 'white',
-                  marginBottom: '8px'
-                }}>
-                  {dept.name}
-                </h3>
-                <p style={{ 
-                  color: '#FFAA00', 
-                  fontSize: '14px', 
-                  marginBottom: '16px',
-                  fontStyle: 'italic'
-                }}>
-                  {dept.description}
-                </p>
-                
-                <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ color: '#00FF00', fontSize: '14px', marginBottom: '8px' }}>Team Members:</h4>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                    {dept.members.map((memberName, memberIndex) => (
-                      <span key={memberIndex} style={{
-                        background: 'rgba(0, 255, 0, 0.1)',
-                        border: '1px solid rgba(0, 255, 0, 0.3)',
-                        borderRadius: '12px',
-                        padding: '4px 8px',
-                        fontSize: '12px',
-                        color: '#00FF00'
-                      }}>
-                        {memberName}
-                      </span>
-                    ))}
-                  </div>
+          <div className="grid grid-3">
+            {staffMembers.map((member, index) => (
+              <div key={index} className="card staff-card">
+                <div className="staff-avatar">
+                  👤
                 </div>
-                
-                <div>
-                  <h4 style={{ color: '#5555FF', fontSize: '14px', marginBottom: '8px' }}>Responsibilities:</h4>
-                  <ul style={{ color: '#ccc', paddingLeft: '16px', fontSize: '13px', lineHeight: '1.4' }}>
-                    {dept.responsibilities.map((resp, respIndex) => (
-                      <li key={respIndex} style={{ marginBottom: '2px' }}>
-                        {resp}
-                      </li>
-                    ))}
-                  </ul>
+                <h3 className="staff-name">{member.name}</h3>
+                <div className="staff-role">{member.role}</div>
+                <p className="staff-description">{member.description}</p>
+                <div className="staff-contact">
+                  {member.contact.map((contact, contactIndex) => (
+                    <div key={contactIndex} className="staff-contact-btn">
+                      {contact.type}: {contact.value}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -349,46 +181,35 @@ export default function StaffPage() {
       </section>
 
       {/* Contact Information */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FF6A00'
-          }}>
+          <h2 className="section-title section-title-orange">
             📞 How to Contact Staff
           </h2>
-          
           <div className="grid grid-3">
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', color: 'white' }}>
-                In-Game
-              </h3>
-              <p style={{ color: '#ccc', marginBottom: '16px', fontSize: '14px' }}>
-                Use /msg [StaffName] or /helpop for immediate assistance
+              <div className="icon-48 icon-center">🎮</div>
+              <h3 className="card-title">In-Game</h3>
+              <p className="card-description mb-16">
+                Use in-game commands to contact staff members directly while playing.
               </p>
-              <div style={{ 
-                background: 'rgba(0, 0, 0, 0.3)',
-                padding: '8px',
-                borderRadius: '6px',
-                fontFamily: 'monospace',
-                color: '#00FF00',
-                fontSize: '13px'
-              }}>
-                /helpop I need help!
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/msg [StaffName]</div>
+                  <div className="command-description">Send a private message</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/helpop [message]</div>
+                  <div className="command-description">Request help from online staff</div>
+                </div>
               </div>
             </div>
 
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>💬</div>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', color: 'white' }}>
-                Discord
-              </h3>
-              <p style={{ color: '#ccc', marginBottom: '16px', fontSize: '14px' }}>
-                Join our Discord server for 24/7 support and community chat
+              <div className="icon-48 icon-center">💬</div>
+              <h3 className="card-title">Discord</h3>
+              <p className="card-description mb-20">
+                Join our Discord server for the fastest response and community support.
               </p>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 Join Discord
@@ -396,44 +217,74 @@ export default function StaffPage() {
             </div>
 
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>📧</div>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', color: 'white' }}>
-                Support Tickets
-              </h3>
-              <p style={{ color: '#ccc', marginBottom: '16px', fontSize: '14px' }}>
-                Create a support ticket for complex issues or appeals
+              <div className="icon-48 icon-center">📧</div>
+              <h3 className="card-title">Support Tickets</h3>
+              <p className="card-description mb-20">
+                For complex issues, create a support ticket in our Discord server.
               </p>
-              <a href="https://discord.gg/kasadyacraft" className="btn" style={{ 
-                background: 'linear-gradient(45deg, #5555FF, #3F51B5)', 
-                color: 'white',
-                textDecoration: 'none'
-              }} target="_blank" rel="noopener noreferrer">
-                Create Ticket
-              </a>
+              <div className="btn btn-secondary">
+                #support-tickets
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Staff Guidelines */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-blue">
+            📋 When to Contact Staff
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">✅ Contact Staff For:</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Rule violations and griefing reports</div>
+                <div className="mb-8">• Towny disputes and conflicts</div>
+                <div className="mb-8">• Technical issues and bugs</div>
+                <div className="mb-8">• Questions about server features</div>
+                <div className="mb-8">• Ban appeals and punishment disputes</div>
+                <div className="mb-8">• Inappropriate behavior reports</div>
+                <div className="mb-8">• Lost items due to server issues</div>
+                <div className="mb-8">• General help and guidance</div>
+              </div>
+            </div>
+            
+            <div className="card">
+              <h3 className="card-title">❌ Please Don't Contact Staff For:</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Basic gameplay questions (ask the community first)</div>
+                <div className="mb-8">• Requesting items or money</div>
+                <div className="mb-8">• Complaints about fair PvP deaths</div>
+                <div className="mb-8">• Minor disagreements between players</div>
+                <div className="mb-8">• Requesting staff positions</div>
+                <div className="mb-8">• Spamming multiple staff members</div>
+                <div className="mb-8">• Issues already resolved</div>
+                <div className="mb-8">• Personal drama unrelated to the server</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ 
-        background: 'rgba(0, 0, 0, 0.8)', 
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '32px 0'
-      }}>
+      <footer className="footer">
         <div className="container text-center">
-          <div style={{ marginBottom: '16px' }}>
-            <Link href="/" style={{ color: '#00FF00', textDecoration: 'none', marginRight: '24px' }}>
-              ← Back to Home
-            </Link>
-            <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none' }}>
-              Explore Towny →
-            </Link>
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/" className="footer-link footer-link-green">
+                ← Back to Home
+              </Link>
+              <Link href="/towny" className="footer-link footer-link-orange">
+                Towny Hub →
+              </Link>
+            </div>
           </div>
-          <p style={{ color: '#888', marginBottom: '8px', fontFamily: 'monospace' }}>
+          <p className="footer-server">
             play.kasadyacraft.online
           </p>
-          <p style={{ color: '#666', fontSize: '14px' }}>
+          <p className="footer-copyright">
             Our staff team is here to help you 24/7!
           </p>
         </div>

@@ -116,49 +116,26 @@ export default function TownyWikiPage() {
   return (
     <div className="minecraft-bg">
       {/* Navigation */}
-      <nav style={{
-        background: 'rgba(0, 0, 0, 0.8)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '16px 0',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50
-      }}>
+      <nav className="nav-container">
         <div className="container">
-          <div className="flex" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-            <div className="flex" style={{ alignItems: 'center', gap: '12px' }}>
-              <Link href="/towny" style={{ 
-                color: '#888', 
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny" className="nav-back">
                 ← Back to Towny
               </Link>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(45deg, #5555FF, #3F51B5)',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '20px'
-              }}>
+              <div className="nav-logo nav-logo-wiki">
                 📚
               </div>
               <div>
-                <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Towny Player Wiki</h1>
-                <p style={{ fontSize: '14px', color: '#888' }}>play.kasadyacraft.online</p>
+                <h1 className="nav-title">Towny Player Wiki</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
               </div>
             </div>
-            <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
-              <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-              <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none' }}>Towny</Link>
-              <Link href="/towny/wiki" style={{ color: '#5555FF', textDecoration: 'none', fontWeight: '600' }}>Wiki</Link>
-              <Link href="/staff" style={{ color: 'white', textDecoration: 'none' }}>Staff</Link>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link-wiki">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
@@ -168,60 +145,32 @@ export default function TownyWikiPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-16">
+      <section className="hero-section">
         <div className="container text-center">
-          <h1 style={{ 
-            fontSize: 'clamp(3rem, 8vw, 5rem)', 
-            fontWeight: 'bold', 
-            marginBottom: '24px',
-            background: 'linear-gradient(45deg, #5555FF, #FFAA00, #00FF00)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>
+          <h1 className="hero-title-wiki">
             📚 Towny Player Wiki
           </h1>
-          <p style={{ 
-            fontSize: '20px', 
-            color: '#ccc', 
-            marginBottom: '32px', 
-            maxWidth: '700px', 
-            margin: '0 auto 32px' 
-          }}>
+          <p className="hero-description-wide">
             Everything you need to know to master Towny on KasadyaCraft! From creating your first town to leading a powerful nation.
           </p>
           
-          <div style={{
-            background: 'rgba(0, 255, 0, 0.1)',
-            border: '2px solid #00FF00',
-            borderRadius: '12px',
-            padding: '20px',
-            maxWidth: '600px',
-            margin: '0 auto',
-            marginBottom: '32px'
-          }}>
-            <h3 style={{ color: '#00FF00', marginBottom: '12px', fontSize: '18px' }}>🎮 Server: play.kasadyacraft.online</h3>
-            <p style={{ color: '#ccc', fontSize: '16px', lineHeight: '1.5' }}>
+          <div className="hero-info-box">
+            <h3 className="hero-box-title hero-box-title-info">🎮 Server: play.kasadyacraft.online</h3>
+            <p className="hero-box-text">
               All guides are specifically written for our server setup. Commands and features may differ from other Towny servers!
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="hero-buttons">
             <Link 
               href="/towny/create-town" 
               className="btn btn-primary"
-              style={{ textDecoration: 'none' }}
             >
               🏗️ Create Your First Town
             </Link>
             <a 
               href="minecraft://play.kasadyacraft.online" 
-              className="btn"
-              style={{ 
-                background: 'linear-gradient(45deg, #FFAA00, #FF6A00)',
-                color: 'white',
-                textDecoration: 'none'
-              }}
+              className="btn btn-towny"
             >
               🎮 Join Server
             </a>
@@ -230,65 +179,35 @@ export default function TownyWikiPage() {
       </section>
 
       {/* Player Guides */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#00FF00'
-          }}>
+          <h2 className="section-title section-title-green">
             📖 Player Guides
           </h2>
           
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
+          <div className="grid grid-auto-400">
             {playerGuides.map((section, index) => (
               <div key={index} className="card">
-                <div style={{ marginBottom: '16px' }}>
-                  <h3 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', marginBottom: '8px' }}>
+                <div className="wiki-section">
+                  <h3 className="card-title-20 mb-8">
                     {section.title}
                   </h3>
-                  <p style={{ color: '#888', fontSize: '14px', fontStyle: 'italic' }}>
+                  <p className="text-gray text-14 mb-16">
                     {section.description}
                   </p>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div className="wiki-articles">
                   {section.articles.map((article, articleIndex) => (
                     <Link 
                       key={articleIndex} 
                       href={article.href}
-                      style={{
-                        display: 'block',
-                        padding: '12px',
-                        borderRadius: '8px',
-                        background: 'rgba(0, 255, 0, 0.05)',
-                        border: '1px solid rgba(0, 255, 0, 0.2)',
-                        textDecoration: 'none',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(0, 255, 0, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(0, 255, 0, 0.4)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(0, 255, 0, 0.05)'
-                        e.currentTarget.style.borderColor = 'rgba(0, 255, 0, 0.2)'
-                      }}
+                      className="wiki-article-link"
                     >
-                      <div style={{ 
-                        color: 'white', 
-                        fontSize: '16px', 
-                        fontWeight: '600',
-                        marginBottom: '4px'
-                      }}>
+                      <div className="wiki-article-title">
                         {article.title}
                       </div>
-                      <div style={{ 
-                        color: '#ccc', 
-                        fontSize: '13px'
-                      }}>
+                      <div className="wiki-article-desc">
                         {article.description}
                       </div>
                     </Link>
@@ -301,48 +220,25 @@ export default function TownyWikiPage() {
       </section>
 
       {/* Quick Command Reference */}
-      <section className="py-16">
+      <section className="section-py">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FFAA00'
-          }}>
+          <h2 className="section-title section-title-orange">
             ⚡ Quick Command Reference
           </h2>
           
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+          <div className="grid grid-auto-300">
             {quickCommands.map((category, index) => (
               <div key={index} className="card">
-                <h3 style={{ 
-                  color: 'white', 
-                  marginBottom: '16px', 
-                  fontSize: '18px',
-                  borderBottom: '2px solid #FFAA00',
-                  paddingBottom: '8px'
-                }}>
+                <h3 className="text-white mb-16 text-18 border-bottom-orange">
                   {category.category}
                 </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div className="command-list">
                   {category.commands.map((command, cmdIndex) => (
-                    <div key={cmdIndex} style={{
-                      background: 'rgba(0, 0, 0, 0.3)',
-                      borderRadius: '6px',
-                      padding: '8px',
-                      border: '1px solid rgba(255, 170, 0, 0.2)'
-                    }}>
-                      <div style={{ 
-                        color: '#00FF00', 
-                        fontFamily: 'monospace', 
-                        fontSize: '13px',
-                        fontWeight: 'bold',
-                        marginBottom: '2px'
-                      }}>
+                    <div key={cmdIndex} className="command-item command-item-wiki">
+                      <div className="command-name">
                         {command.cmd}
                       </div>
-                      <div style={{ color: '#ccc', fontSize: '12px' }}>
+                      <div className="command-description">
                         {command.desc}
                       </div>
                     </div>
@@ -355,57 +251,40 @@ export default function TownyWikiPage() {
       </section>
 
       {/* Getting Help */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      <section className="section-py section-bg">
         <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FF6A00'
-          }}>
+          <h2 className="section-title section-title-red">
             🤝 Need Help?
           </h2>
           
           <div className="grid grid-3">
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
+              <div className="icon-48 icon-center">🎮</div>
+              <h3 className="card-title-20 mb-12">
                 In-Game Help
               </h3>
-              <p style={{ color: '#ccc', marginBottom: '16px', fontSize: '14px' }}>
+              <p className="card-description-14 mb-16">
                 Use /help or ask questions in chat. Our community is friendly and helpful!
               </p>
-              <div style={{ 
-                background: 'rgba(0, 0, 0, 0.3)',
-                padding: '8px',
-                borderRadius: '6px',
-                fontFamily: 'monospace',
-                color: '#00FF00',
-                fontSize: '13px',
-                marginBottom: '12px'
-              }}>
-                /help towny
+              <div className="command-box mb-12">
+                <div className="command-text">
+                  /help towny
+                </div>
               </div>
               <a 
                 href="minecraft://play.kasadyacraft.online" 
-                className="btn" 
-                style={{ 
-                  background: 'linear-gradient(45deg, #00FF00, #00CC00)', 
-                  color: 'black',
-                  textDecoration: 'none'
-                }}
+                className="btn btn-primary"
               >
                 Join Server
               </a>
             </div>
 
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>💬</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
+              <div className="icon-48 icon-center">💬</div>
+              <h3 className="card-title-20 mb-12">
                 Discord Support
               </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '14px' }}>
+              <p className="card-description mb-20">
                 Get instant help from our community and staff members!
               </p>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
@@ -414,18 +293,14 @@ export default function TownyWikiPage() {
             </div>
 
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>👥</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
+              <div className="icon-48 icon-center">👥</div>
+              <h3 className="card-title-20 mb-12">
                 Contact Staff
               </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '14px' }}>
+              <p className="card-description mb-20">
                 Our staff team is always ready to help with any questions!
               </p>
-              <Link href="/staff" className="btn" style={{ 
-                background: 'linear-gradient(45deg, #AA00AA, #8E24AA)', 
-                color: 'white',
-                textDecoration: 'none'
-              }}>
+              <Link href="/staff" className="btn btn-staff">
                 View Staff
               </Link>
             </div>
@@ -434,24 +309,22 @@ export default function TownyWikiPage() {
       </section>
 
       {/* Footer */}
-      <footer style={{ 
-        background: 'rgba(0, 0, 0, 0.8)', 
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        padding: '32px 0'
-      }}>
+      <footer className="footer">
         <div className="container text-center">
-          <div style={{ marginBottom: '16px' }}>
-            <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none', marginRight: '24px' }}>
-              ← Back to Towny Hub
-            </Link>
-            <Link href="/towny/create-town" style={{ color: '#00FF00', textDecoration: 'none' }}>
-              Create a Town Guide →
-            </Link>
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny" className="footer-link footer-link-orange">
+                ← Back to Towny Hub
+              </Link>
+              <Link href="/towny/create-town" className="footer-link footer-link-green">
+                Create a Town Guide →
+              </Link>
+            </div>
           </div>
-          <p style={{ color: '#888', marginBottom: '8px', fontFamily: 'monospace' }}>
+          <p className="footer-server">
             play.kasadyacraft.online
           </p>
-          <p style={{ color: '#666', fontSize: '14px' }}>
+          <p className="footer-copyright">
             Player-focused documentation for our Towny server
           </p>
         </div>
