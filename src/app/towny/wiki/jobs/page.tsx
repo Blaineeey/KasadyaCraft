@@ -1,447 +1,416 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import Link from 'next/link'
+import Link from "next/link"
 
 export default function JobsGuide() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Jobs & Professions Guide</h1>
-            <p className="text-xl text-gray-600 mb-6">
-              Earn money through various professions and skill-based activities
-            </p>
-            <div className="flex flex-wrap justify-center gap-2 mb-6">
-              <Badge variant="secondary">Mining</Badge>
-              <Badge variant="secondary">Farming</Badge>
-              <Badge variant="secondary">Building</Badge>
-              <Badge variant="secondary">Crafting</Badge>
+    <div className="minecraft-bg">
+      {/* Navigation */}
+      <nav className="nav-container">
+        <div className="container">
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny/wiki" className="nav-back">
+                ← Back to Wiki
+              </Link>
+              <div className="nav-logo nav-logo-wiki">
+                ⚒️
+              </div>
+              <div>
+                <h1 className="nav-title">Jobs & Professions</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
+              </div>
+            </div>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link-wiki">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
+        </div>
+      </nav>
 
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="overview">Job Overview</TabsTrigger>
-              <TabsTrigger value="joining">Joining Jobs</TabsTrigger>
-              <TabsTrigger value="professions">Professions</TabsTrigger>
-              <TabsTrigger value="advancement">Advancement</TabsTrigger>
-              <TabsTrigger value="strategies">Strategies</TabsTrigger>
-            </TabsList>
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="container text-center">
+          <h1 className="hero-title-wiki">
+            ⚒️ Jobs & Professions Guide
+          </h1>
+          <p className="hero-description">
+            Earn money through various professions and skill-based activities while building your career on the server.
+          </p>
+        </div>
+      </section>
 
-            <TabsContent value="overview">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Jobs System Overview</CardTitle>
-                    <CardDescription>Understanding how jobs work on KasadyaCraft</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-blue-900 mb-2">How Jobs Work:</h4>
-                      <ul className="text-sm text-blue-800 space-y-1">
-                        <li>• Perform job-related activities to earn money</li>
-                        <li>• Gain experience and level up in your profession</li>
-                        <li>• Unlock better pay rates and bonuses</li>
-                        <li>• Can have multiple jobs simultaneously</li>
-                        <li>• Each job has unique benefits and requirements</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
-                      <div className="font-semibold">Essential Job Commands:</div>
-                      <div>/jobs browse - View available jobs</div>
-                      <div>/jobs join [job] - Join a specific job</div>
-                      <div>/jobs leave [job] - Leave a job</div>
-                      <div>/jobs info [job] - Get job information</div>
-                      <div>/jobs stats - View your job statistics</div>
-                      <div>/jobs top [job] - See job leaderboards</div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Categories</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-green-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-green-900 mb-2">Resource Jobs</h4>
-                        <ul className="text-sm text-green-800 space-y-1">
-                          <li>• Miner - Mine ores and stones</li>
-                          <li>• Woodcutter - Chop trees and wood</li>
-                          <li>• Digger - Excavate dirt and sand</li>
-                          <li>• Farmer - Grow and harvest crops</li>
-                        </ul>
-                      </div>
-                      <div className="bg-purple-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-purple-900 mb-2">Crafting Jobs</h4>
-                        <ul className="text-sm text-purple-800 space-y-1">
-                          <li>• Builder - Place blocks and build</li>
-                          <li>• Crafter - Create items and tools</li>
-                          <li>• Enchanter - Enchant items</li>
-                          <li>• Brewer - Create potions</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="joining">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Joining Your First Job</CardTitle>
-                    <CardDescription>Step-by-step guide to getting started</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="bg-yellow-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-yellow-900 mb-2">Getting Started:</h4>
-                      <ol className="text-sm text-yellow-800 space-y-1">
-                        <li>1. Use /jobs browse to see all available jobs</li>
-                        <li>2. Read job descriptions and pay rates</li>
-                        <li>3. Choose a job that matches your playstyle</li>
-                        <li>4. Use /jobs join [jobname] to join</li>
-                        <li>5. Start performing job activities to earn money!</li>
-                      </ol>
-                    </div>
-
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-blue-900 mb-2">Job Selection Tips:</h4>
-                      <ul className="text-sm text-blue-800 space-y-1">
-                        <li>• Consider your preferred activities</li>
-                        <li>• Check current market demand</li>
-                        <li>• Look at advancement opportunities</li>
-                        <li>• Consider resource availability</li>
-                        <li>• Think about long-term goals</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-green-900 mb-2">Multiple Jobs:</h4>
-                      <p className="text-sm text-green-800 mb-2">
-                        You can have multiple jobs, but there are limits:
-                      </p>
-                      <ul className="text-sm text-green-800 space-y-1">
-                        <li>• Maximum of 3 jobs at once</li>
-                        <li>• Each job levels independently</li>
-                        <li>• Diversify for stable income</li>
-                        <li>• Focus on complementary jobs</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Requirements</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="bg-red-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-red-900 mb-2">Prerequisites:</h4>
-                      <ul className="text-sm text-red-800 space-y-1">
-                        <li>• Some jobs may require minimum levels</li>
-                        <li>• Certain jobs need specific permissions</li>
-                        <li>• Advanced jobs may require job experience</li>
-                        <li>• Check job info before attempting to join</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="professions">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Detailed Job Descriptions</CardTitle>
-                    <CardDescription>Learn about each profession and its benefits</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-4">
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-gray-900 mb-2">⛏️ Miner</h4>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-sm text-gray-700 mb-2"><strong>Activities:</strong></p>
-                            <ul className="text-sm text-gray-600 space-y-1">
-                              <li>• Mine stone, ores, and minerals</li>
-                              <li>• Break blocks underground</li>
-                              <li>• Collect rare materials</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-sm text-gray-700 mb-2"><strong>Benefits:</strong></p>
-                            <ul className="text-sm text-gray-600 space-y-1">
-                              <li>• High pay for rare ores</li>
-                              <li>• Bonus for deep mining</li>
-                              <li>• Special mining perks</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-green-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-green-900 mb-2">🌾 Farmer</h4>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-sm text-green-700 mb-2"><strong>Activities:</strong></p>
-                            <ul className="text-sm text-green-600 space-y-1">
-                              <li>• Plant and harvest crops</li>
-                              <li>• Breed animals</li>
-                              <li>• Collect farm products</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-sm text-green-700 mb-2"><strong>Benefits:</strong></p>
-                            <ul className="text-sm text-green-600 space-y-1">
-                              <li>• Steady, reliable income</li>
-                              <li>• Food production bonuses</li>
-                              <li>• Animal breeding perks</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-blue-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-blue-900 mb-2">🏗️ Builder</h4>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-sm text-blue-700 mb-2"><strong>Activities:</strong></p>
-                            <ul className="text-sm text-blue-600 space-y-1">
-                              <li>• Place blocks and structures</li>
-                              <li>• Build and construct</li>
-                              <li>• Create architectural works</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-sm text-blue-700 mb-2"><strong>Benefits:</strong></p>
-                            <ul className="text-sm text-blue-600 space-y-1">
-                              <li>• Pay for creative building</li>
-                              <li>• Bonus for large projects</li>
-                              <li>• Building material discounts</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-purple-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-purple-900 mb-2">🔨 Crafter</h4>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-sm text-purple-700 mb-2"><strong>Activities:</strong></p>
-                            <ul className="text-sm text-purple-600 space-y-1">
-                              <li>• Craft tools and items</li>
-                              <li>• Create complex recipes</li>
-                              <li>• Produce trade goods</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-sm text-purple-700 mb-2"><strong>Benefits:</strong></p>
-                            <ul className="text-sm text-purple-600 space-y-1">
-                              <li>• Crafting efficiency bonuses</li>
-                              <li>• Recipe unlock rewards</li>
-                              <li>• Material cost reductions</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="advancement">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Advancement System</CardTitle>
-                    <CardDescription>Level up and unlock better rewards</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="bg-indigo-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-indigo-900 mb-2">Experience & Levels</h4>
-                      <ul className="text-sm text-indigo-800 space-y-1">
-                        <li>• Gain experience by performing job activities</li>
-                        <li>• Each level increases your pay rate</li>
-                        <li>• Higher levels unlock special bonuses</li>
-                        <li>• Maximum level varies by job</li>
-                        <li>• Experience requirements increase per level</li>
-                      </ul>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-yellow-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-yellow-900 mb-2">Level Benefits</h4>
-                        <ul className="text-sm text-yellow-800 space-y-1">
-                          <li>• Level 1-10: Basic pay rates</li>
-                          <li>• Level 11-25: Increased earnings</li>
-                          <li>• Level 26-50: Special bonuses</li>
-                          <li>• Level 51-75: Elite rewards</li>
-                          <li>• Level 76-100: Master benefits</li>
-                        </ul>
-                      </div>
-                      <div className="bg-teal-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-teal-900 mb-2">Advancement Tips</h4>
-                        <ul className="text-sm text-teal-800 space-y-1">
-                          <li>• Focus on high-XP activities</li>
-                          <li>• Use XP boost events</li>
-                          <li>• Complete job-specific quests</li>
-                          <li>• Join job-focused towns</li>
-                          <li>• Participate in competitions</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-green-900 mb-2">Prestige System</h4>
-                      <p className="text-sm text-green-800 mb-2">
-                        At maximum level, you can prestige to gain additional benefits:
-                      </p>
-                      <ul className="text-sm text-green-800 space-y-1">
-                        <li>• Reset to level 1 with prestige rank</li>
-                        <li>• Gain permanent bonuses</li>
-                        <li>• Access to prestige-only features</li>
-                        <li>• Special titles and recognition</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Specializations</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="bg-purple-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-purple-900 mb-2">Advanced Specializations:</h4>
-                      <ul className="text-sm text-purple-800 space-y-1">
-                        <li>• Unlock at high levels in base jobs</li>
-                        <li>• Provide focused bonuses and abilities</li>
-                        <li>• Require specific achievements</li>
-                        <li>• Offer unique gameplay mechanics</li>
-                        <li>• Limited slots available</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="strategies">
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Optimization Strategies</CardTitle>
-                    <CardDescription>Maximize your earnings and efficiency</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-orange-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-orange-900 mb-2">Income Maximization</h4>
-                        <ul className="text-sm text-orange-800 space-y-1">
-                          <li>• Focus on high-paying activities</li>
-                          <li>• Time activities during bonus periods</li>
-                          <li>• Use efficiency-boosting tools</li>
-                          <li>• Combine complementary jobs</li>
-                          <li>• Participate in job events</li>
-                        </ul>
-                      </div>
-                      <div className="bg-cyan-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-cyan-900 mb-2">Efficiency Tips</h4>
-                        <ul className="text-sm text-cyan-800 space-y-1">
-                          <li>• Set up dedicated work areas</li>
-                          <li>• Use automated systems where possible</li>
-                          <li>• Organize inventory for quick access</li>
-                          <li>• Plan routes for resource gathering</li>
-                          <li>• Coordinate with other job holders</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="bg-red-50 p-4 rounded-lg">
-                      <h4 className="font-semibent text-red-900 mb-2">Common Mistakes to Avoid</h4>
-                      <ul className="text-sm text-red-800 space-y-1">
-                        <li>• Spreading too thin across many jobs</li>
-                        <li>• Ignoring job-specific bonuses</li>
-                        <li>• Not upgrading tools and equipment</li>
-                        <li>• Missing special events and promotions</li>
-                        <li>• Neglecting job advancement opportunities</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h4 className="font-semibold mb-2">Long-term Planning</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>• Set income goals and track progress</li>
-                        <li>• Plan job combinations strategically</li>
-                        <li>• Invest earnings in better equipment</li>
-                        <li>• Build relationships with other professionals</li>
-                        <li>• Consider transitioning to business ownership</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Job Communities</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-blue-900 mb-2">Getting Involved:</h4>
-                      <ul className="text-sm text-blue-800 space-y-1">
-                        <li>• Join job-specific Discord channels</li>
-                        <li>• Participate in job competitions</li>
-                        <li>• Share tips and strategies</li>
-                        <li>• Mentor new job holders</li>
-                        <li>• Organize group activities</li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-8 text-center">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold mb-2">Ready to Start Working?</h3>
-              <p className="text-gray-600 mb-4">
-                Choose your profession and start earning money today!
+      {/* Jobs Overview */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            📋 Jobs System Overview
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">💼 How Jobs Work</h3>
+              <p className="card-description mb-16">
+                Understanding the job system mechanics and benefits.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link 
-                  href="/towny/wiki/economy" 
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-                >
-                  Economy Guide
-                </Link>
-                <Link 
-                  href="/towny/wiki/shops" 
-                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
-                >
-                  Shop System
-                </Link>
-                <a 
-                  href="https://discord.gg/8DY3eXHnAg" 
-                  className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Join Discord
-                </a>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Activity-Based:</strong> Earn money by performing tasks</div>
+                <div className="mb-8">• <strong>Experience System:</strong> Gain XP and level up</div>
+                <div className="mb-8">• <strong>Pay Progression:</strong> Higher levels = better pay</div>
+                <div className="mb-8">• <strong>Multiple Jobs:</strong> Hold up to 3 jobs simultaneously</div>
+                <div className="mb-8">• <strong>Specialization:</strong> Unlock advanced job features</div>
+                <div className="mb-8">• <strong>Bonuses:</strong> Special perks and multipliers</div>
+                <div className="mb-8">• <strong>Competition:</strong> Leaderboards and rankings</div>
+                <div className="mb-8">• <strong>Events:</strong> Special job-related activities</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚡ Essential Commands</h3>
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/jobs browse</div>
+                  <div className="command-description">View available jobs</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/jobs join [job]</div>
+                  <div className="command-description">Join a specific job</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/jobs leave [job]</div>
+                  <div className="command-description">Leave a job</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/jobs info [job]</div>
+                  <div className="command-description">Get job information</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/jobs stats</div>
+                  <div className="command-description">View your statistics</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Job Categories */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            🏭 Job Categories
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🌿 Resource Jobs</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Miner:</strong> Mine ores, stones, and minerals</div>
+                <div className="mb-8">• <strong>Woodcutter:</strong> Chop trees and harvest wood</div>
+                <div className="mb-8">• <strong>Digger:</strong> Excavate dirt, sand, and gravel</div>
+                <div className="mb-8">• <strong>Farmer:</strong> Grow crops and breed animals</div>
+                <div className="mb-8">• <strong>Fisherman:</strong> Catch fish and ocean resources</div>
+                <div className="mb-8">• <strong>Hunter:</strong> Hunt mobs and collect drops</div>
+                <div className="mb-8">• <strong>Explorer:</strong> Discover new areas and biomes</div>
+                <div className="mb-8">• <strong>Collector:</strong> Gather rare and unique items</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🔨 Crafting Jobs</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Builder:</strong> Place blocks and construct buildings</div>
+                <div className="mb-8">• <strong>Crafter:</strong> Create tools, weapons, and items</div>
+                <div className="mb-8">• <strong>Enchanter:</strong> Enchant items and create magic</div>
+                <div className="mb-8">• <strong>Brewer:</strong> Create potions and magical drinks</div>
+                <div className="mb-8">• <strong>Smelter:</strong> Process ores and materials</div>
+                <div className="mb-8">• <strong>Weaponsmith:</strong> Forge weapons and armor</div>
+                <div className="mb-8">• <strong>Alchemist:</strong> Advanced potion crafting</div>
+                <div className="mb-8">• <strong>Engineer:</strong> Build complex mechanisms</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Getting Started */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-blue">
+            🚀 Getting Started with Jobs
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">📝 Joining Your First Job</h3>
+              <p className="card-description mb-16">
+                Step-by-step guide to starting your career.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Use /jobs browse to see options</div>
+                <div className="mb-8">• Read job descriptions carefully</div>
+                <div className="mb-8">• Check pay rates and requirements</div>
+                <div className="mb-8">• Choose based on your playstyle</div>
+                <div className="mb-8">• Use /jobs join [jobname]</div>
+                <div className="mb-8">• Start performing job activities</div>
+                <div className="mb-8">• Monitor your progress regularly</div>
+                <div className="mb-8">• Ask for help if needed</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🎯 Job Selection Tips</h3>
+              <p className="card-description mb-16">
+                Choose the right jobs for maximum success.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Consider your preferred activities</div>
+                <div className="mb-8">• Check current market demand</div>
+                <div className="mb-8">• Look at advancement opportunities</div>
+                <div className="mb-8">• Consider resource availability</div>
+                <div className="mb-8">• Think about time investment</div>
+                <div className="mb-8">• Plan for long-term goals</div>
+                <div className="mb-8">• Research job combinations</div>
+                <div className="mb-8">• Start with beginner-friendly jobs</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🔄 Multiple Jobs Strategy</h3>
+              <p className="card-description mb-16">
+                Maximize earnings with multiple professions.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Maximum of 3 jobs allowed</div>
+                <div className="mb-8">• Each job levels independently</div>
+                <div className="mb-8">• Diversify for stable income</div>
+                <div className="mb-8">• Choose complementary jobs</div>
+                <div className="mb-8">• Balance time between jobs</div>
+                <div className="mb-8">• Focus on synergistic combinations</div>
+                <div className="mb-8">• Don't spread too thin initially</div>
+                <div className="mb-8">• Master one before adding more</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Detailed Professions */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-orange">
+            ⚒️ Detailed Job Descriptions
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">⛏️ Miner Profession</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Activities:</strong> Mine stone, ores, and minerals</div>
+                <div className="mb-8">• <strong>High Pay Items:</strong> Diamond, emerald, ancient debris</div>
+                <div className="mb-8">• <strong>Bonuses:</strong> Deep mining multipliers</div>
+                <div className="mb-8">• <strong>Special Perks:</strong> Ore detection abilities</div>
+                <div className="mb-8">• <strong>Equipment:</strong> Efficiency pickaxes recommended</div>
+                <div className="mb-8">• <strong>Best Locations:</strong> Deep caves and mining areas</div>
+                <div className="mb-8">• <strong>Tips:</strong> Use fortune enchantments</div>
+                <div className="mb-8">• <strong>Advancement:</strong> Unlock rare ore bonuses</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🌾 Farmer Profession</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Activities:</strong> Plant, harvest crops, breed animals</div>
+                <div className="mb-8">• <strong>High Pay Items:</strong> Rare crops, animal products</div>
+                <div className="mb-8">• <strong>Bonuses:</strong> Harvest multipliers</div>
+                <div className="mb-8">• <strong>Special Perks:</strong> Faster crop growth</div>
+                <div className="mb-8">• <strong>Equipment:</strong> Hoes with efficiency</div>
+                <div className="mb-8">• <strong>Best Locations:</strong> Fertile farmland areas</div>
+                <div className="mb-8">• <strong>Tips:</strong> Automate with hoppers</div>
+                <div className="mb-8">• <strong>Advancement:</strong> Unlock exotic crops</div>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🏗️ Builder Profession</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Activities:</strong> Place blocks, construct buildings</div>
+                <div className="mb-8">• <strong>High Pay Items:</strong> Expensive blocks, decoratives</div>
+                <div className="mb-8">• <strong>Bonuses:</strong> Large project multipliers</div>
+                <div className="mb-8">• <strong>Special Perks:</strong> Building material discounts</div>
+                <div className="mb-8">• <strong>Equipment:</strong> Various building blocks</div>
+                <div className="mb-8">• <strong>Best Locations:</strong> Town construction sites</div>
+                <div className="mb-8">• <strong>Tips:</strong> Plan large builds for efficiency</div>
+                <div className="mb-8">• <strong>Advancement:</strong> Unlock architectural bonuses</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🔨 Crafter Profession</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Activities:</strong> Craft tools, weapons, items</div>
+                <div className="mb-8">• <strong>High Pay Items:</strong> Complex recipes, enchanted items</div>
+                <div className="mb-8">• <strong>Bonuses:</strong> Crafting efficiency multipliers</div>
+                <div className="mb-8">• <strong>Special Perks:</strong> Recipe unlock rewards</div>
+                <div className="mb-8">• <strong>Equipment:</strong> Crafting tables, furnaces</div>
+                <div className="mb-8">• <strong>Best Locations:</strong> Well-equipped workshops</div>
+                <div className="mb-8">• <strong>Tips:</strong> Bulk craft for better rates</div>
+                <div className="mb-8">• <strong>Advancement:</strong> Master craftsman abilities</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Job Advancement */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            📈 Job Advancement System
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">⭐ Experience & Levels</h3>
+              <p className="card-description mb-16">
+                Progress through levels to unlock better rewards.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Gain XP by performing job activities</div>
+                <div className="mb-8">• Each level increases pay rates</div>
+                <div className="mb-8">• Higher levels unlock bonuses</div>
+                <div className="mb-8">• Maximum level varies by job</div>
+                <div className="mb-8">• XP requirements increase per level</div>
+                <div className="mb-8">• Track progress with /jobs stats</div>
+                <div className="mb-8">• Participate in XP boost events</div>
+                <div className="mb-8">• Complete job-specific quests</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🏆 Level Benefits</h3>
+              <p className="card-description mb-16">
+                Rewards for reaching higher job levels.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Level 1-10: Basic pay rates</div>
+                <div className="mb-8">• Level 11-25: Increased earnings</div>
+                <div className="mb-8">• Level 26-50: Special bonuses</div>
+                <div className="mb-8">• Level 51-75: Elite rewards</div>
+                <div className="mb-8">• Level 76-100: Master benefits</div>
+                <div className="mb-8">• Unlock exclusive abilities</div>
+                <div className="mb-8">• Access to rare materials</div>
+                <div className="mb-8">• Special titles and recognition</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">💎 Prestige System</h3>
+              <p className="card-description mb-16">
+                Reset and gain permanent bonuses.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Available at maximum level</div>
+                <div className="mb-8">• Reset to level 1 with prestige rank</div>
+                <div className="mb-8">• Gain permanent bonuses</div>
+                <div className="mb-8">• Access prestige-only features</div>
+                <div className="mb-8">• Special titles and recognition</div>
+                <div className="mb-8">• Increased XP gain rates</div>
+                <div className="mb-8">• Exclusive prestige rewards</div>
+                <div className="mb-8">• Multiple prestige levels available</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Optimization Strategies */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            💡 Job Optimization Strategies
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">💰 Income Maximization</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>High-Value Activities:</strong> Focus on best-paying tasks</div>
+                <div className="mb-8">• <strong>Bonus Periods:</strong> Time activities during multipliers</div>
+                <div className="mb-8">• <strong>Efficient Tools:</strong> Use best equipment available</div>
+                <div className="mb-8">• <strong>Job Combinations:</strong> Synergize multiple professions</div>
+                <div className="mb-8">• <strong>Event Participation:</strong> Join special job events</div>
+                <div className="mb-8">• <strong>Bulk Operations:</strong> Perform activities in large quantities</div>
+                <div className="mb-8">• <strong>Location Optimization:</strong> Work in resource-rich areas</div>
+                <div className="mb-8">• <strong>Time Management:</strong> Schedule work efficiently</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚡ Efficiency Tips</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Dedicated Workspaces:</strong> Set up specialized areas</div>
+                <div className="mb-8">• <strong>Automation:</strong> Use redstone and hoppers</div>
+                <div className="mb-8">• <strong>Inventory Management:</strong> Organize for quick access</div>
+                <div className="mb-8">• <strong>Route Planning:</strong> Optimize resource gathering paths</div>
+                <div className="mb-8">• <strong>Team Coordination:</strong> Work with other professionals</div>
+                <div className="mb-8">• <strong>Tool Maintenance:</strong> Keep equipment in top condition</div>
+                <div className="mb-8">• <strong>Resource Stockpiling:</strong> Maintain material reserves</div>
+                <div className="mb-8">• <strong>Skill Development:</strong> Continuously improve techniques</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Common Mistakes */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-red">
+            ❌ Common Mistakes to Avoid
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🚫 Beginner Mistakes</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Spreading too thin across many jobs</div>
+                <div className="mb-8">• Ignoring job-specific bonuses</div>
+                <div className="mb-8">• Not upgrading tools and equipment</div>
+                <div className="mb-8">• Missing special events and promotions</div>
+                <div className="mb-8">• Neglecting job advancement opportunities</div>
+                <div className="mb-8">• Working in inefficient locations</div>
+                <div className="mb-8">• Poor time management</div>
+                <div className="mb-8">• Not researching job mechanics</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">💡 Success Strategies</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Set realistic income goals</div>
+                <div className="mb-8">• Track progress and adjust strategies</div>
+                <div className="mb-8">• Invest earnings in better equipment</div>
+                <div className="mb-8">• Build relationships with other workers</div>
+                <div className="mb-8">• Stay informed about server updates</div>
+                <div className="mb-8">• Participate in community events</div>
+                <div className="mb-8">• Consider transitioning to business</div>
+                <div className="mb-8">• Maintain work-life balance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container text-center">
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny/wiki/economy" className="footer-link footer-link-orange">
+                ← Economy Guide
+              </Link>
+              <Link href="/towny/wiki/shops" className="footer-link footer-link-green">
+                Shop System →
+              </Link>
+            </div>
+          </div>
+          <p className="footer-server">
+            play.kasadyacraft.online
+          </p>
+          <p className="footer-copyright">
+            Start your career today!
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
