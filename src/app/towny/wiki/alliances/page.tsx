@@ -1,406 +1,329 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
 export default function AlliancesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Towny Alliances Guide</h1>
-            <p className="text-xl text-gray-600">Build powerful coalitions and strengthen your nation through strategic partnerships</p>
-          </div>
-
-          <Tabs defaultValue="basics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="basics">Alliance Basics</TabsTrigger>
-              <TabsTrigger value="formation">Formation</TabsTrigger>
-              <TabsTrigger value="management">Management</TabsTrigger>
-              <TabsTrigger value="advanced">Advanced</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="basics" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    🤝 Understanding Alliances
-                  </CardTitle>
-                  <CardDescription>
-                    Learn the fundamentals of nation alliances
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-lg">Alliance Types</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="default" className="bg-blue-100 text-blue-800">Bilateral</Badge>
-                          <span className="text-sm">Two-nation partnership</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="bg-green-100 text-green-800">Multilateral</Badge>
-                          <span className="text-sm">Multiple nation coalition</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">Regional</Badge>
-                          <span className="text-sm">Geographic-based alliance</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="destructive" className="bg-purple-100 text-purple-800">Ideological</Badge>
-                          <span className="text-sm">Shared values/goals</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-lg">Alliance Benefits</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Mutual defense protection</li>
-                        <li>• Shared resources and trade</li>
-                        <li>• Coordinated military actions</li>
-                        <li>• Diplomatic support</li>
-                        <li>• Information sharing</li>
-                        <li>• Joint infrastructure projects</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alliance Commands</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
-                    <div><span className="text-blue-600">/nation ally add [nation]</span> - Send alliance request</div>
-                    <div><span className="text-green-600">/nation ally remove [nation]</span> - End alliance</div>
-                    <div><span className="text-purple-600">/nation ally list</span> - View current allies</div>
-                    <div><span className="text-orange-600">/nation list allies</span> - See all nation alliances</div>
-                    <div><span className="text-red-600">/nation set board [message]</span> - Alliance announcements</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alliance Hierarchy</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Senior Partner</h3>
-                      <p className="text-sm text-gray-600">Largest or most influential nation in the alliance</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Leads alliance decisions</li>
-                        <li>• Coordinates military actions</li>
-                        <li>• Represents alliance diplomatically</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Equal Partners</h3>
-                      <p className="text-sm text-gray-600">Nations with similar power and influence</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Shared decision making</li>
-                        <li>• Rotating leadership roles</li>
-                        <li>• Balanced contributions</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Junior Partners</h3>
-                      <p className="text-sm text-gray-600">Smaller nations seeking protection and growth</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Receive protection and support</li>
-                        <li>• Contribute specialized resources</li>
-                        <li>• Follow senior partner leadership</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="formation" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Forming an Alliance</CardTitle>
-                  <CardDescription>Step-by-step guide to creating alliances</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-blue-500 pl-4">
-                      <h3 className="font-semibold">Step 1: Identify Potential Partners</h3>
-                      <p className="text-sm text-gray-600 mt-1">Look for nations with:</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Compatible goals and values</li>
-                        <li>• Complementary strengths</li>
-                        <li>• Geographic proximity or strategic location</li>
-                        <li>• Stable leadership and population</li>
-                        <li>• Good reputation in the community</li>
-                      </ul>
-                    </div>
-
-                    <div className="border-l-4 border-green-500 pl-4">
-                      <h3 className="font-semibold">Step 2: Initial Contact</h3>
-                      <p className="text-sm text-gray-600 mt-1">Reach out through:</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• In-game private messages</li>
-                        <li>• Discord direct messages</li>
-                        <li>• Forum posts or announcements</li>
-                        <li>• Diplomatic envoys</li>
-                      </ul>
-                    </div>
-
-                    <div className="border-l-4 border-purple-500 pl-4">
-                      <h3 className="font-semibold">Step 3: Negotiate Terms</h3>
-                      <p className="text-sm text-gray-600 mt-1">Discuss key points:</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Mutual defense obligations</li>
-                        <li>• Trade agreements and benefits</li>
-                        <li>• Resource sharing arrangements</li>
-                        <li>• Leadership structure</li>
-                        <li>• Exit conditions</li>
-                      </ul>
-                    </div>
-
-                    <div className="border-l-4 border-orange-500 pl-4">
-                      <h3 className="font-semibold">Step 4: Formalize Alliance</h3>
-                      <p className="text-sm text-gray-600 mt-1">Make it official:</p>
-                      <ul className="text-sm mt-2 space-y-1">
-                        <li>• Send in-game alliance requests</li>
-                        <li>• Create written alliance charter</li>
-                        <li>• Announce publicly on Discord</li>
-                        <li>• Set up communication channels</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alliance Charter Template</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-gray-50 p-4 rounded-lg text-sm">
-                    <h3 className="font-semibold mb-3">Alliance Charter: [Alliance Name]</h3>
-                    <div className="space-y-3">
-                      <div>
-                        <h4 className="font-medium">Article I: Members</h4>
-                        <p>This alliance consists of the following nations: [List nations]</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Article II: Purpose</h4>
-                        <p>The alliance exists to: [State goals and objectives]</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Article III: Mutual Defense</h4>
-                        <p>Members agree to defend each other against unprovoked attacks</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Article IV: Trade & Commerce</h4>
-                        <p>Preferential trading terms and resource sharing agreements</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Article V: Leadership</h4>
-                        <p>Decision-making structure and leadership roles</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">Article VI: Termination</h4>
-                        <p>Conditions under which the alliance may be dissolved</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="management" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alliance Management</CardTitle>
-                  <CardDescription>Maintaining strong alliance relationships</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Communication</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Regular Meetings:</strong> Weekly alliance councils</li>
-                        <li><strong>Discord Channels:</strong> Dedicated alliance chat</li>
-                        <li><strong>Information Sharing:</strong> Intelligence reports</li>
-                        <li><strong>Transparency:</strong> Open decision making</li>
-                        <li><strong>Conflict Resolution:</strong> Mediation procedures</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Coordination</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Joint Operations:</strong> Coordinated military actions</li>
-                        <li><strong>Resource Pooling:</strong> Shared infrastructure projects</li>
-                        <li><strong>Trade Networks:</strong> Integrated economies</li>
-                        <li><strong>Defense Planning:</strong> Strategic positioning</li>
-                        <li><strong>Diplomatic Unity:</strong> Consistent foreign policy</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Alliance Roles & Responsibilities</h3>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <div>
-                        <h4 className="font-medium text-blue-700">Alliance Leader</h4>
-                        <ul className="text-sm space-y-1">
-                          <li>• Overall strategic direction</li>
-                          <li>• External diplomacy</li>
-                          <li>• Conflict resolution</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-green-700">Military Commander</h4>
-                        <ul className="text-sm space-y-1">
-                          <li>• Defense coordination</li>
-                          <li>• Battle planning</li>
-                          <li>• Training programs</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-purple-700">Economic Coordinator</h4>
-                        <ul className="text-sm space-y-1">
-                          <li>• Trade agreements</li>
-                          <li>• Resource allocation</li>
-                          <li>• Financial planning</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Common Alliance Challenges</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold text-red-700 mb-2">Free Riding</h3>
-                      <p className="text-sm text-gray-600 mb-2">Some members benefit without contributing</p>
-                      <p className="text-sm"><strong>Solution:</strong> Clear contribution requirements and regular reviews</p>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold text-red-700 mb-2">Conflicting Interests</h3>
-                      <p className="text-sm text-gray-600 mb-2">Members have different goals or priorities</p>
-                      <p className="text-sm"><strong>Solution:</strong> Regular alignment meetings and compromise</p>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold text-red-700 mb-2">Power Imbalances</h3>
-                      <p className="text-sm text-gray-600 mb-2">One nation dominates alliance decisions</p>
-                      <p className="text-sm"><strong>Solution:</strong> Rotating leadership and equal representation</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="advanced" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Advanced Alliance Strategies</CardTitle>
-                  <CardDescription>Complex diplomatic and strategic concepts</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Alliance Networks</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Hub & Spoke:</strong> Central nation with multiple allies</li>
-                        <li><strong>Web Network:</strong> Interconnected alliance system</li>
-                        <li><strong>Bloc System:</strong> Competing alliance groups</li>
-                        <li><strong>Flexible Partnerships:</strong> Issue-specific alliances</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Strategic Considerations</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Balance of Power:</strong> Prevent any one alliance from dominating</li>
-                        <li><strong>Entanglement Risk:</strong> Avoid being dragged into unwanted conflicts</li>
-                        <li><strong>Credibility:</strong> Honor commitments to maintain trust</li>
-                        <li><strong>Flexibility:</strong> Adapt to changing circumstances</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Alliance Evolution Stages</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <Badge variant="outline">1</Badge>
-                        <div>
-                          <h4 className="font-medium">Formation</h4>
-                          <p className="text-sm text-gray-600">Initial partnership establishment</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Badge variant="outline">2</Badge>
-                        <div>
-                          <h4 className="font-medium">Consolidation</h4>
-                          <p className="text-sm text-gray-600">Building trust and cooperation</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Badge variant="outline">3</Badge>
-                        <div>
-                          <h4 className="font-medium">Integration</h4>
-                          <p className="text-sm text-gray-600">Deep cooperation and coordination</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <Badge variant="outline">4</Badge>
-                        <div>
-                          <h4 className="font-medium">Institutionalization</h4>
-                          <p className="text-sm text-gray-600">Formal structures and procedures</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold mb-2">🎯 Advanced Tips</h3>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Maintain multiple alliance options for flexibility</li>
-                      <li>• Use economic integration to strengthen bonds</li>
-                      <li>• Create joint institutions for long-term stability</li>
-                      <li>• Balance alliance commitments with national interests</li>
-                      <li>• Monitor alliance effectiveness regularly</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 mb-4">Need help with alliances? Join our community!</p>
-            <div className="flex justify-center gap-4">
-              <Link 
-                href="https://discord.gg/8DY3eXHnAg" 
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Join Discord
+    <div className="minecraft-bg">
+      {/* Navigation */}
+      <nav className="nav-container">
+        <div className="container">
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny/wiki" className="nav-back">
+                ← Back to Wiki
               </Link>
-              <Link 
-                href="/towny/wiki" 
-                className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Back to Wiki
-              </Link>
+              <div className="nav-logo nav-logo-wiki">
+                🤝
+              </div>
+              <div>
+                <h1 className="nav-title">Towny Alliances</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
+              </div>
+            </div>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link-wiki">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="container text-center">
+          <h1 className="hero-title-wiki">
+            🤝 Towny Alliances
+          </h1>
+          <p className="hero-description">
+            Build powerful coalitions and strengthen your nation through strategic partnerships and mutual cooperation.
+          </p>
+        </div>
+      </section>
+
+      {/* Alliance Basics */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-blue">
+            🌟 Understanding Alliances
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🎯 Alliance Types</h3>
+              <p className="card-description mb-16">
+                Different types of alliances and their characteristics.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Bilateral:</strong> Two-nation partnership</div>
+                <div className="mb-8">• <strong>Multilateral:</strong> Multiple nation coalition</div>
+                <div className="mb-8">• <strong>Regional:</strong> Geographic-based alliance</div>
+                <div className="mb-8">• <strong>Ideological:</strong> Shared values/goals</div>
+                <div className="mb-8">• <strong>Economic:</strong> Trade-focused partnerships</div>
+                <div className="mb-8">• <strong>Military:</strong> Defense-oriented alliances</div>
+                <div className="mb-8">• <strong>Cultural:</strong> Social and cultural exchange</div>
+                <div className="mb-8">• <strong>Temporary:</strong> Short-term strategic alliances</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚡ Alliance Commands</h3>
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/nation ally add [nation]</div>
+                  <div className="command-description">Send alliance request</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation ally remove [nation]</div>
+                  <div className="command-description">End alliance</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation ally list</div>
+                  <div className="command-description">View current allies</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation list allies</div>
+                  <div className="command-description">See all nation alliances</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation set board [message]</div>
+                  <div className="command-description">Alliance announcements</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Alliance Formation */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            🏗️ Forming an Alliance
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">📋 Formation Process</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Step 1:</strong> Identify potential partners with compatible goals</div>
+                <div className="mb-8">• <strong>Step 2:</strong> Reach out through Discord or in-game messages</div>
+                <div className="mb-8">• <strong>Step 3:</strong> Discuss mutual benefits and expectations</div>
+                <div className="mb-8">• <strong>Step 4:</strong> Negotiate terms and conditions</div>
+                <div className="mb-8">• <strong>Step 5:</strong> Create written alliance charter</div>
+                <div className="mb-8">• <strong>Step 6:</strong> Send formal alliance requests</div>
+                <div className="mb-8">• <strong>Step 7:</strong> Announce publicly on Discord</div>
+                <div className="mb-8">• <strong>Step 8:</strong> Set up communication channels</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🔍 Partner Selection</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Compatibility:</strong> Similar goals and values</div>
+                <div className="mb-8">• <strong>Strength:</strong> Complementary capabilities</div>
+                <div className="mb-8">• <strong>Location:</strong> Strategic geographic position</div>
+                <div className="mb-8">• <strong>Stability:</strong> Reliable leadership and population</div>
+                <div className="mb-8">• <strong>Reputation:</strong> Good standing in community</div>
+                <div className="mb-8">• <strong>Activity:</strong> Regular player engagement</div>
+                <div className="mb-8">• <strong>Resources:</strong> Economic contribution potential</div>
+                <div className="mb-8">• <strong>Trust:</strong> Proven reliability and honesty</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Alliance Management */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-orange">
+            🛠️ Alliance Management
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">👑 Alliance Leader</h3>
+              <p className="card-description mb-16">
+                Overall strategic direction and external diplomacy.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Sets alliance strategic direction</div>
+                <div className="mb-8">• Handles external diplomacy</div>
+                <div className="mb-8">• Resolves internal conflicts</div>
+                <div className="mb-8">• Coordinates major decisions</div>
+                <div className="mb-8">• Represents alliance publicly</div>
+                <div className="mb-8">• Manages alliance reputation</div>
+                <div className="mb-8">• Plans long-term objectives</div>
+                <div className="mb-8">• Maintains member relationships</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚔️ Military Commander</h3>
+              <p className="card-description mb-16">
+                Defense coordination and battle planning.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Coordinates defense strategies</div>
+                <div className="mb-8">• Plans military operations</div>
+                <div className="mb-8">• Organizes training programs</div>
+                <div className="mb-8">• Manages war preparations</div>
+                <div className="mb-8">• Leads combat operations</div>
+                <div className="mb-8">• Maintains military readiness</div>
+                <div className="mb-8">• Develops tactical doctrines</div>
+                <div className="mb-8">• Coordinates with allied forces</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">💰 Economic Coordinator</h3>
+              <p className="card-description mb-16">
+                Trade agreements and resource allocation.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Negotiates trade agreements</div>
+                <div className="mb-8">• Manages resource allocation</div>
+                <div className="mb-8">• Plans financial strategies</div>
+                <div className="mb-8">• Coordinates economic policies</div>
+                <div className="mb-8">• Monitors alliance finances</div>
+                <div className="mb-8">• Develops trade networks</div>
+                <div className="mb-8">• Manages shared projects</div>
+                <div className="mb-8">• Tracks economic performance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Alliance Benefits */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            🎁 Alliance Benefits
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">💪 Mutual Benefits</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Defense:</strong> Mutual protection agreements</div>
+                <div className="mb-8">• <strong>Trade:</strong> Preferential trading terms</div>
+                <div className="mb-8">• <strong>Resources:</strong> Shared material access</div>
+                <div className="mb-8">• <strong>Information:</strong> Intelligence sharing</div>
+                <div className="mb-8">• <strong>Technology:</strong> Knowledge exchange</div>
+                <div className="mb-8">• <strong>Culture:</strong> Social interaction programs</div>
+                <div className="mb-8">• <strong>Infrastructure:</strong> Joint building projects</div>
+                <div className="mb-8">• <strong>Diplomacy:</strong> Enhanced negotiating power</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚠️ Responsibilities</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Defense:</strong> Honor mutual defense pacts</div>
+                <div className="mb-8">• <strong>Respect:</strong> Honor allied territory</div>
+                <div className="mb-8">• <strong>Intelligence:</strong> Share threat information</div>
+                <div className="mb-8">• <strong>Communication:</strong> Maintain regular contact</div>
+                <div className="mb-8">• <strong>Support:</strong> Assist in diplomatic disputes</div>
+                <div className="mb-8">• <strong>Treaties:</strong> Uphold agreed-upon terms</div>
+                <div className="mb-8">• <strong>Loyalty:</strong> Avoid conflicting alliances</div>
+                <div className="mb-8">• <strong>Contribution:</strong> Participate actively</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Advanced Strategies */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-red">
+            🎯 Advanced Alliance Strategies
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🌐 Alliance Networks</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Hub & Spoke:</strong> Central nation with multiple allies</div>
+                <div className="mb-8">• <strong>Web Network:</strong> Interconnected alliance system</div>
+                <div className="mb-8">• <strong>Bloc System:</strong> Competing alliance groups</div>
+                <div className="mb-8">• <strong>Flexible Partnerships:</strong> Issue-specific alliances</div>
+                <div className="mb-8">• <strong>Nested Alliances:</strong> Alliances within alliances</div>
+                <div className="mb-8">• <strong>Regional Blocs:</strong> Geographic-based coalitions</div>
+                <div className="mb-8">• <strong>Ideological Groups:</strong> Value-based partnerships</div>
+                <div className="mb-8">• <strong>Economic Unions:</strong> Trade-focused alliances</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚖️ Strategic Considerations</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Balance:</strong> Prevent any one alliance from dominating</div>
+                <div className="mb-8">• <strong>Entanglement:</strong> Avoid unwanted conflict involvement</div>
+                <div className="mb-8">• <strong>Credibility:</strong> Honor commitments to maintain trust</div>
+                <div className="mb-8">• <strong>Flexibility:</strong> Adapt to changing circumstances</div>
+                <div className="mb-8">• <strong>Redundancy:</strong> Multiple alliance options</div>
+                <div className="mb-8">• <strong>Integration:</strong> Economic and military cooperation</div>
+                <div className="mb-8">• <strong>Institutionalization:</strong> Formal structures</div>
+                <div className="mb-8">• <strong>Evolution:</strong> Adapt alliance over time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Success Tips */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            💡 Alliance Success Tips
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">✅ Best Practices</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Maintain multiple alliance options for flexibility</div>
+                <div className="mb-8">• Use economic integration to strengthen bonds</div>
+                <div className="mb-8">• Create joint institutions for long-term stability</div>
+                <div className="mb-8">• Balance alliance commitments with national interests</div>
+                <div className="mb-8">• Monitor alliance effectiveness regularly</div>
+                <div className="mb-8">• Communicate openly and frequently</div>
+                <div className="mb-8">• Plan for leadership succession</div>
+                <div className="mb-8">• Document all agreements clearly</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">❌ Common Mistakes</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Forming alliances without clear objectives</div>
+                <div className="mb-8">• Accepting incompatible alliance partners</div>
+                <div className="mb-8">• Failing to honor alliance commitments</div>
+                <div className="mb-8">• Poor communication with alliance members</div>
+                <div className="mb-8">• Not planning for conflict scenarios</div>
+                <div className="mb-8">• Ignoring power imbalances within alliance</div>
+                <div className="mb-8">• Lack of clear leadership structure</div>
+                <div className="mb-8">• Not adapting to changing circumstances</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container text-center">
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny/wiki/wars" className="footer-link footer-link-orange">
+                ← Wars Guide
+              </Link>
+              <Link href="/towny/wiki/nation-benefits" className="footer-link footer-link-green">
+                Nation Benefits →
+              </Link>
+            </div>
+          </div>
+          <p className="footer-server">
+            play.kasadyacraft.online
+          </p>
+          <p className="footer-copyright">
+            Strength through unity!
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

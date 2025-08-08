@@ -1,272 +1,295 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
 export default function DiplomacyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Towny Diplomacy Guide</h1>
-            <p className="text-xl text-gray-600">Master the art of international relations and forge powerful alliances</p>
-          </div>
-
-          <Tabs defaultValue="basics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="basics">Diplomacy Basics</TabsTrigger>
-              <TabsTrigger value="relations">Nation Relations</TabsTrigger>
-              <TabsTrigger value="treaties">Treaties & Pacts</TabsTrigger>
-              <TabsTrigger value="strategy">Strategy Guide</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="basics" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    🤝 Understanding Diplomacy
-                  </CardTitle>
-                  <CardDescription>
-                    Learn the fundamentals of nation-to-nation relations
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-lg">Diplomatic Status Types</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="default">Neutral</Badge>
-                          <span className="text-sm">Default relationship status</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="bg-green-100 text-green-800">Allied</Badge>
-                          <span className="text-sm">Friendly nations with benefits</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="destructive">Enemy</Badge>
-                          <span className="text-sm">Hostile relations, PvP enabled</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">Peaceful</Badge>
-                          <span className="text-sm">Non-aggression pact</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-lg">Diplomatic Benefits</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Trade route bonuses</li>
-                        <li>• Shared teleportation access</li>
-                        <li>• Military cooperation</li>
-                        <li>• Economic partnerships</li>
-                        <li>• Information sharing</li>
-                        <li>• Joint events and projects</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Essential Diplomacy Commands</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-gray-50 p-4 rounded-lg font-mono text-sm space-y-2">
-                    <div><span className="text-blue-600">/nation ally add [nation]</span> - Send alliance request</div>
-                    <div><span className="text-blue-600">/nation ally remove [nation]</span> - Remove alliance</div>
-                    <div><span className="text-blue-600">/nation enemy add [nation]</span> - Declare enemy status</div>
-                    <div><span className="text-blue-600">/nation enemy remove [nation]</span> - Remove enemy status</div>
-                    <div><span className="text-blue-600">/nation peaceful add [nation]</span> - Request peace treaty</div>
-                    <div><span className="text-blue-600">/nation list</span> - View all nations and relations</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="relations" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Managing Nation Relations</CardTitle>
-                  <CardDescription>Build and maintain diplomatic relationships</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Building Alliances</h3>
-                      <div className="space-y-2 text-sm">
-                        <p><strong>Step 1:</strong> Identify potential allies with similar goals</p>
-                        <p><strong>Step 2:</strong> Initiate diplomatic contact via Discord or in-game</p>
-                        <p><strong>Step 3:</strong> Negotiate terms and benefits</p>
-                        <p><strong>Step 4:</strong> Send formal alliance request</p>
-                        <p><strong>Step 5:</strong> Maintain regular communication</p>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Managing Conflicts</h3>
-                      <div className="space-y-2 text-sm">
-                        <p><strong>Mediation:</strong> Use neutral parties to resolve disputes</p>
-                        <p><strong>Economic Pressure:</strong> Trade embargos and sanctions</p>
-                        <p><strong>Diplomatic Isolation:</strong> Rally allies against aggressors</p>
-                        <p><strong>Peace Treaties:</strong> Formal agreements to end conflicts</p>
-                        <p><strong>Compensation:</strong> Reparations for damages</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Alliance Benefits & Responsibilities</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold text-green-700 mb-3">Benefits</h3>
-                      <ul className="space-y-1 text-sm">
-                        <li>✅ Mutual defense agreements</li>
-                        <li>✅ Shared teleportation networks</li>
-                        <li>✅ Trade route bonuses</li>
-                        <li>✅ Resource sharing agreements</li>
-                        <li>✅ Joint military operations</li>
-                        <li>✅ Diplomatic immunity in allied towns</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-orange-700 mb-3">Responsibilities</h3>
-                      <ul className="space-y-1 text-sm">
-                        <li>⚠️ Honor mutual defense pacts</li>
-                        <li>⚠️ Respect allied territory</li>
-                        <li>⚠️ Share intelligence on threats</li>
-                        <li>⚠️ Maintain regular communication</li>
-                        <li>⚠️ Support in diplomatic disputes</li>
-                        <li>⚠️ Uphold agreed-upon treaties</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="treaties" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Treaty Types & Templates</CardTitle>
-                  <CardDescription>Formal agreements between nations</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Non-Aggression Pact</h3>
-                      <p className="text-sm text-gray-600 mb-2">Agreement to avoid hostile actions</p>
-                      <div className="bg-gray-50 p-3 rounded text-sm">
-                        <p><strong>Terms:</strong></p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>No military action against each other</li>
-                          <li>Respect territorial boundaries</li>
-                          <li>Peaceful resolution of disputes</li>
-                          <li>Duration: [Specify timeframe]</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Trade Agreement</h3>
-                      <p className="text-sm text-gray-600 mb-2">Economic cooperation and commerce</p>
-                      <div className="bg-gray-50 p-3 rounded text-sm">
-                        <p><strong>Terms:</strong></p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Reduced trade taxes between nations</li>
-                          <li>Preferred trading partner status</li>
-                          <li>Shared market access</li>
-                          <li>Resource exchange agreements</li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Mutual Defense Treaty</h3>
-                      <p className="text-sm text-gray-600 mb-2">Military alliance and protection</p>
-                      <div className="bg-gray-50 p-3 rounded text-sm">
-                        <p><strong>Terms:</strong></p>
-                        <ul className="list-disc list-inside space-y-1">
-                          <li>Mutual military assistance when attacked</li>
-                          <li>Shared intelligence on threats</li>
-                          <li>Joint military exercises</li>
-                          <li>Coordinated defense strategies</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="strategy" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Diplomatic Strategy Guide</CardTitle>
-                  <CardDescription>Advanced tactics for successful diplomacy</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Power Projection</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Economic Influence:</strong> Control key trade routes</li>
-                        <li><strong>Military Strength:</strong> Maintain strong defenses</li>
-                        <li><strong>Cultural Impact:</strong> Host events and festivals</li>
-                        <li><strong>Diplomatic Network:</strong> Build extensive alliances</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Negotiation Tactics</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Win-Win Solutions:</strong> Find mutual benefits</li>
-                        <li><strong>Leverage:</strong> Use your strengths wisely</li>
-                        <li><strong>Patience:</strong> Don't rush important decisions</li>
-                        <li><strong>Flexibility:</strong> Adapt to changing situations</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h3 className="font-semibold mb-2">💡 Pro Tips</h3>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Always honor your agreements to build trust</li>
-                      <li>• Keep detailed records of all diplomatic interactions</li>
-                      <li>• Use Discord for complex negotiations</li>
-                      <li>• Consider the long-term consequences of your actions</li>
-                      <li>• Build relationships before you need them</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 mb-4">Need help with diplomacy? Join our community!</p>
-            <div className="flex justify-center gap-4">
-              <Link 
-                href="https://discord.gg/8DY3eXHnAg" 
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Join Discord
+    <div className="minecraft-bg">
+      {/* Navigation */}
+      <nav className="nav-container">
+        <div className="container">
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny/wiki" className="nav-back">
+                ← Back to Wiki
               </Link>
-              <Link 
-                href="/towny/wiki" 
-                className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Back to Wiki
-              </Link>
+              <div className="nav-logo nav-logo-wiki">
+                🤝
+              </div>
+              <div>
+                <h1 className="nav-title">Towny Diplomacy</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
+              </div>
+            </div>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link-wiki">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="container text-center">
+          <h1 className="hero-title-wiki">
+            🤝 Towny Diplomacy
+          </h1>
+          <p className="hero-description">
+            Master the art of international relations and forge powerful alliances between nations and towns.
+          </p>
+        </div>
+      </section>
+
+      {/* Diplomacy Basics */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            🌍 Understanding Diplomacy
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🎯 Diplomatic Status Types</h3>
+              <p className="card-description mb-16">
+                Different relationship statuses between nations and their effects.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Neutral:</strong> Default relationship status</div>
+                <div className="mb-8">• <strong>Allied:</strong> Friendly nations with benefits</div>
+                <div className="mb-8">• <strong>Enemy:</strong> Hostile relations, PvP enabled</div>
+                <div className="mb-8">• <strong>Peaceful:</strong> Non-aggression pact</div>
+                <div className="mb-8">• Trade route bonuses available</div>
+                <div className="mb-8">• Shared teleportation access</div>
+                <div className="mb-8">• Military cooperation possible</div>
+                <div className="mb-8">• Economic partnerships encouraged</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚡ Essential Commands</h3>
+              <div className="command-list">
+                <div className="command-item">
+                  <div className="command-name">/nation ally add [nation]</div>
+                  <div className="command-description">Send alliance request</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation ally remove [nation]</div>
+                  <div className="command-description">Remove alliance</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation enemy add [nation]</div>
+                  <div className="command-description">Declare enemy status</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation peaceful add [nation]</div>
+                  <div className="command-description">Request peace treaty</div>
+                </div>
+                <div className="command-item">
+                  <div className="command-name">/nation list</div>
+                  <div className="command-description">View all nations and relations</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Building Alliances */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-blue">
+            🤝 Building Alliances
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">📋 Alliance Process</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Step 1:</strong> Identify potential allies with similar goals</div>
+                <div className="mb-8">• <strong>Step 2:</strong> Initiate diplomatic contact via Discord</div>
+                <div className="mb-8">• <strong>Step 3:</strong> Negotiate terms and benefits</div>
+                <div className="mb-8">• <strong>Step 4:</strong> Send formal alliance request</div>
+                <div className="mb-8">• <strong>Step 5:</strong> Maintain regular communication</div>
+                <div className="mb-8">• <strong>Step 6:</strong> Honor mutual defense agreements</div>
+                <div className="mb-8">• <strong>Step 7:</strong> Share intelligence on threats</div>
+                <div className="mb-8">• <strong>Step 8:</strong> Support in diplomatic disputes</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">💰 Alliance Benefits</h3>
+              <p className="card-description mb-16">
+                Advantages of maintaining strong diplomatic relationships.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Mutual defense agreements</div>
+                <div className="mb-8">• Shared teleportation networks</div>
+                <div className="mb-8">• Trade route bonuses</div>
+                <div className="mb-8">• Resource sharing agreements</div>
+                <div className="mb-8">• Joint military operations</div>
+                <div className="mb-8">• Diplomatic immunity in allied towns</div>
+                <div className="mb-8">• Information sharing networks</div>
+                <div className="mb-8">• Cultural exchange programs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Treaty Types */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-orange">
+            📜 Treaty Types & Templates
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">🕊️ Non-Aggression Pact</h3>
+              <p className="card-description mb-16">
+                Agreement to avoid hostile actions between nations.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• No military action against each other</div>
+                <div className="mb-8">• Respect territorial boundaries</div>
+                <div className="mb-8">• Peaceful resolution of disputes</div>
+                <div className="mb-8">• Specified duration terms</div>
+                <div className="mb-8">• Renewal options available</div>
+                <div className="mb-8">• Violation consequences</div>
+                <div className="mb-8">• Neutral mediation clauses</div>
+                <div className="mb-8">• Emergency contact procedures</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">💼 Trade Agreement</h3>
+              <p className="card-description mb-16">
+                Economic cooperation and commerce treaties.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Reduced trade taxes between nations</div>
+                <div className="mb-8">• Preferred trading partner status</div>
+                <div className="mb-8">• Shared market access</div>
+                <div className="mb-8">• Resource exchange agreements</div>
+                <div className="mb-8">• Currency exchange rates</div>
+                <div className="mb-8">• Quality standards enforcement</div>
+                <div className="mb-8">• Dispute resolution mechanisms</div>
+                <div className="mb-8">• Regular review schedules</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚔️ Mutual Defense Treaty</h3>
+              <p className="card-description mb-16">
+                Military alliance and protection agreements.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Mutual military assistance when attacked</div>
+                <div className="mb-8">• Shared intelligence on threats</div>
+                <div className="mb-8">• Joint military exercises</div>
+                <div className="mb-8">• Coordinated defense strategies</div>
+                <div className="mb-8">• Emergency response protocols</div>
+                <div className="mb-8">• Resource sharing for defense</div>
+                <div className="mb-8">• Command structure agreements</div>
+                <div className="mb-8">• Victory condition definitions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Diplomatic Strategy */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            🎯 Diplomatic Strategy
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">💡 Power Projection</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Economic Influence:</strong> Control key trade routes</div>
+                <div className="mb-8">• <strong>Military Strength:</strong> Maintain strong defenses</div>
+                <div className="mb-8">• <strong>Cultural Impact:</strong> Host events and festivals</div>
+                <div className="mb-8">• <strong>Diplomatic Network:</strong> Build extensive alliances</div>
+                <div className="mb-8">• <strong>Information Control:</strong> Manage public perception</div>
+                <div className="mb-8">• <strong>Resource Monopoly:</strong> Control rare materials</div>
+                <div className="mb-8">• <strong>Strategic Location:</strong> Occupy key territories</div>
+                <div className="mb-8">• <strong>Technological Edge:</strong> Advanced infrastructure</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🗣️ Negotiation Tactics</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Win-Win Solutions:</strong> Find mutual benefits</div>
+                <div className="mb-8">• <strong>Leverage:</strong> Use your strengths wisely</div>
+                <div className="mb-8">• <strong>Patience:</strong> Don't rush important decisions</div>
+                <div className="mb-8">• <strong>Flexibility:</strong> Adapt to changing situations</div>
+                <div className="mb-8">• <strong>Preparation:</strong> Research before negotiations</div>
+                <div className="mb-8">• <strong>Alternatives:</strong> Always have backup plans</div>
+                <div className="mb-8">• <strong>Timing:</strong> Choose the right moment</div>
+                <div className="mb-8">• <strong>Reputation:</strong> Maintain credibility</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Success Tips */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-red">
+            💡 Diplomacy Success Tips
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">✅ Best Practices</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Always honor your agreements to build trust</div>
+                <div className="mb-8">• Keep detailed records of all diplomatic interactions</div>
+                <div className="mb-8">• Use Discord for complex negotiations</div>
+                <div className="mb-8">• Consider long-term consequences of actions</div>
+                <div className="mb-8">• Build relationships before you need them</div>
+                <div className="mb-8">• Maintain regular communication with allies</div>
+                <div className="mb-8">• Be transparent about your intentions</div>
+                <div className="mb-8">• Respect cultural differences between nations</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">❌ Common Mistakes</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Breaking agreements for short-term gains</div>
+                <div className="mb-8">• Ignoring smaller nations and towns</div>
+                <div className="mb-8">• Making threats you can't follow through</div>
+                <div className="mb-8">• Failing to communicate with allies</div>
+                <div className="mb-8">• Being inflexible in negotiations</div>
+                <div className="mb-8">• Letting personal conflicts affect diplomacy</div>
+                <div className="mb-8">• Not having backup diplomatic options</div>
+                <div className="mb-8">• Underestimating opponent capabilities</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container text-center">
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny/wiki/nations" className="footer-link footer-link-orange">
+                ← Nations Guide
+              </Link>
+              <Link href="/towny/wiki/wars" className="footer-link footer-link-green">
+                Wars System →
+              </Link>
+            </div>
+          </div>
+          <p className="footer-server">
+            play.kasadyacraft.online
+          </p>
+          <p className="footer-copyright">
+            Master the art of diplomacy!
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

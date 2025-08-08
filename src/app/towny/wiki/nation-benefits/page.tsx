@@ -1,466 +1,379 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
 export default function NationBenefitsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Nation Benefits Guide</h1>
-            <p className="text-xl text-gray-600">Discover the advantages and perks of nation membership</p>
-          </div>
-
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="economic">Economic</TabsTrigger>
-              <TabsTrigger value="military">Military</TabsTrigger>
-              <TabsTrigger value="social">Social</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="overview" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    👑 Nation Membership Benefits
-                  </CardTitle>
-                  <CardDescription>
-                    Why joining a nation is advantageous for towns and players
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold text-lg mb-3">Immediate Benefits</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="default" className="bg-green-100 text-green-800">Protection</Badge>
-                          <span className="text-sm">Military defense and support</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="bg-blue-100 text-blue-800">Trade</Badge>
-                          <span className="text-sm">Access to nation-wide markets</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">Resources</Badge>
-                          <span className="text-sm">Shared materials and supplies</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="destructive" className="bg-purple-100 text-purple-800">Prestige</Badge>
-                          <span className="text-sm">Enhanced reputation and status</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-3">Long-term Advantages</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Faster town growth and development</li>
-                        <li>• Access to nation infrastructure</li>
-                        <li>• Diplomatic immunity and protection</li>
-                        <li>• Shared knowledge and expertise</li>
-                        <li>• Collective bargaining power</li>
-                        <li>• Cultural exchange opportunities</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Nation Tier System</CardTitle>
-                  <CardDescription>Benefits scale with nation size and influence</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline">Tier 1</Badge>
-                        <h3 className="font-semibold">Emerging Nation</h3>
-                        <span className="text-sm text-gray-600">(2-5 towns)</span>
-                      </div>
-                      <ul className="text-sm space-y-1">
-                        <li>• Basic protection and support</li>
-                        <li>• Access to nation chat</li>
-                        <li>• Shared teleportation network</li>
-                        <li>• Basic trade agreements</li>
-                      </ul>
-                    </div>
-
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="secondary" className="bg-blue-100 text-blue-800">Tier 2</Badge>
-                        <h3 className="font-semibold">Established Nation</h3>
-                        <span className="text-sm text-gray-600">(6-15 towns)</span>
-                      </div>
-                      <ul className="text-sm space-y-1">
-                        <li>• Enhanced military support</li>
-                        <li>• Nation-wide infrastructure projects</li>
-                        <li>• Advanced trade networks</li>
-                        <li>• Diplomatic representation</li>
-                        <li>• Resource sharing programs</li>
-                      </ul>
-                    </div>
-
-                    <div className="border rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="default" className="bg-purple-100 text-purple-800">Tier 3</Badge>
-                        <h3 className="font-semibold">Major Power</h3>
-                        <span className="text-sm text-gray-600">(16+ towns)</span>
-                      </div>
-                      <ul className="text-sm space-y-1">
-                        <li>• Full military protection</li>
-                        <li>• Extensive infrastructure networks</li>
-                        <li>• Preferential trade status</li>
-                        <li>• International influence</li>
-                        <li>• Advanced nation perks</li>
-                        <li>• Leadership opportunities</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="economic" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Economic Benefits</CardTitle>
-                  <CardDescription>Financial advantages of nation membership</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Trade Advantages</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Reduced Taxes:</strong> Lower trade fees within nation</li>
-                        <li><strong>Market Access:</strong> Nation-wide shop networks</li>
-                        <li><strong>Bulk Purchasing:</strong> Group buying power</li>
-                        <li><strong>Trade Routes:</strong> Protected commercial pathways</li>
-                        <li><strong>Currency Benefits:</strong> Stable nation economy</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Financial Support</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Development Loans:</strong> Nation-backed funding</li>
-                        <li><strong>Emergency Aid:</strong> Support during crises</li>
-                        <li><strong>Infrastructure Grants:</strong> Shared project funding</li>
-                        <li><strong>Tax Incentives:</strong> Reduced upkeep costs</li>
-                        <li><strong>Investment Opportunities:</strong> Nation-wide projects</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Economic Perks by Nation Size</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Small Nations (2-5 towns)</span>
-                        <Badge variant="outline">5% trade discount</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Medium Nations (6-15 towns)</span>
-                        <Badge variant="secondary">10% trade discount + loans</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Large Nations (16+ towns)</span>
-                        <Badge variant="default">15% discount + full benefits</Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Resource Sharing Programs</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Material Banks</h3>
-                      <p className="text-sm text-gray-600 mb-2">Shared storage for common resources</p>
-                      <ul className="text-sm space-y-1">
-                        <li>• Building materials</li>
-                        <li>• Food supplies</li>
-                        <li>• Tools and equipment</li>
-                        <li>• Rare resources</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Skill Sharing</h3>
-                      <p className="text-sm text-gray-600 mb-2">Access to specialized expertise</p>
-                      <ul className="text-sm space-y-1">
-                        <li>• Master builders</li>
-                        <li>• Redstone engineers</li>
-                        <li>• Farming specialists</li>
-                        <li>• Combat trainers</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Technology Transfer</h3>
-                      <p className="text-sm text-gray-600 mb-2">Share advanced techniques</p>
-                      <ul className="text-sm space-y-1">
-                        <li>• Automated farms</li>
-                        <li>• Defense systems</li>
-                        <li>• Transportation networks</li>
-                        <li>• Industrial processes</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="military" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Military Benefits</CardTitle>
-                  <CardDescription>Defense and security advantages</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Defense Support</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Mutual Defense:</strong> Nation-wide protection pact</li>
-                        <li><strong>Rapid Response:</strong> Quick military assistance</li>
-                        <li><strong>Fortification Aid:</strong> Help building defenses</li>
-                        <li><strong>Intelligence Sharing:</strong> Threat information</li>
-                        <li><strong>Strategic Planning:</strong> Coordinated defense</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Military Resources</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Weapon Supplies:</strong> Access to nation armory</li>
-                        <li><strong>Training Programs:</strong> Combat skill development</li>
-                        <li><strong>Elite Units:</strong> Specialized military forces</li>
-                        <li><strong>War Machines:</strong> Advanced siege equipment</li>
-                        <li><strong>Veteran Support:</strong> Experienced commanders</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Nation Military Structure</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <Badge variant="destructive">High Command</Badge>
-                        <span className="text-sm">Nation leaders and military strategists</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Badge variant="secondary">Regional Forces</Badge>
-                        <span className="text-sm">Area-specific defense units</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Badge variant="outline">Town Guards</Badge>
-                        <span className="text-sm">Local defense and patrol units</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Badge variant="default">Militia</Badge>
-                        <span className="text-sm">Citizen soldiers and reserves</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-red-50 p-4 rounded-lg">
-                    <h3 className="font-semibold mb-2">⚔️ Military Perks</h3>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Priority protection during conflicts</li>
-                      <li>• Access to nation war chest</li>
-                      <li>• Participation in military campaigns</li>
-                      <li>• Recognition and military ranks</li>
-                      <li>• Veteran benefits and honors</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Security Features</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Passive Protection</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Diplomatic Immunity:</strong> Protection from random attacks</li>
-                        <li><strong>Safe Passage:</strong> Secure travel through nation territory</li>
-                        <li><strong>Border Security:</strong> Monitored nation boundaries</li>
-                        <li><strong>Early Warning:</strong> Threat detection systems</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Active Defense</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Emergency Response:</strong> Rapid deployment forces</li>
-                        <li><strong>Counter-Attacks:</strong> Retaliation capabilities</li>
-                        <li><strong>Siege Breaking:</strong> Relief operations</li>
-                        <li><strong>Evacuation Support:</strong> Emergency relocation</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="social" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Social Benefits</CardTitle>
-                  <CardDescription>Community and cultural advantages</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold mb-3">Community Features</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Nation Chat:</strong> Dedicated communication channel</li>
-                        <li><strong>Events & Festivals:</strong> Nation-wide celebrations</li>
-                        <li><strong>Cultural Exchange:</strong> Inter-town programs</li>
-                        <li><strong>Mentorship:</strong> Experienced player guidance</li>
-                        <li><strong>Social Networks:</strong> Expanded friend groups</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-3">Recognition Systems</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li><strong>Nation Ranks:</strong> Hierarchical progression</li>
-                        <li><strong>Achievement Awards:</strong> Special recognitions</li>
-                        <li><strong>Hall of Fame:</strong> Historical records</li>
-                        <li><strong>Titles & Honors:</strong> Prestigious designations</li>
-                        <li><strong>Legacy Building:</strong> Long-term impact</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Nation Rank Progression</h3>
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Citizen</span>
-                        <Badge variant="outline">Basic member</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Resident</span>
-                        <Badge variant="secondary">Established member</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Noble</span>
-                        <Badge variant="default">Respected contributor</Badge>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Lord/Lady</span>
-                        <Badge variant="destructive">High-ranking official</Badge>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Cultural Programs</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Education</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Building workshops</li>
-                        <li>• History lessons</li>
-                        <li>• Skill training</li>
-                        <li>• Leadership development</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Entertainment</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Tournaments & competitions</li>
-                        <li>• Cultural festivals</li>
-                        <li>• Art exhibitions</li>
-                        <li>• Music performances</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Collaboration</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Joint building projects</li>
-                        <li>• Research initiatives</li>
-                        <li>• Exploration expeditions</li>
-                        <li>• Community service</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="bg-purple-50 p-4 rounded-lg mt-4">
-                    <h3 className="font-semibold mb-2">🎉 Social Perks</h3>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Access to exclusive nation events</li>
-                      <li>• Priority in community projects</li>
-                      <li>• Special cosmetic rewards</li>
-                      <li>• Historical documentation</li>
-                      <li>• Legacy preservation</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Membership Requirements</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Basic Requirements</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Active town with established population</li>
-                        <li>• Good standing in the community</li>
-                        <li>• Commitment to nation values</li>
-                        <li>• Willingness to contribute</li>
-                      </ul>
-                    </div>
-                    <div className="border rounded-lg p-4">
-                      <h3 className="font-semibold mb-2">Ongoing Obligations</h3>
-                      <ul className="text-sm space-y-1">
-                        <li>• Participate in nation activities</li>
-                        <li>• Support fellow members</li>
-                        <li>• Honor alliance commitments</li>
-                        <li>• Maintain diplomatic relations</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 mb-4">Ready to join a nation? Connect with our community!</p>
-            <div className="flex justify-center gap-4">
-              <Link 
-                href="https://discord.gg/8DY3eXHnAg" 
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Join Discord
+    <div className="minecraft-bg">
+      {/* Navigation */}
+      <nav className="nav-container">
+        <div className="container">
+          <div className="nav-flex">
+            <div className="nav-left">
+              <Link href="/towny/wiki" className="nav-back">
+                ← Back to Wiki
               </Link>
-              <Link 
-                href="/towny/wiki" 
-                className="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-              >
-                Back to Wiki
-              </Link>
+              <div className="nav-logo nav-logo-wiki">
+                👑
+              </div>
+              <div>
+                <h1 className="nav-title">Nation Benefits</h1>
+                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
+              </div>
+            </div>
+            <div className="nav-right">
+              <Link href="/" className="nav-link">Home</Link>
+              <Link href="/towny" className="nav-link-towny">Towny</Link>
+              <Link href="/towny/wiki" className="nav-link-wiki">Wiki</Link>
+              <Link href="/staff" className="nav-link">Staff</Link>
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="container text-center">
+          <h1 className="hero-title-wiki">
+            👑 Nation Benefits
+          </h1>
+          <p className="hero-description">
+            Discover the advantages and perks of nation membership for towns and their residents.
+          </p>
+        </div>
+      </section>
+
+      {/* Overview */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            🌟 Nation Membership Benefits
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">⚡ Immediate Benefits</h3>
+              <p className="card-description mb-16">
+                Advantages you gain as soon as you join a nation.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Protection:</strong> Military defense and support</div>
+                <div className="mb-8">• <strong>Trade:</strong> Access to nation-wide markets</div>
+                <div className="mb-8">• <strong>Resources:</strong> Shared materials and supplies</div>
+                <div className="mb-8">• <strong>Prestige:</strong> Enhanced reputation and status</div>
+                <div className="mb-8">• <strong>Communication:</strong> Nation chat channels</div>
+                <div className="mb-8">• <strong>Teleportation:</strong> Fast travel networks</div>
+                <div className="mb-8">• <strong>Diplomacy:</strong> International relations</div>
+                <div className="mb-8">• <strong>Events:</strong> Nation-wide celebrations</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🚀 Long-term Advantages</h3>
+              <p className="card-description mb-16">
+                Benefits that grow over time with nation membership.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Faster town growth and development</div>
+                <div className="mb-8">• Access to nation infrastructure</div>
+                <div className="mb-8">• Diplomatic immunity and protection</div>
+                <div className="mb-8">• Shared knowledge and expertise</div>
+                <div className="mb-8">• Collective bargaining power</div>
+                <div className="mb-8">• Cultural exchange opportunities</div>
+                <div className="mb-8">• Advanced military support</div>
+                <div className="mb-8">• Leadership development programs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nation Tiers */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-blue">
+            📊 Nation Tier System
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">🌱 Tier 1: Emerging Nation</h3>
+              <p className="card-description mb-16">
+                Small nations with 2-5 member towns.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Basic protection and support</div>
+                <div className="mb-8">• Access to nation chat</div>
+                <div className="mb-8">• Shared teleportation network</div>
+                <div className="mb-8">• Basic trade agreements</div>
+                <div className="mb-8">• Simple diplomatic relations</div>
+                <div className="mb-8">• Community events</div>
+                <div className="mb-8">• Resource sharing programs</div>
+                <div className="mb-8">• Growth support initiatives</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🏛️ Tier 2: Established Nation</h3>
+              <p className="card-description mb-16">
+                Medium nations with 6-15 member towns.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Enhanced military support</div>
+                <div className="mb-8">• Nation-wide infrastructure projects</div>
+                <div className="mb-8">• Advanced trade networks</div>
+                <div className="mb-8">• Diplomatic representation</div>
+                <div className="mb-8">• Resource sharing programs</div>
+                <div className="mb-8">• Cultural exchange initiatives</div>
+                <div className="mb-8">• Educational programs</div>
+                <div className="mb-8">• Economic development support</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">👑 Tier 3: Major Power</h3>
+              <p className="card-description mb-16">
+                Large nations with 16+ member towns.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Full military protection</div>
+                <div className="mb-8">• Extensive infrastructure networks</div>
+                <div className="mb-8">• Preferential trade status</div>
+                <div className="mb-8">• International influence</div>
+                <div className="mb-8">• Advanced nation perks</div>
+                <div className="mb-8">• Leadership opportunities</div>
+                <div className="mb-8">• Elite military units</div>
+                <div className="mb-8">• Global diplomatic reach</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Economic Benefits */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            💰 Economic Benefits
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">📈 Trade Advantages</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Reduced Taxes:</strong> Lower trade fees within nation</div>
+                <div className="mb-8">• <strong>Market Access:</strong> Nation-wide shop networks</div>
+                <div className="mb-8">• <strong>Bulk Purchasing:</strong> Group buying power</div>
+                <div className="mb-8">• <strong>Trade Routes:</strong> Protected commercial pathways</div>
+                <div className="mb-8">• <strong>Currency Benefits:</strong> Stable nation economy</div>
+                <div className="mb-8">• <strong>Export Support:</strong> International trade assistance</div>
+                <div className="mb-8">• <strong>Quality Standards:</strong> Certified products</div>
+                <div className="mb-8">• <strong>Market Intelligence:</strong> Trade information sharing</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🏦 Financial Support</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Development Loans:</strong> Nation-backed funding</div>
+                <div className="mb-8">• <strong>Emergency Aid:</strong> Support during crises</div>
+                <div className="mb-8">• <strong>Infrastructure Grants:</strong> Shared project funding</div>
+                <div className="mb-8">• <strong>Tax Incentives:</strong> Reduced upkeep costs</div>
+                <div className="mb-8">• <strong>Investment Opportunities:</strong> Nation-wide projects</div>
+                <div className="mb-8">• <strong>Insurance Programs:</strong> Risk protection</div>
+                <div className="mb-8">• <strong>Banking Services:</strong> Nation financial institutions</div>
+                <div className="mb-8">• <strong>Economic Planning:</strong> Strategic development</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Military Benefits */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-red">
+            ⚔️ Military Benefits
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">🛡️ Defense Support</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Mutual Defense:</strong> Nation-wide protection pact</div>
+                <div className="mb-8">• <strong>Rapid Response:</strong> Quick military assistance</div>
+                <div className="mb-8">• <strong>Fortification Aid:</strong> Help building defenses</div>
+                <div className="mb-8">• <strong>Intelligence Sharing:</strong> Threat information</div>
+                <div className="mb-8">• <strong>Strategic Planning:</strong> Coordinated defense</div>
+                <div className="mb-8">• <strong>Early Warning:</strong> Threat detection systems</div>
+                <div className="mb-8">• <strong>Evacuation Support:</strong> Emergency relocation</div>
+                <div className="mb-8">• <strong>Counter-Intelligence:</strong> Security operations</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚡ Military Resources</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Weapon Supplies:</strong> Access to nation armory</div>
+                <div className="mb-8">• <strong>Training Programs:</strong> Combat skill development</div>
+                <div className="mb-8">• <strong>Elite Units:</strong> Specialized military forces</div>
+                <div className="mb-8">• <strong>War Machines:</strong> Advanced siege equipment</div>
+                <div className="mb-8">• <strong>Veteran Support:</strong> Experienced commanders</div>
+                <div className="mb-8">• <strong>Military Ranks:</strong> Recognition system</div>
+                <div className="mb-8">• <strong>Combat Bonuses:</strong> Enhanced abilities</div>
+                <div className="mb-8">• <strong>War Chest:</strong> Military funding</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Benefits */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-orange">
+            🎉 Social Benefits
+          </h2>
+          <div className="grid grid-3">
+            <div className="card">
+              <h3 className="card-title">👥 Community Features</h3>
+              <p className="card-description mb-16">
+                Social interaction and community building.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Nation chat channels</div>
+                <div className="mb-8">• Events and festivals</div>
+                <div className="mb-8">• Cultural exchange programs</div>
+                <div className="mb-8">• Mentorship opportunities</div>
+                <div className="mb-8">• Social networks</div>
+                <div className="mb-8">• Community projects</div>
+                <div className="mb-8">• Celebration ceremonies</div>
+                <div className="mb-8">• Friendship building</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">🏆 Recognition Systems</h3>
+              <p className="card-description mb-16">
+                Achievement and progression systems.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Nation rank progression</div>
+                <div className="mb-8">• Achievement awards</div>
+                <div className="mb-8">• Hall of fame records</div>
+                <div className="mb-8">• Titles and honors</div>
+                <div className="mb-8">• Legacy building</div>
+                <div className="mb-8">• Contribution tracking</div>
+                <div className="mb-8">• Merit-based advancement</div>
+                <div className="mb-8">• Historical documentation</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">📚 Cultural Programs</h3>
+              <p className="card-description mb-16">
+                Education and cultural development.
+              </p>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Building workshops</div>
+                <div className="mb-8">• History lessons</div>
+                <div className="mb-8">• Skill training</div>
+                <div className="mb-8">• Leadership development</div>
+                <div className="mb-8">• Art exhibitions</div>
+                <div className="mb-8">• Music performances</div>
+                <div className="mb-8">• Literary competitions</div>
+                <div className="mb-8">• Knowledge sharing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Membership Requirements */}
+      <section className="section-py">
+        <div className="container">
+          <h2 className="section-title section-title-purple">
+            📋 Membership Requirements
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">✅ Basic Requirements</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Active Town:</strong> Must own an established town</div>
+                <div className="mb-8">• <strong>Good Standing:</strong> Positive community reputation</div>
+                <div className="mb-8">• <strong>Commitment:</strong> Dedication to nation values</div>
+                <div className="mb-8">• <strong>Contribution:</strong> Willingness to participate</div>
+                <div className="mb-8">• <strong>Stability:</strong> Consistent activity levels</div>
+                <div className="mb-8">• <strong>Leadership:</strong> Capable town management</div>
+                <div className="mb-8">• <strong>Resources:</strong> Ability to pay nation taxes</div>
+                <div className="mb-8">• <strong>Compatibility:</strong> Alignment with nation goals</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">⚠️ Ongoing Obligations</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• <strong>Participation:</strong> Engage in nation activities</div>
+                <div className="mb-8">• <strong>Support:</strong> Help fellow nation members</div>
+                <div className="mb-8">• <strong>Loyalty:</strong> Honor alliance commitments</div>
+                <div className="mb-8">• <strong>Diplomacy:</strong> Maintain good relations</div>
+                <div className="mb-8">• <strong>Taxes:</strong> Pay nation dues regularly</div>
+                <div className="mb-8">• <strong>Defense:</strong> Contribute to military efforts</div>
+                <div className="mb-8">• <strong>Communication:</strong> Stay active in nation chat</div>
+                <div className="mb-8">• <strong>Growth:</strong> Help expand nation influence</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Success Tips */}
+      <section className="section-py section-bg">
+        <div className="container">
+          <h2 className="section-title section-title-green">
+            💡 Maximizing Nation Benefits
+          </h2>
+          <div className="grid grid-2">
+            <div className="card">
+              <h3 className="card-title">✅ Best Practices</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Actively participate in nation events and activities</div>
+                <div className="mb-8">• Build strong relationships with other members</div>
+                <div className="mb-8">• Contribute your unique skills and resources</div>
+                <div className="mb-8">• Communicate regularly with nation leadership</div>
+                <div className="mb-8">• Support nation goals and initiatives</div>
+                <div className="mb-8">• Take advantage of available programs</div>
+                <div className="mb-8">• Mentor new nation members</div>
+                <div className="mb-8">• Represent the nation positively</div>
+              </div>
+            </div>
+            <div className="card">
+              <h3 className="card-title">❌ Common Mistakes</h3>
+              <div className="text-gray text-14">
+                <div className="mb-8">• Joining a nation without understanding expectations</div>
+                <div className="mb-8">• Not participating in nation activities</div>
+                <div className="mb-8">• Failing to pay nation taxes regularly</div>
+                <div className="mb-8">• Ignoring nation chat and communications</div>
+                <div className="mb-8">• Not supporting fellow nation members</div>
+                <div className="mb-8">• Breaking nation rules and agreements</div>
+                <div className="mb-8">• Leaving without proper notice</div>
+                <div className="mb-8">• Not taking advantage of available benefits</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container text-center">
+          <div className="footer-content">
+            <div className="footer-links">
+              <Link href="/towny/wiki/alliances" className="footer-link footer-link-orange">
+                ← Alliances Guide
+              </Link>
+              <Link href="/towny/wiki/shops" className="footer-link footer-link-green">
+                Shop System →
+              </Link>
+            </div>
+          </div>
+          <p className="footer-server">
+            play.kasadyacraft.online
+          </p>
+          <p className="footer-copyright">
+            Unlock your nation's full potential!
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
