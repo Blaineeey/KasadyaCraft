@@ -9,7 +9,12 @@ export default function HomePage() {
           <div className="nav-flex">
             <div className="nav-left">
               <div className="nav-logo nav-logo-home">
-                🏰
+                <img 
+                  src="/logo.png" 
+                  alt="Server Logo" 
+                  width="32" 
+                  height="32"
+                />
               </div>
               <div>
                 <h1 className="nav-title">KasadyaCraft</h1>
@@ -32,7 +37,12 @@ export default function HomePage() {
       <section className="hero-section">
         <div className="container text-center">
           <h1 className="hero-title">
-            🏰 Welcome to KasadyaCraft
+                            <img 
+                  src="/logo.png" 
+                  alt="Server Logo" 
+                  width="100" 
+                  height="100"
+                /> Welcome to KasadyaCraft
           </h1>
           <p className="hero-description">
             Experience the ultimate Minecraft server with Towny, Skyblock, and Creative modes. Build your empire, create amazing structures, and join our thriving community!
