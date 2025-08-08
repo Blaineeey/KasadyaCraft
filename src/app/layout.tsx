@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'KasadyaCraft - Premium Minecraft Server',
   description: 'Join thousands of players in the ultimate Minecraft experience. Build towns, forge alliances, and create your legacy!',
   keywords: 'minecraft, server, towny, multiplayer, gaming, kasadyacraft',
-  authors: [{ name: 'KasadyaCraft Team' }],
+  authors: [{ name: 'Blaine  Panares' }],
   viewport: 'width=device-width, initial-scale=1',
 }
 
