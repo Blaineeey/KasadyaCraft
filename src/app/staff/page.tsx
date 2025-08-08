@@ -3,57 +3,48 @@ import Link from "next/link"
 export default function StaffPage() {
   const staffMembers = [
     {
-      name: "ServerOwner",
-      role: "Server Owner",
-      description: "Founder and lead administrator of KasadyaCraft. Handles server management, major decisions, and community leadership.",
-      contact: [
-        { type: "Discord", value: "serverowner#1234" },
-        { type: "In-Game", value: "/msg ServerOwner" }
-      ]
-    },
-    {
-      name: "AdminPlayer",
+      name: "TBD",
       role: "Head Administrator",
       description: "Senior administrator responsible for staff management, plugin configuration, and handling complex player issues.",
       contact: [
-        { type: "Discord", value: "adminplayer#5678" },
-        { type: "In-Game", value: "/msg AdminPlayer" }
+        { type: "Discord", value: "TBD" },
+        { type: "In-Game", value: "/msg TBD" }
       ]
     },
     {
-      name: "ModeratorOne",
+      name: "Rasasakeet",
       role: "Senior Moderator",
       description: "Experienced moderator specializing in Towny disputes, nation conflicts, and maintaining server peace.",
       contact: [
-        { type: "Discord", value: "moderatorone#9012" },
-        { type: "In-Game", value: "/msg ModeratorOne" }
+        { type: "Discord", value: "I F R I T Z#0310" },
+        { type: "In-Game", value: "/msg Rasasakeet" }
       ]
     },
     {
-      name: "ModeratorTwo",
+      name: "TBD",
       role: "Moderator",
       description: "Handles player reports, enforces server rules, and assists with general player support and questions.",
       contact: [
-        { type: "Discord", value: "moderatortwo#3456" },
-        { type: "In-Game", value: "/msg ModeratorTwo" }
+        { type: "Discord", value: "TBD" },
+        { type: "In-Game", value: "/msg TBD" }
       ]
     },
     {
-      name: "HelperOne",
+      name: "TBD",
       role: "Helper",
       description: "Community helper focused on assisting new players, answering questions, and providing Towny guidance.",
       contact: [
-        { type: "Discord", value: "helperone#7890" },
-        { type: "In-Game", value: "/msg HelperOne" }
+        { type: "Discord", value: "TBD" },
+        { type: "In-Game", value: "/msg TBD" }
       ]
     },
     {
-      name: "HelperTwo",
+      name: "TBD",
       role: "Helper",
       description: "Friendly helper who specializes in building advice, server features, and community event organization.",
       contact: [
-        { type: "Discord", value: "helpertwo#2345" },
-        { type: "In-Game", value: "/msg HelperTwo" }
+        { type: "Discord", value: "TBD" },
+        { type: "In-Game", value: "/msg TBD" }
       ]
     }
   ]
@@ -62,17 +53,17 @@ export default function StaffPage() {
     {
       name: "🛡️ Administration",
       description: "Server management, major decisions, and policy enforcement",
-      members: ["ServerOwner", "AdminPlayer"]
+      members: ["Admins"]
     },
     {
       name: "⚖️ Moderation",
       description: "Rule enforcement, dispute resolution, and player discipline",
-      members: ["ModeratorOne", "ModeratorTwo"]
+      members: ["Moderators"]
     },
     {
       name: "🤝 Community Support",
       description: "Player assistance, questions, and new player guidance",
-      members: ["HelperOne", "HelperTwo"]
+      members: ["Helpers"]
     }
   ]
 
