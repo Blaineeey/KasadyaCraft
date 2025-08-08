@@ -5,8 +5,11 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'KasadyaCraft - Minecraft Server',
-  description: 'Join our thriving Minecraft community! Build towns, create nations, and embark on epic adventures.',
+  title: 'KasadyaCraft - Premium Minecraft Server',
+  description: 'Join thousands of players in the ultimate Minecraft experience. Build towns, forge alliances, and create your legacy!',
+  keywords: 'minecraft, server, towny, multiplayer, gaming, kasadyacraft',
+  authors: [{ name: 'KasadyaCraft Team' }],
+  viewport: 'width=device-width, initial-scale=1',
 }
 
 export default function RootLayout({
@@ -16,7 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#00FF00" />
+      </head>
+      <body className={inter.className} style={{ margin: 0, padding: 0 }}>
+        {children}
+      </body>
     </html>
   )
 }
