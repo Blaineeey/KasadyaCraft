@@ -23,7 +23,7 @@ export default function HomePage() {
       players: "Coming Soon",
       status: "maintenance",
       image: "/minecraft-skyblock.png",
-      href: "#"
+      href: "#skyblock-coming-soon"
     },
     {
       name: "Creative",
@@ -31,7 +31,7 @@ export default function HomePage() {
       players: "Coming Soon", 
       status: "maintenance",
       image: "/minecraft-creative-builds.png",
-      href: "#"
+      href: "#creative-coming-soon"
     }
   ]
 
@@ -91,7 +91,8 @@ export default function HomePage() {
             <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
               <Link href="/" style={{ color: '#00FF00', textDecoration: 'none', fontWeight: '600' }}>Home</Link>
               <Link href="/towny" style={{ color: 'white', textDecoration: 'none' }}>Towny</Link>
-              <Link href="#" style={{ color: 'white', textDecoration: 'none' }}>Forums</Link>
+              <Link href="/towny/wiki" style={{ color: 'white', textDecoration: 'none' }}>Wiki</Link>
+              <Link href="/staff" style={{ color: 'white', textDecoration: 'none' }}>Staff</Link>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
@@ -143,9 +144,28 @@ export default function HomePage() {
             }}>
               play.kasadyacraft.online
             </div>
-            <a href="#" className="btn btn-primary" style={{ fontSize: '18px', padding: '16px 32px' }}>
-              🎮 Join Server Now
-            </a>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a 
+                href="minecraft://play.kasadyacraft.online" 
+                className="btn btn-primary" 
+                style={{ fontSize: '18px', padding: '16px 32px' }}
+              >
+                🎮 Join Server Now
+              </a>
+              <Link 
+                href="/towny" 
+                className="btn" 
+                style={{ 
+                  fontSize: '18px', 
+                  padding: '16px 32px',
+                  background: 'linear-gradient(45deg, #FFAA00, #FF6A00)',
+                  color: 'white',
+                  textDecoration: 'none'
+                }}
+              >
+                🏰 Explore Towny
+              </Link>
+            </div>
           </div>
 
           {/* Server Stats */}
@@ -192,7 +212,7 @@ export default function HomePage() {
                 </div>
                 
                 <img 
-                  src={mode.image || "/placeholder.svg"} 
+                  src={mode.image || "/placeholder.svg?height=200&width=400&text=Minecraft+Server"} 
                   alt={mode.name}
                   style={{ 
                     width: '100%', 
@@ -219,7 +239,7 @@ export default function HomePage() {
                 </div>
                 
                 {mode.status === 'online' ? (
-                  <Link href={mode.href} className="btn btn-primary" style={{ width: '100%' }}>
+                  <Link href={mode.href} className="btn btn-primary" style={{ width: '100%', textDecoration: 'none', display: 'block', textAlign: 'center' }}>
                     Play Now
                   </Link>
                 ) : (
@@ -313,19 +333,20 @@ export default function HomePage() {
             </div>
             
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>❤️</div>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>👥</div>
               <h3 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '12px', color: 'white' }}>
-                Support Us
+                Meet Our Staff
               </h3>
               <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Help keep the server running and get exclusive perks and rewards!
+                Get to know our dedicated team who keeps the server running smoothly!
               </p>
-              <a href="#" className="btn" style={{ 
-                background: 'linear-gradient(45deg, #FF1744, #C51162)', 
-                color: 'white' 
+              <Link href="/staff" className="btn" style={{ 
+                background: 'linear-gradient(45deg, #AA00AA, #8E24AA)', 
+                color: 'white',
+                textDecoration: 'none'
               }}>
-                Donate
-              </a>
+                View Staff
+              </Link>
             </div>
             
             <div className="card text-center">
@@ -336,12 +357,13 @@ export default function HomePage() {
               <p style={{ color: '#ccc', marginBottom: '20px' }}>
                 Learn the ropes with our comprehensive guides and tutorials!
               </p>
-              <a href="#" className="btn" style={{ 
+              <Link href="/towny/wiki" className="btn" style={{ 
                 background: 'linear-gradient(45deg, #4CAF50, #2E7D32)', 
-                color: 'white' 
+                color: 'white',
+                textDecoration: 'none'
               }}>
                 Read Wiki
-              </a>
+              </Link>
             </div>
           </div>
         </div>

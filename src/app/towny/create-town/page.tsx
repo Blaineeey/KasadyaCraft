@@ -131,6 +131,9 @@ export default function CreateTownPage() {
               <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
               <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none' }}>Towny</Link>
               <Link href="/towny/wiki" style={{ color: 'white', textDecoration: 'none' }}>Wiki</Link>
+              <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
         </div>
@@ -174,6 +177,25 @@ export default function CreateTownPage() {
               Make sure you have at least <strong style={{ color: '#00FF00' }}>$1,000</strong> and have chosen a good location 
               away from existing towns. Town creation is permanent, so choose wisely!
             </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a 
+              href="minecraft://play.kasadyacraft.online" 
+              className="btn btn-primary"
+              style={{ textDecoration: 'none' }}
+            >
+              🎮 Join Server to Start
+            </a>
+            <a 
+              href="https://discord.gg/kasadyacraft" 
+              className="btn btn-secondary"
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              💬 Get Help on Discord
+            </a>
           </div>
         </div>
       </section>

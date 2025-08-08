@@ -1,184 +1,117 @@
 import Link from "next/link"
 
 export default function TownyWikiPage() {
-  const wikiSections = [
+  const playerGuides = [
     {
       title: "🏗️ Getting Started",
-      status: "Complete",
+      description: "Essential guides for new players",
       articles: [
-        { title: "Creating Your First Town", status: "complete", href: "/towny/create-town" },
-        { title: "Premium GUI Navigation", status: "complete", href: "#" },
-        { title: "Understanding Chunks and Claims", status: "complete", href: "#" },
-        { title: "Town Permissions & Protection", status: "complete", href: "#" },
-        { title: "Custom Menus Overview", status: "complete", href: "#" }
+        { title: "Creating Your First Town", href: "/towny/create-town", description: "Step-by-step town creation guide" },
+        { title: "Understanding Chunks and Claims", href: "/towny/wiki/chunks", description: "Learn how land claiming works" },
+        { title: "Basic Commands Guide", href: "/towny/wiki/commands", description: "Essential commands every player needs" },
+        { title: "Economy Basics", href: "/towny/wiki/economy", description: "Making money and managing finances" },
+        { title: "Town Permissions", href: "/towny/wiki/permissions", description: "Control who can do what in your town" }
       ]
     },
     {
       title: "🏛️ Town Management",
-      status: "Complete",
+      description: "Advanced town leadership",
       articles: [
-        { title: "Advanced Town GUI", status: "complete", href: "#" },
-        { title: "Managing Residents and Ranks", status: "complete", href: "#" },
-        { title: "Plot Management System", status: "complete", href: "#" },
-        { title: "Town Bank & Economy", status: "complete", href: "#" },
-        { title: "Custom Town Settings", status: "complete", href: "#" },
-        { title: "Town Upgrades & Levels", status: "complete", href: "#" }
+        { title: "Managing Residents", href: "/towny/wiki/residents", description: "Invite, rank, and manage your citizens" },
+        { title: "Plot System Guide", href: "/towny/wiki/plots", description: "Create and sell plots to residents" },
+        { title: "Town Bank & Taxes", href: "/towny/wiki/banking", description: "Manage your town's finances" },
+        { title: "Town Settings & Toggles", href: "/towny/wiki/settings", description: "Configure your town's behavior" },
+        { title: "Expanding Your Town", href: "/towny/wiki/expansion", description: "Claim more land and grow" }
       ]
     },
     {
-      title: "👑 Nations and Politics",
-      status: "Complete",
+      title: "👑 Nations & Politics",
+      description: "Form alliances and wage wars",
       articles: [
-        { title: "Nation Creation & Management", status: "complete", href: "#" },
-        { title: "Advanced Nation GUI", status: "complete", href: "#" },
-        { title: "Diplomacy System", status: "complete", href: "#" },
-        { title: "Nation Wars & Sieges", status: "complete", href: "#" },
-        { title: "Alliance Management", status: "complete", href: "#" },
-        { title: "Nation Ranks & Hierarchy", status: "complete", href: "#" }
+        { title: "Creating a Nation", href: "/towny/wiki/nations", description: "Unite multiple towns under one banner" },
+        { title: "Diplomacy System", href: "/towny/wiki/diplomacy", description: "Manage relationships with other nations" },
+        { title: "Nation Wars", href: "/towny/wiki/wars", description: "Engage in strategic warfare" },
+        { title: "Alliance Management", href: "/towny/wiki/alliances", description: "Form powerful coalitions" },
+        { title: "Nation Benefits", href: "/towny/wiki/nation-benefits", description: "Advantages of joining a nation" }
       ]
     },
     {
       title: "💰 Economy & Trading",
-      status: "Complete",
+      description: "Master the server economy",
       articles: [
-        { title: "Advanced Shop System", status: "complete", href: "#" },
-        { title: "Town & Nation Banks", status: "complete", href: "#" },
-        { title: "Tax Collection System", status: "complete", href: "#" },
-        { title: "Trade Routes & Commerce", status: "complete", href: "#" },
-        { title: "Auction House Integration", status: "complete", href: "#" }
+        { title: "Shop Creation Guide", href: "/towny/wiki/shops", description: "Set up shops to sell items" },
+        { title: "Trading with Players", href: "/towny/wiki/trading", description: "Safe trading practices" },
+        { title: "Jobs & Professions", href: "/towny/wiki/jobs", description: "Earn money through various jobs" },
+        { title: "Auction House", href: "/towny/wiki/auction", description: "Buy and sell items globally" },
+        { title: "Banking System", href: "/towny/wiki/banks", description: "Store and manage your wealth" }
       ]
     },
     {
-      title: "⚔️ PvP & Warfare",
-      status: "Complete",
+      title: "⚔️ PvP & Combat",
+      description: "Battle mechanics and strategies",
       articles: [
-        { title: "Siege Warfare System", status: "complete", href: "#" },
-        { title: "PvP Mechanics & Rules", status: "complete", href: "#" },
-        { title: "War Declaration GUI", status: "complete", href: "#" },
-        { title: "Battle Statistics", status: "complete", href: "#" },
-        { title: "Defensive Strategies", status: "complete", href: "#" }
+        { title: "PvP Rules & Zones", href: "/towny/wiki/pvp-rules", description: "Where and how PvP works" },
+        { title: "Siege Warfare", href: "/towny/wiki/sieges", description: "Attack and defend towns" },
+        { title: "Combat Strategies", href: "/towny/wiki/combat", description: "Tips for winning battles" },
+        { title: "War Preparation", href: "/towny/wiki/war-prep", description: "Get ready for nation conflicts" },
+        { title: "Defensive Building", href: "/towny/wiki/defenses", description: "Protect your town from attacks" }
       ]
     },
     {
-      title: "🎨 Premium Features",
-      status: "Complete",
+      title: "🎨 Customization",
+      description: "Personalize your experience",
       articles: [
-        { title: "Custom GUI System (150+ Menus)", status: "complete", href: "#" },
-        { title: "Advanced Graphics & Overlays", status: "complete", href: "#" },
-        { title: "Town & Nation Cosmetics", status: "complete", href: "#" },
-        { title: "Custom Ranks & Titles", status: "complete", href: "#" },
-        { title: "Enhanced Chat System", status: "complete", href: "#" },
-        { title: "Statistics & Leaderboards", status: "complete", href: "#" }
-      ]
-    },
-    {
-      title: "🔧 Advanced Configuration",
-      status: "Complete",
-      articles: [
-        { title: "Server-Specific Features", status: "complete", href: "#" },
-        { title: "Custom Plot Types", status: "complete", href: "#" },
-        { title: "Integration Plugins", status: "complete", href: "#" },
-        { title: "Performance Optimization", status: "complete", href: "#" }
+        { title: "Town Aesthetics", href: "/towny/wiki/aesthetics", description: "Make your town look amazing" },
+        { title: "Custom Ranks", href: "/towny/wiki/ranks", description: "Create unique roles for residents" },
+        { title: "Town Banners & Flags", href: "/towny/wiki/banners", description: "Design your town's identity" },
+        { title: "Chat Channels", href: "/towny/wiki/chat", description: "Communicate with your town and nation" },
+        { title: "Town Events", href: "/towny/wiki/events", description: "Host competitions and gatherings" }
       ]
     }
   ]
 
-  const premiumFeatures = [
+  const quickCommands = [
     {
-      title: "🎨 Custom GUI System",
-      description: "150+ professionally designed menus",
-      features: [
-        "Interactive town management interface",
-        "Visual plot selection system",
-        "Drag-and-drop resident management",
-        "Real-time statistics dashboard",
-        "Custom graphics and overlays"
+      category: "🏘️ Basic Town Commands",
+      commands: [
+        { cmd: "/town", desc: "View your town information and status" },
+        { cmd: "/town spawn", desc: "Teleport to your town's spawn point" },
+        { cmd: "/town claim", desc: "Claim the chunk you're standing in" },
+        { cmd: "/town unclaim", desc: "Remove claim from current chunk" },
+        { cmd: "/town deposit [amount]", desc: "Add money to your town bank" }
       ]
     },
     {
-      title: "🏰 Enhanced Town Features",
-      description: "Advanced town management tools",
-      features: [
-        "Town leveling and upgrade system",
-        "Custom town cosmetics and banners",
-        "Advanced permission matrix",
-        "Automated tax collection",
-        "Town achievement system"
+      category: "👥 Resident Management",
+      commands: [
+        { cmd: "/town invite [player]", desc: "Invite a player to join your town" },
+        { cmd: "/town kick [player]", desc: "Remove a player from your town" },
+        { cmd: "/town rank add [player] [rank]", desc: "Give a rank to a resident" },
+        { cmd: "/town rank remove [player] [rank]", desc: "Remove a rank from a resident" },
+        { cmd: "/town set mayor [player]", desc: "Transfer mayorship to another player" }
       ]
     },
     {
-      title: "⚔️ Advanced Warfare",
-      description: "Professional siege and war mechanics",
-      features: [
-        "Siege planning interface",
-        "Battle statistics tracking",
-        "War declaration ceremonies",
-        "Victory condition customization",
-        "Post-war reconstruction tools"
+      category: "🏗️ Plot Management",
+      commands: [
+        { cmd: "/plot forsale [price]", desc: "Put your plot up for sale" },
+        { cmd: "/plot notforsale", desc: "Remove your plot from sale" },
+        { cmd: "/plot set [type]", desc: "Set plot type (shop, embassy, etc.)" },
+        { cmd: "/plot toggle [setting]", desc: "Change plot permissions" },
+        { cmd: "/plot claim", desc: "Claim an available plot" }
+      ]
+    },
+    {
+      category: "👑 Nation Commands",
+      commands: [
+        { cmd: "/nation", desc: "View your nation information" },
+        { cmd: "/nation new [name]", desc: "Create a new nation" },
+        { cmd: "/nation invite [town]", desc: "Invite a town to your nation" },
+        { cmd: "/nation ally [nation]", desc: "Send alliance request to another nation" },
+        { cmd: "/nation enemy [nation]", desc: "Declare another nation as enemy" }
       ]
     }
   ]
-
-  const quickReference = [
-    {
-      category: "Premium GUI Commands",
-      commands: [
-        { cmd: "/town gui", desc: "Open advanced town management GUI" },
-        { cmd: "/nation gui", desc: "Open nation management interface" },
-        { cmd: "/plot gui", desc: "Open plot management system" },
-        { cmd: "/war gui", desc: "Access war declaration interface" },
-        { cmd: "/shop gui", desc: "Open advanced shop system" }
-      ]
-    },
-    {
-      category: "Enhanced Town Commands",
-      commands: [
-        { cmd: "/town upgrade", desc: "Access town upgrade system" },
-        { cmd: "/town stats", desc: "View detailed town statistics" },
-        { cmd: "/town cosmetics", desc: "Customize town appearance" },
-        { cmd: "/town achievements", desc: "View town achievements" },
-        { cmd: "/town leaderboard", desc: "Check town rankings" }
-      ]
-    },
-    {
-      category: "Advanced Nation Commands",
-      commands: [
-        { cmd: "/nation diplomacy", desc: "Manage diplomatic relations" },
-        { cmd: "/nation war [nation]", desc: "Declare war with advanced options" },
-        { cmd: "/nation alliance", desc: "Manage alliance system" },
-        { cmd: "/nation treasury", desc: "Access nation treasury GUI" },
-        { cmd: "/nation ranks", desc: "Manage custom nation ranks" }
-      ]
-    },
-    {
-      category: "Premium Economy Commands",
-      commands: [
-        { cmd: "/auction gui", desc: "Open auction house interface" },
-        { cmd: "/bank gui", desc: "Access advanced banking system" },
-        { cmd: "/trade routes", desc: "Manage trade route system" },
-        { cmd: "/tax collector", desc: "View tax collection interface" },
-        { cmd: "/economy stats", desc: "View server economy statistics" }
-      ]
-    }
-  ]
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'complete': return '#00FF00'
-      case 'in-progress': return '#FFAA00'
-      case 'planned': return '#888888'
-      default: return '#888888'
-    }
-  }
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'complete': return '✅'
-      case 'in-progress': return '🚧'
-      case 'planned': return '📋'
-      default: return '📋'
-    }
-  }
 
   return (
     <div className="minecraft-bg">
@@ -217,14 +150,18 @@ export default function TownyWikiPage() {
                 📚
               </div>
               <div>
-                <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Premium Towny Wiki</h1>
-                <p style={{ fontSize: '14px', color: '#888' }}>NitroSetups v3.6.1 • Season 3</p>
+                <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>Towny Player Wiki</h1>
+                <p style={{ fontSize: '14px', color: '#888' }}>play.kasadyacraft.online</p>
               </div>
             </div>
             <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
               <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
               <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none' }}>Towny</Link>
               <Link href="/towny/wiki" style={{ color: '#5555FF', textDecoration: 'none', fontWeight: '600' }}>Wiki</Link>
+              <Link href="/staff" style={{ color: 'white', textDecoration: 'none' }}>Staff</Link>
+              <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                💬 Discord
+              </a>
             </div>
           </div>
         </div>
@@ -242,7 +179,7 @@ export default function TownyWikiPage() {
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
           }}>
-            📚 Premium Towny Wiki
+            📚 Towny Player Wiki
           </h1>
           <p style={{ 
             fontSize: '20px', 
@@ -251,8 +188,7 @@ export default function TownyWikiPage() {
             maxWidth: '700px', 
             margin: '0 auto 32px' 
           }}>
-            Master our enhanced Towny experience! Featuring 150+ custom menus, advanced GUI systems, 
-            and professional-grade town management tools powered by NitroSetups.
+            Everything you need to know to master Towny on KasadyaCraft! From creating your first town to leading a powerful nation.
           </p>
           
           <div style={{
@@ -264,62 +200,37 @@ export default function TownyWikiPage() {
             margin: '0 auto',
             marginBottom: '32px'
           }}>
-            <h3 style={{ color: '#00FF00', marginBottom: '12px', fontSize: '18px' }}>✨ Premium Features Active</h3>
+            <h3 style={{ color: '#00FF00', marginBottom: '12px', fontSize: '18px' }}>🎮 Server: play.kasadyacraft.online</h3>
             <p style={{ color: '#ccc', fontSize: '16px', lineHeight: '1.5' }}>
-              Our server runs the premium NitroSetups Towny configuration with enhanced graphics, 
-              custom overlays, and advanced management systems not found on standard servers!
+              All guides are specifically written for our server setup. Commands and features may differ from other Towny servers!
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Premium Features Showcase */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
-        <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#FFAA00'
-          }}>
-            ✨ Premium Features
-          </h2>
-          
-          <div className="grid grid-3">
-            {premiumFeatures.map((feature, index) => (
-              <div key={index} className="card">
-                <h3 style={{ 
-                  color: 'white', 
-                  fontSize: '20px', 
-                  fontWeight: 'bold',
-                  marginBottom: '12px'
-                }}>
-                  {feature.title}
-                </h3>
-                <p style={{ 
-                  color: '#FFAA00', 
-                  fontSize: '14px', 
-                  marginBottom: '16px',
-                  fontStyle: 'italic'
-                }}>
-                  {feature.description}
-                </p>
-                <ul style={{ color: '#ccc', paddingLeft: '20px', lineHeight: '1.6' }}>
-                  {feature.features.map((item, itemIndex) => (
-                    <li key={itemIndex} style={{ marginBottom: '4px' }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link 
+              href="/towny/create-town" 
+              className="btn btn-primary"
+              style={{ textDecoration: 'none' }}
+            >
+              🏗️ Create Your First Town
+            </Link>
+            <a 
+              href="minecraft://play.kasadyacraft.online" 
+              className="btn"
+              style={{ 
+                background: 'linear-gradient(45deg, #FFAA00, #FF6A00)',
+                color: 'white',
+                textDecoration: 'none'
+              }}
+            >
+              🎮 Join Server
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Wiki Sections */}
-      <section className="py-16">
+      {/* Player Guides */}
+      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
         <div className="container">
           <h2 style={{ 
             fontSize: '48px', 
@@ -328,72 +239,59 @@ export default function TownyWikiPage() {
             marginBottom: '48px',
             color: '#00FF00'
           }}>
-            📖 Complete Documentation
+            📖 Player Guides
           </h2>
           
           <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
-            {wikiSections.map((section, index) => (
+            {playerGuides.map((section, index) => (
               <div key={index} className="card">
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  marginBottom: '16px'
-                }}>
-                  <h3 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <h3 style={{ color: 'white', fontSize: '20px', fontWeight: 'bold', marginBottom: '8px' }}>
                     {section.title}
                   </h3>
-                  <div style={{
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    background: '#00FF00',
-                    color: 'black'
-                  }}>
-                    {section.status}
-                  </div>
+                  <p style={{ color: '#888', fontSize: '14px', fontStyle: 'italic' }}>
+                    {section.description}
+                  </p>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {section.articles.map((article, articleIndex) => (
-                    <div key={articleIndex} style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '8px 12px',
-                      borderRadius: '6px',
-                      background: 'rgba(0, 255, 0, 0.05)',
-                      border: '1px solid rgba(0, 255, 0, 0.2)'
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '14px' }}>
-                          ✅
-                        </span>
-                        {article.href !== '#' ? (
-                          <Link href={article.href} style={{ 
-                            color: 'white', 
-                            textDecoration: 'none',
-                            fontSize: '14px'
-                          }}>
-                            {article.title}
-                          </Link>
-                        ) : (
-                          <span style={{ 
-                            color: 'white',
-                            fontSize: '14px'
-                          }}>
-                            {article.title}
-                          </span>
-                        )}
+                    <Link 
+                      key={articleIndex} 
+                      href={article.href}
+                      style={{
+                        display: 'block',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        background: 'rgba(0, 255, 0, 0.05)',
+                        border: '1px solid rgba(0, 255, 0, 0.2)',
+                        textDecoration: 'none',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(0, 255, 0, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(0, 255, 0, 0.4)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(0, 255, 0, 0.05)'
+                        e.currentTarget.style.borderColor = 'rgba(0, 255, 0, 0.2)'
+                      }}
+                    >
+                      <div style={{ 
+                        color: 'white', 
+                        fontSize: '16px', 
+                        fontWeight: '600',
+                        marginBottom: '4px'
+                      }}>
+                        {article.title}
                       </div>
-                      <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: '#00FF00'
-                      }} />
-                    </div>
+                      <div style={{ 
+                        color: '#ccc', 
+                        fontSize: '13px'
+                      }}>
+                        {article.description}
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -402,27 +300,27 @@ export default function TownyWikiPage() {
         </div>
       </section>
 
-      {/* Enhanced Command Reference */}
-      <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+      {/* Quick Command Reference */}
+      <section className="py-16">
         <div className="container">
           <h2 style={{ 
             fontSize: '48px', 
             fontWeight: 'bold', 
             textAlign: 'center', 
             marginBottom: '48px',
-            color: '#FF6A00'
+            color: '#FFAA00'
           }}>
-            ⚡ Premium Command Reference
+            ⚡ Quick Command Reference
           </h2>
           
           <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-            {quickReference.map((category, index) => (
+            {quickCommands.map((category, index) => (
               <div key={index} className="card">
                 <h3 style={{ 
                   color: 'white', 
                   marginBottom: '16px', 
                   fontSize: '18px',
-                  borderBottom: '2px solid #FF6A00',
+                  borderBottom: '2px solid #FFAA00',
                   paddingBottom: '8px'
                 }}>
                   {category.category}
@@ -433,7 +331,7 @@ export default function TownyWikiPage() {
                       background: 'rgba(0, 0, 0, 0.3)',
                       borderRadius: '6px',
                       padding: '8px',
-                      border: '1px solid rgba(255, 106, 0, 0.2)'
+                      border: '1px solid rgba(255, 170, 0, 0.2)'
                     }}>
                       <div style={{ 
                         color: '#00FF00', 
@@ -456,64 +354,7 @@ export default function TownyWikiPage() {
         </div>
       </section>
 
-      {/* Server Specifications */}
-      <section className="py-16">
-        <div className="container">
-          <h2 style={{ 
-            fontSize: '48px', 
-            fontWeight: 'bold', 
-            textAlign: 'center', 
-            marginBottom: '48px',
-            color: '#5555FF'
-          }}>
-            🔧 Server Specifications
-          </h2>
-          
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
-            <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎨</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Custom Graphics
-              </h3>
-              <p style={{ color: '#ccc', fontSize: '14px' }}>
-                Professional overlays and custom graphics system with enhanced visual experience
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>📱</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                150+ Menus
-              </h3>
-              <p style={{ color: '#ccc', fontSize: '14px' }}>
-                Comprehensive GUI system covering every aspect of town and nation management
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚡</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Optimized Performance
-              </h3>
-              <p style={{ color: '#ccc', fontSize: '14px' }}>
-                Professional configuration ensuring smooth gameplay for hundreds of players
-              </p>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Season 3 Ready
-              </h3>
-              <p style={{ color: '#ccc', fontSize: '14px' }}>
-                Latest version compatible with Minecraft 1.21.x with all modern features
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Support Section */}
+      {/* Getting Help */}
       <section className="py-16" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
         <div className="container">
           <h2 style={{ 
@@ -521,19 +362,51 @@ export default function TownyWikiPage() {
             fontWeight: 'bold', 
             textAlign: 'center', 
             marginBottom: '48px',
-            color: '#FFAA00'
+            color: '#FF6A00'
           }}>
-            🤝 Get Help & Support
+            🤝 Need Help?
           </h2>
           
           <div className="grid grid-3">
+            <div className="card text-center">
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
+              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
+                In-Game Help
+              </h3>
+              <p style={{ color: '#ccc', marginBottom: '16px', fontSize: '14px' }}>
+                Use /help or ask questions in chat. Our community is friendly and helpful!
+              </p>
+              <div style={{ 
+                background: 'rgba(0, 0, 0, 0.3)',
+                padding: '8px',
+                borderRadius: '6px',
+                fontFamily: 'monospace',
+                color: '#00FF00',
+                fontSize: '13px',
+                marginBottom: '12px'
+              }}>
+                /help towny
+              </div>
+              <a 
+                href="minecraft://play.kasadyacraft.online" 
+                className="btn" 
+                style={{ 
+                  background: 'linear-gradient(45deg, #00FF00, #00CC00)', 
+                  color: 'black',
+                  textDecoration: 'none'
+                }}
+              >
+                Join Server
+              </a>
+            </div>
+
             <div className="card text-center">
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>💬</div>
               <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
                 Discord Support
               </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Get instant help from our community and staff members in our Discord server!
+              <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '14px' }}>
+                Get instant help from our community and staff members!
               </p>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 Join Discord
@@ -541,35 +414,20 @@ export default function TownyWikiPage() {
             </div>
 
             <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>👥</div>
               <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                In-Game Help
+                Contact Staff
               </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Use our comprehensive in-game help system and GUI tutorials!
+              <p style={{ color: '#ccc', marginBottom: '20px', fontSize: '14px' }}>
+                Our staff team is always ready to help with any questions!
               </p>
-              <button className="btn" style={{ 
-                background: 'linear-gradient(45deg, #00FF00, #00CC00)', 
-                color: 'black' 
+              <Link href="/staff" className="btn" style={{ 
+                background: 'linear-gradient(45deg, #AA00AA, #8E24AA)', 
+                color: 'white',
+                textDecoration: 'none'
               }}>
-                /help towny
-              </button>
-            </div>
-
-            <div className="card text-center">
-              <div style={{ fontSize: '48px', marginBottom: '16px' }}>📖</div>
-              <h3 style={{ color: 'white', marginBottom: '12px', fontSize: '20px' }}>
-                Video Tutorials
-              </h3>
-              <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Watch step-by-step video guides for complex features and systems!
-              </p>
-              <button className="btn" style={{ 
-                background: 'linear-gradient(45deg, #FF0000, #CC0000)', 
-                color: 'white' 
-              }}>
-                YouTube Channel
-              </button>
+                View Staff
+              </Link>
             </div>
           </div>
         </div>
@@ -590,11 +448,11 @@ export default function TownyWikiPage() {
               Create a Town Guide →
             </Link>
           </div>
-          <p style={{ color: '#888', marginBottom: '8px' }}>
-            🎨 Powered by NitroSetups v3.6.1 • Season 3 • Minecraft 1.21.x
+          <p style={{ color: '#888', marginBottom: '8px', fontFamily: 'monospace' }}>
+            play.kasadyacraft.online
           </p>
           <p style={{ color: '#666', fontSize: '14px' }}>
-            Premium Towny setup with 150+ custom menus and professional configuration
+            Player-focused documentation for our Towny server
           </p>
         </div>
       </footer>

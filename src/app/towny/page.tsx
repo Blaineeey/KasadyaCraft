@@ -99,6 +99,7 @@ export default function TownyPage() {
             <div className="flex" style={{ alignItems: 'center', gap: '24px' }}>
               <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
               <Link href="/towny" style={{ color: '#FFAA00', textDecoration: 'none', fontWeight: '600' }}>Towny</Link>
+              <Link href="/towny/wiki" style={{ color: 'white', textDecoration: 'none' }}>Wiki</Link>
               <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
@@ -212,9 +213,9 @@ export default function TownyPage() {
                     <span style={{ marginRight: '16px' }}>🕐 {event.time}</span>
                     <span>🏆 {event.prize}</span>
                   </div>
-                  <button className="btn btn-primary">
+                  <a href="https://discord.gg/kasadyacraft" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
                     Join Event
-                  </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -307,14 +308,16 @@ export default function TownyPage() {
               <p style={{ color: '#ccc', marginBottom: '20px' }}>
                 Start your own settlement and become a mayor. Lead your citizens to prosperity!
               </p>
-              <button className="btn" style={{ 
+              <Link href="/towny/create-town" className="btn" style={{ 
                 width: '100%',
                 background: 'linear-gradient(45deg, #FFAA00, #FF8F00)', 
                 color: 'black',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                display: 'block',
+                textDecoration: 'none'
               }}>
                 Learn How
-              </button>
+              </Link>
             </div>
 
             <div className="card text-center">
@@ -325,13 +328,15 @@ export default function TownyPage() {
               <p style={{ color: '#ccc', marginBottom: '20px' }}>
                 Ally with other towns for protection, power, and shared resources!
               </p>
-              <button className="btn" style={{ 
+              <Link href="/towny/wiki" className="btn" style={{ 
                 width: '100%',
                 background: 'linear-gradient(45deg, #5555FF, #3F51B5)', 
-                color: 'white'
+                color: 'white',
+                display: 'block',
+                textDecoration: 'none'
               }}>
-                View Nations
-              </button>
+                View Nations Guide
+              </Link>
             </div>
 
             <div className="card text-center">
@@ -342,13 +347,15 @@ export default function TownyPage() {
               <p style={{ color: '#ccc', marginBottom: '20px' }}>
                 Engage in strategic warfare with rival nations for territory and glory!
               </p>
-              <button className="btn" style={{ 
+              <Link href="/towny/wiki" className="btn" style={{ 
                 width: '100%',
                 background: 'linear-gradient(45deg, #FF5555, #F44336)', 
-                color: 'white'
+                color: 'white',
+                display: 'block',
+                textDecoration: 'none'
               }}>
-                War System
-              </button>
+                War System Guide
+              </Link>
             </div>
           </div>
         </div>
