@@ -9,7 +9,12 @@ export default function HomePage() {
           <div className="nav-flex">
             <div className="nav-left">
               <div className="nav-logo nav-logo-home">
-                🏰
+                <img 
+                  src="../../public/logo.png" 
+                  alt="Server Logo" 
+                  width="32" 
+                  height="32"
+                />
               </div>
               <div>
                 <h1 className="nav-title">KasadyaCraft</h1>
