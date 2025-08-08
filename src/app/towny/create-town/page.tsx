@@ -100,7 +100,7 @@ export default function CreateTownPage() {
               <Link href="/towny" className="nav-link-towny">Towny</Link>
               <Link href="/towny/wiki" className="nav-link">Wiki</Link>
               <Link href="/staff" className="nav-link">Staff</Link>
-              <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
             </div>
@@ -299,7 +299,7 @@ export default function CreateTownPage() {
             <a href="minecraft://play.kasadyacraft.online" className="btn btn-towny">
               🎮 Start Building
             </a>
-            <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
               💬 Get Help
             </a>
           </div>

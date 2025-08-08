@@ -98,7 +98,7 @@ export default function StaffPage() {
               <Link href="/" className="nav-link">Home</Link>
               <Link href="/towny" className="nav-link">Towny</Link>
               <Link href="/staff" className="nav-link-staff">Staff</Link>
-              <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
               </a>
             </div>
@@ -211,7 +211,7 @@ export default function StaffPage() {
               <p className="card-description mb-20">
                 Join our Discord server for the fastest response and community support.
               </p>
-              <a href="https://discord.gg/kasadyacraft" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 Join Discord
               </a>
             </div>
