@@ -148,51 +148,27 @@ export default function SMPWikiPage() {
 
                 <div style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>
                   {plugin.guides.map((guide, guideIndex) => (
-                    guide.href ? (
-                      <Link
-                        key={guideIndex}
-                        href={guide.href}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '12px',
-                          padding: '12px 16px',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: '8px',
-                          textDecoration: 'none',
-                          transition: 'all 0.3s ease'
-                        }}
-                        className="hover-lift"
-                      >
-                        <span style={{fontSize: '1.5rem'}}>{guide.emoji}</span>
-                        <span style={{color: '#fff', fontSize: '0.95rem', fontWeight: '600'}}>
-                          {guide.title}
-                        </span>
-                      </Link>
-                    ) : (
-                      <div
-                        key={guideIndex}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '12px',
-                          padding: '12px 16px',
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          borderRadius: '8px'
-                        }}
-                      >
-                        <span style={{fontSize: '1.5rem', marginTop: '2px'}}>{guide.emoji}</span>
-                        <div>
-                          <div style={{color: '#fff', fontSize: '0.95rem', fontWeight: '600', marginBottom: '4px'}}>
-                            {guide.title}
-                          </div>
-                          <div style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.85rem'}}>
-                            {guide.info}
-                          </div>
-                        </div>
-                      </div>
-                    )
+                    <Link
+                      key={guideIndex}
+                      href={guide.href}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '12px 16px',
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '8px',
+                        textDecoration: 'none',
+                        transition: 'all 0.3s ease'
+                      }}
+                      className="hover-lift"
+                    >
+                      <span style={{fontSize: '1.5rem'}}>{guide.emoji}</span>
+                      <span style={{color: '#fff', fontSize: '0.95rem', fontWeight: '600'}}>
+                        {guide.title}
+                      </span>
+                    </Link>
                   ))}
                 </div>
               </div>
