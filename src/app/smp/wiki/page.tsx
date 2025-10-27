@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function SMPWikiPage() {
   const pluginGuides = [
@@ -59,34 +60,7 @@ export default function SMPWikiPage() {
 
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/smp" className="nav-back">
-                ← Back to SMP
-              </Link>
-              <div className="nav-logo nav-logo-wiki">
-                📚
-              </div>
-              <div>
-                <h1 className="nav-title">Plugin Guides</h1>
-                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link-towny">SMP</Link>
-              <Link href="/smp/wiki" className="nav-link-wiki">Wiki</Link>
-              <Link href="/staff" className="nav-link">Staff</Link>
-              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                💬 Discord
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="wiki" showBackButton={true} backLink="/smp" backText="← Back to SMP" />
 
       {/* Hero Section */}
       <section className="hero-section">

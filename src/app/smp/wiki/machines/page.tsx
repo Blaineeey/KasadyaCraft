@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function MachinesGuidePage() {
   const machineCategories = [
@@ -178,30 +179,7 @@ export default function MachinesGuidePage() {
 
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/smp/wiki/slimefun-guide" className="nav-back">
-                ← Back to Slimefun Guide
-              </Link>
-              <div className="nav-logo nav-logo-wiki">
-                🏭
-              </div>
-              <div>
-                <h1 className="nav-title">Machines Guide</h1>
-                <p className="nav-subtitle-mono">Automation & Production</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link-towny">SMP</Link>
-              <Link href="/smp/wiki" className="nav-link-wiki">Wiki</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="wiki" showBackButton={true} backLink="/smp/wiki" backText="← Back to Wiki" />
 
       {/* Hero */}
       <section className="hero-section">

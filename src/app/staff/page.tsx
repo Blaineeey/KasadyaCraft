@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function StaffPage() {
   const staffMembers = [
@@ -69,33 +70,7 @@ export default function StaffPage() {
 
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/" className="nav-back">
-                ← Back to Home
-              </Link>
-              <div className="nav-logo nav-logo-staff">
-                👥
-              </div>
-              <div>
-                <h1 className="nav-title">Staff Team</h1>
-                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link">SMP</Link>
-              <Link href="/staff" className="nav-link-staff">Staff</Link>
-              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                💬 Discord
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="staff" showBackButton={true} backLink="/" backText="← Back to Home" />
 
       {/* Hero Section */}
       <section className="hero-section">

@@ -1,35 +1,10 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function MedicinePage() {
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/smp/wiki" className="nav-back">
-                ← Back to Wiki
-              </Link>
-              <div className="nav-logo" style={{background: 'rgba(126, 211, 33, 0.2)', border: '2px solid rgba(126, 211, 33, 0.4)'}}>
-                💊
-              </div>
-              <div>
-                <h1 className="nav-title">Medicine Crafting</h1>
-                <p className="nav-subtitle-mono">Cure & Heal</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link-towny">SMP</Link>
-              <Link href="/smp/wiki" className="nav-link-wiki">Wiki</Link>
-              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                💬 Discord
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="wiki" showBackButton={true} backLink="/smp/wiki" backText="← Back to Wiki" />
 
       {/* Hero Section */}
       <section className="hero-section">

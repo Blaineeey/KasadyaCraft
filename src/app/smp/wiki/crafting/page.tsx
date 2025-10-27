@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function CraftingGuidePage() {
   const craftingStations = [
@@ -198,31 +199,7 @@ export default function CraftingGuidePage() {
 
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/smp/wiki/slimefun-guide" className="nav-back">
-                ← Back to Slimefun Guide
-              </Link>
-              <div className="nav-logo nav-logo-wiki">
-                ⚒️
-              </div>
-              <div>
-                <h1 className="nav-title">Crafting Guide</h1>
-                <p className="nav-subtitle-mono">Stations & Recipes</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link-towny">SMP</Link>
-              <Link href="/smp/wiki" className="nav-link-wiki">Wiki</Link>
-              <Link href="/staff" className="nav-link">Staff</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="wiki" showBackButton={true} backLink="/smp/wiki" backText="← Back to Wiki" />
 
       {/* Hero Section */}
       <section className="hero-section">

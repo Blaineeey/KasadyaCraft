@@ -1,23 +1,10 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function ResourcesGuidePage() {
   return (
     <div className="minecraft-bg">
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <Link href="/smp/wiki/slimefun-guide" className="nav-back">← Back</Link>
-              <div className="nav-logo nav-logo-wiki">💎</div>
-              <div><h1 className="nav-title">Resources</h1></div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link-towny">SMP</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="wiki" showBackButton={true} backLink="/smp/wiki" backText="← Back to Wiki" />
 
       <section className="hero-section">
         <div className="container text-center">

@@ -1,37 +1,10 @@
 import Link from "next/link"
+import Navigation from "@/components/Navigation"
 
 export default function HomePage() {
   return (
     <div className="minecraft-bg">
-      {/* Navigation */}
-      <nav className="nav-container">
-        <div className="container">
-          <div className="nav-flex">
-            <div className="nav-left">
-              <div className="nav-logo nav-logo-home">
-                <img 
-                  src="/logo.png" 
-                  alt="Server Logo" 
-                  width="32" 
-                  height="32"
-                />
-              </div>
-              <div>
-                <h1 className="nav-title">KasadyaCraft</h1>
-                <p className="nav-subtitle-mono">play.kasadyacraft.online</p>
-              </div>
-            </div>
-            <div className="nav-right">
-              <Link href="/" className="nav-link">Home</Link>
-              <Link href="/smp" className="nav-link">SMP</Link>
-              <Link href="/staff" className="nav-link">Staff</Link>
-              <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                💬 Discord
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation variant="home" />
 
       {/* Hero Section */}
       <section className="hero-section">
