@@ -14,7 +14,7 @@ export default function StaffPage() {
     {
       name: "Rasasakeet",
       role: "Senior Moderator",
-      description: "Experienced moderator specializing in Towny disputes, nation conflicts, and maintaining server peace.",
+      description: "Experienced moderator specializing in player disputes, Slimefun support, and maintaining server peace.",
       contact: [
         { type: "Discord", value: "I F R I T Z#0310" },
         { type: "In-Game", value: "/msg Rasasakeet" }
@@ -32,7 +32,7 @@ export default function StaffPage() {
     {
       name: "TBD",
       role: "Helper",
-      description: "Community helper focused on assisting new players, answering questions, and providing Towny guidance.",
+      description: "Community helper focused on assisting new players, answering questions, and providing Slimefun guidance.",
       contact: [
         { type: "Discord", value: "TBD" },
         { type: "In-Game", value: "/msg TBD" }
@@ -87,7 +87,7 @@ export default function StaffPage() {
             </div>
             <div className="nav-right">
               <Link href="/" className="nav-link">Home</Link>
-              <Link href="/towny" className="nav-link">Towny</Link>
+              <Link href="/smp" className="nav-link">SMP</Link>
               <Link href="/staff" className="nav-link-staff">Staff</Link>
               <a href="https://discord.gg/8DY3eXHnAg" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 💬 Discord
@@ -232,9 +232,9 @@ export default function StaffPage() {
               <h3 className="card-title">✅ Contact Staff For:</h3>
               <div className="text-gray text-14">
                 <div className="mb-8">• Rule violations and griefing reports</div>
-                <div className="mb-8">• Towny disputes and conflicts</div>
+                <div className="mb-8">• Player disputes and conflicts</div>
                 <div className="mb-8">• Technical issues and bugs</div>
-                <div className="mb-8">• Questions about server features</div>
+                <div className="mb-8">• Questions about Slimefun or Epidemic</div>
                 <div className="mb-8">• Ban appeals and punishment disputes</div>
                 <div className="mb-8">• Inappropriate behavior reports</div>
                 <div className="mb-8">• Lost items due to server issues</div>
@@ -267,8 +267,8 @@ export default function StaffPage() {
               <Link href="/" className="footer-link footer-link-green">
                 ← Back to Home
               </Link>
-              <Link href="/towny" className="footer-link footer-link-orange">
-                Towny Hub →
+              <Link href="/smp" className="footer-link footer-link-orange">
+                SMP Hub →
               </Link>
             </div>
           </div>

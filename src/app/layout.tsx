@@ -5,9 +5,9 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'KasadyaCraft - Premium Minecraft Server',
-  description: 'Join thousands of players in the ultimate Minecraft experience. Build towns, forge alliances, and create your legacy!',
-  keywords: 'minecraft, server, towny, multiplayer, gaming, kasadyacraft',
+  title: 'KasadyaCraft - SMP Server with Epidemic + Slimefun Plugins',
+  description: 'Pure Minecraft SMP enhanced with Epidemic (disease survival) and Slimefun (500+ tech items) core plugins. Build, automate, survive deadly diseases in our challenging multiplayer world!',
+  keywords: 'minecraft, smp server, slimefun plugin, epidemic plugin, survival multiplayer, minecraft automation, tech mod, disease survival, kasadyacraft',
   authors: [{ name: 'Blaine  Panares' }],
   viewport: 'width=device-width, initial-scale=1',
 }
