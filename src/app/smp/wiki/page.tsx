@@ -102,7 +102,7 @@ export default function SMPWikiPage() {
 
           <div className="grid grid-2">
             {pluginGuides.map((plugin, index) => (
-              <div key={index} className="card" style={{
+              <div key={index} className="card wiki-guide-card" style={{
                 background: plugin.color === 'green'
                   ? 'rgba(126, 211, 33, 0.05)'
                   : 'rgba(255, 61, 61, 0.05)',
@@ -125,18 +125,7 @@ export default function SMPWikiPage() {
                     <Link
                       key={guideIndex}
                       href={guide.href}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        padding: '12px 16px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                        transition: 'all 0.3s ease'
-                      }}
-                      className="hover-lift"
+                      className="wiki-guide-link"
                     >
                       <span style={{fontSize: '1.5rem'}}>{guide.emoji}</span>
                       <span style={{color: '#fff', fontSize: '0.95rem', fontWeight: '600'}}>
