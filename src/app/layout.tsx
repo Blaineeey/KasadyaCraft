@@ -1,30 +1,63 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Chakra_Petch, Manrope, JetBrains_Mono } from 'next/font/google'
+import { site } from '@/lib/site'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const chakra = Chakra_Petch({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-chakra',
+  display: 'swap',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'KasadyaCraft - SMP Server with Epidemic + Slimefun Plugins',
-  description: 'Pure Minecraft SMP enhanced with Epidemic (disease survival) and Slimefun (500+ tech items) core plugins. Build, automate, survive deadly diseases in our challenging multiplayer world!',
-  keywords: 'minecraft, smp server, slimefun plugin, epidemic plugin, survival multiplayer, minecraft automation, tech mod, disease survival, kasadyacraft',
-  authors: [{ name: 'Blaine  Panares' }],
-  viewport: 'width=device-width, initial-scale=1',
+  title: {
+    default: `${site.name} — People to play with, people to grow with`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  keywords: [
+    'kasadyacraft',
+    'gaming community',
+    'find people to play with',
+    'game servers',
+    'minecraft server',
+    'roblox group',
+    'discord gaming',
+  ],
+  icons: { icon: '/logo.png' },
+  openGraph: {
+    title: site.name,
+    description: site.description,
+    type: 'website',
+    images: ['/logo.png'],
+  },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0a0a0b',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/server-icon.png" />
-      </head>
-      <body className={`${inter.className} body-reset`}>
-        {children}
-      </body>
+    <html lang="en" className={`${chakra.variable} ${manrope.variable} ${mono.variable}`}>
+      <body>{children}</body>
     </html>
   )
 }
