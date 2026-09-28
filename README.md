@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KasadyaCraft
 
-## Getting Started
+Website for KasadyaCraft, a gaming community that plays across multiple titles and hosts its own game servers (Minecraft, Roblox).
 
-First, run the development server:
+Built with Next.js 15 (App Router) and plain CSS. No Tailwind, no component library.
+
+## Develop
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm run start   # serve the build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Editing content
 
-## Learn More
+Almost everything you will want to change lives in `src/lib/site.ts`:
 
-To learn more about Next.js, take a look at the following resources:
+- `site` — name, tagline, description, Discord invite
+- `servers` — hosted servers, their status (`online`, `beta`, `soon`), addresses and join links
+- `reasons` — the "why people stay" cards on the home page
+- `activities` — the "what happens here" list on the community page
+- `team` — staff roster shown on the Community page
+- `nav` — top navigation links
+- `products` — cards on the Products page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Roblox entry currently points at a placeholder URL. Replace `joinUrl` with the group or experience link when it is live and flip `status` to `online`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Routes
 
-## Deploy on Vercel
+| Path | Page |
+| --- | --- |
+| `/` | Home |
+| `/community` | What happens here, team and support |
+| `/games` | Game and server directory |
+| `/games/minecraft` | Minecraft SMP |
+| `/games/minecraft/wiki` | Plugin wiki (Slimefun and Epidemic guides) |
+| `/games/roblox` | Roblox |
+| `/products` | Community products (shows "coming soon" until `products` is filled) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Old URLs (`/servers/*`, `/smp`, `/smp/wiki/*`, `/staff`) redirect permanently to the new ones. See `next.config.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design
+
+Tokens (colours, fonts, spacing) are defined at the top of `src/app/globals.css`. The palette is dark with a single amber accent taken from the logo. Fonts are Chakra Petch (headings), Manrope (body) and JetBrains Mono (labels), loaded via `next/font`.
