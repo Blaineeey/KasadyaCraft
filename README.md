@@ -1,5 +1,5 @@
 # KasadyaCraft
-
+ 
 Website for KasadyaCraft, a gaming community that plays across multiple titles and hosts its own game servers (Minecraft, Roblox).
 
 Built with Next.js 15 (App Router) and plain CSS. No Tailwind, no component library.
