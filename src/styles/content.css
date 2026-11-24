@@ -1,0 +1,313 @@
+/* ==========================================================================
+   Prose styles for guide + wiki bodies (src/components/content/ContentBlocks).
+   Owner: PIXEL UI DESIGNER.
+   .kc-prose--dark  = on stone/deepslate panels (wiki)
+   .kc-prose--light = on paper/GUI panels and books (guides)
+   ========================================================================== */
+
+.kc-prose {
+  --prose-text: var(--text);
+  --prose-dim: var(--text-dim);
+  --prose-rule: rgba(255, 255, 255, 0.16);
+  --prose-accent: var(--kc-gold);
+  --prose-table-head: rgba(0, 0, 0, 0.45);
+  --prose-table-row: rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  max-width: 72ch;
+  color: var(--prose-text);
+}
+
+.kc-prose--light {
+  --prose-text: var(--ink);
+  --prose-dim: var(--ink-dim);
+  --prose-rule: rgba(60, 40, 10, 0.28);
+  --prose-accent: var(--mat-plank-dark);
+  --prose-table-head: rgba(60, 40, 10, 0.12);
+  --prose-table-row: rgba(60, 40, 10, 0.05);
+}
+
+.kc-prose--light a {
+  color: var(--link-on-light);
+}
+
+.kc-prose > :first-child {
+  margin-top: 0;
+}
+
+/* ---------- Headings ------------------------------------------------------- */
+.kc-prose h2 {
+  position: relative;
+  margin-top: var(--s-6);
+  padding-bottom: var(--s-3);
+  font-size: var(--fs-2xl);
+  scroll-margin-top: var(--s-6);
+}
+
+/* three-block sunburst underline, the same mark as SectionHeading */
+.kc-prose h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 54px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--kc-gold) 0 18px, var(--kc-orange) 18px 36px, var(--kc-red) 36px);
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+.kc-prose h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  font-size: var(--fs-xl);
+  scroll-margin-top: var(--s-6);
+}
+
+.kc-prose h3::before {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background: var(--prose-accent);
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+.kc-prose--light h2,
+.kc-prose--light h3 {
+  text-shadow: none;
+}
+
+.kc-prose strong {
+  font-weight: 700;
+}
+
+/* ---------- Lists ------------------------------------------------------------ */
+.kc-prose__list {
+  display: grid;
+  gap: var(--s-2);
+  padding-left: 0;
+  list-style: none;
+}
+
+ul.kc-prose__list > li {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+/* square pixel bullets */
+ul.kc-prose__list > li::before {
+  content: '';
+  position: absolute;
+  left: 0.2em;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  background: var(--prose-accent);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+ol.kc-prose__list {
+  counter-reset: kc-ol;
+}
+
+ol.kc-prose__list > li {
+  position: relative;
+  padding-left: 2.2em;
+  counter-increment: kc-ol;
+}
+
+ol.kc-prose__list > li::before {
+  content: counter(kc-ol);
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  min-width: 1.6em;
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  color: #000;
+  background: var(--prose-accent);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.kc-prose--light ol.kc-prose__list > li::before {
+  color: #fff;
+}
+
+/* ---------- Divider ------------------------------------------------------------ */
+.kc-prose__divider {
+  height: 3px;
+  margin-block: var(--s-3);
+  border: 0;
+  background: repeating-linear-gradient(90deg, var(--prose-rule) 0 10px, transparent 10px 16px);
+}
+
+/* ---------- Steps: numbered blocks joined by a rail -------------------------------- */
+.kc-steps {
+  position: relative;
+  list-style: none;
+  display: grid;
+  gap: var(--s-5);
+}
+
+.kc-steps__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+
+/* the ladder between step blocks */
+.kc-steps__item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 48px;
+  bottom: calc(var(--s-5) * -1);
+  width: 6px;
+  background: repeating-linear-gradient(180deg, var(--mat-plank-dark) 0 4px, var(--mat-plank) 4px 8px);
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+.kc-steps__num {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: #fff;
+  background: var(--btn-grass);
+  background-image: linear-gradient(var(--btn-grass-lip) 0 8px, transparent 8px);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), 3px 3px 0 rgba(0, 0, 0, 0.4);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.kc-steps__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+  padding-top: var(--s-2);
+}
+
+.kc-steps__title {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ---------- Command list ---------------------------------------------------------- */
+.kc-cmdlist ul {
+  list-style: none;
+  display: grid;
+  gap: var(--s-2);
+}
+
+.kc-cmdlist__title {
+  margin-bottom: var(--s-2);
+  color: var(--prose-dim);
+}
+
+.kc-cmdlist__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.kc-cmdlist__row .kc-cmd {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+/* ---------- Tables ------------------------------------------------------------------ */
+.kc-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: var(--bw) solid var(--edge);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.kc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.kc-prose--light .kc-table {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.kc-table caption {
+  padding: var(--s-2) var(--s-3);
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  text-align: left;
+  caption-side: top;
+  border-bottom: var(--bw-thin) solid var(--edge);
+}
+
+.kc-table th,
+.kc-table td {
+  padding: var(--s-2) var(--s-3);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: var(--bw-thin) solid var(--prose-rule);
+}
+
+.kc-table thead th {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--prose-table-head);
+  border-bottom: var(--bw) solid var(--edge);
+}
+
+.kc-table tbody tr:nth-child(even) {
+  background: var(--prose-table-row);
+}
+
+.kc-table tbody th {
+  font-weight: 700;
+}
+
+.kc-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* ---------- Figures: hung in a plank frame ---------------------------------------------- */
+.kc-figure {
+  padding: 6px;
+  background: var(--mat-plank);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 2px 2px 0 var(--mat-plank-light), inset -2px -2px 0 var(--mat-plank-dark), 4px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.kc-figure img {
+  width: 100%;
+  border: var(--bw-thin) solid var(--edge);
+  image-rendering: auto;
+}
+
+.kc-figure figcaption {
+  margin-top: 6px;
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Slots inside prose ----------------------------------------------------------- */
+.kc-prose > .kc-slotgrid {
+  align-self: flex-start;
+}

@@ -1,13 +1,15 @@
 # KasadyaCraft
- 
-Website for KasadyaCraft, a gaming community that plays across multiple titles and hosts its own game servers (Minecraft, Roblox).
 
-Built with Next.js 15 (App Router) and plain CSS. No Tailwind, no component library.
+Website for KasadyaCraft, a Minecraft Java survival server (`play.kasadyacraft.com`) and the gaming community around it.
+
+Built with Next.js 15 (App Router), React 19 and plain CSS. No Tailwind, no component library. The look is
+hand-made pixel art: original textures in `public/textures`, original icons in `src/components/ui/pixel-icons.ts`,
+pixel fonts (Pixelify Sans, Silkscreen, VT323) plus Atkinson Hyperlegible Next for body text, all via `next/font`.
 
 ## Develop
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -18,34 +20,32 @@ npm run build   # production build
 npm run start   # serve the build
 ```
 
-## Editing content
+## Where things live
 
-Almost everything you will want to change lives in `src/lib/site.ts`:
+The full plan, routes, ownership and component contracts are in [`docs/SITE_PLAN.md`](docs/SITE_PLAN.md).
 
-- `site` — name, tagline, description, Discord invite
-- `servers` — hosted servers, their status (`online`, `beta`, `soon`), addresses and join links
-- `reasons` — the "why people stay" cards on the home page
-- `activities` — the "what happens here" list on the community page
-- `team` — staff roster shown on the Community page
-- `nav` — top navigation links
-- `products` — cards on the Products page
-
-The Roblox entry currently points at a placeholder URL. Replace `joinUrl` with the group or experience link when it is live and flip `status` to `online`.
+- `src/lib/site.ts`: shared facts (address, version, Discord), hotbar navigation, footer links, community content
+- `src/lib/store.ts`: ranks and store catalogue (single source for the store and the wiki)
+- `src/content/guides/*`, `src/content/wiki/*`: starter guides and wiki pages as typed data (`src/lib/content.ts`)
+- `src/components/ui/*`: the pixel UI kit (buttons, panels, inventory slots, tooltips, toasts)
+- `src/components/interactive/*`: live server status, copy-IP, sky, day/night, toasts
+- `src/app/globals.css`: design tokens
 
 ## Routes
 
 | Path | Page |
 | --- | --- |
 | `/` | Home |
-| `/community` | What happens here, team and support |
-| `/games` | Game and server directory |
-| `/games/minecraft` | Minecraft SMP |
-| `/games/minecraft/wiki` | Plugin wiki (Slimefun and Epidemic guides) |
-| `/games/roblox` | Roblox |
-| `/products` | Community products (shows "coming soon" until `products` is filled) |
+| `/play` | How to join |
+| `/guides`, `/guides/[slug]` | Starter guides |
+| `/wiki`, `/wiki/[slug]` | Server wiki |
+| `/store` | Ranks, crate keys, cosmetics |
+| `/vote` | Voting (not live yet) |
+| `/community` | Team, events and support |
+| `/games`, `/games/minecraft`, `/games/roblox` | Everything the community plays |
+| `/api/status` | Live server status JSON |
 
-Old URLs (`/servers/*`, `/smp`, `/smp/wiki/*`, `/staff`) redirect permanently to the new ones. See `next.config.ts`.
+Old URLs (`/servers/*`, `/smp`, `/staff`, `/products`, the old `/games/minecraft/wiki/*`) redirect permanently.
+Shortcuts like `/join`, `/rules`, `/ranks` and `/discord` mirror the in-game commands. See `next.config.ts`.
 
-## Design
-
-Tokens (colours, fonts, spacing) are defined at the top of `src/app/globals.css`. The palette is dark with a single amber accent taken from the logo. Fonts are Chakra Petch (headings), Manrope (body) and JetBrains Mono (labels), loaded via `next/font`.
+Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.

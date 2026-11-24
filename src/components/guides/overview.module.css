@@ -1,0 +1,152 @@
+/* /games/minecraft overview. Tokens only. Owner: STARTER-GUIDE WRITER. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.features {
+  list-style: none;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+}
+
+.feature {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  padding: var(--s-3);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.feature:hover,
+.feature:focus-within {
+  box-shadow: var(--bevel-up), inset 0 0 0 var(--bw-thin) var(--kc-gold);
+}
+
+.feature:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.frame {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.featureText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  min-width: 0;
+}
+
+.featureTitle {
+  font-size: var(--fs-lg);
+}
+
+.featureLink {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.featureLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.featureLink:focus-visible {
+  outline: none;
+}
+
+.featureBody {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.flow {
+  list-style: none;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  counter-reset: flow;
+}
+
+.flowStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+}
+
+.flowStep h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-lg);
+}
+
+.facts {
+  display: grid;
+  gap: 0;
+  border: var(--bw) solid var(--edge);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: minmax(110px, 30%) 1fr;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface-1);
+}
+
+.fact:nth-child(even) {
+  background: var(--surface-2);
+}
+
+.fact dt {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+}
+
+.fact dd {
+  color: var(--text-dim);
+  overflow-wrap: anywhere;
+}
+
+.fact a {
+  color: var(--link);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}

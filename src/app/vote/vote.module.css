@@ -1,0 +1,173 @@
+/* /vote. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.page {
+  display: grid;
+  gap: var(--s-7);
+  padding-block: var(--s-7) var(--s-8);
+}
+
+.top {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 900px) {
+  .top {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: stretch;
+  }
+}
+
+.h2 {
+  margin-top: var(--s-4);
+  font-size: var(--fs-2xl);
+}
+
+.p {
+  margin-top: var(--s-3);
+}
+
+/* ---------- locked chest ---------- */
+.chestBtn {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  padding: var(--s-4);
+  background: rgba(0, 0, 0, 0.45);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.06);
+}
+
+.chestBtn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.chestArt {
+  display: grid;
+  filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.5));
+}
+
+.chestArt[data-rattle] {
+  animation: rattle 360ms steps(6, end);
+}
+
+@keyframes rattle {
+  0%, 100% { transform: none; }
+  20% { transform: translateX(-6px) rotate(-3deg); }
+  40% { transform: translateX(6px) rotate(3deg); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.chestHint {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+/* ---------- to-do list ---------- */
+.todo {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  list-style: none;
+}
+
+.todoItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+
+.todoBox {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--gui-slot-dark);
+  box-shadow: var(--bevel-down);
+}
+
+.todoTitle {
+  display: block;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.todoText {
+  display: block;
+  color: var(--text-dim);
+}
+
+/* ---------- vote crate ---------- */
+.crate,
+.today {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.crate > :first-child,
+.today > :first-child {
+  justify-self: start;
+  padding: var(--s-3) var(--s-4);
+  background: rgba(0, 0, 0, 0.62);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.crateRow {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 900px) {
+  .crateRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.card {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.contents {
+  display: grid;
+  gap: 2px;
+  padding-left: var(--s-4);
+  color: var(--text);
+}
+
+.price {
+  font-family: var(--font-term);
+  font-size: 1.5rem;
+  color: var(--chat-gold);
+}
+
+.priceNote {
+  font-size: 1.25rem;
+  color: var(--tooltip-text);
+}
+
+.crateCmds {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.todayList {
+  display: grid;
+  gap: var(--s-3);
+  list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chestArt[data-rattle] {
+    animation: none;
+  }
+}

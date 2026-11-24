@@ -1,0 +1,128 @@
+/* Store-driven blocks inside wiki articles (rank matrix, rank kits, crate keys). Owner: WIKI WRITER. */
+
+.block {
+  /* Same table rule colour the prose tables use, so .kc-table looks identical here. */
+  --prose-rule: color-mix(in srgb, var(--text) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  color: var(--text);
+}
+
+.lead,
+.note {
+  max-width: 72ch;
+}
+
+.note {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.wrap {
+  max-width: 100%;
+}
+
+/* ---- Rank matrix ---- */
+.matrix {
+  min-width: 640px;
+}
+
+.matrix th,
+.matrix td {
+  vertical-align: middle;
+}
+
+.matrix tbody td,
+.matrix thead th {
+  text-align: center;
+}
+
+.matrix thead th:first-child {
+  text-align: left;
+}
+
+/* Keep the perk names visible while the rank columns scroll sideways on phones. */
+.matrix th[scope='row'],
+.matrix thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 180px;
+  background: var(--mat-deepslate-dark);
+  box-shadow: inset calc(var(--bw-thin) * -1) 0 0 var(--edge);
+}
+
+.rankHead {
+  color: var(--rank, var(--text));
+}
+
+.prefix {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  color: var(--rank, var(--text));
+  white-space: nowrap;
+}
+
+.price {
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  color: var(--kc-gold);
+  white-space: nowrap;
+}
+
+.num {
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+}
+
+.cmd {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.cmdDesc {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+.yes {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.no {
+  color: var(--text-muted);
+}
+
+/* ---- Kits ---- */
+.kits {
+  list-style: none;
+  --grid-gap: var(--s-4);
+}
+
+.kit {
+  height: 100%;
+}
+
+/* ---- Crate keys ---- */
+.sub {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+}
+
+.inlineList {
+  display: grid;
+  gap: 2px;
+  padding-left: 1.1em;
+}
+
+.inlineList li::marker {
+  color: var(--kc-gold);
+}

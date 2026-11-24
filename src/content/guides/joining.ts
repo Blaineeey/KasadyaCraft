@@ -1,0 +1,100 @@
+import type { Guide } from '@/lib/content'
+import { site } from '@/lib/site'
+import { CHECKED } from './facts'
+
+/*
+ * Sources: proxy velocity.toml (try = hub, failover on), Hub plugins/KasadyaLobby/config.yml
+ * (portal, Survival Guide NPC, compass in the middle hotbar slot, /survival /smp /hub /lobby,
+ * double jump, first-join fireworks + "Member #N"), Hub DeluxeMenus selector.yml (/menu),
+ * Survival server.properties (require-resource-pack=true, prompt text), ViaVersion 5.5.2 on both backends.
+ */
+export const joining: Guide = {
+  slug: 'joining',
+  title: 'Joining KasadyaCraft',
+  summary: 'From the launcher to Survival in about two minutes: the right version, the address, the resource pack and the hub.',
+  icon: 'portal',
+  stage: 'join',
+  order: 1,
+  minutes: 3,
+  updated: CHECKED,
+  next: 'first-day',
+  related: ['faq', 'features'],
+  body: [
+    {
+      type: 'p',
+      text: `You need **Minecraft: ${site.edition}** on a paid account. Bedrock (phones, consoles, the Windows Bedrock app) can't join yet.`,
+    },
+    { type: 'h2', text: 'What you need' },
+    {
+      type: 'list',
+      items: [
+        `Java Edition **${site.recommendedVersion}**. Older 1.21 versions may connect, but newer ones like 1.21.11 can't join yet.`,
+        `The address: \`${site.address}\``,
+        'A few seconds to download our resource pack the first time you enter Survival.',
+      ],
+    },
+    { type: 'h2', text: 'Join in three steps' },
+    {
+      type: 'steps',
+      items: [
+        {
+          title: `Pick version ${site.recommendedVersion}`,
+          text: `Open the Minecraft Launcher. Under **Installations**, make a new one, set the version to **release ${site.recommendedVersion}** and press Play.`,
+        },
+        {
+          title: 'Add the server',
+          text: 'Click **Multiplayer**, then **Add Server**. Give it any name and paste the address below. Click **Done** and join.',
+          command: site.address,
+        },
+        {
+          title: 'Say yes to the resource pack',
+          text: 'When you step into Survival the game asks to download our pack. Click **Yes**. It holds the custom items, dungeon mobs and menus. Click No and you get sent back to the hub.',
+        },
+      ],
+    },
+    {
+      type: 'callout',
+      tone: 'tip',
+      text: 'Want pictures and fixes for common errors? The full walkthrough is on the [How to join](/play) page.',
+    },
+    { type: 'h2', text: 'The hub: your first stop' },
+    {
+      type: 'p',
+      text: 'Everyone lands in the hub first. It is a festival plaza floating in the sky, with a big portal at the north gate. Nobody can get hurt here, and you can double jump.',
+    },
+    { type: 'p', text: 'There are three ways into Survival:' },
+    {
+      type: 'list',
+      items: [
+        'Walk through the **portal** at the gate.',
+        'Click the **Survival Guide** standing next to the portal.',
+        'Right-click the **compass** in the middle of your hotbar and pick Survival.',
+      ],
+    },
+    { type: 'h3', text: 'Hub commands' },
+    {
+      type: 'commands',
+      items: [
+        { command: '/survival', description: 'In the hub: jump straight into Survival. `/smp` works too.' },
+        { command: '/hub', description: 'Back to the hub from anywhere. `/lobby` works too.' },
+        { command: '/menu', description: 'In the hub: opens the server selector.' },
+      ],
+    },
+    {
+      type: 'callout',
+      tone: 'info',
+      title: 'If Survival restarts',
+      text: 'You drop back into the hub and stay connected. Give it a minute, then hop back in.',
+    },
+    { type: 'h2', text: 'Your first join' },
+    {
+      type: 'p',
+      text: 'First time on the network? The hub sets off fireworks for you and the whole server sees your member number. In Survival you start at spawn with a starter kit already on you.',
+    },
+    {
+      type: 'callout',
+      tone: 'lore',
+      text: 'Kasadya means joy, the feeling of a town fiesta. That is why the hub has lanterns and bunting everywhere. Tara, laro tayo!',
+    },
+  ],
+}

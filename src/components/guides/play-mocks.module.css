@@ -1,0 +1,167 @@
+/* Illustrations for /play. Original layouts built from the kit, tokens only. Owner: STARTER-GUIDE WRITER. */
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  max-width: 100%;
+}
+
+.caption {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  max-width: 60ch;
+}
+
+/* ---- dialog mock (dirt backdrop, like a game options screen) ------------- */
+.dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  width: min(100%, 460px);
+  padding: var(--s-5) var(--s-4);
+  color: var(--text);
+  background-color: var(--mat-dirt-dark);
+  background-image: var(--tex-dirt);
+  background-size: 48px;
+  background-blend-mode: multiply;
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-down), var(--block-drop);
+  text-align: center;
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.dialogTitle {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.dialogText {
+  max-width: 34ch;
+  color: var(--chat-gold);
+  font-family: var(--font-pixel);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  width: 100%;
+  text-align: left;
+}
+
+.fields dt {
+  margin-bottom: var(--s-1);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.field {
+  padding: var(--s-2) var(--s-3);
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  line-height: 1.1;
+  color: var(--text);
+  background: var(--edge);
+  border: var(--bw-thin) solid var(--gui-slot);
+  overflow-wrap: anywhere;
+}
+
+.fieldActive {
+  border-color: var(--text);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.5em;
+  margin-left: 2px;
+  border-bottom: 3px solid var(--text);
+  animation: kc-blink 1s steps(1) infinite;
+}
+
+@keyframes kc-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.fakeButton {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 40px;
+  font-family: var(--font-pixel);
+  color: var(--text);
+  background: var(--mat-stone);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  width: 100%;
+}
+
+.result {
+  min-height: 1.5em;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+}
+
+.resultYes {
+  color: var(--chat-green);
+}
+
+.resultNo {
+  color: var(--chat-red);
+}
+
+/* ---- version chips --------------------------------------------------------- */
+.versions {
+  list-style: none;
+  display: grid;
+  gap: var(--s-2);
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+}
+
+.version {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 4px 0 0 var(--idle);
+}
+
+.version[data-ok='yes'] {
+  box-shadow: inset 4px 0 0 var(--ok);
+}
+
+.version[data-ok='maybe'] {
+  box-shadow: inset 4px 0 0 var(--warn);
+}
+
+.version[data-ok='no'] {
+  box-shadow: inset 4px 0 0 var(--bad);
+}
+
+.versionName {
+  /* version numbers in VT323: Pixelify draws 2 close to 8 at this size */
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  line-height: 1.1;
+}
+
+.versionNote {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}

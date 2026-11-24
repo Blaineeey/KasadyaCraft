@@ -1,69 +1,60 @@
-'use client'
-
-import type { MouseEvent } from 'react'
+import Badge from '@/components/ui/Badge'
+import PixelIcon from '@/components/ui/PixelIcon'
+import type { PixelIconName } from '@/components/ui/pixel-icons'
 import type { ShowcaseGame } from '@/lib/site'
+import styles from './GameStack.module.css'
+
+/*
+ * Each game gets one of our own pixel icons by genre. We deliberately do NOT
+ * show the games' official logos here: no Mojang art anywhere on the site, and
+ * a shelf of mixed corporate logos fought the hand-made look.
+ */
+const genreIcon: Record<string, PixelIconName> = {
+  Minecraft: 'grass',
+  Roblox: 'player',
+  Valorant: 'crosshair',
+  'League of Legends': 'shield',
+  'Dota 2': 'sword',
+  'Counter-Strike 2': 'crosshair',
+  'Mobile Legends': 'crown',
+  'Call of Duty': 'flag',
+  Fortnite: 'pickaxe',
+  'Apex Legends': 'trophy',
+  'Diablo IV': 'skull',
+  GTA: 'map',
+  'NBA 2K': 'trophy',
+}
+
+/* rotating cartridge colours, from the festival palette */
+const shells = ['red', 'gold', 'teal', 'magenta', 'orange', 'leaf'] as const
 
 /**
- * Stacked, overlapping game cards.
- * Idle: each card bobs gently on its own rhythm.
- * Hover: the card lifts, scales up, tilts toward the cursor and a spotlight
- * follows the pointer. Neighbours slide apart to make room.
+ * "Games we play" shelf: a wall of chunky game cartridges with a pixel icon,
+ * the game name and what the crew plays in it. Hovering a cartridge pulls it
+ * off the shelf a few pixels. Servers we host get a gold badge.
+ * (File name kept for history; this replaces the old 3D card stack.)
+ * Owner: PIXEL UI DESIGNER.
  */
-export default function GameStack({ games, perRow = 7 }: { games: ShowcaseGame[]; perRow?: number }) {
-  function onMove(e: MouseEvent<HTMLDivElement>) {
-    const el = e.currentTarget
-    const r = el.getBoundingClientRect()
-    const x = (e.clientX - r.left) / r.width
-    const y = (e.clientY - r.top) / r.height
-    el.style.setProperty('--mx', `${x * 100}%`)
-    el.style.setProperty('--my', `${y * 100}%`)
-    el.style.setProperty('--ry', `${(x - 0.5) * 18}deg`)
-    el.style.setProperty('--rx', `${(0.5 - y) * 14}deg`)
-  }
-
-  function onLeave(e: MouseEvent<HTMLDivElement>) {
-    const el = e.currentTarget
-    el.style.removeProperty('--rx')
-    el.style.removeProperty('--ry')
-  }
-
-  const rows: ShowcaseGame[][] = []
-  for (let i = 0; i < games.length; i += perRow) rows.push(games.slice(i, i + perRow))
-
+export default function GameStack({ games }: { games: ShowcaseGame[]; perRow?: number }) {
   return (
-    <div className="gstack" role="list" aria-label="Games we play">
-      {rows.map((row, r) => (
-        <div key={r} className="gstack-row">
-          {row.map((g, i) => (
-            <div
-              key={g.name}
-              role="listitem"
-              className="gcard"
-              onMouseMove={onMove}
-              onMouseLeave={onLeave}
-              style={{ '--d': `${((r * perRow + i) * 0.7) % 4}s` } as React.CSSProperties}
-            >
-              <div className="gcard-inner">
-                <div className="gcard-head">
-                  <div>
-                    <div className="gcard-title">{g.name}</div>
-                    <div className="gcard-sub">{g.sub}</div>
-                  </div>
-                </div>
-                <div className="gcard-logo">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={g.logo} alt="" loading="lazy" draggable={false} />
-                </div>
-                {g.hosted && (
-                  <div className="gcard-foot">
-                    <span className="gcard-badge">Hosted</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+    // role="list" keeps list semantics in Safari, which drops them for list-style: none
+    <ul className={styles.shelf} role="list" aria-label="Games we play">
+      {games.map((g, i) => (
+        <li key={g.name} className={styles.cart} data-shell={shells[i % shells.length]}>
+          <span className={styles.label}>
+            <span className={styles.art} aria-hidden="true">
+              <PixelIcon name={genreIcon[g.name] ?? 'controller'} size={48} />
+            </span>
+            <span className={styles.name}>{g.name}</span>
+            <span className={styles.sub}>{g.sub}</span>
+          </span>
+          {g.hosted ? (
+            <Badge tone="gold" className={styles.badge}>
+              Hosted by us
+            </Badge>
+          ) : null}
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

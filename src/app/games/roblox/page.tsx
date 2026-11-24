@@ -1,100 +1,92 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import Shell from '@/components/Shell'
-import { DiscordIcon } from '@/components/DiscordIcon'
+import { notFound } from 'next/navigation'
+import PageHero from '@/components/shell/PageHero'
+import { Badge, Book, Panel, PixelButton, PixelIcon, type PixelIconName } from '@/components/ui'
 import { servers, site } from '@/lib/site'
+import styles from './roblox.module.css'
 
 export const metadata: Metadata = {
   title: 'Roblox',
-  description: 'KasadyaCraft on Roblox: group sessions, private servers and community events.',
+  description: 'KasadyaCraft on Roblox: group sessions, private servers and community events. Coming soon.',
 }
 
-const plans = [
+const plans: { title: string; icon: PixelIconName; body: string }[] = [
   {
     title: 'Group sessions',
-    body: 'Scheduled nights where the crew hops into the same experiences together. Announced in Discord.',
+    icon: 'player',
+    body: 'Set nights where the crew hops into the same experiences together. We announce them in Discord.',
   },
   {
     title: 'Private servers',
-    body: 'Crew-only servers for popular experiences so we can play without randoms.',
+    icon: 'key',
+    body: 'Crew-only servers for popular experiences, so we can play without randoms.',
   },
   {
     title: 'Community events',
-    body: 'Obby races, build-offs and tournaments with bragging rights on the line.',
+    icon: 'trophy',
+    body: 'Obby races, build-offs and small tournaments with bragging rights on the line.',
   },
 ]
 
 export default function RobloxPage() {
-  const server = servers.find((s) => s.slug === 'roblox')!
+  const server = servers.find((s) => s.slug === 'roblox')
+  if (!server) notFound()
 
   return (
-    <Shell>
-      <section className="page-hero">
-        <div className="container">
-          <div className="stack">
-            <div className="crumbs">
-              <Link href="/games">Games</Link>
-              <span>/</span>
-              <span style={{ opacity: 1 }}>Roblox</span>
-            </div>
-            <span className="pill" style={{ alignSelf: 'flex-start' }}>
-              <span className="dot" data-status={server.status} aria-hidden="true" />
-              Coming soon
-            </span>
-            <h1 className="display">{server.name}</h1>
-            <p className="lead">{server.summary}</p>
-            <div className="hero-actions">
-              <a href={site.discord} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                <DiscordIcon />
-                Get notified in Discord
-              </a>
-              {server.joinUrl && (
-                <a href={server.joinUrl} className="btn btn-ghost" target="_blank" rel="noopener noreferrer">
-                  {server.joinLabel}
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+    <>
+      <PageHero
+        crumbs={[{ label: 'Games', href: '/games' }, { label: 'Roblox' }]}
+        eyebrow="Coming soon"
+        title={server.name}
+        icon="player"
+        lead={server.summary}
+      >
+        <PixelButton href={site.discord} variant="discord" size="lg" icon="chat">
+          Get notified in Discord
+        </PixelButton>
+        {server.joinUrl ? (
+          <PixelButton href={server.joinUrl} variant="wood" size="lg">
+            {server.joinLabel}
+          </PixelButton>
+        ) : null}
+      </PageHero>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="stack">
-              <span className="eyebrow">What&apos;s planned</span>
-              <h2 className="h2">How Roblox fits the crew</h2>
-            </div>
-          </div>
-          <div className="list">
-            {plans.map((p, i) => (
-              <div key={p.title} className="list-row">
-                <span className="index">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="h3">{p.title}</h3>
-                <p className="text-2">{p.body}</p>
-              </div>
+      <section className="kc-container kc-section" aria-labelledby="plan-title">
+        <Book
+          title={<span id="plan-title">How Roblox fits the crew</span>}
+          footer="Nothing here is live yet. When the group opens, the link goes up in Discord first."
+        >
+          <ol className={styles.quests}>
+            {plans.map((p) => (
+              <li key={p.title} className={styles.quest}>
+                <span className={styles.questIcon} aria-hidden="true">
+                  <PixelIcon name={p.icon} size={32} />
+                </span>
+                <div className={styles.questText}>
+                  <h3 className={styles.questTitle}>
+                    {p.title} <Badge tone="gray">Planned</Badge>
+                  </h3>
+                  <p>{p.body}</p>
+                </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ol>
+        </Book>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="cta">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <span className="eyebrow">Want in early?</span>
-              <h2 className="h2">Group links drop in Discord first</h2>
-              <p className="text-2" style={{ maxWidth: '48ch' }}>
-                Join the server and watch the Roblox channel for the group invite and the first session.
-              </p>
-            </div>
-            <a href={site.discord} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-              <DiscordIcon />
-              Open Discord
-            </a>
+      <section className="kc-container" aria-labelledby="early-title">
+        <Panel material="planks" padding="lg" rivets className={styles.cta}>
+          <div>
+            <h2 id="early-title" className={styles.ctaTitle}>
+              Want in early?
+            </h2>
+            <p>Join the Discord and watch the Roblox channel for the group invite and the first session.</p>
           </div>
-        </div>
+          <PixelButton href={site.discord} variant="discord" icon="chat">
+            Open Discord
+          </PixelButton>
+        </Panel>
       </section>
-    </Shell>
+    </>
   )
 }

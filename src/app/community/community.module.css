@@ -1,0 +1,214 @@
+/* /community page layout. Owner: PIXEL UI DESIGNER. Tokens only. */
+
+/* ---------- Notice board ---------- */
+.board :global(.kc-panel__body) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+  gap: var(--s-5);
+  list-style: none;
+}
+
+/* paper notes pinned to the board. Offsets instead of rotation keep pixels crisp. */
+.note {
+  --pin: var(--kc-red);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-5) var(--s-4) var(--s-4);
+  color: var(--ink);
+  text-shadow: none;
+  background: var(--mat-paper) var(--tex-paper);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset -3px -3px 0 var(--mat-paper-dark),
+    4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.note:nth-child(even) {
+  margin-top: var(--s-3);
+}
+
+/* the pin */
+.note::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  background: var(--pin);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.45);
+}
+
+.note[data-pin='1'] { --pin: var(--kc-gold); }
+.note[data-pin='2'] { --pin: var(--kc-teal); }
+.note[data-pin='3'] { --pin: var(--kc-magenta); }
+
+.noteIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.noteTitle {
+  font-size: var(--fs-xl);
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.boardFoot {
+  align-self: flex-start;
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  color: var(--kc-gold);
+  background: rgba(0, 0, 0, 0.5);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* ---------- Staff ---------- */
+.staff {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  gap: var(--s-6) var(--s-5);
+  list-style: none;
+}
+
+.member {
+  display: flex;
+}
+
+.memberPanel {
+  flex: 1;
+}
+
+.memberPanel :global(.kc-panel__body) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  height: 100%;
+}
+
+.memberHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.memberRole {
+  font-size: var(--fs-lg);
+  color: var(--kc-gold);
+}
+
+.memberFocus {
+  color: var(--text-dim);
+}
+
+.memberDiscord {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--s-2);
+  margin-top: auto;
+  padding-top: var(--s-2);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.memberDiscord :global(.t-term) {
+  white-space: nowrap;
+}
+
+/* ---------- Support ---------- */
+.ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.wayBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.wayCmds {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+/* ---------- Guidelines ---------- */
+.lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: var(--s-6);
+}
+
+.listTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-xl);
+  color: var(--gui-ink);
+  text-shadow: none;
+}
+
+.checkList {
+  display: grid;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.checkList li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+}
+
+.checkList li :global(.kc-icon) {
+  margin-top: 0.3em;
+}
+
+/* ---------- Closing call ---------- */
+.cta :global(.kc-panel__body) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.ctaTitle {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-2xl);
+  color: var(--kc-gold);
+}

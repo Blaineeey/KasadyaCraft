@@ -1,0 +1,163 @@
+/* /styleguide layout. Owner: PIXEL UI DESIGNER. Tokens only. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  padding-block: var(--s-7);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: var(--s-5);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: var(--s-5);
+  align-items: start;
+}
+
+/* colours */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
+  gap: var(--s-3);
+  list-style: none;
+}
+
+.swatch {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--s-2);
+  align-items: center;
+}
+
+.chip {
+  grid-row: span 2;
+  width: 40px;
+  height: 40px;
+  background: var(--sw);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.3), inset -3px -3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.swName {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+}
+
+.swToken {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* type */
+.typePixel {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+}
+
+/* textures */
+.textures {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: var(--s-4);
+  list-style: none;
+}
+
+.texture {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-2);
+  background: var(--plate);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.texture code {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+.tile {
+  display: block;
+  aspect-ratio: 1;
+  background: var(--tile) 0 0 / 64px;
+  image-rendering: pixelated;
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* icons */
+.sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+
+.sizeCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.iconCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  padding: var(--s-2) var(--s-1);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.iconCell code,
+.sizeCell code {
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+
+/* tooltips */
+.tooltips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: var(--s-4);
+  align-items: start;
+}
+
+.tipTrigger {
+  color: var(--kc-gold);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+/* toasts shown statically, without the slide-in */
+.staticToast {
+  animation: none !important;
+}

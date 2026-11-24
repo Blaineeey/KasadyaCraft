@@ -1,0 +1,77 @@
+/* Store teaser (home). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.chest {
+  display: grid;
+  align-content: start;
+  gap: var(--s-4);
+  height: 100%;
+  padding: var(--s-5);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    var(--tex-planks-dark) 0 0 / var(--tex-size),
+    var(--mat-darkwood);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 var(--s-1) 0 0 var(--kc-gold), var(--block-drop);
+}
+
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+.title {
+  margin-top: calc(var(--s-3) * -1);
+  font-size: var(--fs-2xl);
+  color: var(--text);
+}
+
+.ranks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.rank {
+  display: grid;
+  justify-items: center;
+  min-width: 84px;
+  padding: var(--s-2) var(--s-2) var(--s-1);
+  background: rgba(0, 0, 0, 0.6);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 0 calc(var(--bw-thin) * -1) 0 0 var(--rank, var(--text));
+}
+
+.prefix {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--rank, var(--text));
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.price {
+  font-family: var(--font-term);
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: var(--text-dim);
+}
+
+.text {
+  color: var(--text);
+}
+
+.fine {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}

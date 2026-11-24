@@ -1,0 +1,30 @@
+/* Small layout helpers for src/app/page.tsx. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.aside {
+  justify-self: start;
+  max-width: 64ch;
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.6);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.pair {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 960px) {
+  .pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+/* Small phones: the stepper needs the width more than the padding. */
+@media (max-width: 479px) {
+  .stepPanel :global(.kc-panel__body) {
+    padding: var(--s-3);
+  }
+}
