@@ -1,5 +1,6 @@
 import { DAILY_QUEST_BONUS, DAILY_QUESTS, count } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
+import { voteRewards, voteSites } from '@/lib/vote'
 
 /*
  * Overview of every feature. Facts checked 2026-11-25 against the live Survival
@@ -54,6 +55,7 @@ export const features: WikiPage = {
       items: [
         `${DAILY_QUESTS.perDay} daily quests in \`/dquests\`, ${count(DAILY_QUESTS.xpEach)} XP each. Finish all ${DAILY_QUESTS.perDay} for ${DAILY_QUEST_BONUS}.`,
         'Daily, weekly and monthly rewards in `/rewards`, Tokens included.',
+        `Voting in \`/vote\`: ${voteRewards.keysPerVote} Vote crate key per vote, on ${voteSites.length} sites. Links on the [vote page](/vote).`,
         'Playtime levels in `/levels`: money, XP, points and Tokens as your hours add up.',
         'The AFK pool at `/warp afk`: 10 points every 20 minutes. See [AFK pool](/wiki/afk-pool).',
         'Chat games every few minutes. See [Chat games](/wiki/chat-games).',

@@ -78,6 +78,8 @@ function ExternalBadge({ className }: { className: string }) {
  *   page's icon, name and hint, plus a few handy deep links. Native <dialog>, so
  *   Escape closes it, focus stays inside, and the page behind is inert.
  * - Slot 9 (Discord) wears a small arrow badge: it opens a new tab.
+ * - A `featured` item (Vote) sits in a gold slot, and `stack` puts a count in the bottom-right corner,
+ *   like a stack of items. Both are data in src/lib/site.ts, and both stay still.
  * - Number keys 1-9 jump to a slot (ignored while typing, with modifier keys, or
  *   while another window such as a store item is open).
  * - Every slot is a real link with a text label for screen readers.
@@ -211,6 +213,7 @@ export default function Hotbar() {
               const common = {
                 className: 'kc-hotbar__slot',
                 'data-selected': selected || undefined,
+                'data-featured': item.featured || undefined,
                 onMouseEnter: () => setPreview(i),
                 onMouseLeave: () => setPreview(null),
                 onFocus: () => setPreview(i),
@@ -221,11 +224,17 @@ export default function Hotbar() {
                   <PixelIcon name={item.icon} size={32} />
                   <span className="kc-sr-only">
                     {item.label}
+                    {item.stack ? `, ${item.stack.count} ${item.stack.unit}` : ''}
                     {item.external ? ' (opens in a new tab)' : ''}
                   </span>
                   <span className="kc-hotbar__key" aria-hidden="true">
                     {i + 1}
                   </span>
+                  {item.stack ? (
+                    <span className="kc-hotbar__count" aria-hidden="true">
+                      {item.stack.count}
+                    </span>
+                  ) : null}
                   {item.external ? <ExternalBadge className="kc-hotbar__ext" /> : null}
                   {selected ? (
                     <span className="kc-hotbar__cap" aria-hidden="true">
@@ -305,14 +314,22 @@ export default function Hotbar() {
                 const here = i === current
                 const inner = (
                   <>
-                    <span className="kc-inv__slot" data-selected={here || undefined}>
+                    <span className="kc-inv__slot" data-selected={here || undefined} data-featured={item.featured || undefined}>
                       <PixelIcon name={item.icon} size={32} />
                       <span className="kc-inv__key" aria-hidden="true">
                         {i + 1}
                       </span>
+                      {item.stack ? (
+                        <span className="kc-inv__count" aria-hidden="true">
+                          {item.stack.count}
+                        </span>
+                      ) : null}
                       {item.external ? <ExternalBadge className="kc-inv__ext" /> : null}
                     </span>
-                    <span className="kc-inv__name">{item.label}</span>
+                    <span className="kc-inv__name">
+                      {item.label}
+                      {item.stack ? <span className="kc-sr-only">{`, ${item.stack.count} ${item.stack.unit}`}</span> : null}
+                    </span>
                     <span className="kc-inv__hint">
                       {item.hint}
                       {item.external ? <span className="kc-inv__newtab">Opens in a new tab</span> : null}

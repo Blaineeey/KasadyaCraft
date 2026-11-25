@@ -517,6 +517,139 @@
   }
 }
 
+/* Highlight = the selected entry of the server list: the hotbar's white selection frame around
+   the same dark card. The frame is a size container, so the card grows with the column it is in
+   (hero, /vote, a narrow panel) and not with the viewport. Static: no glow, no pulse. */
+.kc-status-pick {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 560px;
+  padding: var(--s-1);
+  background: var(--gui-light);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--block-drop);
+}
+
+/* Under 320px of room: bars and count sit under the icon, so nothing can run into the name. */
+.kc-status-pick > .kc-status--card {
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'icon name'
+    'side meta'
+    'motd motd';
+  align-items: center;
+  gap: var(--s-1) var(--s-3);
+  max-width: none;
+  padding: var(--s-3);
+  box-shadow: inset 0 0 0 var(--bw-thin) rgba(255, 255, 255, 0.14);
+}
+
+/* Name, MOTD and meta become direct grid items: name and player count share the top line. */
+.kc-status-pick .kc-status__main { display: contents; }
+.kc-status-pick .kc-status__name { grid-area: name; }
+.kc-status-pick .kc-status__meta { grid-area: meta; }
+
+.kc-status-pick .kc-status__motd {
+  grid-area: motd;
+  margin-top: var(--s-1);
+  font-size: 1.25rem;
+}
+
+.kc-status-pick .kc-status__icon {
+  grid-area: icon;
+  justify-self: center;
+  width: 56px;
+  height: 56px;
+}
+
+.kc-status-pick .kc-status__side {
+  grid-area: side;
+  justify-items: center;
+}
+
+/* phones */
+@container (min-width: 320px) {
+  .kc-status-pick > .kc-status--card {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'icon name side'
+      'icon meta side'
+      'motd motd motd';
+  }
+
+  .kc-status-pick .kc-status__side {
+    justify-items: end;
+    align-self: center;
+  }
+}
+
+/* room for the whole MOTD beside the icon: count and bars on the name's line, like in game */
+@container (min-width: 400px) {
+  .kc-status-pick > .kc-status--card {
+    grid-template-areas:
+      'icon name side'
+      'icon motd motd'
+      'icon meta meta';
+    padding: var(--s-3) var(--s-4);
+  }
+
+  .kc-status-pick .kc-status__icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .kc-status-pick .kc-status__name { font-size: var(--fs-xl); }
+
+  .kc-status-pick .kc-status__motd {
+    margin-top: 0;
+    font-size: 1.3rem;
+  }
+
+  .kc-status-pick .kc-status__side {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: var(--s-2);
+  }
+
+  .kc-status-pick .kc-status__bars { order: 1; }
+  .kc-status-pick .kc-status__count { font-size: 1.8rem; }
+}
+
+@container (min-width: 520px) {
+  .kc-status-pick > .kc-status--card {
+    column-gap: var(--s-4);
+    padding: var(--s-4);
+  }
+
+  .kc-status-pick .kc-status__icon {
+    width: 96px;
+    height: 96px;
+  }
+
+  .kc-status-pick .kc-status__name { font-size: 2rem; }
+  .kc-status-pick .kc-status__motd { font-size: 1.6rem; }
+  .kc-status-pick .kc-status__meta { font-size: 1.3rem; }
+  .kc-status-pick .kc-status__count { font-size: 2.4rem; }
+
+  .kc-status-pick .kc-status__bars {
+    gap: 3px;
+    height: 30px;
+  }
+
+  .kc-status-pick .kc-status__bar { width: 5px; }
+  .kc-status-pick .kc-status__bar:nth-child(1) { height: 10px; }
+  .kc-status-pick .kc-status__bar:nth-child(2) { height: 15px; }
+  .kc-status-pick .kc-status__bar:nth-child(3) { height: 20px; }
+  .kc-status-pick .kc-status__bar:nth-child(4) { height: 25px; }
+  .kc-status-pick .kc-status__bar:nth-child(5) { height: 30px; }
+}
+
+/* "Pinging..." and "No signal" are words, not a count: they keep the small size at every width. */
+.kc-status-pick .kc-status--card[data-state='unknown'] .kc-status__count,
+.kc-status-pick .kc-status--card[data-state='checking'] .kc-status__count {
+  font-size: 1.25rem;
+}
+
 /* signal bars */
 .kc-status__bars {
   display: inline-flex;

@@ -1,6 +1,7 @@
 import { DAILY_QUESTS_LINE, DAILY_REWARDS, dailyRewardText, shopPrice, type ShopItem } from '@/content/facts'
 import type { Guide } from '@/lib/content'
 import { site } from '@/lib/site'
+import { voteRewards, voteSites } from '@/lib/vote'
 import {
   CHECKED,
   PLAYTIME_COMMAND,
@@ -110,12 +111,13 @@ export const firstDay: Guide = {
       text: `You start with **${money(STARTING_BALANCE)}**. Check your balance any time with \`/bal\`. More ways to earn: [Making money](/guides/making-money).`,
     },
     { type: 'h2', text: 'Claim the freebies' },
-    { type: 'p', text: '**Minute 25.** Three menus hand out free stuff:' },
+    { type: 'p', text: '**Minute 25.** Four menus hand out free stuff:' },
     {
       type: 'list',
       items: [
         `\`/dquests\`: ${DAILY_QUESTS_LINE}`,
         `\`/rewards\`: a daily reward (${dailyRewardText(DAILY_REWARDS[0])}), plus bigger weekly and monthly ones.`,
+        `\`/vote\`: ${voteSites.length} vote sites, ${voteRewards.keysPerVote} Vote crate key per vote. Click a site to get its link in chat, or use the [vote page](/vote).`,
         `\`${PLAYTIME_COMMAND}\`: playtime levels. Level I unlocks after ${level('I').after} and level II pays ${level('II').reward} after ${level('II').after}.`,
       ],
     },

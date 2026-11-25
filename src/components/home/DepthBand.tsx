@@ -3,7 +3,7 @@ import s from './DepthBand.module.css'
 
 export interface DepthBandProps {
   /** Which layer of the world this band is. The home page digs down as you scroll. */
-  material: 'dirt' | 'stone' | 'deepslate' | 'bedrock'
+  material: 'dirt' | 'stone' | 'cobble' | 'deepslate' | 'bedrock'
   /** Y level shown in the corner, F3-style. */
   y: number
   id?: string
@@ -12,8 +12,8 @@ export interface DepthBandProps {
 }
 
 /**
- * Full-width textured band for home sections: dirt, then stone, deepslate and
- * bedrock as you scroll. A tiny "Y: 62" coordinate sits in the corner.
+ * Full-width textured band for home sections: dirt, then stone, a cobblestone
+ * storeroom, deepslate and bedrock as you scroll. A tiny "Y: 62" coordinate sits in the corner.
  * Content goes inside .kc-container; text sits on a heavily darkened texture.
  * Owner: INTERACTIVITY ENGINEER.
  */

@@ -1,12 +1,13 @@
-/* /vote. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+/* /vote. Owner: INTERACTIVITY ENGINEER. Tokens only. The list itself: VoteList.module.css. */
 
 .page {
   display: grid;
-  gap: var(--s-7);
-  padding-block: var(--s-7) var(--s-8);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8);
+  padding-block: var(--s-6) var(--s-8);
 }
 
-/* ---------- locked chest (stands on the pedestal in the hero's ballot scene) ---------- */
+/* ---------- open ballot chest (stands on the pedestal in the hero's ballot scene) ---------- */
 /* column-reverse: the hint floats above the chest like a name tag, the chest stands on the pedestal */
 .chestBtn {
   display: flex;
@@ -18,25 +19,48 @@
   border: 0;
 }
 
-.chestBtn:hover .chestArt {
-  transform: translateY(-2px);
-}
-
 .chestArt {
   display: grid;
   filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.5));
 }
 
-.chestArt[data-rattle] {
-  animation: rattle 360ms steps(6, end);
+.chestLayer {
+  grid-area: 1 / 1;
+  width: 140px; /* 7px per art pixel on phones, 10px from 600px up */
+  height: auto;
 }
 
-@keyframes rattle {
-  0%, 100% { transform: none; }
-  20% { transform: translateX(-6px) rotate(-3deg); }
-  40% { transform: translateX(6px) rotate(3deg); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
+.loot {
+  grid-area: 1 / 1;
+  display: grid;
+}
+
+/* one art pixel up: 1/17 of the sprite's height */
+.chestBtn:hover .loot {
+  transform: translateY(-5.88%);
+}
+
+.loot[data-hop] {
+  animation: loot-hop 420ms steps(1, end);
+}
+
+@keyframes loot-hop {
+  0%,
+  100% {
+    transform: none;
+  }
+  15% {
+    transform: translateY(-5.88%);
+  }
+  35% {
+    transform: translateY(-11.76%);
+  }
+  60% {
+    transform: translateY(-5.88%);
+  }
+  80% {
+    transform: none;
+  }
 }
 
 .chestHint {
@@ -50,63 +74,185 @@
   background: rgba(0, 0, 0, 0.88); /* 5:1 for the small gold label even on the day sky */
 }
 
-/* ---------- to-do list ---------- */
-.todo {
-  display: grid;
-  gap: var(--s-4);
-  list-style: none;
-}
-
-@media (min-width: 900px) {
-  .todo {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+@media (min-width: 600px) {
+  .chestLayer {
+    width: 200px;
   }
 }
 
-.todoItem {
+/* ---------- hero: jump to the list ---------- */
+.jump {
+  width: min(100vw - 2 * var(--gutter), 560px);
+}
+
+@media (min-width: 900px) {
+  .jump {
+    display: none;
+  }
+}
+
+/* ---------- the vote board: gold-framed server list + how it works ---------- */
+.board {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.screen {
+  min-width: 0;
+  padding: var(--bw);
+  background: var(--kc-gold);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--block-drop);
+}
+
+.screenHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  color: var(--btn-gold-ink);
+}
+
+.screenTitle {
+  flex: 1 1 8em;
+  font-size: var(--fs-2xl);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.perVote {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 2px var(--s-3) 2px var(--s-2);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+  background: var(--btn-gold-ink);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* ---------- beside the list: the live server card, then how it works ---------- */
+.aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+  min-width: 0;
+}
+
+/* as wide as the column it stands in */
+.aside .server {
+  max-width: none;
+}
+
+/* ---------- vote party ---------- */
+.party {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  color: var(--text);
+  line-height: 1.5;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    var(--tex-obsidian) 0 0 / var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw) var(--kc-magenta), var(--block-drop);
+}
+
+.partyTitle {
+  font-size: var(--fs-xl);
+  color: var(--kc-gold);
+}
+
+/* ---------- how it works ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
   gap: var(--s-3);
   align-items: start;
 }
 
-.todoBox {
+.slot {
+  flex: none;
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
-  background: var(--gui-slot-dark);
-  box-shadow: var(--bevel-down);
+  width: 52px;
+  height: 52px;
+  background: var(--gui-slot);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-slot);
 }
 
-.todoTitle {
-  display: block;
-  font-family: var(--font-pixel);
+.stepTitle {
   font-size: var(--fs-lg);
-  font-weight: 600;
 }
 
-.todoText {
-  display: block;
-  color: var(--text-dim);
+.stepText {
+  margin-top: var(--s-1);
+  line-height: 1.5;
+}
+
+@media (min-width: 760px) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* side by side, and both columns end on the same line */
+@media (min-width: 1200px) {
+  .board {
+    /* 430px: the server line of the highlighted card fits on one line */
+    grid-template-columns: minmax(0, 1fr) 430px;
+    gap: var(--s-4);
+    align-items: stretch;
+  }
+
+  .screen {
+    align-self: start;
+  }
+
+  .aside {
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-6);
+  }
 }
 
 /* ---------- vote crate ---------- */
 .crate,
-.today {
+.more {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s-4);
 }
 
 /* the openers (oak sign, chat line) carry their own backing, so no extra plate here */
 .crate > :first-child,
-.today > :first-child {
+.more > :first-child {
   justify-self: start;
   margin-bottom: 0;
 }
 
 .crateRow {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s-5);
 }
 
@@ -130,8 +276,10 @@
 }
 
 .price {
+  margin-top: var(--s-3);
   font-family: var(--font-term);
   font-size: 1.5rem;
+  line-height: 1.15;
   color: var(--chat-gold);
 }
 
@@ -142,18 +290,33 @@
 
 .crateCmds {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s-3);
-  justify-items: start;
 }
 
-.todayList {
+.crateCmds > a {
+  justify-self: start;
+}
+
+/* ---------- more rewards ---------- */
+.moreList {
   display: grid;
   gap: var(--s-3);
   list-style: none;
 }
 
+.moreList > li {
+  display: grid;
+}
+
+@media (min-width: 900px) {
+  .moreList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .chestArt[data-rattle] {
+  .loot[data-hop] {
     animation: none;
   }
 }

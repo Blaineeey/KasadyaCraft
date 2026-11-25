@@ -8,7 +8,8 @@ import type { WikiPage } from '@/lib/content'
  * - plugin.yml commands/aliases/defaults: Essentials, PlotSquared, MythicDungeons, ODailyQuests, DailyReward, GSit,
  *   AxTrade (trade, default true), FreeCoinFlip, CustomFishing commands.yml,
  *   EconomyShopGUI (shop/sellall/sellgui default true), CombatLogX
- * - DeluxeMenus open_command lists, Skript scripts (commanddixes.sk, rtp.sk, nightvision.sk, discord.sk, website.sk, vote.sk)
+ * - DeluxeMenus open_command lists, Skript scripts (commanddixes.sk, rtp.sk, nightvision.sk, discord.sk, website.sk)
+ * - KasadyaVote (/vote)
  * - Hub: KasadyaLobby (/survival /smp), Velocity KasadyaHub (/hub /lobby)
  * - GSit poses are rank perks since the GAMEPLAY FIXER round 2 (CHANGELOG 06:17-06:48, LP export 07:25): default has
  *   gsit.sit/lay/layback/bellyflop/spin/crawl = false; VIP gsit.sit, VIP+ gsit.lay/layback/bellyflop/spin, MVP gsit.crawl
@@ -52,7 +53,7 @@ export const commands: WikiPage = {
         { command: '/warps', description: 'The warp menu.' },
         { command: '/links', description: 'Discord and website links.' },
         { command: '/discord', description: 'Get the Discord invite in chat.' },
-        { command: '/vote', description: 'Voting is not open yet. This says where it will be announced.' },
+        { command: '/vote', description: 'The vote menu. Click a site to get its link in chat.' },
       ],
     },
     { type: 'h2', text: 'Getting around' },

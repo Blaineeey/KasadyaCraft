@@ -19,7 +19,7 @@ conflicts with your instinct, follow this file and raise it in your report.
 - Never use Mojang/Minecraft assets, logos, textures, sounds or the Minecraft font. Draw originals.
   Colours and the general "blocky" look are fine; copied art is not.
 - Server access is READ ONLY (see section 9). Another team is changing the servers right now.
-- Copy is honest. If a feature is not live (voting, web checkout), the site says so plainly.
+- Copy is honest. If a feature is not live (web checkout), the site says so plainly.
 
 ## 1. Routes
 
@@ -32,7 +32,7 @@ conflicts with your instinct, follow this file and raise it in your report.
 | `/wiki` | `src/app/wiki/page.tsx` | WIKI WRITER | Wiki index, grouped by category, with a search/filter box |
 | `/wiki/[slug]` | `src/app/wiki/[slug]/page.tsx` | WIKI WRITER | One wiki page (data in `src/content/wiki/*`) |
 | `/store` | `src/app/store/**` + `src/components/store/*` | STORE ENGINEER | Ranks, crate keys, cosmetics, support. Sub-routes allowed, e.g. `/store/[category]` |
-| `/vote` | `src/app/vote/page.tsx` | INTERACTIVITY | Honest placeholder: voting is not live yet |
+| `/vote` | `src/app/vote/page.tsx` | INTERACTIVITY | Vote: the sites, what a vote gives, how it works (data in `src/lib/vote.ts`) |
 | `/community` | `src/app/community/page.tsx` | PIXEL UI DESIGNER | Keep content, restyle with the kit |
 | `/games` | `src/app/games/page.tsx` | PIXEL UI DESIGNER | Multi-game page, restyle |
 | `/games/roblox` | `src/app/games/roblox/page.tsx` | PIXEL UI DESIGNER | Restyle |
@@ -142,6 +142,7 @@ Use names, never raw values. The designer may change values and add tokens, neve
     <main id="main">   your page
     SiteFooter         grass edge, dirt block, link columns, Mojang disclaimer (shell)
     Hotbar             fixed bottom 9-slot nav; keys 1-9 jump; selected name floats above (shell)
+                       Vote sits in a gold slot with a stack count (`featured` + `stack` in site.ts)
 ```
 
 Pages do NOT wrap themselves in a shell. Inner pages start with `<PageHero>` (from `@/components/shell/PageHero`)
@@ -307,9 +308,9 @@ verified and where (config path), anything you could not verify, and requests fo
    lanterns. CSS transforms only, reduced-motion safe, cheap on phones. `TimeOfDayToggle` with sun/moon icons.
 4. Delight, small and optional: toast when the IP is copied (done), a hidden Konami-code firework,
    clicking a hero block "mines" it. Nothing that blocks reading or costs much JS.
-5. `/vote`: honest placeholder. Voting needs a Votifier plugin and server-list listings that do not exist
-   yet (in game, `/vote` already says "voting opens soon"). Explain what voting will give (vote crate keys
-   exist in game) only if you verify it, and link Discord for the announcement.
+5. `/vote`: the vote page. Sites, order, links and rewards come from `src/lib/vote.ts`, which mirrors the
+   KasadyaVote config; change them there only. Do not promise anything that config does not give: a vote pays
+   Vote crate keys, no Tokens, no money, no streaks.
 6. `not-found.tsx`: fun 404 with respawn.
 
 ## 9. Server facts (verify before publishing)
@@ -330,7 +331,10 @@ Checked by the architect on 2026-11-25:
   Keys and Points. Example from Ranks.yml: VIP costs 1000 tokens and lists max 2 shops, 2 homes, 2 plots,
   10 chest shops, /nv, /sit, /trash, /kittycannon, /craft and a VIP kit (verify every line yourself).
   Keys.yml: vote key 20 tokens. Points.yml: 10 points for 1 token. There is no web payment provider.
-- Voting is NOT live (no Votifier plugin; `/vote` in game says it opens soon).
+- Voting is live (2026-11-25): NuVotifier receives votes, the KasadyaVote plugin gives the rewards. 7 sites,
+  1 Vote crate key per vote, and every 25 votes everyone online on Survival gets 1 Vote key (vote party). Offline
+  votes wait up to 30 days (max 30 per player). One free inventory slot is needed. `/vote` opens a menu; clicking a
+  site gives its link in chat. Players use their exact Minecraft name on the site. Data: `src/lib/vote.ts`.
 - Spawners (zSpawner): Silk Touch on a diamond or netherite pickaxe picks up NATURAL spawners; any other tool
   destroys a placed spawner; max 2 per chunk; no stacking; also from the Spawner Crate (spawner keys not in circulation yet).
 - Plugins present (for feature names): PlotSquared, QuickShop-Hikari, EconomyShopGUI, ExcellentCrates,

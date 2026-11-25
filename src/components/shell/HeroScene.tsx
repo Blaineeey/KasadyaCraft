@@ -191,7 +191,7 @@ function Plaza({ title, eyebrow, lead, crumbs, children }: HeroSceneProps) {
 }
 
 /* ---------------------------------------------------------------------------------------- */
-/* Vote: the locked ballot chest on a stone pedestal; the lead reads like an item tooltip.   */
+/* Vote: the ballot chest on a stone pedestal; the lead reads like an item tooltip.          */
 /* ---------------------------------------------------------------------------------------- */
 function Ballot({ title, eyebrow, lead, crumbs, icon, children, art }: HeroSceneProps) {
   return (

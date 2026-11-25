@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { voteRewards } from '@/lib/vote'
 
 /*
  * Key prices, pack sizes and "also from" render from src/lib/store.ts (storeItems, category 'keys')
@@ -25,6 +26,7 @@ export const crates: WikiPage = {
   keywords: [
     '/warp crates',
     '/keys',
+    '/vote',
     'crate',
     'keys',
     'vote key',
@@ -47,6 +49,10 @@ export const crates: WikiPage = {
     { type: 'h2', text: 'Getting keys' },
     { type: 'h2', text: 'Vote crate' },
     { type: 'p', text: 'A starter grab bag: iron gear, handy supplies and extra keys, with a small shot at diamonds, a Totem or an Enchanted Golden Apple.' },
+    {
+      type: 'p',
+      text: `Every vote gives you **${voteRewards.keysPerVote} Vote key**. The links are in \`/vote\` and on the [vote page](/vote).`,
+    },
     {
       type: 'table',
       caption: 'Vote crate rewards',

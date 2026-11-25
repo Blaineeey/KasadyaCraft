@@ -3,12 +3,17 @@ import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import type { PixelIconName } from '@/components/ui/pixel-icons'
 import { site } from '@/lib/site'
+import { voteRewards, voteSites } from '@/lib/vote'
 import s from './StorePage.module.css'
 
 const ways: { icon: PixelIconName; title: string; text: string }[] = [
   { icon: 'heart', title: 'Bring a friend', text: 'A server is only as fun as the people on it. Send them the address below.' },
   { icon: 'chat', title: 'Tell us what is broken', text: 'Found a bug or have an idea? Post it in Discord. We read everything.' },
-  { icon: 'star', title: 'Vote, once voting opens', text: 'Votes help new players find us. We will switch it on soon.' },
+  {
+    icon: 'star',
+    title: 'Vote for us',
+    text: `Votes help new players find us. There are ${voteSites.length} sites, and each vote gives you ${voteRewards.keysPerVote} Vote crate key.`,
+  },
   { icon: 'house', title: 'Build something great', text: 'Nice builds in the plot world make everyone want to stay.' },
 ]
 
@@ -37,8 +42,8 @@ export default function SupportPanel() {
         <PixelButton variant="discord" icon="chat" href={site.discord}>
           Join the Discord
         </PixelButton>
-        <PixelButton variant="stone" icon="star" href="/vote">
-          Voting
+        <PixelButton variant="gold" icon="star" href="/vote">
+          Vote
         </PixelButton>
       </div>
     </div>
