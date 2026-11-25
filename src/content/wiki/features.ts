@@ -24,7 +24,7 @@ export const features: WikiPage = {
     { type: 'h2', text: 'How the network works' },
     {
       type: 'p',
-      text: 'Join `play.kasadyacraft.com` on Java Edition 1.21.x and you land in the **hub**, our festival plaza. Walk through the portal, click the **Survival Guide** NPC or right-click the compass in the middle hotbar slot (key 5) to enter Survival. `/hub` brings you back any time.',
+      text: 'Join `play.kasadyacraft.com` on Java Edition 1.21.x, or on Bedrock with port 19132, and you land in the **hub**, our festival plaza. Walk through the portal, click the **Survival Guide** NPC or right-click the compass in the middle hotbar slot (key 5) to enter Survival. `/hub` brings you back any time.',
     },
     {
       type: 'p',

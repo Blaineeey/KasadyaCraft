@@ -142,12 +142,12 @@ export default function MinecraftOverview() {
             <div className={s.fact}>
               <dt>Version</dt>
               <dd>
-                {site.edition} {site.versionLabel.replace(/^Java\s*/, '')} ({site.recommendedVersion} recommended). No Bedrock yet.
+                {site.edition} {site.versionLabel.replace(/^Java\s*/, '')} ({site.recommendedVersion} recommended). Bedrock: port {site.bedrockPort}.
               </dd>
             </div>
             <div className={s.fact}>
               <dt>Account</dt>
-              <dd>A paid Java Edition account</dd>
+              <dd>Any. Paid accounts log in by themselves, others use /register and /login.</dd>
             </div>
             <div className={s.fact}>
               <dt>Resource pack</dt>

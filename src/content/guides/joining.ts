@@ -24,7 +24,7 @@ export const joining: Guide = {
   body: [
     {
       type: 'p',
-      text: `You need **Minecraft: ${site.edition}** on a paid account. Bedrock (phones, consoles, the Windows Bedrock app) can't join yet.`,
+      text: `Play with **Minecraft: ${site.edition}** or with **Bedrock** on a phone, tablet or Windows. You do not need a paid account.`,
     },
     { type: 'h2', text: 'What you need' },
     {
@@ -53,6 +53,25 @@ export const joining: Guide = {
           text: 'When you step into Survival the game asks to download our pack. Click **Proceed**. It holds the custom items, dungeon mobs and menus. Click Disconnect and you leave the server. No harm done: rejoin and click Proceed.',
         },
       ],
+    },
+    { type: 'h2', text: 'Logging in' },
+    {
+      type: 'list',
+      items: [
+        '**Paid Java account:** nothing to do. You are logged in automatically.',
+        '**No paid account:** you start in a login room. Type `/register <password> <password>` the first time and `/login <password>` after that. You have 2 minutes.',
+        '**Bedrock:** nothing to do. Your Xbox account is your login, and your name gets a dot in front.',
+      ],
+    },
+    {
+      type: 'callout',
+      tone: 'warn',
+      text: 'Use a password with at least 8 characters that you use nowhere else. Staff will never ask for it. Names of paid accounts are reserved for their owners.',
+    },
+    { type: 'h2', text: 'Joining on Bedrock' },
+    {
+      type: 'p',
+      text: `In Minecraft open **Play**, then **Servers**, then **Add Server**. Address \`${site.address}\`, port \`${site.bedrockPort}\`. The first time, Minecraft may ask if you trust the server. Consoles need a helper app such as BedrockConnect. Custom dungeon monsters and some icons are made for Java and may not show.`,
     },
     {
       type: 'callout',

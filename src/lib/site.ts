@@ -20,13 +20,15 @@ export const site = {
    * src/content/guides/facts.ts); 1.21.10 stays recommended because the resource pack is made for it.
    */
   edition: 'Java Edition',
+  /** Bedrock players join through Geyser on the same address (proxy, port 19132 TCP + UDP), since 2026-11-25. */
+  bedrockPort: 19132,
   versionLabel: 'Java 1.21.x',
   recommendedVersion: '1.21.10',
   tagline: 'People to play with, people to grow with.',
   /** Second line of the live MOTD (proxy config). Keep the two in step; there is no "City". */
   motdLine: 'Survival | Dungeons | Plots | Shops',
   description:
-    'KasadyaCraft is a friendly Minecraft Java survival server with plots, player shops, daily quests and a dungeon with a real boss fight. Hop in at play.kasadyacraft.com.',
+    'KasadyaCraft is a friendly Minecraft survival server for Java and Bedrock with plots, player shops, daily quests and a dungeon with a real boss fight. Hop in at play.kasadyacraft.com.',
   /** "Kasadya" means joy or festivity. The whole brand is a festival. */
   meaning: 'Kasadya means joy, the feeling of a town fiesta.',
   founded: '2024',

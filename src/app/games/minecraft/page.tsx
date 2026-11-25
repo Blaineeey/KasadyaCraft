@@ -14,7 +14,7 @@ import { pageMetadata } from '@/lib/seo'
 export const metadata: Metadata = pageMetadata({
   title: 'KasadyaCraft Survival',
   description:
-    'KasadyaCraft Survival: free plots, player shops, daily quests and the Lab of Horrors dungeon. Minecraft Java Edition, play.kasadyacraft.com.',
+    'KasadyaCraft Survival: free plots, player shops, daily quests and the Lab of Horrors dungeon. Minecraft Java and Bedrock, play.kasadyacraft.com.',
   path: '/games/minecraft',
 })
 

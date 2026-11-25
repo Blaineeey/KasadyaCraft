@@ -36,7 +36,7 @@ export default function HomePage() {
           id="home-join"
           eyebrow="How to join"
           title="Four steps and you are in"
-          lead="Works on any computer that runs Minecraft: Java Edition. Click through the steps, then go play."
+          lead="Java on a computer, or Bedrock on your phone. Click through the steps, then go play."
         />
         <Panel material="deepslate" padding="lg" className={homeStyles.stepPanel}>
           <JoinStepper />

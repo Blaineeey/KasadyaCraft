@@ -31,9 +31,17 @@ export const faq: WikiPage = {
       text: `The address is \`${site.address}\` on **Java Edition 1.21.x**, with **${site.recommendedVersion}** recommended because our resource pack is made for it. Newer versions like 1.21.11 and 26.1 connect too. In fact anything from ${VERSIONS.oldest} to ${VERSIONS.newest} gets in. Step by step help is on [How to join](/play).`,
     },
     { type: 'h3', text: 'Can I play on Bedrock (phone, console, Windows Bedrock)?' },
-    { type: 'p', text: 'Not right now. KasadyaCraft is Java Edition only.' },
+    {
+      type: 'p',
+      text: `Yes, on phones, tablets and Windows: address \`${site.address}\`, port \`${site.bedrockPort}\`. No password needed, and your name gets a dot in front. Consoles need a helper app such as BedrockConnect. Custom dungeon monsters and some icons may not show on Bedrock.`,
+    },
     { type: 'h3', text: 'Do I need a paid Minecraft account?' },
-    { type: 'p', text: 'Yes. You need a real Java Edition account. Cracked or offline accounts cannot join.' },
+    {
+      type: 'p',
+      text: 'No. Paid accounts log in automatically. Without one you type `/register <password> <password>` the first time and `/login <password>` after that. Names of paid accounts are reserved for their owners.',
+    },
+    { type: 'h3', text: 'I forgot my password. What now?' },
+    { type: 'p', text: 'Ask staff on Discord to reset your account. You can change a password you still know with `/changepassword <old> <new>`.' },
     { type: 'h3', text: 'Do I need the resource pack?' },
     {
       type: 'p',

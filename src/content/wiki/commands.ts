@@ -42,6 +42,9 @@ export const commands: WikiPage = {
       items: [
         { command: '/survival', description: 'From the hub, go to Survival. `/smp` and `/server smp` work too.' },
         { command: '/hub', description: 'Back to the hub from anywhere. Also `/lobby`.' },
+        { command: '/register <password> <password>', description: 'First time without a paid account: pick your password. At least 8 characters.' },
+        { command: '/login <password>', description: 'Log in. Paid Java accounts and Bedrock players do not need it.' },
+        { command: '/changepassword <old> <new>', description: 'Change your password.' },
       ],
     },
     { type: 'h2', text: 'Menus and help' },
