@@ -60,7 +60,7 @@ export const commands: WikiPage = {
       type: 'commands',
       items: [
         { command: '/spawn', description: 'Go to the Survival spawn.' },
-        { command: '/warp <name>', description: 'Warps: spawn, shop, mall, crates, afk, dungeon.' },
+        { command: '/warp <name>', description: 'Warps: spawn, shop, mall, crates, afk, dungeon, pvp, duel.' },
         { command: '/sethome <name>', description: 'Save a home where you stand.' },
         { command: '/home <name>', description: 'Go to a home. With just one home, `/home` is enough.' },
         { command: '/delhome <name>', description: 'Delete a home.' },
