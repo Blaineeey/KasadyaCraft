@@ -36,6 +36,19 @@ export default function StoreBrowser({ support }: { support: ReactNode }) {
     return () => window.removeEventListener('hashchange', sync)
   }, [])
 
+  // On very narrow phones the tab row scrolls sideways: keep the active tab in view
+  // (moves only the row, never the page).
+  useEffect(() => {
+    const tab = tabRefs.current[active]
+    const row = tab?.parentElement
+    if (!tab || !row || row.scrollWidth <= row.clientWidth) return
+    const pad = 8
+    if (tab.offsetLeft < row.scrollLeft) row.scrollLeft = tab.offsetLeft - pad
+    else if (tab.offsetLeft + tab.offsetWidth > row.scrollLeft + row.clientWidth) {
+      row.scrollLeft = tab.offsetLeft + tab.offsetWidth - row.clientWidth + pad
+    }
+  }, [active])
+
   const select = useCallback((id: StoreCategoryId, focus = false) => {
     setActive(id)
     try {
@@ -104,7 +117,14 @@ export default function StoreBrowser({ support }: { support: ReactNode }) {
                 onKeyDown={onTabKey}
               >
                 <StoreSprite shape={c.sprite.shape} tone={c.sprite.tone} size={32} />
-                <span className={s.tabLabel}>{c.name}</span>
+                {c.short ? (
+                  <span className={s.tabLabel}>
+                    <span className={s.labelShort}>{c.short}</span>
+                    <span className={s.labelLong}>{c.name}</span>
+                  </span>
+                ) : (
+                  <span className={s.tabLabel}>{c.name}</span>
+                )}
               </button>
             )
           })}

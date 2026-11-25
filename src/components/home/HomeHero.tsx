@@ -19,8 +19,23 @@ export default function HomeHero() {
 
       <div className={`kc-container ${s.inner}`}>
         {/* DOM order = phone order (logo, join, sign); desktop places them with grid areas. */}
+        {/*
+          The logo is the LCP element on phones and desktop. `priority` preloads it from <head>,
+          fetchPriority="high" makes that preload start at high priority instead of waiting for
+          layout, and `sizes` matches the CSS widths (.logo: 220px, 340px from 960px) so phones
+          get the 384w WebP (22 KB), not the full 500px file.
+        */}
         <h1 id="home-title" className={s.title}>
-          <Image src="/logo.png" alt="" width={360} height={360} priority className={s.logo} sizes="(min-width: 960px) 340px, 220px" />
+          <Image
+            src="/logo.png"
+            alt=""
+            width={360}
+            height={360}
+            priority
+            fetchPriority="high"
+            className={s.logo}
+            sizes="(min-width: 960px) 340px, 220px"
+          />
           <span className="kc-sr-only">{site.name}: a friendly Minecraft survival server</span>
         </h1>
 
@@ -33,7 +48,7 @@ export default function HomeHero() {
           </p>
           <LiveStatus variant="card" />
           <div className={s.plate}>
-            <CopyIp size="lg" showHint className={s.copy} />
+            <CopyIp size="lg" showHint fill />
             <div className={s.actions}>
               <PixelButton href="/play" icon="grass" size="lg">
                 How to join

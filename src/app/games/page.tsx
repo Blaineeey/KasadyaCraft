@@ -4,12 +4,14 @@ import { CopyIp, LiveStatus } from '@/components/interactive'
 import PageHero from '@/components/shell/PageHero'
 import { Badge, Panel, PixelButton, PixelIcon, SectionHeading, type PixelIconName } from '@/components/ui'
 import { popularGames, servers, site, type ServerStatusLabel } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import styles from './games.module.css'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Games',
   description: 'The game servers the KasadyaCraft community runs, and the games the crew plays together on game night.',
-}
+  path: '/games',
+})
 
 const serverIcon: Record<string, PixelIconName> = {
   minecraft: 'grass',

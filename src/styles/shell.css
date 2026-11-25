@@ -103,6 +103,7 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   letter-spacing: 0.02em;
   color: var(--kc-teal);
   text-shadow: 2px 2px 0 #000;
+  text-wrap: balance; /* 768-859px: two even lines, not a lone "SHOPS" */
 }
 
 .kc-header__tools {
@@ -128,7 +129,20 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   }
 }
 
-/* ---------- Hotbar (main nav) ----------------------------------------------------- */
+/* 640-767px: the status and IP chips join the bar and leave the wordmark about 200px. At full
+   size "KasadyaCraft" ran into the player count, and the MOTD broke over three lines, so the
+   wordmark steps down a size and the MOTD waits for wider screens (the chips say the same). */
+@media (min-width: 640px) and (max-width: 767px) {
+  .kc-brand__word {
+    font-size: var(--fs-lg);
+  }
+
+  .kc-brand__motd {
+    display: none;
+  }
+}
+
+/* ---------- Hotbar (main nav)----------------------------------------------------- */
 .kc-hotbar {
   position: fixed;
   z-index: var(--z-hotbar);
@@ -156,7 +170,34 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   background: var(--plate);
   border: var(--bw-thin) solid var(--edge);
   clip-path: var(--notch-2);
-  animation: kc-label-in var(--dur) steps(3) both;
+  /* backwards, not both: a held end frame (opacity 1) would beat the fade-out below */
+  animation: kc-label-in var(--dur) steps(3) backwards;
+}
+
+/* Like the game's item name: up for about two seconds after a page load or a slot change, then it
+   fades (Hotbar.tsx sets data-asleep), so it never covers a button or a table row for long.
+   It keeps its space, so the bar does not jump. A mouse over the bar or keyboard focus in it
+   brings it back. Touch screens get no hover rule: a tapped slot stays :hover there. */
+.kc-hotbar__label[data-asleep] {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-slow) steps(4, end),
+    visibility 0s linear var(--dur-slow);
+}
+
+.kc-hotbar:has(.kc-hotbar__slot:focus-visible) .kc-hotbar__label {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .kc-hotbar:hover .kc-hotbar__label {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
 }
 
 .kc-hotbar__label-name {

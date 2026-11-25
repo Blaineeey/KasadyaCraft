@@ -14,12 +14,16 @@ export const site = {
   url: 'https://kasadyacraft.com',
   /** What players type in Multiplayer > Add Server. */
   address: 'play.kasadyacraft.com',
-  /** Player-facing version line. Via 5.5.2 on the backends accepts clients up to 1.21.10. */
+  /**
+   * Player-facing version line. Via 5.12.3 on the backends accepts 1.13 to 26.3 (VERSIONS in
+   * src/content/guides/facts.ts); 1.21.10 stays recommended because the resource pack is made for it.
+   */
   edition: 'Java Edition',
   versionLabel: 'Java 1.21.x',
   recommendedVersion: '1.21.10',
   tagline: 'People to play with, people to grow with.',
-  motdLine: 'Dungeon | City | Plot | Adventure',
+  /** Second line of the live MOTD (proxy config). Keep the two in step; there is no "City". */
+  motdLine: 'Survival | Dungeons | Plots | Shops',
   description:
     'KasadyaCraft is a friendly Minecraft Java survival server with plots, player shops, daily quests and a dungeon with a real boss fight. Hop in at play.kasadyacraft.com.',
   /** "Kasadya" means joy or festivity. The whole brand is a festival. */
@@ -170,45 +174,31 @@ export const activities = [
   },
 ]
 
-/** Why people join. */
-export const reasons = [
-  {
-    title: 'Someone to play with',
-    body: 'No more empty friend lists or random lobbies. There is always someone here up for a session.',
-  },
-  {
-    title: 'Someone to grow with',
-    body: 'Get better at the games you love, and at the things outside them. Members share what they know freely.',
-  },
-  {
-    title: 'Someone in your corner',
-    body: 'A group that notices when you are gone, celebrates your wins and listens on the bad days.',
-  },
-]
-
+/*
+ * No logo field on purpose: the site never ships publishers' logos (no Mojang art at all,
+ * and the repo is public). GameStack draws its own pixel icons, picked by genre.
+ */
 export interface ShowcaseGame {
   name: string
   sub: string
-  /** Official logo file under /public/games, shown in its original colours */
-  logo: string
   hosted?: boolean
 }
 
 /** Popular games the community plays (the /games showcase). */
 export const popularGames: ShowcaseGame[] = [
-  { name: 'Minecraft', sub: 'KasadyaCraft Survival', logo: '/games/minecraft.png', hosted: true },
-  { name: 'Roblox', sub: 'Kasadya group', logo: '/games/roblox.png', hosted: true },
-  { name: 'Valorant', sub: 'Ranked & customs', logo: '/games/valorant.svg' },
-  { name: 'League of Legends', sub: 'Flex queue', logo: '/games/lol.svg' },
-  { name: 'Dota 2', sub: 'Ranked & turbo', logo: '/games/dota2.png' },
-  { name: 'Counter-Strike 2', sub: 'Premier & casual', logo: '/games/cs2.svg' },
-  { name: 'Mobile Legends', sub: 'Squad nights', logo: '/games/mlbb.png' },
-  { name: 'Call of Duty', sub: 'Warzone', logo: '/games/cod.svg' },
-  { name: 'Fortnite', sub: 'Trios', logo: '/games/fortnite.svg' },
-  { name: 'Apex Legends', sub: 'Pubs & ranked', logo: '/games/apex.png' },
-  { name: 'Diablo IV', sub: 'Seasons & co-op', logo: '/games/diablo4.png' },
-  { name: 'GTA', sub: 'Online sessions', logo: '/games/gta.svg' },
-  { name: 'NBA 2K', sub: 'Park & MyTeam', logo: '/games/nba2k.svg' },
+  { name: 'Minecraft', sub: 'KasadyaCraft Survival', hosted: true },
+  { name: 'Roblox', sub: 'Kasadya group', hosted: true },
+  { name: 'Valorant', sub: 'Ranked & customs' },
+  { name: 'League of Legends', sub: 'Flex queue' },
+  { name: 'Dota 2', sub: 'Ranked & turbo' },
+  { name: 'Counter-Strike 2', sub: 'Premier & casual' },
+  { name: 'Mobile Legends', sub: 'Squad nights' },
+  { name: 'Call of Duty', sub: 'Warzone' },
+  { name: 'Fortnite', sub: 'Trios' },
+  { name: 'Apex Legends', sub: 'Pubs & ranked' },
+  { name: 'Diablo IV', sub: 'Seasons & co-op' },
+  { name: 'GTA', sub: 'Online sessions' },
+  { name: 'NBA 2K', sub: 'Park & MyTeam' },
 ]
 
 export interface TeamMember {

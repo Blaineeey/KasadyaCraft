@@ -10,6 +10,9 @@ const DISCORD = 'https://discord.gg/8DY3eXHnAg'
 const nextConfig: NextConfig = {
   // Lets a verification build run in a separate folder while `next dev` is active.
   distDir: process.env.NEXT_DIST_DIR || '.next',
+  // images.formats stays on the default (WebP). AVIF was measured on the hero logo, the LCP image:
+  // 384w 21.9 KB AVIF vs 22.0 KB WebP, 640w 24.7 KB vs 23.3 KB. No saving, and AVIF is slower to
+  // encode on a cold cache and to decode on low-end phones.
   async redirects() {
     return [
       // ---- Old site structure -------------------------------------------------

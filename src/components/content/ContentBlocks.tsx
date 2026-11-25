@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Badge, Callout, Command, Slot, SlotGrid } from '@/components/ui'
 import { slugify, type ContentBlock, type RankId } from '@/lib/content'
 import { renderInline } from './RichText'
+import TableFrame from './TableFrame'
 
 /**
  * Renders a guide/wiki body (ContentBlock[]). Styling lives in
@@ -23,6 +24,80 @@ const rankLabel: Record<RankId, string> = {
   mvp: 'MVP',
   'mvp-plus': 'MVP+',
   'mvp-plus-plus': 'MVP++',
+}
+
+type TableBlock = Extract<ContentBlock, { type: 'table' }>
+
+/** Inline markup stripped to plain text, for data-labels and aria-labels. */
+function plainText(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)\s]+\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+}
+
+/**
+ * Should this table turn into one card per row on phones (< 600px)? Only when it has 3+ columns
+ * and its text would not fit a ~300px phone column without being squeezed into one word per line:
+ * roughly 7.5px per character, each column capped at 18 characters, plus cell padding.
+ * Short-celled tables (prices, counts) stay a compact table instead.
+ */
+function stacksOnPhones(b: TableBlock): boolean {
+  if (b.head.length < 3) return false
+  const width = b.head.reduce((sum, h, c) => {
+    const longest = Math.max(0, ...b.rows.map((r) => plainText(r[c] ?? '').length))
+    return sum + Math.max(Math.min(longest, 18), Math.min(plainText(h).length, 14)) * 7.5 + 24
+  }, 0)
+  return width > 300
+}
+
+/** Cells this short sit on one line next to their label in the phone cards, like a stat line. */
+const SHORT_CELL = 18
+
+function Table({ b }: { b: TableBlock }) {
+  const stack = stacksOnPhones(b)
+  const labels = b.head.map(plainText)
+  const label = b.caption ? plainText(b.caption) : `Table: ${labels.join(', ')}`
+  /* Explicit table roles keep the semantics when CSS turns the rows into cards (display: block). */
+  const role = (r: string) => (stack ? r : undefined)
+  return (
+    <TableFrame label={label} caption={b.caption ? renderInline(b.caption) : undefined} stack={stack}>
+      <table className="kc-table" role={role('table')}>
+        {b.caption ? <caption className="kc-sr-only">{renderInline(b.caption)}</caption> : null}
+        <thead role={role('rowgroup')}>
+          <tr role={role('row')}>
+            {b.head.map((h) => (
+              <th key={h} scope="col" role={role('columnheader')}>
+                {renderInline(h)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody role={role('rowgroup')}>
+          {b.rows.map((row, r) => (
+            <tr key={r} role={role('row')}>
+              {row.map((cell, c) => {
+                if (c === 0) {
+                  return (
+                    <th key={c} scope="row" role={role('rowheader')}>
+                      {renderInline(cell)}
+                    </th>
+                  )
+                }
+                if (!stack) return <td key={c}>{renderInline(cell)}</td>
+                const text = plainText(cell).trim()
+                return (
+                  <td key={c} role="cell" data-label={labels[c]} data-short={text && text.length <= SHORT_CELL ? '' : undefined}>
+                    {text ? <span className="kc-cell">{renderInline(cell)}</span> : null}
+                  </td>
+                )
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </TableFrame>
+  )
 }
 
 export default function ContentBlocks({ blocks, tone = 'dark', className }: ContentBlocksProps) {
@@ -98,29 +173,7 @@ export default function ContentBlocks({ blocks, tone = 'dark', className }: Cont
               </Callout>
             )
           case 'table':
-            return (
-              <div key={i} className="kc-table-wrap" role="region" aria-label={b.caption ?? 'Table'} tabIndex={0}>
-                <table className="kc-table">
-                  {b.caption ? <caption>{b.caption}</caption> : null}
-                  <thead>
-                    <tr>
-                      {b.head.map((h) => (
-                        <th key={h} scope="col">
-                          {renderInline(h)}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {b.rows.map((row, r) => (
-                      <tr key={r}>
-                        {row.map((cell, c) => (c === 0 ? <th key={c} scope="row">{renderInline(cell)}</th> : <td key={c}>{renderInline(cell)}</td>))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )
+            return <Table key={i} b={b} />
           case 'slots':
             return (
               <SlotGrid key={i} label={b.label} title={b.title} columns={b.columns}>

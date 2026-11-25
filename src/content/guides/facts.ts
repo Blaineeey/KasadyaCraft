@@ -7,9 +7,22 @@
  * Owner: STARTER-GUIDE WRITER. Change a number here and every guide follows.
  */
 import type { GuideArtName } from '@/components/guides/guide-art'
+import { PLAYTIME_LADDER, playtimeReward, roman, shopPrices } from '@/content/facts'
 import type { RankId } from '@/lib/content'
 
+/* Shop prices, the playtime ladder, daily quests and money() are shared with the wiki: src/content/facts.ts. */
+export { money } from '@/content/facts'
+
 export const CHECKED = '2026-11-25'
+
+/**
+ * Game versions that can join. ViaVersion + ViaBackwards 5.12.3 on hub and Survival (live since the
+ * 05:13-05:19 restarts, CHANGELOG): block-versions "<1.13"; the Velocity proxy (modern forwarding)
+ * refuses anything older than 1.13 itself and anything newer than 26.3. Verified after the restarts:
+ * protocols 393 (1.13) and 773-777 (1.21.10 to 26.3) accepted, 778 refused. The resource pack is
+ * made for site.recommendedVersion (1.21.10), so that stays the version we recommend.
+ */
+export const VERSIONS = { oldest: '1.13', newest: '26.3' } as const
 
 /** <srv>/plugins/Essentials/config.yml starting-balance */
 export const STARTING_BALANCE = 250
@@ -79,10 +92,10 @@ export const RANK_LADDER: RankStep[] = [
  */
 export const RANK_COMMANDS: { rank: string; commands: string }[] = [
   { rank: 'VIP', commands: '`/nv` night vision, `/sit`, `/craft` (a crafting table anywhere), `/kittycannon`' },
-  { rank: 'VIP+', commands: '`/back`, `/tpahere`, `/lay`, `/anvil`, `/grindstone`, `/carttable`' },
+  { rank: 'VIP+', commands: '`/back`, `/tpahere`, `/lay` (plus `/layback`, `/bellyflop` and `/spin`), `/anvil`, `/grindstone`, `/carttable`' },
   { rank: 'MVP', commands: '`/repair`, `/feed`, `/condense`, `/seen`, `/loom`, `/crawl`' },
-  { rank: 'MVP+', commands: '`/fly`, `/heal`, `/hat`, `/echest`, `/stonecutter`, `/beezooka`' },
-  { rank: 'MVP++', commands: '`/god`, `/pweather`, `/bigtree`, `/smite`, `/smithtable`, `/clear` (empties your own inventory)' },
+  { rank: 'MVP+', commands: '`/fly` (plot world and Shopping Mall only), `/heal`, `/hat`, `/echest`, `/stonecutter`, `/beezooka`' },
+  { rank: 'MVP++', commands: '`/pweather`, `/bigtree`, `/smite`, `/smithtable`, `/clear` (empties your own inventory)' },
 ]
 
 /** Essentials kits.yml, item by item. Rank kits carry the lore "Cannot be sold to the shop". */
@@ -161,28 +174,40 @@ export const KITS: { kit: string; title: string; every: string; items: string[] 
   },
 ]
 
-/** EconomyShopGUI shops/*.yml: buy price / what the shop pays (null = the shop will not buy it). */
-export const SHOP_PRICES: { item: string; buy: number; sell: number | null; note?: string }[] = [
-  { item: 'Cobblestone', buy: 0.4, sell: 0.1 },
-  { item: 'Oak Log', buy: 8, sell: 2 },
-  { item: 'Sugar Cane', buy: 2, sell: 0.5 },
-  { item: 'Iron Ingot', buy: 12, sell: 3 },
-  { item: 'Diamond', buy: 400, sell: 100 },
-  { item: 'Netherite Scrap', buy: 320, sell: 80 },
-  { item: 'Glass', buy: 2, sell: null, note: 'Crafted' },
-  { item: 'Chest', buy: 8.33, sell: null, note: 'Crafted' },
-  { item: 'Golden Apple', buy: 136.5, sell: null, note: 'Crafted' },
-  { item: 'Emerald', buy: 24, sell: null, note: 'Not on the sell list' },
-]
+/**
+ * The /shop prices the guides show (PriceTooltips, first-day). The numbers live in ONE list shared
+ * with the wiki economy page: SHOP in src/content/facts.ts (EconomyShopGUI shops/*.yml, re-read after
+ * the round 3 reprice of 07:22: Iron Ingot 6/1.5, Raw Iron 11.2/2.8, Glass 1.6, Golden Apple 86.1).
+ * Raw iron pays more than the ingot, so the first-day guide quotes raw iron. The economy team is
+ * still tuning, so re-check <srv>/plugins/EconomyShopGUI/shops/*.yml right before each release.
+ */
+export const SHOP_PRICES = shopPrices([
+  'Cobblestone',
+  'Oak Log',
+  'Sugar Cane',
+  'Raw Iron',
+  'Iron Ingot',
+  'Diamond',
+  'Netherite Scrap',
+  'Glass',
+  'Chest',
+  'Golden Apple',
+  'Emerald',
+])
 
-/** DeluxeMenus gui_menus/BASIC/Playtime.yml (first levels). */
-export const PLAYTIME_LEVELS = [
-  { level: 'I', after: '1 hour', reward: '100 XP' },
-  { level: 'II', after: '3 hours', reward: '$500' },
-  { level: 'III', after: '6 hours', reward: '$1,000' },
-  { level: 'IV', after: '10 hours', reward: '$1,500' },
-  { level: 'V', after: '15 hours', reward: '100 Tokens and 500 points' },
-] as const
+/**
+ * The command that opens the playtime levels menu. DeluxeMenus BASIC/Playtime.yml open_command is
+ * levels / playtime / playtimes, but EssentialsX declares its own /playtime in plugin.yml and keeps it,
+ * so /playtime prints Essentials' playtime line instead of the menu. Nothing else claims /levels.
+ */
+export const PLAYTIME_COMMAND = '/levels'
+
+/** First five playtime levels, built from the full ladder in src/content/facts.ts (BASIC/Playtime.yml). */
+export const PLAYTIME_LEVELS = PLAYTIME_LADDER.slice(0, 5).map((l) => ({
+  level: roman(l.level),
+  after: l.after,
+  reward: playtimeReward(l),
+}))
 
 /**
  * Lab of Horrors. MythicDungeons groups/LabOfHorrors/{general,stages,lootchests}.yml,
@@ -248,9 +273,3 @@ export const CHAMBER_KEYS: { name: string; art: GuideArtName; opens: string; ite
     ],
   },
 ]
-
-/** Money formatting used in guide text: 0.4 -> "$0.40", 8 -> "$8", 5000 -> "$5,000". */
-export function money(n: number): string {
-  const whole = Number.isInteger(n)
-  return `$${n.toLocaleString('en-US', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 })}`
-}

@@ -66,9 +66,15 @@ export default function ItemTooltip({ title, rarity, lines, children, focusable 
     const panel = panelRef.current
     if (!wrap || !panel) return { side: placement, shift: 0 }
     const r = wrap.getBoundingClientRect()
-    // The panel is laid out even while hidden (visibility), so it can be measured.
+    // A closed panel is display:none (so it never widens the page). Lay it out unseen for
+    // one synchronous read, then hand it back to the stylesheet.
+    const { display, visibility } = panel.style
+    panel.style.display = 'block'
+    panel.style.visibility = 'hidden'
     const pw = panel.offsetWidth
     const ph = panel.offsetHeight
+    panel.style.display = display
+    panel.style.visibility = visibility
     const vw = document.documentElement.clientWidth
     const vh = window.innerHeight
 

@@ -3,6 +3,7 @@ import PageHero from '@/components/shell/PageHero'
 import { Callout, Command, Panel, PixelButton, PixelIcon, SectionHeading, TooltipCard } from '@/components/ui'
 import { formatPrice, getStoreItem, priceLabel } from '@/lib/store'
 import { site } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import VoteChest from './VoteChest'
 import s from './vote.module.css'
 
@@ -16,10 +17,11 @@ import s from './vote.module.css'
  * - The Vote crate is placed at /warp crates; its key and contents come from
  *   src/lib/store.ts (PURCHASE/Keys.yml + ExcellentCrates vote_crate.yml).
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Vote',
   description: 'Voting for KasadyaCraft is not open yet. Here is what is missing, what already exists, and what you can do today.',
-}
+  path: '/vote',
+})
 
 const NEEDED = [
   { title: 'Listings on server-list sites', text: 'KasadyaCraft has to be listed before there is anything to vote on.' },
@@ -30,7 +32,7 @@ const NEEDED = [
 const TODAY = [
   { command: '/rewards', description: 'Your daily reward. Claim it every day you log in.' },
   { command: '/dquests', description: 'Fresh daily quests with their own rewards.' },
-  { command: '/playtime', description: 'Playtime milestones. Some of them pay out Tokens.' },
+  { command: '/levels', description: 'Playtime milestones. Some of them pay out Tokens.' },
   { command: '/warp afk', description: 'The AFK pool: 10 points every 20 minutes.' },
 ]
 
@@ -109,7 +111,7 @@ export default function VotePage() {
               </TooltipCard>
               <div className={s.crateCmds}>
                 <Command command="/warp crates" description="Walk to the crates at spawn" />
-                <Command command={voteKey.commands?.[0] ?? '/store'} description="Opens the key shop. Vote keys cost Tokens." />
+                <Command command={voteKey.commands?.[0] ?? '/keys'} description="Opens the key shop. Vote keys cost Tokens." />
                 <PixelButton href="/store" variant="gold" icon="key">
                   Keys in the store
                 </PixelButton>

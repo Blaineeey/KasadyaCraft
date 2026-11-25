@@ -220,7 +220,7 @@ function CheckoutPanel({ lines }: { lines: ListLine[] }) {
         <PixelButton variant="gold" icon="coin" href={STORE_CHECKOUT_URL} external block>
           Continue on the web store
         </PixelButton>
-        <p className={s.small}>Pick the same items there. Anything marked &ldquo;in game only&rdquo; is bought with /store.</p>
+        <p className={s.small}>Pick the same items there. Anything marked &ldquo;in game only&rdquo; is bought with /purchase.</p>
       </div>
     )
   }

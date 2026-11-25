@@ -1,6 +1,9 @@
 import { iconRuns, pixelIcons, type PixelIconName } from './pixel-icons'
+import { memoPaths, type PixelPath } from './pixel-paths'
 
 export type { PixelIconName }
+
+const pathCache = new Map<PixelIconName, PixelPath[]>()
 
 export interface PixelIconProps {
   name: PixelIconName
@@ -12,12 +15,12 @@ export interface PixelIconProps {
 }
 
 /**
- * Original pixel-art icon rendered as crisp SVG rects.
+ * Original pixel-art icon rendered as crisp SVG, one <path> per colour (see pixel-paths.ts).
  * Owner: PIXEL UI DESIGNER.
  */
 export default function PixelIcon({ name, size = 32, title, className }: PixelIconProps) {
-  const def = pixelIcons[name] ?? pixelIcons.missing!
-  const runs = iconRuns(def)
+  const key = pixelIcons[name] ? name : 'missing'
+  const paths = memoPaths(pathCache, key, () => iconRuns(pixelIcons[key]!))
   const a11y = title ? { role: 'img' as const, 'aria-label': title } : { 'aria-hidden': true as const }
   return (
     <svg
@@ -31,8 +34,8 @@ export default function PixelIcon({ name, size = 32, title, className }: PixelIc
       {...a11y}
     >
       {title ? <title>{title}</title> : null}
-      {runs.map(([x, y, w, fill]) => (
-        <rect key={`${x}-${y}`} x={x} y={y} width={w} height={1} fill={fill} />
+      {paths.map((p) => (
+        <path key={p.fill} fill={p.fill} d={p.d} />
       ))}
     </svg>
   )

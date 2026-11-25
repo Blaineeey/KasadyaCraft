@@ -1,12 +1,14 @@
 import type { Guide } from '@/lib/content'
 import { site } from '@/lib/site'
-import { CHECKED } from './facts'
+import { CHECKED, VERSIONS } from './facts'
 
 /*
  * Sources: proxy velocity.toml (try = hub, failover on), Hub plugins/KasadyaLobby/config.yml
  * (portal, Survival Guide NPC, compass in the middle hotbar slot, /survival /smp /hub /lobby,
  * double jump, first-join fireworks + "Member #N"), Hub DeluxeMenus selector.yml (/menu),
- * Survival server.properties (require-resource-pack=true, prompt text), ViaVersion 5.5.2 on both backends.
+ * Survival server.properties (require-resource-pack=true, prompt text; the game shows Proceed /
+ * Disconnect, and Disconnect drops the player off the whole network), ViaVersion + ViaBackwards
+ * 5.12.3 on both backends (1.13 to 26.3 can join, see VERSIONS in facts.ts).
  */
 export const joining: Guide = {
   slug: 'joining',
@@ -28,7 +30,7 @@ export const joining: Guide = {
     {
       type: 'list',
       items: [
-        `Java Edition **${site.recommendedVersion}**. Older 1.21 versions may connect, but newer ones like 1.21.11 can't join yet.`,
+        `Java Edition **${site.recommendedVersion}**. Anything from ${VERSIONS.oldest} to ${VERSIONS.newest} can join, but our resource pack is made for ${site.recommendedVersion}, so it looks best there.`,
         `The address: \`${site.address}\``,
         'A few seconds to download our resource pack the first time you enter Survival.',
       ],
@@ -47,8 +49,8 @@ export const joining: Guide = {
           command: site.address,
         },
         {
-          title: 'Say yes to the resource pack',
-          text: 'When you step into Survival the game asks to download our pack. Click **Yes**. It holds the custom items, dungeon mobs and menus. Click No and you get sent back to the hub.',
+          title: 'Accept the resource pack',
+          text: 'When you step into Survival the game asks to download our pack. Click **Proceed**. It holds the custom items, dungeon mobs and menus. Click Disconnect and you leave the server. No harm done: rejoin and click Proceed.',
         },
       ],
     },

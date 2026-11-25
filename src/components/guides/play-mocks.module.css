@@ -101,11 +101,18 @@
   box-shadow: var(--bevel-up);
 }
 
+/* Side by side when both labels fit, stacked when not: "Disconnect" is wider than half the
+   dialog on phones, and a fixed 1fr 1fr grid pushed /play to ~400px wide at 320. */
 .buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--s-3);
   width: 100%;
+}
+
+.buttons > * {
+  flex: 1 1 0;
+  min-width: max-content;
 }
 
 .result {

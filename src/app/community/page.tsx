@@ -2,13 +2,15 @@ import type { Metadata } from 'next'
 import PageHero from '@/components/shell/PageHero'
 import { Command, NameTag, Panel, PixelButton, PixelIcon, SectionHeading, type ChatColor, type PixelIconName } from '@/components/ui'
 import { activities, site, team } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import styles from './community.module.css'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Community',
   description:
     'KasadyaCraft is a community that plays together and grows together, in games and in life. See what happens here, meet the team and learn how to reach us.',
-}
+  path: '/community',
+})
 
 /* One original icon per notice on the board, in the order of `activities`. */
 const activityIcons: PixelIconName[] = ['controller', 'firework', 'chat', 'flower']

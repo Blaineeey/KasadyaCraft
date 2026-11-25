@@ -1,8 +1,9 @@
+import { DAILY_QUEST_BONUS, DAILY_QUESTS, count } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
 
 /*
  * Overview of every feature. Facts checked 2026-11-25 against the live Survival
- * and Hub configs (see the per-page files for the exact sources).
+ * and Hub configs (see the per-page files for the exact sources; shared numbers in src/content/facts.ts).
  */
 export const features: WikiPage = {
   slug: 'features',
@@ -51,8 +52,8 @@ export const features: WikiPage = {
     {
       type: 'list',
       items: [
-        '3 daily quests in `/dquests`. Finish all three for $1,500 and a diamond block.',
-        'Daily, weekly and monthly rewards in `/rewards`.',
+        `${DAILY_QUESTS.perDay} daily quests in \`/dquests\`, ${count(DAILY_QUESTS.xpEach)} XP each. Finish all ${DAILY_QUESTS.perDay} for ${DAILY_QUEST_BONUS}.`,
+        'Daily, weekly and monthly rewards in `/rewards`, Tokens included.',
         'Playtime levels in `/levels`: money, XP, points and Tokens as your hours add up.',
         'The AFK pool at `/warp afk`: 10 points every 20 minutes. See [AFK pool](/wiki/afk-pool).',
         'Chat games every few minutes. See [Chat games](/wiki/chat-games).',
@@ -70,7 +71,7 @@ export const features: WikiPage = {
       items: [
         'Crates are at `/warp crates`. See [Crates and keys](/wiki/crates) for what is inside.',
         'You can collect spawners with a Silk Touch diamond or netherite pickaxe. Rules on [Spawners](/wiki/spawners).',
-        'Legendary weapons have wild abilities, and their block damage only works in the Wild. See [Legendary weapons](/wiki/legendary-weapons).',
+        'Legendary weapons are not obtainable yet. When they arrive, their block damage will only work in the Wild. See [Legendary weapons](/wiki/legendary-weapons).',
       ],
     },
     { type: 'h2', text: 'Ranks and Tokens' },

@@ -143,14 +143,6 @@
   color: var(--text);
 }
 
-.caption {
-  padding: var(--s-3);
-  text-align: left;
-  font-family: var(--font-pixel);
-  color: var(--text-dim);
-  caption-side: top;
-}
-
 .table th,
 .table td {
   padding: var(--s-2) var(--s-3);
@@ -220,10 +212,18 @@
   margin-inline: auto;
 }
 
+/* "not included": a flat pixel dash, big enough to read at a glance */
 .no {
-  font-family: var(--font-term);
-  font-size: var(--fs-xl);
-  color: var(--text-muted);
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  vertical-align: middle;
+  background: var(--text-muted);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.45);
+}
+
+.yes {
+  flex: none;
 }
 
 .table .groupRow th {
@@ -261,6 +261,344 @@
 .footnote {
   font-size: var(--fs-sm);
   color: var(--text-dim);
+}
+
+.compareLead {
+  font-family: var(--font-pixel);
+  color: var(--text-dim);
+}
+
+/* Phones get the rank picker, wider screens the table. display:none also hides the
+   other one from screen readers, so nobody hears the ranks twice. */
+.tableBlock {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .picker {
+    display: none;
+  }
+
+  .tableBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+}
+
+/* ---------- Command groups inside the table -------------------------------- */
+.tableTools {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.toolButton {
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+  background: var(--mat-stone-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 3px 0 0 var(--mat-deepslate-dark);
+  margin-bottom: 3px;
+  transition: transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+}
+
+.toolButton:active {
+  transform: translateY(3px);
+  box-shadow: var(--bevel-down);
+}
+
+.table .cmdGroup th,
+.table .cmdGroup td {
+  background-color: var(--surface-1);
+}
+
+.cmdToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+}
+
+.cmdToggle:hover .cmdGroupName {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chevron {
+  flex: none;
+  transition: transform var(--dur-fast) steps(2);
+}
+
+.cmdToggle[aria-expanded='true'] .chevron {
+  transform: rotate(90deg);
+}
+
+.cmdGroupName {
+  color: var(--rank, var(--text));
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.cmdChips {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-term);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  line-height: 1.2;
+  word-spacing: 0.35em;
+  color: var(--chat-aqua);
+}
+
+.table .cmdRows th {
+  padding-left: calc(var(--s-3) + var(--s-5));
+}
+
+/* ---------- Rank picker (phones) ------------------------------------------ */
+.pickerSet {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pickerLegend {
+  margin-bottom: var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+.segments {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s-1);
+}
+
+.segment {
+  --rank: var(--text);
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* the real radio sits on top of the face, invisible: native arrows, focus and taps */
+.segmentInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmentFace {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+  background: var(--mat-deepslate-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 3px 0 0 var(--edge);
+  margin-bottom: 3px;
+  transition: transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+}
+
+.segmentInput:checked + .segmentFace {
+  color: var(--ink);
+  text-shadow: none;
+  background: var(--rank);
+  box-shadow: var(--bevel-down);
+  transform: translateY(3px);
+}
+
+.segmentInput:focus-visible + .segmentFace {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 399.98px) {
+  .segmentFace {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* The chosen rank, drawn as an item tooltip: dark panel, purple edge */
+.pick {
+  --rank: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  color: var(--tooltip-text);
+  background: var(--tooltip-bg);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--tooltip-edge-top), inset 0 calc(var(--bw-thin) * -2) 0 0 var(--tooltip-edge-bottom);
+}
+
+.pickHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.pickSlot {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.pickHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pickName {
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.pickPrice {
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  color: var(--chat-yellow);
+}
+
+.pickTagline {
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.pickNeeds {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.pickStats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.pickStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--s-2) var(--s-1);
+  text-align: center;
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--tooltip-edge-bottom);
+}
+
+.pickStatNum {
+  font-family: var(--font-term);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--text);
+}
+
+.pickStatLabel {
+  font-size: var(--fs-xs);
+  line-height: 1.25;
+  color: var(--text-dim);
+}
+
+.newBadge {
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--chat-green);
+}
+
+.pickSub {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding-top: var(--s-2);
+  font-size: var(--fs-lg);
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+  border-top: var(--bw-thin) solid var(--tooltip-edge-bottom);
+}
+
+.pickCount {
+  flex: none;
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink);
+  text-shadow: none;
+  background: var(--kc-gold);
+}
+
+.pickList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.pickItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+}
+
+.pickItemText {
+  min-width: 0;
+}
+
+.keptList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.keptChip {
+  padding: 0 var(--s-1);
+  font-family: var(--font-term);
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  color: var(--text-dim);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--surface-3);
 }
 
 /* ---------- Tokens ladder (advancements on an XP track) --------------------- */
@@ -347,6 +685,25 @@
   color: var(--text-muted);
 }
 
+.ladderHead {
+  font-size: var(--fs-lg);
+  color: var(--kc-gold);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.ladderHead:not(:first-child) {
+  margin-top: var(--s-2);
+}
+
+/* the command a repeat source is claimed with, in the "total" slot of the card */
+.ladderCmd {
+  grid-area: total;
+  justify-self: start;
+  margin-top: var(--s-1);
+  font-size: var(--fs-sm);
+  color: var(--chat-aqua);
+}
+
 @media (min-width: 760px) {
   .ladderSteps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -365,6 +722,9 @@
 }
 
 .ladderNote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
   max-width: 70ch;
   color: var(--text-dim);
 }

@@ -9,8 +9,10 @@ import type { WikiPage } from '@/lib/content'
  * - plugins/ExcellentCrates/config.yml Rewards.Rarities: common 70, uncommon 40, rare 25, legendary 10, mythic 5
  * - Odds = rarity weight / sum of rarity weights present in that crate x reward weight / sum of reward weights in
  *   that rarity (same model as /root/launch/work/econ-balancer/crate_ev.py and the zSpawner integrator's odds)
- * - Crate positions: spawn world (warp crates); spawner crate has no position yet (CHANGELOG zSpawner entry)
- * NOTE: epic_crate.yml reward "epic_crossbow" is an ARROW item (id minecraft:arrow) named EPIC CROSSBOW. Reported.
+ * - Crate positions: spawn world (warp crates); spawner_crate.yml Positions -52,71,46,spawn since the gameplay fixer.
+ *   Spawner keys: PURCHASE/Keys.yml Spawner_Key (100 Tokens) + Playtime.yml L27 (CHANGELOG gameplay fixer)
+ * - epic_crate.yml epic_crossbow ItemsData (re-read 06:55): id minecraft:crossbow named EPIC CROSSBOW, mending, multishot,
+ *   piercing 4, quick_charge 3, unbreaking 3, charged_projectiles = 3 intangible arrows (comes loaded).
  */
 export const crates: WikiPage = {
   slug: 'crates',
@@ -99,7 +101,7 @@ export const crates: WikiPage = {
         ['Epic Hoe (diamond)', 'Efficiency V, Mending, Unbreaking III'],
         ['Epic Elytra', 'Mending, Unbreaking III'],
         ['Epic Bow', 'Power V, Punch II, Flame, Infinity, Unbreaking III'],
-        ['Epic Crossbow', 'Multishot, Piercing IV, Quick Charge III, Mending, Unbreaking III. Being fixed: it currently drops as an arrow.'],
+        ['Epic Crossbow', 'Multishot, Piercing IV, Quick Charge III, Mending, Unbreaking III. Comes loaded and ready to fire.'],
         ['Epic Shield', 'Mending, Unbreaking III'],
         ['Epic Fishing Rod', 'Luck of the Sea III, Lure III, Mending, Unbreaking III'],
         ['Epic Shears, Brush or Flint and Steel', 'Mending, Unbreaking III'],
@@ -127,7 +129,7 @@ export const crates: WikiPage = {
     { type: 'h2', text: 'Spawner crate' },
     {
       type: 'p',
-      text: 'Gives a placeable spawner that you can move later with a Silk Touch diamond or netherite pickaxe. This crate is not set up at spawn yet and spawner keys are not handed out yet. When it opens, these are the odds:',
+      text: 'Gives a placeable spawner that you can move later with a Silk Touch diamond or netherite pickaxe. It stands with the other crates at `/warp crates`. Buy a Spawner key in `/keys` for 100 Tokens, or get one free at playtime level XXVII. These are the odds:',
     },
     {
       type: 'table',

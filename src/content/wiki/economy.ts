@@ -1,9 +1,12 @@
-import type { WikiPage } from '@/lib/content'
+import { DAILY_QUEST_BONUS, FACTS_CHECKED, TOKEN_SOURCES_TEXT, money, shopPrice, shopPrices, type ShopItem } from '@/content/facts'
+import type { ContentBlock, WikiPage } from '@/lib/content'
 
 /*
  * Sources (read-only, 2026-11-25):
  * - Essentials config: starting-balance 250, currency $, /sell disabled
- * - EconomyShopGUI shops/*.yml (8 sections, 843 entries, ~190 sellable materials), sample prices read directly;
+ * - EconomyShopGUI shops/*.yml (8 sections, 843 entries, ~190 sellable materials). The price table renders from
+ *   SHOP in src/content/facts.ts (shared with the guides), re-read after the round 3 reprice (files dated 07:22);
+ *   raw iron 2.8 and raw gold 3.8 now sell for more than the ingots (1.5 / 2.5), so the page says sell them raw;
  *   economy balancer log in /root/launch/CHANGELOG.md (sell = 25% of buy, loop fixes, totem 3500/20)
  * - ToastedAFK denied_commands: /shop
  * - CustomFishing config: earnings-multiplier 0.25, daily limitation 2500 (balancer log)
@@ -11,8 +14,42 @@ import type { WikiPage } from '@/lib/content'
  * - FreeCoinFlip: min 1000, tax enabled 5% (balancer log)
  * - QuickShop: cost 100, refund false, fee-for-price-change 50, tax 0.05; ARM stall prices; AlonsoTags prices
  * - LuckPerms default: essentials.pay, no playerpoints.pay, no flaretokens pay
- * - Tokens: DeluxeMenus BASIC/Playtime.yml `ft give` (100 + 100 + 150 + 500)
+ * - Tokens: DailyRewards `tokens give` 10/50/150, ODailyQuests global_reward 25, Playtime.yml `ft give` (850),
+ *   via TOKEN_SOURCES in src/content/facts.ts
  */
+const priceRows = shopPrices([
+  'Diamond',
+  'Raw Gold',
+  'Gold Ingot',
+  'Raw Iron',
+  'Iron Ingot',
+  'Coal',
+  'Lapis Lazuli',
+  'Oak Log',
+  'Cod',
+  'Sugar Cane',
+  'Bone',
+  'Cobblestone',
+  'Emerald',
+  'Netherite Ingot',
+  'Totem of Undying',
+]).map((p) => [p.item, money(p.buy), p.sell === null ? 'Buy only' : money(p.sell)])
+
+/** What the shop pays for one item (0 when it will not buy it). */
+const sells = (item: ShopItem) => shopPrice(item).sell ?? 0
+
+/* Only give the "sell it raw" advice while the live prices back it up (round 3 reprice: yes). */
+const sellRawTip: ContentBlock[] =
+  sells('Raw Iron') > sells('Iron Ingot') && sells('Raw Gold') > sells('Gold Ingot')
+    ? [
+        {
+          type: 'callout',
+          tone: 'tip',
+          text: `Sell iron and gold raw. Raw iron pays ${money(sells('Raw Iron'))} and raw gold ${money(sells('Raw Gold'))}, but the ingots only get ${money(sells('Iron Ingot'))} and ${money(sells('Gold Ingot'))}. Smelting first loses you money.`,
+        },
+      ]
+    : []
+
 export const economy: WikiPage = {
   slug: 'economy',
   title: 'Money and the shop',
@@ -20,7 +57,7 @@ export const economy: WikiPage = {
   icon: 'coin',
   category: 'economy',
   order: 1,
-  updated: '2026-11-25',
+  updated: FACTS_CHECKED,
   keywords: [
     '/shop',
     '/sell',
@@ -49,11 +86,11 @@ export const economy: WikiPage = {
       rows: [
         [
           'Money ($)',
-          'Selling raw materials, player shops, daily quests, playtime levels, chat games, the fish market',
+          'Selling raw materials, player shops, the daily quest bonus, playtime levels, chat games, the fish market',
           'Shop items, player shops, chat tags, Mall stalls, coinflip',
         ],
         ['Points (✪)', 'AFK pool, weekly and monthly rewards, playtime level V, or buy them with Tokens', 'Chat colours in `/cosmetics`, ✪25 each'],
-        ['Tokens (⛃)', 'Playtime levels only, 850 in total right now', 'Ranks, crate keys and points in `/purchase`'],
+        ['Tokens (⛃)', TOKEN_SOURCES_TEXT, 'Ranks, crate keys and points in `/purchase`'],
       ],
     },
     {
@@ -77,22 +114,9 @@ export const economy: WikiPage = {
       type: 'table',
       caption: 'Some prices right now',
       head: ['Item', 'Buy', 'Sell'],
-      rows: [
-        ['Diamond', '$400', '$100'],
-        ['Gold ingot', '$16', '$4'],
-        ['Iron ingot', '$12', '$3'],
-        ['Coal', '$8', '$2'],
-        ['Lapis lazuli', '$8', '$2'],
-        ['Oak log', '$8', '$2'],
-        ['Cod', '$12', '$3'],
-        ['Sugar cane', '$2', '$0.50'],
-        ['Bone', '$1.20', '$0.30'],
-        ['Cobblestone', '$0.40', '$0.10'],
-        ['Emerald', '$24', 'Buy only'],
-        ['Netherite ingot', '$1,411.20', 'Buy only'],
-        ['Totem of Undying', '$3,500', '$20'],
-      ],
+      rows: priceRows,
     },
+    ...sellRawTip,
     {
       type: 'p',
       text: 'We rebalance now and then, so the shop itself always has the latest price.',
@@ -160,7 +184,7 @@ export const economy: WikiPage = {
       type: 'list',
       items: [
         'Mining is the steady earner at the start. Diamonds sell for $100 each.',
-        'Do all 3 daily quests: you get $1,500 and a diamond block on top of the quest rewards.',
+        `Do all 3 daily quests: you get ${DAILY_QUEST_BONUS} on top of the XP from each quest.`,
         'Claim `/rewards` every day and check `/levels` as your playtime grows. Level II already pays $500.',
         'Sell to players for more than the shop pays. Set up a [chest shop](/wiki/player-shops) on your plot.',
         'A Mall stall costs at least $5,000 a week. Start with chest shops on your plot and rent a stall once you sell enough to cover it.',

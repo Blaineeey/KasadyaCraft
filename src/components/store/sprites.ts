@@ -717,6 +717,3 @@ export function spriteRuns(ref: SpriteRef): [number, number, number, string][] {
   })
   return runs
 }
-
-/** Every shape name, for previews and tests. */
-export const spriteShapes = Object.keys(shapes) as SpriteShape[]

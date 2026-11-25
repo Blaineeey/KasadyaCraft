@@ -55,7 +55,7 @@ export async function startTebexCheckout(lines: CheckoutLine[], username: string
   }
   const sellable = tebexLines(lines)
   if (sellable.length === 0) {
-    return { ok: false, message: 'Nothing on your list is sold on the web store yet. Buy it in game with /store.', fallbackUrl }
+    return { ok: false, message: 'Nothing on your list is sold on the web store yet. Buy it in game with /purchase.', fallbackUrl }
   }
 
   const controller = new AbortController()

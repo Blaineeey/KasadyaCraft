@@ -16,16 +16,18 @@ import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import { site } from '@/lib/site'
 import { CHECKOUT_MODE, STORE_CHECKOUT_URL } from '@/lib/store'
+import { pageMetadata } from '@/lib/seo'
 
 /*
  * /store. Owner: STORE ENGINEER. Data: src/lib/store.ts (single source of truth).
  * Contract and content rules: docs/SITE_PLAN.md
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Store',
   description:
     'Ranks, crate keys and cosmetics on KasadyaCraft: what each one really gives you and how to get it in game with Tokens, Points or money.',
-}
+  path: '/store',
+})
 
 export default function StorePage() {
   const webOpen = CHECKOUT_MODE !== 'off'
@@ -75,7 +77,8 @@ export default function StorePage() {
                   </span>
                 ) : (
                   <span>
-                    <strong>Web store: opening soon.</strong> Until then, open <code>/store</code> in game.
+                    <strong>Web store: opening soon.</strong> Until then, open <code>/purchase</code> in game, or go
+                    straight to <code>/ranks</code> or <code>/keys</code>.
                   </span>
                 )}
               </div>

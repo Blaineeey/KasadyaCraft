@@ -11,6 +11,7 @@ import WikiToc from '@/components/wiki/WikiToc'
 import { formatWikiDate } from '@/components/wiki/format'
 import { getWikiPage, neighbours, relatedPages, wikiCategories, wikiPages } from '@/content/wiki'
 import { tocFromBlocks } from '@/lib/content'
+import { pageMetadata } from '@/lib/seo'
 import { site } from '@/lib/site'
 
 /*
@@ -30,12 +31,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const page = getWikiPage(slug)
   if (!page) return {}
-  return {
+  return pageMetadata({
     title: `${page.title} (Wiki)`,
+    socialTitle: `${page.title} | KasadyaCraft Wiki`,
     description: page.summary,
-    alternates: { canonical: `/wiki/${page.slug}` },
-    openGraph: { title: `${page.title} | KasadyaCraft Wiki`, description: page.summary, type: 'article' },
-  }
+    path: `/wiki/${page.slug}`,
+    type: 'article',
+    modifiedTime: page.updated,
+  })
 }
 
 export default async function WikiArticlePage({ params }: Props) {

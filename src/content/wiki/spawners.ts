@@ -9,7 +9,7 @@ import type { WikiPage } from '@/lib/content'
  * - spigot.yml nerf-spawner-mobs true (zSpawner integrator log)
  * - PlotSquared worlds.yml mob_spawner_spawning false; WorldGuard shoppingmall mob-spawning DENY; spawn region denies build
  * - EconomyShopGUI: spawners not sold; spawner-provider DISABLED; sell prices (bone/string 0.30, rotten flesh 0.10)
- * - ExcellentCrates spawner_crate.yml (unplaced, no keys in circulation)
+ * - ExcellentCrates spawner_crate.yml (placed at /warp crates; keys from PURCHASE/Keys.yml for 100 Tokens and playtime L27)
  */
 export const spawners: WikiPage = {
   slug: 'spawners',
@@ -46,7 +46,7 @@ export const spawners: WikiPage = {
     },
     {
       type: 'p',
-      text: 'The Spawner crate will give spawners too, once spawner keys are handed out. See [Crates and keys](/wiki/crates).',
+      text: 'The Spawner crate at `/warp crates` gives spawners too. Its keys cost 100 Tokens in `/keys`, and playtime level XXVII hands you one. See [Crates and keys](/wiki/crates).',
     },
     { type: 'h2', text: 'Placing and moving' },
     {

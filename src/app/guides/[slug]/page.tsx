@@ -11,6 +11,7 @@ import PixelIcon from '@/components/ui/PixelIcon'
 import { getGuide, guideNumber, guides, guideStageLabels } from '@/content/guides'
 import { getWikiPage } from '@/content/wiki'
 import { tocFromBlocks } from '@/lib/content'
+import { pageMetadata } from '@/lib/seo'
 import s from '../guides.module.css'
 
 /*
@@ -29,12 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const guide = getGuide(slug)
   if (!guide) return {}
-  return {
+  return pageMetadata({
     title: `${guide.title} (Starter guide)`,
+    socialTitle: `${guide.title} | KasadyaCraft starter guide`,
     description: guide.summary,
-    alternates: { canonical: `/guides/${guide.slug}` },
-    openGraph: { title: `${guide.title} | KasadyaCraft starter guide`, description: guide.summary, type: 'article' },
-  }
+    path: `/guides/${guide.slug}`,
+    type: 'article',
+    modifiedTime: guide.updated,
+  })
 }
 
 /** Titles for contracted wiki slugs, used until the wiki page itself exists. */

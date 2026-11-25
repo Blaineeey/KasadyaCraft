@@ -1,9 +1,12 @@
+import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { site } from '@/lib/site'
-import { formatPrice, ranks, tokensFromPlaytime, tokensToReach } from '@/lib/store'
+import { formatPrice, PLAYTIME_MENU, ranks, tokenPace, tokenSources, tokensToReach, type TokenSource } from '@/lib/store'
 import s from './StorePage.module.css'
 
 const top = ranks[ranks.length - 1]
+const tokens = (amount: number) => formatPrice({ currency: 'tokens', amount })
+const earn = (id: TokenSource['id']) => tokens(tokenSources.find((t) => t.id === id)?.tokens ?? 0)
 
 /*
  * OWNER PLACEHOLDERS in this file (search for "PLACEHOLDER"):
@@ -20,7 +23,7 @@ const faqs: { q: string; a: ReactNode }[] = [
         <a href={site.discord} target="_blank" rel="noopener noreferrer">
           Discord
         </a>{' '}
-        and the Buy buttons here will start working.
+        and you will be able to buy on this page too.
       </>
     ),
   },
@@ -28,9 +31,11 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'How do I get Tokens?',
     a: (
       <>
-        From the playtime ladder: open <code>/playtime</code> and claim each level when you reach it. That gives{' '}
-        {formatPrice({ currency: 'tokens', amount: tokensFromPlaytime })} in total right now. Check your balance in{' '}
-        <code>/store</code>.
+        By playing. <code>/rewards</code> pays {earn('daily')} a day, {earn('weekly')} a week and {earn('monthly')} a month.
+        Finish all three daily quests in <code>/dquests</code> for {earn('quests')} more. Playtime levels in{' '}
+        <code>{PLAYTIME_MENU}</code> add {earn('playtime')} in total as your hours go up. Play most days and {ranks[0].name}{' '}
+        takes about {tokenPace.vipAfter}. Your balance shows at the top of <code>/ranks</code>, and you spend Tokens in{' '}
+        <code>/purchase</code>.
       </>
     ),
   },
@@ -85,8 +90,9 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'What are the odds in the crates?',
     a: (
       <>
-        We list everything each crate can give, but we do not publish exact odds yet. Every listed reward can drop. Keys also
-        come from your daily reward (<code>/rewards</code>) and from rank kits.
+        The odds for every reward in every crate are on the wiki: <Link href="/wiki/crates">Crates and keys</Link>. Tap a key in
+        the store to see its main chances. Keys also come from your daily reward (<code>/rewards</code>), a few playtime levels
+        and rank kits.
       </>
     ),
   },

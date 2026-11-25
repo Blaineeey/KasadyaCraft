@@ -384,7 +384,3 @@ export const guideArt: Record<GuideArtName, PixelIconDef> = {
   'key-emerald': { palette: { K, k: '#80b874' }, rows: key },
   'key-star': { palette: { K, k: '#94a7c6' }, rows: key },
 }
-
-export function isGuideArt(name: string): name is GuideArtName {
-  return Object.prototype.hasOwnProperty.call(guideArt, name)
-}

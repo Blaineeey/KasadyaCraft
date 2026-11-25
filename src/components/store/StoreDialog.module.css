@@ -304,12 +304,23 @@
   box-shadow: inset 0 var(--bevel) 0 var(--gui-light);
 }
 
-.soonWrap {
-  flex-basis: 100%;
+/* "Web store: soon" is aria-disabled (it stays focusable so its reason can be read):
+   no hover glow and no press, but the keyboard focus ring stays. */
+.foot .soonButton:hover:not(:focus-visible),
+.foot .soonButton:active:not(:focus-visible) {
+  box-shadow:
+    var(--bevel-up),
+    0 var(--press-depth) 0 0 var(--btn-base),
+    0 calc(var(--press-depth) + var(--bw)) 0 0 var(--edge);
 }
 
-.soonWrap:empty {
-  display: none;
+.soonNote {
+  flex: 1 1 16rem;
+  max-width: 44ch;
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-dim);
 }
 
 .soon {

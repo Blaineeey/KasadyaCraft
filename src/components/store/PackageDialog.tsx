@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import Link from 'next/link'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import Command from '@/components/ui/Command'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
@@ -74,7 +75,6 @@ export default function PackageDialog() {
 
 function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void }) {
   const { add, quantityOf, setListOpen } = useStore()
-  const [soon, setSoon] = useState(false)
   const rank = item.rankId ? getRank(item.rankId) : undefined
   const needs = rank?.requires ? getRank(rank.requires) : undefined
   const realPrice = webPrice(item.web)
@@ -139,8 +139,15 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
                 ))}
               </ul>
             ) : null}
-            {item.contents && item.category === 'keys' ? (
-              <p className={s.small}>Every listed reward can drop. We do not publish exact odds yet.</p>
+            {item.category === 'keys' && item.odds ? (
+              <p className={s.small}>
+                <strong>Chances:</strong> {item.odds}
+              </p>
+            ) : null}
+            {item.category === 'keys' ? (
+              <p className={s.small}>
+                The odds for every reward in every crate are on the wiki: <Link href="/wiki/crates">Crates and keys</Link>.
+              </p>
             ) : null}
           </section>
 
@@ -233,42 +240,40 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
               Buy now
             </PixelButton>
           ) : (
-            <PixelButton variant="gold" icon="coin" onClick={() => setSoon(true)} aria-expanded={soon} aria-controls="store-item-soon">
-              Buy online
-            </PixelButton>
+            /* No web store yet (no Tebex URL or token set): an honest, disabled button with the reason right next to it.
+               The gold Buy button above comes back by itself once NEXT_PUBLIC_TEBEX_STORE_URL or _PUBLIC_TOKEN is set. */
+            <>
+              <PixelButton
+                variant="stone"
+                icon="lantern"
+                className={s.soonButton}
+                aria-disabled="true"
+                aria-describedby="store-item-soon-note"
+              >
+                Web store: soon
+              </PixelButton>
+              <p id="store-item-soon-note" className={s.soonNote}>
+                No real money yet.{' '}
+                {item.commands?.[0] ? (
+                  <>
+                    Get it in game right now: type <code>{item.commands[0]}</code> in Survival.
+                  </>
+                ) : (
+                  <>
+                    Get it in game right now with <code>/purchase</code>.
+                  </>
+                )}{' '}
+                Want to know the day the web store opens?{' '}
+                <a href={site.discord} target="_blank" rel="noopener noreferrer">
+                  Ask in our Discord
+                  <span className="kc-sr-only"> (opens in a new tab)</span>
+                </a>
+                .
+              </p>
+            </>
           )
         ) : null}
-
-        <div id="store-item-soon" className={s.soonWrap} role="status">
-          {soon ? <OpeningSoon item={item} /> : null}
-        </div>
       </footer>
-    </div>
-  )
-}
-
-/** The friendly "no web store yet" state. Never a broken checkout. */
-export function OpeningSoon({ item }: { item?: StoreItem }) {
-  return (
-    <div className={s.soon}>
-      <p className={s.soonTitle}>
-        <PixelIcon name="lantern" size={24} /> The web store is opening soon
-      </p>
-      <p>
-        We do not take real money yet.{' '}
-        {item?.commands?.[0] ? (
-          <>
-            You can get this in game right now: join <strong>{site.address}</strong>, hop into Survival and type{' '}
-            <code>{item.commands[0]}</code>.
-          </>
-        ) : (
-          <>Everything here can be bought in game right now with /store.</>
-        )}{' '}
-        Want to know the day the web store opens? Join our Discord.
-      </p>
-      <PixelButton variant="discord" icon="chat" href={site.discord}>
-        Join the Discord
-      </PixelButton>
     </div>
   )
 }

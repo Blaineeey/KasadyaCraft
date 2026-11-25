@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Metric-matched fallback fonts (stops layout shift when the web fonts swap in).
+   Owner: SITE ARCHITECT / INTEGRATOR (added by the tech fixer).
+
+   Until Atkinson Hyperlegible Next and Pixelify Sans arrive, text renders in a
+   local system font that is resized (size-adjust) so each line keeps the same width.
+   When the web font swaps in, lines do not re-wrap and the page does not jump.
+   Each family is listed in layout.tsx (next/font `fallback`), right after the web font.
+
+   Numbers come from the real font files (fontkit, the copy bundled with Next) measured
+   on this site's own text: 245 headings and the first-day guide's paragraphs.
+     Atkinson 400 / Arial 0.977, Atkinson 700 / Arial Bold 0.992
+     Pixelify 600 (headings) / Arial Bold 1.058, Pixelify 400 / Arial 1.116
+     Roboto (Android has no Arial): regular x1.0023, bold x1.062 of the Arial value
+   ascent/descent-override = font ascent 984 / descent 316 (Atkinson), 920 / 280 (Pixelify),
+   divided by size-adjust. Bold text gets its own face, so no synthetic bold changes widths.
+   If a font file changes, re-measure; do not guess.
+   ========================================================================== */
+
+/* ---- Body: Atkinson Hyperlegible Next ---------------------------------- */
+@font-face {
+  font-family: 'Atkinson Fallback';
+  font-style: normal;
+  font-weight: 100 549;
+  src: local('Arial'), local('ArialMT'), local('Arimo'), local('Liberation Sans'), local('LiberationSans'), local('Helvetica');
+  size-adjust: 97.7%;
+  ascent-override: 100.72%;
+  descent-override: 32.34%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Atkinson Fallback';
+  font-style: normal;
+  font-weight: 550 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Arimo Bold'), local('Liberation Sans Bold'), local('LiberationSans-Bold'),
+    local('Helvetica Bold');
+  size-adjust: 99.2%;
+  ascent-override: 99.19%;
+  descent-override: 31.85%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Atkinson Fallback Roboto';
+  font-style: normal;
+  font-weight: 100 549;
+  src: local('Roboto'), local('Roboto-Regular'), local('Roboto Regular');
+  size-adjust: 97.92%;
+  ascent-override: 100.49%;
+  descent-override: 32.27%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Atkinson Fallback Roboto';
+  font-style: normal;
+  font-weight: 550 900;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 105.32%;
+  ascent-override: 93.43%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+/* ---- Headings, buttons, nav: Pixelify Sans ------------------------------ */
+@font-face {
+  font-family: 'Pixelify Fallback';
+  font-style: normal;
+  font-weight: 100 549;
+  src: local('Arial'), local('ArialMT'), local('Arimo'), local('Liberation Sans'), local('LiberationSans'), local('Helvetica');
+  size-adjust: 111.6%;
+  ascent-override: 82.44%;
+  descent-override: 25.09%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Pixelify Fallback';
+  font-style: normal;
+  font-weight: 550 900;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Arimo Bold'), local('Liberation Sans Bold'), local('LiberationSans-Bold'),
+    local('Helvetica Bold');
+  size-adjust: 105.8%;
+  ascent-override: 86.96%;
+  descent-override: 26.47%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Pixelify Fallback Roboto';
+  font-style: normal;
+  font-weight: 100 549;
+  src: local('Roboto'), local('Roboto-Regular'), local('Roboto Regular');
+  size-adjust: 111.85%;
+  ascent-override: 82.25%;
+  descent-override: 25.03%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Pixelify Fallback Roboto';
+  font-style: normal;
+  font-weight: 550 900;
+  src: local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 112.33%;
+  ascent-override: 81.9%;
+  descent-override: 24.93%;
+  line-gap-override: 0%;
+}

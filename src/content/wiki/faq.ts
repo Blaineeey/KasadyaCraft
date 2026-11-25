@@ -1,9 +1,13 @@
+import { FACTS_CHECKED, TOKEN_SOURCES_TEXT } from '@/content/facts'
+import { VERSIONS } from '@/content/guides/facts'
 import type { WikiPage } from '@/lib/content'
+import { site } from '@/lib/site'
 
 /*
  * Answers summarise facts verified for the other wiki pages (see their source notes) plus:
  * - Velocity proxy online-mode true, no Geyser (CHANGELOG infra + cutover entries)
- * - ViaVersion/ViaBackwards 5.5.2 on hub + survival: clients up to 1.21.10 (CHANGELOG QA blocker note)
+ * - ViaVersion/ViaBackwards 5.12.3 live on hub + survival since the 2026-11-25 05:13-05:19 restarts: 1.21.11 and
+ *   26.x clients connect (VERSIONS in src/content/guides/facts.ts); the pack is made for site.recommendedVersion
  * - survival server.properties require-resource-pack=true; hub sends no pack
  * - CombatLogX default-timer 10, punish.yml kill on disconnect
  * - vote.sk: voting not open, no Votifier
@@ -15,7 +19,7 @@ export const faq: WikiPage = {
   icon: 'question',
   category: 'help',
   order: 1,
-  updated: '2026-11-25',
+  updated: FACTS_CHECKED,
   keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money'],
   related: ['features', 'commands', 'rules', 'world-and-warps'],
   body: [
@@ -23,7 +27,7 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'What is the IP and version?' },
     {
       type: 'p',
-      text: 'The address is `play.kasadyacraft.com` on **Java Edition 1.21.x**, with 1.21.10 recommended. Newer versions like 1.21.11 cannot join yet. Step by step help is on [How to join](/play).',
+      text: `The address is \`${site.address}\` on **Java Edition 1.21.x**, with **${site.recommendedVersion}** recommended because our resource pack is made for it. Newer versions like 1.21.11 and 26.1 connect too. In fact anything from ${VERSIONS.oldest} to ${VERSIONS.newest} gets in. Step by step help is on [How to join](/play).`,
     },
     { type: 'h3', text: 'Can I play on Bedrock (phone, console, Windows Bedrock)?' },
     { type: 'p', text: 'Not right now. KasadyaCraft is Java Edition only.' },
@@ -32,7 +36,7 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'Do I need the resource pack?' },
     {
       type: 'p',
-      text: 'Yes, Survival needs it for the custom items, dungeon mobs and menus. If you clicked no by accident, go to Multiplayer, select the server, click Edit, set Server Resource Packs to Enabled or Prompt, and join again.',
+      text: 'Yes, Survival needs it for the custom items, dungeon mobs and menus. The game asks with two buttons: click **Proceed**. Disconnect takes you off the server. Clicked it by accident? Rejoin and pick Proceed. To skip the question, go to Multiplayer, select the server, click Edit and set Server Resource Packs to Enabled.',
     },
     { type: 'h3', text: 'I joined but I am in a plaza. Where is Survival?' },
     {
@@ -84,7 +88,7 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'How do I get a rank?' },
     {
       type: 'p',
-      text: 'With Tokens from playtime levels, in `/ranks`. You buy them in order, VIP first. See [Ranks](/wiki/ranks).',
+      text: `With Tokens, in \`/ranks\`. You earn them from ${TOKEN_SOURCES_TEXT}. You buy ranks in order, VIP first. See [Ranks](/wiki/ranks).`,
     },
     { type: 'h3', text: 'Can I buy ranks with real money?' },
     { type: 'p', text: 'Not yet. There is no web store today. The [store page](/store) explains what you can get in game.' },

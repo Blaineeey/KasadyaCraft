@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { PixelButton } from '@/components/ui'
-import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, priceLabel, ranks, tokenMilestones } from '@/lib/store'
+import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, priceLabel, ranks, tokensFirstRewards } from '@/lib/store'
 import s from './StoreTeaser.module.css'
 
 /**
@@ -10,7 +10,6 @@ import s from './StoreTeaser.module.css'
  * Owner: INTERACTIVITY ENGINEER.
  */
 export default function StoreTeaser() {
-  const firstTokens = tokenMilestones[0]
   const webStore = CHECKOUT_MODE !== 'off' && STORE_CHECKOUT_URL
 
   return (
@@ -38,19 +37,14 @@ export default function StoreTeaser() {
         <p className={s.text}>Buy ranks and keys on our web store, or with Tokens in game. Same perks either way.</p>
       ) : (
         <p className={s.text}>
-          No credit card on this site. Ranks, crate keys and cosmetics are bought in game with Tokens: type{' '}
-          <code className="kc-cmd-inline">/store</code>.
-          {firstTokens ? (
-            <>
-              {' '}
-              You earn Tokens by playing. The first {firstTokens.tokens} come at {firstTokens.playtime}, see{' '}
-              <code className="kc-cmd-inline">/playtime</code>.
-            </>
-          ) : null}
+          No credit card on this site. Ranks and crate keys are bought in game with Tokens: type{' '}
+          <code className="kc-cmd-inline">/purchase</code>. You earn Tokens by playing. Your first{' '}
+          <code className="kc-cmd-inline">/rewards</code> claims already give{' '}
+          {formatPrice({ currency: 'tokens', amount: tokensFirstRewards })}, and daily quests and playtime levels add more.
         </p>
       )}
 
-      <p className={s.fine}>Cosmetics are looks only. Nothing in the store wins fights for you.</p>
+      <p className={s.fine}>Cosmetics are looks only. They never win fights.</p>
 
       <div className={s.ctas}>
         <PixelButton href="/store" variant="gold" icon="chest">

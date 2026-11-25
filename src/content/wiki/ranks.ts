@@ -1,6 +1,8 @@
+import { TOKEN_SOURCES_TEXT } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
 
 /*
+ * Token sources come from TOKEN_SOURCES in src/content/facts.ts (DailyRewards, ODailyQuests, Playtime.yml).
  * Perks, limits, prices and kits are NOT written here. They render from src/lib/store.ts (ranks, defaultLimits,
  * starterKit, tokensToReach, tokenMilestones) through the 'compare-ranks' and 'rank-kits' inserts
  * (src/components/wiki/inserts.tsx), so they live in exactly one place.
@@ -30,7 +32,7 @@ export const ranks: WikiPage = {
     {
       type: 'steps',
       items: [
-        { title: 'Earn Tokens', text: 'Tokens come from playtime levels in `/levels`. See [Quests and rewards](/wiki/rewards).' },
+        { title: 'Earn Tokens', text: `Tokens come from ${TOKEN_SOURCES_TEXT}. See [Quests and rewards](/wiki/rewards).` },
         { title: 'Open the rank menu', text: 'Type `/ranks`, or open `/purchase` and pick Ranks.', command: '/ranks' },
         { title: 'Buy the next rank', text: 'You need the rank below it first. The Tokens are taken, the rank is yours right away, and you get a little firework.' },
       ],

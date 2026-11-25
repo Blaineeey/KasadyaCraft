@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import CommunityStrip from '@/components/home/CommunityStrip'
 import CraftingTable from '@/components/home/CraftingTable'
@@ -8,6 +9,15 @@ import homeStyles from '@/components/home/Home.module.css'
 import JoinStepper from '@/components/home/JoinStepper'
 import StoreTeaser from '@/components/home/StoreTeaser'
 import { Panel, SectionHeading } from '@/components/ui'
+import { pageMetadata } from '@/lib/seo'
+import { site } from '@/lib/site'
+
+/* No title: the home page keeps the root layout's default title. */
+export const metadata: Metadata = pageMetadata({
+  socialTitle: `${site.name}: Minecraft survival with plots, shops and a dungeon`,
+  description: site.description,
+  path: '/',
+})
 
 /*
  * HOME. Owner: INTERACTIVITY ENGINEER.

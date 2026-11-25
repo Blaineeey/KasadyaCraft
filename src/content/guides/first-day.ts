@@ -1,14 +1,26 @@
+import { DAILY_QUESTS_LINE, DAILY_REWARDS, dailyRewardText, shopPrice, type ShopItem } from '@/content/facts'
 import type { Guide } from '@/lib/content'
 import { site } from '@/lib/site'
-import { CHECKED, PLAYTIME_LEVELS, PLOT, RTP_COOLDOWN_SECONDS, SHOP_PRICES, STARTING_BALANCE, WILD_SIZE, money } from './facts'
+import {
+  CHECKED,
+  PLAYTIME_COMMAND,
+  PLAYTIME_LEVELS,
+  PLOT,
+  RTP_COOLDOWN_SECONDS,
+  STARTING_BALANCE,
+  WILD_SIZE,
+  money,
+} from './facts'
 
 /*
  * Sources: Essentials config.yml (newbies.kit starter, kit-auto-equip, sethome-multiple member 1,
  * starting-balance), kits.yml (starter delay 86400), WorldGuard spawn region (pvp deny), spawn world
  * keepInventory true, Citizens NPCs at spawn, DeluxeMenus Guide/Warp/Rtp/Playtime menus, Skript rtp.sk,
- * PlotSquared (free claims, 51x51), DailyRewards config.yml, ODailyQuests quests/*.yml.
+ * PlotSquared (free claims, 51x51), DailyRewards config.yml, ODailyQuests config.yml + quests/global.yml
+ * (global mode only; quest and reward facts live in src/content/facts.ts).
  */
-const price = (item: string) => money(SHOP_PRICES.find((p) => p.item === item)?.sell ?? 0)
+/** What the shop pays for one item (EconomyShopGUI sell price, shared SHOP list in src/content/facts.ts). */
+const price = (item: ShopItem) => money(shopPrice(item).sell ?? 0)
 const level = (n: string) => PLAYTIME_LEVELS.find((l) => l.level === n)!
 
 export const firstDay: Guide = {
@@ -81,7 +93,7 @@ export const firstDay: Guide = {
     { type: 'h2', text: 'Gather and sell' },
     {
       type: 'p',
-      text: `**Minute 15.** Chop logs, mine stone, look for iron. Then head back with \`/spawn\` and open \`/shop\`. The shop pays for raw materials: an oak log sells for ${price('Oak Log')}, an iron ingot for ${price('Iron Ingot')} and a diamond for ${price('Diamond')}.`,
+      text: `**Minute 15.** Chop logs, mine stone, look for iron. Then head back with \`/spawn\` and open \`/shop\`. The shop pays for raw materials: an oak log sells for ${price('Oak Log')}, a piece of raw iron for ${price('Raw Iron')} and a diamond for ${price('Diamond')}. Sell raw iron, not ingots: an iron ingot only gets ${price('Iron Ingot')}, so skip the furnace.`,
     },
     {
       type: 'callout',
@@ -93,9 +105,9 @@ export const firstDay: Guide = {
     {
       type: 'list',
       items: [
-        '`/dquests`: your daily quests, in easy, medium and hard. Each one pays XP or money.',
-        '`/rewards`: a daily reward (a Resource crate key, 8 iron and 2 gold), plus weekly and monthly ones.',
-        `\`/playtime\`: playtime levels. Level I unlocks after ${level('I').after} and level II pays ${level('II').reward} after ${level('II').after}.`,
+        `\`/dquests\`: ${DAILY_QUESTS_LINE}`,
+        `\`/rewards\`: a daily reward (${dailyRewardText(DAILY_REWARDS[0])}), plus bigger weekly and monthly ones.`,
+        `\`${PLAYTIME_COMMAND}\`: playtime levels. Level I unlocks after ${level('I').after} and level II pays ${level('II').reward} after ${level('II').after}.`,
       ],
     },
     { type: 'h2', text: 'Say hi' },

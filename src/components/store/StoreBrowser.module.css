@@ -103,12 +103,25 @@
   align-items: flex-end;
   gap: var(--s-1);
   padding-inline: var(--s-2);
-  margin-bottom: calc(var(--bw) * -1);
+  /* On the narrowest phones the row scrolls sideways instead of breaking labels mid-word.
+     The bottom padding keeps the lowered (unselected) tabs inside the scroll box, and the
+     larger negative margin tucks that padding over the window edge exactly as before. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-bottom: var(--s-1);
+  margin-bottom: calc((var(--bw) + var(--s-1)) * -1);
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
-  flex: 1 1 0;
-  min-width: 0;
+  /* grow to share the row, never shrink below the label (min-width: auto = its content) */
+  flex: 1 1 auto;
+  min-width: auto;
   min-height: 56px;
   display: flex;
   flex-direction: column;
@@ -147,8 +160,24 @@
   outline-offset: -6px;
 }
 
+/* "Cosmetics" must never wrap as "Cosmetic / s" */
 .tabLabel {
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* Phones show the short label ("Keys"), wider screens the full one ("Crate keys"). */
+.labelLong {
+  display: none;
+}
+
+@media (max-width: 399.98px) {
+  .tab {
+    padding-inline: 3px;
+    font-size: 0.75rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -162,6 +191,14 @@
     gap: var(--s-2);
     padding-inline: var(--s-4);
     font-size: var(--fs-md);
+  }
+
+  .labelShort {
+    display: none;
+  }
+
+  .labelLong {
+    display: inline;
   }
 }
 

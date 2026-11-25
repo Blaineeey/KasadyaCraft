@@ -179,7 +179,7 @@ plus `SiteHeader`, `SiteFooter`, `Hotbar` (layout only).
 
 | Export | Signature | Notes |
 | --- | --- | --- |
-| `CopyIp` | `{ address?=site.address, size?: sm\|md\|lg, showHint?, className? }` | Copies, fires a toast, falls back to selectable text |
+| `CopyIp` | `{ address?=site.address, size?: sm\|md\|lg, showHint?, fill?, className? }` | Copies, fires a toast, falls back to selectable text. `fill` spans the parent and scales the address to fit one line |
 | `LiveStatus` | `{ variant?: chip\|card\|inline, className? }` | States: checking / online (N players) / offline / unknown. Never a fake number |
 | `useServerStatus(pollMs?)` | `=> { status: ServerStatus \| null, loading, error }` | Polls `/api/status` |
 | `useToast()` | `=> { toast(t: ToastInput) }` | `ToastInput = { title, heading?, icon?, frame?, duration? }` |
@@ -321,7 +321,7 @@ of this repo. Never modify server files, never restart anything, never copy secr
 Checked by the architect on 2026-11-25:
 - Network: Velocity proxy on `play.kasadyacraft.com:25565` sends everyone to the HUB first (festival plaza:
   portal, "Survival Guide" NPC, selector compass in hotbar slot 4). `/hub` or `/lobby` returns to the hub.
-  If Survival restarts or kicks you, you land in the hub. Max 100 players. MOTD "Dungeon | City | Plot | Adventure".
+  If Survival restarts or kicks you, you land in the hub. Max 100 players. MOTD "Survival | Dungeons | Plots | Shops".
 - Backends are Paper 1.21.10 with ViaVersion/ViaBackwards 5.5.2: clients up to 1.21.10 work; newer clients
   (1.21.11, 26.x) currently cannot join. Write "Java Edition 1.21.x (1.21.10 recommended)" and re-check the Via version.
   Online mode (premium Java accounts). No Geyser, so no Bedrock.

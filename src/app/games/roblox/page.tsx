@@ -3,12 +3,14 @@ import { notFound } from 'next/navigation'
 import PageHero from '@/components/shell/PageHero'
 import { Badge, Book, Panel, PixelButton, PixelIcon, type PixelIconName } from '@/components/ui'
 import { servers, site } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import styles from './roblox.module.css'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Roblox',
   description: 'KasadyaCraft on Roblox: group sessions, private servers and community events. Coming soon.',
-}
+  path: '/games/roblox',
+})
 
 const plans: { title: string; icon: PixelIconName; body: string }[] = [
   {

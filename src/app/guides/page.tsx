@@ -10,17 +10,18 @@ import PixelIcon from '@/components/ui/PixelIcon'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { guideNumber, guides, guidesByStage, guideStageBlurbs, guideStageLabels, guideStageOrder } from '@/content/guides'
 import { site } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import s from './guides.module.css'
 
 /*
  * /guides: the starter guide index, grouped by stage in reading order,
  * with an XP-bar of how many this visitor has read. Owner: STARTER-GUIDE WRITER.
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Starter guides',
   description: 'New to KasadyaCraft? Eight short guides that take you from your first join to your first dungeon run.',
-  alternates: { canonical: '/guides' },
-}
+  path: '/guides',
+})
 
 const totalMinutes = guides.reduce((sum, g) => sum + g.minutes, 0)
 

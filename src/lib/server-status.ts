@@ -56,7 +56,7 @@ export function playersLabel(n: number): string {
 
 /**
  * The MOTD line worth showing under the server name. The live MOTD is
- * "✦ KASADYACRAFT ✦" + "Dungeon | City | Plot | Adventure"; the first line just
+ * "✦ KASADYACRAFT ✦" + "Survival | Dungeons | Plots | Shops"; the first line just
  * repeats the name, so prefer the last line.
  */
 export function motdTagline(motd: string | null | undefined): string | null {

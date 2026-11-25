@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 import { site } from '@/lib/site'
 import { useToast } from './ToastProvider'
 
@@ -10,6 +10,11 @@ export interface CopyIpProps {
   size?: 'sm' | 'md' | 'lg'
   /** Small helper line under the button ("Paste it in Multiplayer, Add Server"). */
   showHint?: boolean
+  /**
+   * Stretch to the parent's full width and scale the address so it always fits on
+   * one line in the room left beside the button (hero blocks in narrow columns).
+   */
+  fill?: boolean
   className?: string
 }
 
@@ -45,7 +50,13 @@ function legacyCopy(text: string): boolean {
  * and the hint tells the player to copy it by hand.
  * Owner: INTERACTIVITY ENGINEER.
  */
-export default function CopyIp({ address = site.address, size = 'md', showHint = false, className }: CopyIpProps) {
+export default function CopyIp({
+  address = site.address,
+  size = 'md',
+  showHint = false,
+  fill = false,
+  className,
+}: CopyIpProps) {
   const [state, setState] = useState<'idle' | 'copied' | 'manual'>('idle')
   const addrRef = useRef<HTMLSpanElement>(null)
   const resetRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -84,13 +95,25 @@ export default function CopyIp({ address = site.address, size = 'md', showHint =
       : 'Paste it in Multiplayer, Add Server'
 
   return (
-    <div className={['kc-copyip', `kc-copyip--${size}`, className].filter(Boolean).join(' ')} data-state={state}>
+    <div
+      className={['kc-copyip', `kc-copyip--${size}`, fill && 'kc-copyip--fill', className].filter(Boolean).join(' ')}
+      data-state={state}
+      // Character count lets the fill variant size the address to its box (see interactive.css).
+      style={{ '--kc-copyip-chars': address.length } as CSSProperties}
+    >
       <button type="button" className="kc-copyip__btn" onClick={copy} aria-label={`Copy server address ${address}`}>
         <span ref={addrRef} className="kc-copyip__addr t-term">
-          {address}
+          <span className="kc-copyip__text">{address}</span>
         </span>
+        {/* Both labels share one grid cell, so the block is always as wide as "Copied!"
+            and clicking never squeezes the address. */}
         <span className="kc-copyip__action" aria-hidden="true">
-          {state === 'copied' ? 'Copied!' : 'Copy'}
+          <span className="kc-copyip__label" data-on={state !== 'copied' || undefined}>
+            Copy
+          </span>
+          <span className="kc-copyip__label" data-on={state === 'copied' || undefined}>
+            Copied!
+          </span>
         </span>
       </button>
       {/* Success is announced by the toast (role=status); only the fallback needs its own message. */}

@@ -53,6 +53,19 @@
   box-shadow: inset calc(var(--bw-thin) * -1) 0 0 var(--edge);
 }
 
+/* Phones: a slimmer pinned column leaves room for two rank columns; TableFrame shows the swipe cue. */
+@media (max-width: 599.98px) {
+  .matrix {
+    min-width: 600px;
+  }
+
+  .matrix th[scope='row'],
+  .matrix thead th:first-child {
+    min-width: 132px;
+    max-width: 150px;
+  }
+}
+
 .rankHead {
   color: var(--rank, var(--text));
 }

@@ -7,17 +7,18 @@ import WikiSearch from '@/components/wiki/WikiSearch'
 import { formatWikiDate, latestDate } from '@/components/wiki/format'
 import { getWikiPage, wikiCategories, wikiPages, wikiSearchIndex } from '@/content/wiki'
 import type { WikiPage } from '@/lib/content'
+import { pageMetadata } from '@/lib/seo'
 
 /*
  * /wiki index. Owner: WIKI WRITER.
  * Search + category tabs (client, no dependency), quick slots to the most-used pages.
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Wiki',
   description:
     'Every KasadyaCraft feature in one place: commands, ranks, money and shops, crates, spawners, the Lab of Horrors dungeon, rules and FAQ. Checked against the live server.',
-  alternates: { canonical: '/wiki' },
-}
+  path: '/wiki',
+})
 
 /** The hotbar of the wiki: the pages people open most. */
 const QUICK_SLOTS = ['commands', 'rules', 'faq', 'economy', 'plots', 'ranks', 'dungeon', 'crates', 'rewards']

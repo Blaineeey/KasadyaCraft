@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PixelButton } from '@/components/ui'
 import s from './not-found.module.css'
+
+/* Missing pages get their own title and stay out of search results. */
+export const metadata: Metadata = {
+  title: 'Page not found',
+  robots: { index: false, follow: true },
+}
 
 /*
  * 404. Owner: INTERACTIVITY ENGINEER.

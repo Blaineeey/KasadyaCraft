@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import PixelIcon from '@/components/ui/PixelIcon'
+import { PLAYTIME_MENU } from '@/lib/store'
 import StoreSprite from './StoreSprite'
 import s from './StorePage.module.css'
 
@@ -11,8 +12,9 @@ interface Currency {
   spend: ReactNode
 }
 
-/* Sources: FlareTokens (playtime ladder only), PlayerPoints (AFK pool 10 per 20 min,
-   Playtime L5 500, weekly reward 50), Vault money ($250 start). CHANGELOG economy audit 2026-11-25. */
+/* Sources: FlareTokens (tokenSources in src/lib/store.ts: /rewards, daily quests, playtime levels),
+   PlayerPoints (AFK pool 10 per 20 min, Playtime L5 500, weekly reward 50, monthly 100), Vault money
+   ($250 start). CHANGELOG economy audit + ECONOMY FIXER 2026-11-25. */
 const currencies: Currency[] = [
   {
     symbol: '⛃',
@@ -20,12 +22,13 @@ const currencies: Currency[] = [
     art: <StoreSprite shape="tokens" size={48} />,
     earn: (
       <>
-        Playtime rewards in <code>/playtime</code>.
+        <code>/rewards</code> every day, week and month, all three daily quests in <code>/dquests</code>, and playtime levels
+        in <code>{PLAYTIME_MENU}</code>.
       </>
     ),
     spend: (
       <>
-        Ranks, crate keys and Points in <code>/store</code>.
+        Ranks, crate keys and Points in <code>/purchase</code>.
       </>
     ),
   },

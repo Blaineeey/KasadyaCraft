@@ -1,4 +1,5 @@
 import { iconRuns } from '@/components/ui/pixel-icons'
+import { memoPaths, type PixelPath } from '@/components/ui/pixel-paths'
 import { guideArt, type GuideArtName } from './guide-art'
 
 export interface GuideArtProps {
@@ -8,12 +9,14 @@ export interface GuideArtProps {
   className?: string
 }
 
+const pathCache = new Map<GuideArtName, PixelPath[]>()
+
 /**
- * Renders one of the guide-only pixel items as crisp SVG rects. Always decorative:
- * the slot or caption around it carries the name. Owner: STARTER-GUIDE WRITER.
+ * Renders one of the guide-only pixel items as crisp SVG, one <path> per colour. Always
+ * decorative: the slot or caption around it carries the name. Owner: STARTER-GUIDE WRITER.
  */
 export default function GuideArt({ name, size = 32, className }: GuideArtProps) {
-  const runs = iconRuns(guideArt[name])
+  const paths = memoPaths(pathCache, name, () => iconRuns(guideArt[name]))
   return (
     <svg
       className={['kc-icon', className].filter(Boolean).join(' ')}
@@ -25,8 +28,8 @@ export default function GuideArt({ name, size = 32, className }: GuideArtProps) 
       aria-hidden="true"
       data-art={name}
     >
-      {runs.map(([x, y, w, fill]) => (
-        <rect key={`${x}-${y}`} x={x} y={y} width={w} height={1} fill={fill} />
+      {paths.map((p) => (
+        <path key={p.fill} fill={p.fill} d={p.d} />
       ))}
     </svg>
   )

@@ -12,43 +12,52 @@ import Panel from '@/components/ui/Panel'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import SectionHeading from '@/components/ui/SectionHeading'
-import { STARTING_BALANCE, money } from '@/content/guides/facts'
+import { STARTING_BALANCE, VERSIONS, money } from '@/content/guides/facts'
 import { site } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
 import s from './play.module.css'
 
 /*
  * /play: the definitive "how to join" page. Owner: STARTER-GUIDE WRITER.
  * Facts (checked 2026-11-25): Velocity proxy on play.kasadyacraft.com sends everyone to the hub;
- * ViaVersion 5.5.2 on hub + Survival accepts clients up to 1.21.10 (1.21.11+ get "Outdated server");
- * online mode (paid accounts), no Geyser (no Bedrock); Survival server.properties require-resource-pack=true;
- * declining the pack kicks you from Survival and the proxy fails you over to the hub;
+ * ViaVersion + ViaBackwards 5.12.3 on hub + Survival (since the 05:13-05:19 restarts) accept 1.13 to 26.3
+ * (VERSIONS in content/guides/facts.ts); older clients get "Minecraft 1.13 or newer" (Via block message /
+ * Velocity), newer than 26.3 are refused by Velocity; 1.21.10 stays recommended because the pack is made for it;
+ * online mode (paid accounts), no Geyser (no Bedrock); Survival server.properties require-resource-pack=true,
+ * so the game shows Proceed / Disconnect; Disconnect makes the client close its connection to the proxy,
+ * so the player leaves the whole network (no failover to the hub);
  * Hub KasadyaLobby: portal, Survival Guide NPC, compass in the middle hotbar slot, /survival /smp /hub /lobby /menu.
  */
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'How to join',
   description: `Join KasadyaCraft in three steps: open Minecraft Java ${site.recommendedVersion}, add ${site.address}, accept the resource pack.`,
-  alternates: { canonical: '/play' },
-}
+  path: '/play',
+})
 
 const troubles: { q: string; a: ReactNode }[] = [
   {
-    q: 'It says "Outdated server"',
+    q: 'It says my version is incompatible',
     a: (
       <p>
-        Your game is newer than the server. In the launcher, set your installation to release {site.recommendedVersion}. Newer versions
-        will work once we update.
+        We take Java {VERSIONS.oldest} up to {VERSIONS.newest}. If your game is newer than {VERSIONS.newest}, we have not caught up yet. In
+        the launcher, set your installation to release {site.recommendedVersion}, the version our resource pack is made for.
       </p>
     ),
   },
   {
-    q: 'It says "Outdated client"',
-    a: <p>Your game is older than the server supports. Update your installation to release {site.recommendedVersion}.</p>,
+    q: `It says I need Minecraft ${VERSIONS.oldest} or newer`,
+    a: (
+      <p>
+        Your game is too old for us. Update your installation to release {site.recommendedVersion}. Anything from {VERSIONS.oldest} up
+        can join, but {site.recommendedVersion} looks best.
+      </p>
+    ),
   },
   {
-    q: 'I clicked No on the resource pack',
+    q: 'I clicked Disconnect on the resource pack',
     a: (
       <>
-        <p>No problem. Survival sends you back to the hub. Walk through the portal again and click Yes this time.</p>
+        <p>No problem. Disconnect means you leave the server. Rejoin, head back into Survival and click Proceed this time.</p>
         <p>
           No question at all? In your server list, select KasadyaCraft, click Edit and set Server Resource Packs to Prompt or Enabled.
         </p>
@@ -177,14 +186,17 @@ export default function PlayPage() {
                       3
                     </span>
                     <h2 id="step-3" className={s.stepTitle}>
-                      Say yes to the resource pack
+                      Accept the resource pack
                     </h2>
                   </div>
                   <p>
-                    The first time you step into Survival, the game asks to download our resource pack. Click <strong>Yes</strong>. It
-                    holds the custom items, dungeon mobs and menus, and it only downloads once.
+                    The first time you step into Survival, the game asks to download our resource pack. Click <strong>Proceed</strong>.
+                    It holds the custom items, dungeon mobs and menus, and it only downloads once.
                   </p>
-                  <p>Click No and Survival sends you back to the hub. Nothing breaks, just walk through the portal again.</p>
+                  <p>
+                    Click Disconnect and you leave the server. Nothing breaks: rejoin, head back into Survival and click Proceed this
+                    time.
+                  </p>
                 </div>
                 <PackPrompt />
               </div>

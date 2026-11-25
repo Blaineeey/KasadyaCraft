@@ -2,12 +2,17 @@ import type { WikiPage } from '@/lib/content'
 
 /*
  * Player commands only. Sources (read-only, 2026-11-25):
- * - LuckPerms group nodes (default ... mvp++) from the functional tester's export
- * - plugin.yml commands/aliases/defaults: Essentials, PlotSquared, MythicDungeons, ODailyQuests, DailyReward, GSit
- *   (sit/lay/crawl/spin/bellyflop default true), AxTrade (trade, default true), FreeCoinFlip, CustomFishing commands.yml,
+ * - LuckPerms group nodes (default ... mvp++) from the functional tester's export, re-checked against
+ *   /root/launch/backups/before-qa-audit2-2026-11-25/qa-audit2-before.json.gz: mvp+ essentials.fly only in
+ *   world=plotworld / world=shoppingmall (Essentials world-change-fly-reset true); nobody has essentials.god
+ * - plugin.yml commands/aliases/defaults: Essentials, PlotSquared, MythicDungeons, ODailyQuests, DailyReward, GSit,
+ *   AxTrade (trade, default true), FreeCoinFlip, CustomFishing commands.yml,
  *   EconomyShopGUI (shop/sellall/sellgui default true), CombatLogX
  * - DeluxeMenus open_command lists, Skript scripts (commanddixes.sk, rtp.sk, nightvision.sk, discord.sk, website.sk, vote.sk)
  * - Hub: KasadyaLobby (/survival /smp), Velocity KasadyaHub (/hub /lobby)
+ * - GSit poses are rank perks since the GAMEPLAY FIXER round 2 (CHANGELOG 06:17-06:48, LP export 07:25): default has
+ *   gsit.sit/lay/layback/bellyflop/spin/crawl = false; VIP gsit.sit, VIP+ gsit.lay/layback/bellyflop/spin, MVP gsit.crawl
+ *   (matches the Ranks.yml lore). Still free: click-sitting on stairs/slabs/carpets (GSit.SitClick) and /sit toggle.
  * /store is NOT used here: Skript store.sk owns that label ("store coming soon"). /purchase opens the Tokens menu.
  */
 export const commands: WikiPage = {
@@ -163,12 +168,20 @@ export const commands: WikiPage = {
     {
       type: 'commands',
       items: [
-        { command: '/sit', description: 'Sit down where you stand.' },
-        { command: '/lay', description: 'Lie down.' },
-        { command: '/crawl', description: 'Crawl through 1 block gaps.' },
         { command: '/trash', description: 'Open a bin to throw items away.' },
         { command: '/controls', description: 'How to use legendary weapon abilities.' },
+        { command: '/sit toggle', description: 'Turn sitting by right-click off or on.' },
+        { command: '/sit', description: 'Sit down where you stand.', rank: 'vip' },
+        { command: '/lay', description: 'Lie down.', rank: 'vip-plus' },
+        { command: '/layback', description: 'Lie on your back.', rank: 'vip-plus' },
+        { command: '/bellyflop', description: 'Lie flat on your belly.', rank: 'vip-plus' },
+        { command: '/spin', description: 'Spin around on the spot.', rank: 'vip-plus' },
+        { command: '/crawl', description: 'Crawl through 1 block gaps.', rank: 'mvp' },
       ],
+    },
+    {
+      type: 'p',
+      text: 'No rank? You can still sit on stairs, slabs and carpets: right-click one with an empty hand.',
     },
     { type: 'h2', text: 'Rank commands' },
     {
@@ -190,13 +203,12 @@ export const commands: WikiPage = {
         { command: '/heal', description: 'Restore your health. 60 second cooldown.', rank: 'mvp-plus' },
         { command: '/hat', description: 'Wear the item in your hand as a hat.', rank: 'mvp-plus' },
         { command: '/echest', description: 'Open your ender chest anywhere.', rank: 'mvp-plus' },
-        { command: '/fly', description: 'Toggle flying.', rank: 'mvp-plus' },
+        { command: '/fly', description: 'Fly in the plot world and the Shopping Mall. It switches off when you leave.', rank: 'mvp-plus' },
         { command: '/beezooka', description: 'Launch a bee.', rank: 'mvp-plus' },
         { command: '/smithtable', description: 'A smithing table anywhere.', rank: 'mvp-plus-plus' },
         { command: '/bigtree', description: 'Grow a big tree where you look.', rank: 'mvp-plus-plus' },
         { command: '/pweather <type>', description: 'Your own weather. Only you see it.', rank: 'mvp-plus-plus' },
         { command: '/smite', description: 'Strike lightning where you look.', rank: 'mvp-plus-plus' },
-        { command: '/god', description: 'Toggle god mode.', rank: 'mvp-plus-plus' },
         { command: '/clear', description: 'Empty your whole inventory.', rank: 'mvp-plus-plus' },
       ],
     },

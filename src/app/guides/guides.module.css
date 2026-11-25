@@ -222,6 +222,18 @@
   padding: 2px 0;
 }
 
+/* The global reset zeroes list padding, so in the sidebar panel the numbers hung outside its
+   left border. Room for two-digit numbers, set in the terminal font like F3 coordinates. */
+.side .tocList {
+  padding-left: 1.9em;
+}
+
+.side .tocList > li::marker {
+  font-family: var(--font-term);
+  font-size: 1.2em;
+  color: var(--kc-gold);
+}
+
 .side {
   display: none;
 }

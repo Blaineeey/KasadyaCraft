@@ -56,6 +56,18 @@
   }
 }
 
+/* Phones: a smaller logo and tighter gaps, so "How to join" sits fully above the hotbar in the
+   first screen (390x844: button bottom 796 -> under 740, the hotbar name plate starts at 747). */
+@media (max-width: 599px) {
+  .inner {
+    gap: var(--s-4);
+  }
+
+  .logo {
+    width: min(176px, 48vw);
+  }
+}
+
 .sign {
   grid-area: sign;
   position: relative;
@@ -149,18 +161,6 @@
   box-shadow: inset 0 0 0 var(--bw-thin) rgba(255, 255, 255, 0.08), var(--block-drop);
 }
 
-.copy {
-  width: 100%;
-}
-
-.copy :global(.kc-copyip__btn) {
-  width: 100%;
-}
-
-.copy :global(.kc-copyip__addr) {
-  flex: 1;
-}
-
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -184,6 +184,14 @@
   border-top: var(--bw) solid var(--edge);
   position: relative;
   z-index: -1;
+}
+
+/* Phones: the big copy block right under the card already shows the address, so the card drops
+   its small copy of it (the in-game server list does not show it either). */
+@media (max-width: 599px) {
+  .join :global(.kc-status__addr) {
+    display: none;
+  }
 }
 
 /* ---------- small phones ---------- */

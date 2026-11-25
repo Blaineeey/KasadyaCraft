@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { CopyIp } from '@/components/interactive'
+import IntentLink from '@/components/shell/IntentLink'
 import Kbd from '@/components/ui/Kbd'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
@@ -9,6 +9,7 @@ import { footerLinks, site } from '@/lib/site'
  * Footer: grass tufts and a grass block edge over a slice of dirt (link
  * columns live in the dirt), then a deepslate layer with the legal line.
  * The disclaimer wording follows Mojang's usage guidelines; keep it.
+ * Links prefetch on hover/focus only (IntentLink): the footer is on every page.
  * Owner: PIXEL UI DESIGNER.
  */
 export default function SiteFooter() {
@@ -44,10 +45,10 @@ export default function SiteFooter() {
                         <span className="kc-sr-only"> (opens in a new tab)</span>
                       </a>
                     ) : (
-                      <Link href={l.href}>
+                      <IntentLink href={l.href}>
                         <PixelIcon name="arrow-right" size={16} className="kc-footer__arrow" />
                         {l.label}
-                      </Link>
+                      </IntentLink>
                     )}
                   </li>
                 ))}

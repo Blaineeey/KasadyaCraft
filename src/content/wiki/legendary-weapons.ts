@@ -4,7 +4,12 @@ import type { WikiPage } from '@/lib/content'
  * Sources (read-only, 2026-11-25):
  * - plugins/AltarSMP/messages.yml (weapon names + ability text), config.yml (cooldowns, recipes WeaponHandle /
  *   VulcansSkull / IllusionCore enabled, trueDamage true, weapons_that_can_be_obtained_from_rolling list)
- * - plugins/AltarSMP/altars.yml empty (no altars placed): weapons come from staff-run events
+ * - plugins/AltarSMP/altars.yml is 0 bytes (no altar placed, so nothing can be forged). No crate, menu, shop or quest
+ *   hands out legendaries or rolls (grep over ExcellentCrates, DeluxeMenus, EconomyShopGUI, ODailyQuests), and
+ *   /root/launch/CHANGELOG.md has no event schedule. So the page says they are NOT obtainable yet.
+ *   OWNER: confirm before the site promises staff events or a forge opening date.
+ * - The WeaponHandle / VulcansSkull / IllusionCore recipes are enabled, so players can craft the parts today even
+ *   though nothing uses them. The page warns them not to (a Weapon Handle eats a Nether Star).
  * - KasadyaWildGuard-1.0.0 (log: "Block destruction from explosions/abilities is limited to: [world]"):
  *   outside "world" it clears explosion block lists, cancels explosion/fireball/lightning/end-crystal fire and removes
  *   plugin-spawned falling blocks. No bypass.
@@ -13,7 +18,7 @@ import type { WikiPage } from '@/lib/content'
 export const legendaryWeapons: WikiPage = {
   slug: 'legendary-weapons',
   title: 'Legendary weapons',
-  summary: 'Rare weapons with two special abilities each. Their block-breaking powers only work in the overworld Wild.',
+  summary: 'Rare weapons with two special abilities each. Not obtainable yet, but here is what they do and the wild-only rule they follow.',
   icon: 'sword',
   category: 'features',
   order: 7,
@@ -38,8 +43,14 @@ export const legendaryWeapons: WikiPage = {
   related: ['world-and-warps', 'plots', 'rules'],
   body: [
     {
+      type: 'callout',
+      tone: 'warn',
+      title: 'Not obtainable yet',
+      text: 'Legendary weapons are not obtainable yet. We will announce on [Discord](https://discord.gg/8DY3eXHnAg) when they are.',
+    },
+    {
       type: 'p',
-      text: 'Legendary weapons are one-of-a-kind items with special abilities. They come from server events run by staff, so watch our [Discord](https://discord.gg/8DY3eXHnAg) for the next one.',
+      text: 'Each legendary is a one-of-a-kind weapon with two special abilities. This page shows what they do and the rules they follow, so you know what is coming.',
     },
     { type: 'h2', text: 'The wild-only rule' },
     {
@@ -102,19 +113,11 @@ export const legendaryWeapons: WikiPage = {
         ['Pale Cannon', 'Shoots resin that spreads Pale Rot (30 s)', 'Pale Roots: roots that follow your aim (45 s)'],
       ],
     },
-    { type: 'h2', text: 'Crafting parts' },
+    { type: 'h2', text: 'Forge parts: do not craft them yet' },
     {
-      type: 'p',
-      text: 'Three parts used to forge legendary weapons can be crafted in a normal crafting table:',
-    },
-    {
-      type: 'table',
-      head: ['Part', 'Recipe', 'Used for'],
-      rows: [
-        ['Weapon Handle', 'Netherite ingot, Nether Star, netherite ingot in a column', 'Forging mythical weapons'],
-        ["Vulcan's Skull", 'Wither skeleton skull in the middle, magma blocks on the sides, ancient debris in the corners', "Forging Vulcan's Crossbow"],
-        ['Illusion Core', 'Heavy core in the middle, skeleton skulls on the sides, ancient debris in the corners', 'Forging the Illusion Wand'],
-      ],
+      type: 'callout',
+      tone: 'warn',
+      text: "Your recipe book may show a **Weapon Handle**, a **Vulcan's Skull** and an **Illusion Core**. Skip them for now. No forge is open, so these parts do nothing yet, and the Weapon Handle costs a Nether Star and two netherite ingots. Hold on to your materials until we announce the forge.",
     },
   ],
 }

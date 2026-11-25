@@ -392,8 +392,11 @@
   background: var(--bg-deep);
 }
 
+/* minmax(0, 1fr): the inner track may not grow past its column. With the implicit auto track
+   the unbreakable address set the width (161px) and the MOTD ran under the player count. */
 .kc-status__main {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2px;
   min-width: 0;
 }
@@ -424,6 +427,12 @@
   font-size: 1.2rem;
   line-height: 1.1;
   color: var(--text-dim);
+}
+
+/* last resort only: below 380px the card gives the text column enough room for it */
+.kc-status__addr {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .kc-status__ver {
@@ -479,6 +488,33 @@
 @media (min-width: 420px) {
   .kc-status--card { padding: var(--s-3) var(--s-4); }
   .kc-status__icon { width: 64px; height: 64px; }
+}
+
+/* Small phones: three columns leave the name and MOTD about 135px at 320px. The signal bars and
+   player count move under the icon, so the text column gets the rest of the card (~195px) and
+   nothing can run into the count. The card stays the same height. */
+@media (max-width: 379px) {
+  .kc-status--card {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .kc-status__icon {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  .kc-status__main {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .kc-status__side {
+    grid-column: 1;
+    grid-row: 2;
+    justify-items: center;
+  }
 }
 
 /* signal bars */
@@ -549,17 +585,30 @@
 }
 
 .kc-copyip__addr {
+  flex: 1 1 auto;
   min-width: 0;
   padding: var(--s-1) var(--s-3);
-  overflow-wrap: anywhere;
   user-select: all;
   -webkit-user-select: all;
 }
 
+/* One line, always. The sizes below fit the full address from 320px up; the ellipsis is only a
+   guard so the block can never break onto two lines. Selecting the text (a click, or the
+   manual-copy fallback) only recolours it and never changes the box. */
+.kc-copyip__text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fixed width: "Copy" and "Copied!" are stacked in one grid cell and only the active label is
+   visible, so the block is as wide as the longer label in every state and every font. */
 .kc-copyip__action {
   flex: none;
   display: grid;
   place-items: center;
+  white-space: nowrap;
   padding: 0 var(--s-3);
   font-family: var(--font-pixel);
   font-size: var(--fs-sm);
@@ -568,6 +617,14 @@
   background: var(--kc-gold);
   box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5), inset -3px -3px 0 rgba(0, 0, 0, 0.25);
   border-left: var(--bw) solid var(--edge);
+}
+
+.kc-copyip__label {
+  grid-area: 1 / 1;
+}
+
+.kc-copyip__label:not([data-on]) {
+  visibility: hidden;
 }
 
 .kc-copyip[data-state='copied'] .kc-copyip__action {
@@ -582,26 +639,52 @@
 
 .kc-copyip--sm .kc-copyip__btn { margin-bottom: 0; box-shadow: var(--bevel-up); }
 .kc-copyip--sm .kc-copyip__btn:active { transform: none; box-shadow: var(--bevel-down); }
-.kc-copyip--sm .kc-copyip__addr { font-size: 1.2rem; padding: 2px var(--s-2); }
-.kc-copyip--sm .kc-copyip__action { padding: 0 var(--s-2); font-size: var(--fs-xs); }
-/* VT323 is ~0.41em per glyph, so these sizes keep "play.kasadyacraft.com" on one line down to 320px. */
+/* Trimmed so the header block, now always "Copied!" wide, is no wider than the old idle "Copy" one. */
+.kc-copyip--sm .kc-copyip__addr { font-size: 1.15rem; padding: 2px 6px; }
+.kc-copyip--sm .kc-copyip__action { padding: 0 6px; font-size: var(--fs-xs); }
+/* VT323 is 0.4em per glyph. With the action block always "Copied!" wide, these sizes keep
+   "play.kasadyacraft.com" on one line with room to spare from 320px up (measured in Chrome). */
 .kc-copyip--md .kc-copyip__addr { font-size: clamp(1.15rem, 5.4vw, 1.6rem); }
-.kc-copyip--lg .kc-copyip__addr { font-size: clamp(1.2rem, 6vw, 2.6rem); padding: var(--s-2) var(--s-4); }
-.kc-copyip--lg .kc-copyip__action { font-size: var(--fs-lg); padding: 0 var(--s-5); }
+.kc-copyip--lg .kc-copyip__addr { font-size: clamp(1.15rem, 5.75vw, 2.6rem); padding: var(--s-2) var(--s-4); }
+.kc-copyip--lg .kc-copyip__action { font-size: var(--fs-lg); padding: 0 var(--s-4); }
 
 @media (max-width: 479px) {
   .kc-copyip__addr { padding-inline: var(--s-2); }
-  .kc-copyip--lg .kc-copyip__addr { padding: var(--s-2) var(--s-3); }
+  .kc-copyip--lg .kc-copyip__addr { padding: var(--s-2); }
   .kc-copyip__action,
-  .kc-copyip--lg .kc-copyip__action { padding: 0 var(--s-2); font-size: var(--fs-md); }
+  .kc-copyip--lg .kc-copyip__action { padding: 0 var(--s-2); font-size: var(--fs-sm); }
 }
 
+/* Fill: spans the parent, and the address box is a size container, so the text is sized from the
+   exact room left beside the "Copied!" block instead of from the viewport. 100cqi is that room;
+   each VT323 glyph is 0.4em, and the extra 5% keeps sub-pixel rounding off the ellipsis. */
+.kc-copyip--fill { width: 100%; }
+.kc-copyip--fill .kc-copyip__btn { width: 100%; }
+.kc-copyip--fill .kc-copyip__addr { container-type: inline-size; }
+.kc-copyip--fill.kc-copyip--lg .kc-copyip__text {
+  font-size: clamp(1.15rem, 100cqi / (var(--kc-copyip-chars, 21) * 0.42), 2.6rem);
+}
+
+/* Narrower than any phone we design for: show the whole address over two lines rather than cut it. */
+@media (max-width: 319px) {
+  .kc-copyip__text { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; }
+}
+
+/* The hint often sits straight on the day sky (hero), where light text failed contrast
+   (1.5:1). On its own dark plate it reads on sky, textures and panels alike (11:1). */
 .kc-copyip__hint {
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 3px var(--s-2) 2px;
   font-family: var(--font-label);
   font-size: var(--fs-xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-dim);
+  text-shadow: none;
+  background: var(--plate);
+  border: var(--bw-thin) solid var(--plate-edge);
+  clip-path: var(--notch-2);
 }
 
 .kc-copyip__hint[data-manual] {

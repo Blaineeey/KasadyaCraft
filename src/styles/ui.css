@@ -135,6 +135,18 @@
   transform: none;
 }
 
+/* A disabled button keeps its resting shape: no hover glow, no press. The focus ring still shows. */
+.kc-btn:disabled:hover:not(:focus-visible),
+.kc-btn:disabled:active:not(:focus-visible),
+.kc-btn[aria-disabled='true']:hover:not(:focus-visible),
+.kc-btn[aria-disabled='true']:active:not(:focus-visible) {
+  transform: none;
+  box-shadow:
+    var(--bevel-up),
+    0 var(--press-depth) 0 0 var(--btn-base),
+    0 calc(var(--press-depth) + var(--bw)) 0 0 var(--edge);
+}
+
 .kc-btn--grass {
   --btn-face: var(--btn-grass);
   --btn-base: var(--btn-grass-base);
@@ -437,7 +449,9 @@
   color: var(--tooltip-text);
   clip-path: var(--notch-2);
   font-family: var(--font-pixel);
-  font-size: var(--fs-sm);
+  /* 16px, not 15: at 1x Pixelify's counts ("2 plots", "32 cooked beef") need the extra pixel
+     to read cleanly, on top of the redrawn 2/3/5 from KC Glyphs (--font-pixel). */
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.35;
   text-align: left;
@@ -503,15 +517,19 @@
   vertical-align: middle;
 }
 
+/* Closed panels are display:none, not just hidden: a hidden panel still takes up layout
+   space, and near the right edge it made phones scroll sideways (and zoom out).
+   aria-describedby still reads a display:none tooltip. ItemTooltip measures the panel
+   for a moment before it opens. */
 .kc-tip__panel {
   position: absolute;
   z-index: var(--z-tooltip);
   left: 50%;
   bottom: calc(100% + 8px);
+  display: none;
   width: max-content;
-  max-width: min(280px, calc(100vw - 16px));
+  max-width: min(280px, calc(100vw - 32px));
   transform: translateX(calc(-50% + var(--tip-shift, 0px)));
-  visibility: hidden;
   pointer-events: none;
   /* hard shadow that follows the notched corners */
   filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.5));
@@ -523,8 +541,8 @@
   top: calc(100% + 8px);
 }
 
-.kc-tip[data-open] .kc-tip__panel {
-  visibility: visible;
+.kc-tip[data-open] > .kc-tip__panel {
+  display: block;
   pointer-events: auto;
   animation: kc-tip-pop var(--dur-fast) steps(2) both;
 }
@@ -832,6 +850,19 @@ button.kc-slot:hover::after,
 }
 
 .kc-callout--lore a { color: var(--link-on-light); }
+
+/* Dark callouts (and figure captions) often sit inside paper: .kc-prose--light, .kc-panel--paper,
+   .kc-book. Those set the dark paper link colour, which is 2.1:1 on this background. The extra
+   class in the selector outranks them wherever the callout lands, so links stay gold (11:1). */
+.kc-callout:not(.kc-callout--lore) a,
+.kc-figure figcaption a {
+  color: var(--link);
+}
+
+.kc-callout:not(.kc-callout--lore) a:hover,
+.kc-figure figcaption a:hover {
+  color: var(--link-hover);
+}
 
 .kc-callout__slot {
   flex: none;

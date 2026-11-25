@@ -6,10 +6,13 @@
  * freely, do not rename or remove existing ones.
  *
  * HONESTY RULES (non-negotiable):
- * - There is NO web payment provider today. In game, /store (alias /purchase,
- *   /buy, /beli, /tokenshop) opens a FlareTokens menu: ranks, keys and points
- *   are bought with Tokens. Tokens only come from the playtime ladder
- *   (/playtime): 850 in total (CHANGELOG, economy balancer, 2026-11-25).
+ * - There is NO web payment provider today. In game, /purchase (aliases /buy,
+ *   /beli, /tokenshop) opens a FlareTokens menu: ranks, keys and points are
+ *   bought with Tokens. NEVER tell players to type /store: Skript store.sk owns
+ *   that label and only answers "Our store is coming soon!".
+ * - Tokens come from /rewards (daily 10, weekly 50, monthly 150), all 3 daily
+ *   quests (25) and the playtime ladder (/levels, 850 in total). See
+ *   tokenSources below (CHANGELOG, ECONOMY FIXER ~04:40-05:00, 2026-11-25).
  * - Never build a fake checkout, never collect payment details, never invent
  *   prices. Every in-game price below comes from a config (cited per item).
  * - Real-money prices (`web.price`) are PLACEHOLDERS for the owner. The site
@@ -22,6 +25,11 @@
  * - plugins/AdvancedRegionMarket/config.yml Limits (Shopping Mall stalls)
  * - plugins/AlonsoTags/tags.yml, DeluxeMenus CHATCOLOR/Minecraft.yml, BASIC/Cosmetics.yml
  * - plugins/ExcellentCrates/crates/*.yml, BASIC/Playtime.yml
+ * RE-CHECKED after the GAMEPLAY + ECONOMY FIXERS (CHANGELOG 04:30-05:00):
+ * - LP export /root/launch/work/gameplay/gameplay-fix-after.json.gz: mvp++ has no
+ *   essentials.god; mvp+ fly only in world=plotworld / world=shoppingmall
+ * - PURCHASE/Keys.yml Spawner_Key (100 Tokens, single key), spawner_crate.yml placed
+ * - DailyRewards config.yml + ODailyQuests global_reward (token sources)
  *
  * ENVIRONMENT (all optional, read at build time):
  *   NEXT_PUBLIC_TEBEX_STORE_URL     e.g. https://kasadyacraft.tebex.io
@@ -31,7 +39,8 @@
  *                                   builds a real Tebex basket and sends the player
  *                                   to Tebex's own checkout.
  *   NEXT_PUBLIC_STORE_CURRENCY      'PHP' (default) or 'USD': which web price to show.
- * With none of them set, Buy shows a friendly "web store opening soon" state.
+ * With none of them set there is no Buy button: the package window shows a disabled
+ * "Web store: soon" button with the reason next to it (how to get it in game + Discord).
  */
 import type { SpriteRef } from '@/components/store/sprites'
 import type { PixelIconName } from '@/components/ui/pixel-icons'
@@ -63,7 +72,7 @@ export type WebCurrency = 'PHP' | 'USD'
 export const STORE_CURRENCY: WebCurrency = process.env.NEXT_PUBLIC_STORE_CURRENCY === 'USD' ? 'USD' : 'PHP'
 
 /**
- * off      = no web store: Buy explains how to get it in game + Discord.
+ * off      = no web store: a disabled "Web store: soon" button + how to get it in game + Discord.
  * link     = Buy opens the Tebex store (package page when we know its id).
  * headless = the shopping list creates a Tebex basket and redirects to checkout.
  */
@@ -79,6 +88,8 @@ export type StoreCategoryId = 'ranks' | 'keys' | 'cosmetics' | 'support'
 export interface StoreCategory {
   id: StoreCategoryId
   name: string
+  /** Shorter tab label for phones, e.g. 'Keys' for 'Crate keys'. */
+  short?: string
   blurb: string
   icon: PixelIconName
   /** Store sprite for the creative-inventory tab. */
@@ -165,7 +176,7 @@ export interface StoreItem {
   rarity: Rarity
   price: Price | null
   perks?: string[]
-  /** Exactly how a player gets it, e.g. 'In game: /store > Keys'. */
+  /** Exactly how a player gets it, e.g. 'In game: /purchase > Keys'. */
   howToGet: string
   status: 'in-game' | 'coming-soon' | 'free'
   /** For ranks: link the Rank record. */
@@ -174,8 +185,10 @@ export interface StoreItem {
   sprite: SpriteRef
   /** Commands that open the right in-game menu, first one is the main one. */
   commands?: string[]
-  /** "What's inside" lines for crates and bundles (shown as a list, not odds). */
+  /** "What's inside" lines for crates and bundles. */
   contents?: string[]
+  /** Crates only: the headline chances in one short line. The full table is on /wiki/crates. */
+  odds?: string
   /** Other ways to get it in game (kits, daily rewards...). */
   alsoFrom?: string[]
   /** Price is "from" (several sizes in game). */
@@ -219,6 +232,7 @@ export const storeCategories: StoreCategory[] = [
   {
     id: 'keys',
     name: 'Crate keys',
+    short: 'Keys',
     blurb: 'Keys for the crates at /warp crates.',
     icon: 'key',
     sprite: { shape: 'key', tone: 'epic' },
@@ -246,15 +260,24 @@ export const storeCategories: StoreCategory[] = [
 /** What every player gets for free (LuckPerms group "default"). */
 export const defaultLimits: RankLimits = { plots: 1, homes: 1, stalls: 1 }
 
-/** Commands everyone already has, even though old rank menus list some of them as perks. */
+/**
+ * Commands every player has without a rank. /sit, /lay and /crawl are NOT here: since
+ * the GAMEPLAY FIXER round 2 (CHANGELOG 06:17-06:48) the default group has gsit.sit/lay/
+ * layback/bellyflop/spin/crawl set to false, and they are VIP, VIP+ and MVP perks below.
+ */
 export const everyoneCommands: RankCommand[] = [
-  { command: '/sit', description: 'Sit down anywhere' },
-  { command: '/lay', description: 'Lie down' },
-  { command: '/crawl', description: 'Crawl' },
   { command: '/trash', description: 'Throw items away' },
   { command: '/kit starter', description: 'Starter kit once a day' },
   { command: '/chatcolor', description: 'Colour codes in chat' },
 ]
+
+/**
+ * Free extras with no command to type, as full sentences (rendered after the
+ * "everyone already has" line). GSit.SitClick stays default true: GSit config
+ * Sit.SitMaterials (#stairs, #slabs, carpets, snow), empty-hand-only true.
+ * `/sit toggle` is free too and turns click-sitting off and on.
+ */
+export const everyoneExtras: string[] = ['Anyone can sit on stairs, slabs and carpets: right-click one with an empty hand.']
 
 export const starterKit: { name: string; cooldown: string; items: string[] } = {
   name: 'Starter',
@@ -304,7 +327,9 @@ function buildRank(input: RankInput, below?: Rank): Rank {
  * Commands: LuckPerms nodes of that group only. Perks the old menu lists but
  * that do not work (no plugin) or that everyone already has are left out on
  * purpose: /invsort, /chestsort, /heads, anvil colours, chest shop limits,
- * "multiple claims", "Minecraft codes", /sit, /lay, /crawl, /trash.
+ * "multiple claims", "Minecraft codes", /trash.
+ * GSit poses ARE rank perks (GAMEPLAY FIXER round 2, LP export 07:25; Ranks.yml lore):
+ * VIP gsit.sit, VIP+ gsit.lay + layback + bellyflop + spin, MVP gsit.crawl.
  *
  * WEB PRICES BELOW ARE PLACEHOLDERS FOR THE OWNER (never shown while placeholder: true).
  */
@@ -322,6 +347,7 @@ const vip = buildRank({
   commands: [
     { command: '/nv', description: 'Night vision on and off' },
     { command: '/craft', description: 'Crafting table anywhere' },
+    { command: '/sit', description: 'Sit down anywhere' },
     { command: '/kittycannon', description: 'Fire a kitten cannon, just for laughs' },
   ],
   kit: {
@@ -363,6 +389,10 @@ const vipPlus = buildRank(
         description: 'Go back to your last spot, even where you died',
         review: 'Returning to your death point is a gameplay edge (recovering gear fast).',
       },
+      { command: '/lay', description: 'Lie down anywhere' },
+      { command: '/layback', description: 'Lie on your back' },
+      { command: '/bellyflop', description: 'Lie flat on your belly' },
+      { command: '/spin', description: 'Spin around on the spot' },
     ],
     kit: {
       name: 'VIP+',
@@ -404,6 +434,7 @@ const mvp = buildRank(
       { command: '/feed', description: 'Fill your hunger bar', review: 'Free food on demand helps in fights and the dungeon.' },
       { command: '/seen', description: 'See when a player was last online' },
       { command: '/repair', description: 'Repair the item in your hand', review: 'Free repairs skip the XP and material cost everyone else pays.' },
+      { command: '/crawl', description: 'Crawl anywhere, even through 1-block gaps' },
     ],
     kit: {
       name: 'MVP',
@@ -431,7 +462,7 @@ const mvpPlus = buildRank(
     color: 'var(--chat-aqua)',
     order: 4,
     price: { currency: 'tokens', amount: 3000 },
-    tagline: 'Fly, wear anything as a hat, carry your ender chest, and a diamond armour kit.',
+    tagline: 'Fly on plots and in the Mall, wear anything as a hat, carry your ender chest, and a diamond armour kit.',
     rarity: 'epic',
     sprite: { shape: 'banner4' },
     requires: 'mvp',
@@ -443,8 +474,8 @@ const mvpPlus = buildRank(
       { command: '/echest', description: 'Open your ender chest anywhere' },
       {
         command: '/fly',
-        description: 'Fly',
-        review: 'The old menu says "in your claims" but no plugin limits it, so it works everywhere. Movement advantage.',
+        description: 'Fly in the plot world and the Shopping Mall',
+        review: 'LuckPerms world contexts (plotworld, shoppingmall) since the gameplay fix; flight switches off when you change world.',
       },
       { command: '/beezooka', description: 'Launch a bee, just for fun' },
     ],
@@ -485,11 +516,6 @@ const mvpPlusPlus = buildRank(
     requires: 'mvp-plus',
     limits: { plots: 6, homes: 10, stalls: 5 },
     commands: [
-      {
-        command: '/god',
-        description: 'God mode, you take no damage',
-        review: 'MAJOR: invulnerability on a survival + dungeon server. Clearly pay-to-win if sold for money.',
-      },
       { command: '/clear', description: 'Empty your inventory' },
       { command: '/bigtree', description: 'Grow a big tree where you look' },
       { command: '/smithtable', description: 'Smithing table anywhere' },
@@ -545,7 +571,14 @@ export function tokensToReach(id: RankId): number {
 /* ------------------------------------------------------------------------ */
 
 /**
- * The ONLY source of Tokens today: the playtime ladder (/playtime).
+ * The menu that shows the playtime ladder. DeluxeMenus BASIC/Playtime.yml opens on
+ * levels / playtime / playtimes, but EssentialsX keeps its own /playtime (it only
+ * prints your time), so /levels is the one that works.
+ */
+export const PLAYTIME_MENU = '/levels'
+
+/**
+ * The playtime ladder: one-off Token payouts as your total time online grows.
  * DeluxeMenus BASIC/Playtime.yml: `ft give` at Level V, XI, XII and XVII.
  * "days" = total time played (player-time.reached.4d etc.), not calendar days.
  */
@@ -557,6 +590,50 @@ export const tokenMilestones: { level: string; playtime: string; hours: number; 
 ]
 
 export const tokensFromPlaytime = tokenMilestones.reduce((sum, m) => sum + m.tokens, 0)
+
+export interface TokenSource {
+  id: 'daily' | 'weekly' | 'monthly' | 'quests' | 'playtime'
+  /** Short name, e.g. 'Daily reward'. */
+  name: string
+  /** The command that opens it in game. */
+  command: string
+  tokens: number
+  /** How often, in plain words: 'Every day', 'Once per level'. */
+  every: string
+  /** true = you can claim it again and again; false = one-off (the playtime ladder). */
+  repeats: boolean
+}
+
+/**
+ * EVERY way to earn Tokens today (grep of `ft|tokens give` over the plugins, ECONOMY FIXER):
+ * - DailyRewards config.yml: daily +10, weekly +50, monthly +150 (normal and premium lists)
+ * - ODailyQuests config.yml global_reward (all 3 daily quests done): +25, next to $1,500 + a diamond block
+ * - DeluxeMenus BASIC/Playtime.yml: 850 in total (tokenMilestones)
+ * Not a source: mob or mining drops (FlareTokens drops.yml is empty), voting (no Votifier yet), the dungeon.
+ */
+export const tokenSources: TokenSource[] = [
+  { id: 'daily', name: 'Daily reward', command: '/rewards', tokens: 10, every: 'Every day', repeats: true },
+  { id: 'weekly', name: 'Weekly reward', command: '/rewards', tokens: 50, every: 'Every week', repeats: true },
+  { id: 'monthly', name: 'Monthly reward', command: '/rewards', tokens: 150, every: 'Every 30 days', repeats: true },
+  { id: 'quests', name: 'All 3 daily quests', command: '/dquests', tokens: 25, every: 'Every day', repeats: true },
+  { id: 'playtime', name: 'Playtime levels', command: PLAYTIME_MENU, tokens: tokensFromPlaytime, every: 'Once per level', repeats: false },
+]
+
+function sourceTokens(id: TokenSource['id']): number {
+  return tokenSources.find((t) => t.id === id)?.tokens ?? 0
+}
+
+/** Your very first /rewards claims (daily, weekly and monthly are all open on day one): 210. */
+export const tokensFirstRewards = sourceTokens('daily') + sourceTokens('weekly') + sourceTokens('monthly')
+
+/** Day one for someone who also finishes all 3 daily quests: 235. */
+export const tokensFirstDay = tokensFirstRewards + sourceTokens('quests')
+
+/**
+ * ECONOMY FIXER pace estimate (CHANGELOG ~04:40-05:00): an active daily player earns about 47 Tokens a
+ * day and reaches VIP (1,000) around day 15 to 18, playtime levels V and XI included.
+ */
+export const tokenPace = { perDay: 47, vipAfter: '2 to 2.5 weeks' } as const
 
 /* ------------------------------------------------------------------------ */
 /* Store items                                                              */
@@ -572,19 +649,25 @@ const rankItems: StoreItem[] = ranks.map((r) => ({
   price: r.price,
   perks: r.perks,
   howToGet: r.requires
-    ? `In game: type /ranks (or /store, then Ranks) and pay with Tokens. You need ${getRank(r.requires)?.name} first.`
-    : 'In game: type /ranks (or /store, then Ranks) and pay with Tokens.',
+    ? `In game: type /ranks (or /purchase, then Ranks) and pay with Tokens. You need ${getRank(r.requires)?.name} first.`
+    : 'In game: type /ranks (or /purchase, then Ranks) and pay with Tokens.',
   status: 'in-game',
   rankId: r.id,
   sprite: r.sprite,
-  commands: ['/ranks', '/store'],
+  commands: ['/ranks', '/purchase'],
   maxQuantity: 1,
   web: r.web,
 }))
 
-const keyHow = 'In game: type /keys (or /store, then Keys) and pay with Tokens. Open crates at /warp crates.'
+const keyHow = 'In game: type /keys (or /purchase, then Keys) and pay with Tokens. Open crates at /warp crates.'
 
-/* Prices: PURCHASE/Keys.yml. Contents: ExcellentCrates crates/*.yml (no odds published on purpose). */
+/*
+ * Prices: PURCHASE/Keys.yml. Contents: ExcellentCrates crates/*.yml.
+ * Odds: same model as /wiki/crates (src/content/wiki/crates.ts): rarity weight (config.yml
+ * Rewards.Rarities common 70, uncommon 40, rare 25, legendary 10) / sum of the rarities in that
+ * crate, x reward weight / sum of reward weights in that rarity. Re-checked 2026-11-25.
+ * Keep `odds` in step with the wiki tables if a crate file changes.
+ */
 const keyItems: StoreItem[] = [
   {
     id: 'key-vote',
@@ -608,7 +691,8 @@ const keyItems: StoreItem[] = [
       'Golden apple or enchanted golden apple',
       'A trim or resource crate key',
     ],
-    alsoFrom: ['A resource crate (sometimes)', 'Voting, once voting opens'],
+    odds: 'Totem of undying about 17%, turtle shell and cobblestone generator about 14% each, mace about 7%, everything else about 3% each.',
+    alsoFrom: ['Playtime level III', 'A resource crate (sometimes)', 'Voting, once voting opens'],
     packSizes: [1, 12],
     maxQuantity: 64,
     web: { tebexPackageId: null, price: { PHP: 15, USD: 0.29 }, placeholder: true },
@@ -633,7 +717,8 @@ const keyItems: StoreItem[] = [
       'Saplings, including cherry',
       'A vote, trim or epic crate key',
     ],
-    alsoFrom: ['Daily reward (/rewards)', 'VIP+ and MVP kits', 'A vote crate (sometimes)'],
+    odds: 'All 23 rewards have the same chance, about 4% each.',
+    alsoFrom: ['Daily reward (/rewards)', 'Playtime level VIII', 'VIP+ and MVP kits', 'A vote crate (sometimes)'],
     packSizes: [1, 12],
     maxQuantity: 64,
     web: { tebexPackageId: null, price: { PHP: 20, USD: 0.39 }, placeholder: true },
@@ -651,6 +736,7 @@ const keyItems: StoreItem[] = [
     sprite: { shape: 'key', tone: 'trim' },
     commands: ['/keys', '/warp crates'],
     contents: ['One of 18 armour trim smithing templates'],
+    odds: 'Flow and Bolt about 14% each, Silence about 7%, every other template about 4%.',
     alsoFrom: ['MVP++ kit', 'Vote and resource crates (sometimes)'],
     packSizes: [1, 12],
     maxQuantity: 64,
@@ -677,24 +763,31 @@ const keyItems: StoreItem[] = [
       'Epic elytra',
       'Enchanted golden apple',
     ],
+    odds: 'All 16 rewards have the same chance, about 6% each.',
     alsoFrom: ['MVP+ and MVP++ kits', 'A resource crate (sometimes)'],
     packSizes: [1, 12],
     maxQuantity: 64,
     web: { tebexPackageId: null, price: { PHP: 30, USD: 0.59 }, placeholder: true },
   },
   {
+    // PURCHASE/Keys.yml Spawner_Key: `ft remove 100` + `crate key give spawner 1` (single keys only, no 12-pack).
+    // The Spawner crate stands at /warp crates (spawner_crate.yml Positions -52,71,46,spawn).
     id: 'key-spawner',
     category: 'keys',
     name: 'Spawner crate key',
-    summary: 'A real mob spawner for your base. Not handed out yet.',
+    summary: 'A real mob spawner for your grinder in the Wild.',
     icon: 'spawner',
     rarity: 'legendary',
-    price: null,
-    howToGet: 'Not available yet. We will announce in Discord how spawner keys can be earned.',
-    status: 'coming-soon',
+    price: { currency: 'tokens', amount: 100 },
+    howToGet: 'In game: type /keys (or /purchase, then Keys) and pay with Tokens. One key at a time. Open the Spawner crate at /warp crates.',
+    status: 'in-game',
     sprite: { shape: 'key', tone: 'spawner' },
-    contents: ['A pig, chicken, sheep, cow, zombie, skeleton or spider spawner'],
-    maxQuantity: 0,
+    commands: ['/keys', '/warp crates'],
+    contents: ['A pig, chicken, sheep, zombie, skeleton, spider or cow spawner'],
+    odds: 'Pig about 22%, chicken and sheep about 18% each, zombie about 15%, skeleton and spider about 10.5% each, cow about 5%.',
+    alsoFrom: ['Playtime level XXVII'],
+    packSizes: [1],
+    maxQuantity: 64,
   },
 ]
 
@@ -799,10 +892,10 @@ const cosmeticItems: StoreItem[] = [
     rarity: 'rare',
     price: { currency: 'tokens', amount: 1 },
     priceFrom: true,
-    howToGet: 'In game: type /store, then Points. You can also earn Points in the AFK pool and from playtime rewards.',
+    howToGet: 'In game: type /purchase, then Points. You can also earn Points in the AFK pool, from /rewards and from playtime levels.',
     status: 'in-game',
     sprite: { shape: 'points' },
-    commands: ['/store', '/warp afk'],
+    commands: ['/purchase', '/warp afk'],
     // PURCHASE/Points.yml: what `points give` actually pays (the menu titles say 100/500/... + bonus)
     contents: [
       '⛃1 gives ✪10',
@@ -812,7 +905,12 @@ const cosmeticItems: StoreItem[] = [
       '⛃200 gives ✪2,500',
       '⛃500 gives ✪6,000',
     ],
-    alsoFrom: ['AFK pool at /warp afk: ✪10 every 20 minutes', 'Playtime Level V: ✪500', 'Weekly reward (/rewards): ✪50'],
+    alsoFrom: [
+      'AFK pool at /warp afk: ✪10 every 20 minutes',
+      'Playtime level V: ✪500',
+      'Weekly reward (/rewards): ✪50',
+      'Monthly reward (/rewards): ✪100',
+    ],
     maxQuantity: 1,
   },
 ]

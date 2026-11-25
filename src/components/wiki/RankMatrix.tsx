@@ -1,18 +1,22 @@
 import type { CSSProperties, ReactNode } from 'react'
+import TableFrame from '@/components/content/TableFrame'
 import Callout from '@/components/ui/Callout'
 import PixelIcon from '@/components/ui/PixelIcon'
-import { site } from '@/lib/site'
 import {
   defaultLimits,
   everyoneCommands,
+  everyoneExtras,
   formatPrice,
   priceLabel,
   ranks,
   starterKit,
-  tokensFromPlaytime,
+  tokenPace,
+  tokensFirstDay,
+  tokenSources,
   tokensToReach,
   type Rank,
   type RankLimits,
+  type TokenSource,
 } from '@/lib/store'
 import s from './WikiData.module.css'
 
@@ -21,6 +25,8 @@ import s from './WikiData.module.css'
  * prices live in one place (STORE ENGINEER owns the data). RankCommand.review is an
  * owner-only note and is never rendered. Owner: WIKI WRITER.
  */
+
+const MATRIX_CAPTION = 'Each rank keeps everything from the ranks before it.'
 
 const rankStyle = (r: Rank) => ({ '--rank': r.color }) as CSSProperties
 
@@ -46,6 +52,11 @@ function No() {
 
 function tokens(n: number): string {
   return `⛃${n.toLocaleString('en-US')}`
+}
+
+/** Tokens one source pays, from tokenSources in src/lib/store.ts. */
+function earn(id: TokenSource['id']): string {
+  return tokens(tokenSources.find((t) => t.id === id)?.tokens ?? 0)
 }
 
 export default function RankMatrix() {
@@ -82,22 +93,21 @@ export default function RankMatrix() {
 
   return (
     <div className={s.block}>
-      {firstCost !== null && tokensFromPlaytime < firstCost ? (
-        <Callout tone="warn" title="Honest Token check">
+      {firstCost !== null ? (
+        <Callout tone="tip" title={`Saving up for ${first.name}`}>
           <p>
-            Right now Tokens only come from playtime levels, and they add up to {tokens(tokensFromPlaytime)} in total. {first.name}{' '}
-            costs {tokens(firstCost)}, so playtime alone is not quite enough yet. News about other ways to earn Tokens goes up on{' '}
-            <a href={site.discord} target="_blank" rel="noopener noreferrer">
-              Discord
-            </a>
-            .
+            Tokens come from <code className="kc-cmd-inline">/rewards</code> ({earn('daily')} a day, {earn('weekly')} a week,{' '}
+            {earn('monthly')} a month), all three daily quests ({earn('quests')}) and playtime levels ({earn('playtime')} in
+            total). Your first day of claims is already worth {tokens(tokensFirstDay)}.
+            {` Play most days and ${first.name} (${tokens(firstCost)}) takes about ${tokenPace.vipAfter}.`}
           </p>
         </Callout>
       ) : null}
 
-      <div className={`kc-table-wrap ${s.wrap}`} role="region" aria-label="Rank comparison" tabIndex={0}>
+      {/* Scrolls sideways on phones with the perk column pinned; TableFrame adds the edge shadow and swipe cue. */}
+      <TableFrame label="Rank comparison" caption={MATRIX_CAPTION} sticky className={s.wrap}>
         <table className={`kc-table ${s.matrix}`}>
-          <caption>Each rank keeps everything from the ranks before it.</caption>
+          <caption className="kc-sr-only">{MATRIX_CAPTION}</caption>
           <thead>
             <tr>
               <th scope="col">Perk</th>
@@ -169,7 +179,7 @@ export default function RankMatrix() {
             )}
           </tbody>
         </table>
-      </div>
+      </TableFrame>
 
       <p className={s.note}>
         Everyone already has{' '}
@@ -179,7 +189,7 @@ export default function RankMatrix() {
             {i < everyoneCommands.length - 2 ? ', ' : i === everyoneCommands.length - 2 ? ' and ' : ''}
           </span>
         ))}
-        , rank or not.
+        , rank or not.{everyoneExtras.length ? ` ${everyoneExtras.join(' ')}` : null}
       </p>
     </div>
   )

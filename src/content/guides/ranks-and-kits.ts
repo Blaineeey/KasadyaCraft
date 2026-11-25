@@ -1,11 +1,14 @@
+import { DAILY_QUESTS, TOKEN_SOURCES, count } from '@/content/facts'
 import type { Guide } from '@/lib/content'
-import { CHECKED, PLAYTIME_LEVELS, RANK_COMMANDS, RANK_LADDER } from './facts'
+import { CHECKED, PLAYTIME_COMMAND, PLAYTIME_LEVELS, RANK_COMMANDS, RANK_LADDER } from './facts'
 
 /*
  * Sources: DeluxeMenus PURCHASE/Menu.yml (/purchase) + PURCHASE/Ranks.yml (/ranks, token prices, each rank
  * requires the previous one), LuckPerms groups (inheritance default > vip > ... > mvp++, plots, homes, kits,
- * commands), Essentials kits.yml + config.yml sethome-multiple, ARM Limits, FlareTokens sources (Playtime.yml
- * levels V, XI, XII, XV and one medium daily quest; FlareTokens drops.yml empty, no web store),
+ * commands), Essentials kits.yml + config.yml sethome-multiple, ARM Limits, FlareTokens sources (TOKEN_SOURCES in
+ * src/content/facts.ts: DailyRewards 10/50/150, ODailyQuests global_reward 25, Playtime.yml levels V, XI, XII,
+ * XVII = 850; FlareTokens drops.yml empty, no web store),
+ * LuckPerms mvp+ essentials.fly only with world contexts plotworld + shoppingmall (Essentials world-change-fly-reset),
  * MythicDungeons LabOfHorrors Requirements.Permission false (no rank needed).
  */
 const tokens = (n: number | null) => (n === null ? 'Free' : `${n.toLocaleString('en-US')} Tokens`)
@@ -33,7 +36,7 @@ export const ranksAndKits: Guide = {
     },
     {
       type: 'p',
-      text: `You earn Tokens by playing. Playtime levels in \`/playtime\` pay them (your first 100 come at ${firstTokenLevel.after}), and some daily quests pay them too. There is no web store yet.`,
+      text: `You earn Tokens by playing. Claim \`/rewards\` for ${TOKEN_SOURCES.daily} a day, ${TOKEN_SOURCES.weekly} a week and ${TOKEN_SOURCES.monthly} a month, finish all ${DAILY_QUESTS.perDay} daily quests for ${TOKEN_SOURCES.quests} more, and playtime levels in \`${PLAYTIME_COMMAND}\` add ${count(TOKEN_SOURCES.playtime)} over time (your first 100 come at ${firstTokenLevel.after}). There is no web store yet.`,
     },
     {
       type: 'table',
