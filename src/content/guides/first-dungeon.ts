@@ -7,8 +7,9 @@ import { CHECKED, DUNGEON } from './facts'
  * objectives, portal + button, Draedon, 2 minute reward room), lootchests.yml (12 per-player supply chests),
  * MythicMobs mobs/LabOfHorrors (stats + Infected Flesh drops), droptables/LabOfHorrors/loh.yml (raid chest loot),
  * skills/LabOfHorrors/locksmith.yml + lair_of_horrors_mechanics.yml (key consumed, one chest per player per kill),
- * DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo) + DUNGEON/Locksmith.yml (/locksmith), MythicDungeons plugin.yml
- * (/mr = mythicrooms), locale en_US.yml (room invite / accept), Citizens NPCs in the dungeon hall, warp dungeon.
+ * DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo) + DUNGEON/Locksmith.yml (/locksmith) + DUNGEON/Main.yml (/dungeon:
+ * Play Solo, Play with Friends, Quick Match, Join a Party, Accept an Invite, Start, Leave Dungeon), locale en_US.yml,
+ * Citizens NPCs in the dungeon hall (Dungeon Master opens /dungeon), warp dungeon.
  */
 export const firstDungeon: Guide = {
   slug: 'first-dungeon',
@@ -42,9 +43,9 @@ export const firstDungeon: Guide = {
       type: 'steps',
       items: [
         { title: 'Go to the dungeon hall', text: 'It is at spawn. Say hi to the Dungeon Guard on the way in.', command: '/warp dungeon' },
-        { title: 'Open the dungeon menu', text: 'Click the dungeon NPC or type the command, then create a room for the Lab of Horrors.', command: '/mr menu' },
-        { title: 'Invite your party', text: 'Each friend gets a chat message and types `/mr accept <your name>` to join.', command: '/mr invite <name>' },
-        { title: 'Start and meet at the gate', text: 'Start the run from the menu. Inside, the whole party stands at the lab gate together to open it.' },
+        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master or type the command. Click **Play Solo** to jump straight in, or **Play with Friends** to make a party.', command: '/dungeon' },
+        { title: 'Bring your friends', text: 'Click **Invite a Friend** and type their name. They can also open the same menu and use **Join a Party** or **Accept an Invite**. No friends online? **Quick Match** teams you up with other players.' },
+        { title: 'Start and meet at the gate', text: 'Click **Start Dungeon**. Inside, the whole party stands at the lab gate together to open it.' },
       ],
     },
     {
@@ -115,7 +116,7 @@ export const firstDungeon: Guide = {
     {
       type: 'callout',
       tone: 'tip',
-      text: 'Need to leave a run early? Type `/md leave`. Your party can carry on without you.',
+      text: 'Need to leave a run early? Type `/dungeon` and click **Leave Dungeon**. Your party can carry on without you.',
     },
   ],
 }

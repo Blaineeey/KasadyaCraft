@@ -141,9 +141,9 @@ export const commands: WikiPage = {
       type: 'commands',
       items: [
         { command: '/warp dungeon', description: 'Go to the dungeon entrance.' },
-        { command: '/mr menu', description: 'Create or join a dungeon room.' },
-        { command: '/mr invite <player>', description: 'Invite a friend to your room.' },
-        { command: '/md leave', description: 'Leave the dungeon run.' },
+        { command: '/dungeon', description: 'The dungeon menu: play solo, make a party, quick match, join or accept an invite, start, or leave a run.' },
+        { command: '/mr invite <player>', description: 'Invite a friend to your party (the menu does this for you too).' },
+        { command: '/room accept <player>', description: 'Accept a party invite.' },
         { command: '/dungeoninfo', description: 'The Dungeon Codex: mobs, boss and loot. `/codex` works too.' },
         { command: '/locksmith', description: 'Forge Chamber Keys, decipher dungeon books and trade loot for crate keys.' },
         { command: '/dchat <message>', description: 'Talk only to your dungeon party.' },

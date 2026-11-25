@@ -74,7 +74,7 @@ export const features: Feature[] = [
     recipe: ['sword', _, 'shield', _, 'skull', _, 'potion', 'key', 'potion'],
     flavour: 'Bring friends. Draedon is waiting.',
     body: 'Our dungeon has rooms full of custom mobs and a boss fight with Draedon at the end. Make a party, fight through, then forge Chamber keys at the Locksmith to open the raid chests.',
-    commands: ['/warp dungeon', '/mr menu', '/locksmith', '/dungeoninfo'],
+    commands: ['/warp dungeon', '/dungeon', '/locksmith', '/dungeoninfo'],
     href: '/wiki/dungeon',
     linkLabel: 'Dungeon guide',
   },

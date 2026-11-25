@@ -9,7 +9,8 @@ import { HEXTECH_TAG } from './locksmith'
  * - plugins/MythicMobs/mobs/LabOfHorrors/{loh,draedon}.yml: health/damage, drops (INFECTED_FLESH 0.1 / 0.5 / 1-3)
  * - plugins/MythicDungeons/loottables/loh_lootchest.yml (supply chests), MythicMobs droptables/LabOfHorrors/loh.yml (raid chests)
  * - DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo, /codex): 7 rooms, 12 supply chests, boss phases, 2 minute rewards room
- * - Citizens NPCs at spawn: Dungeon Guard, Dungeon Master (/mr menu), Dungeon Codex (/dungeoninfo)
+ * - Citizens NPCs at spawn: Dungeon Guard, Dungeon Master (/dungeon), Dungeon Codex (/dungeoninfo)
+ * - DeluxeMenus DUNGEON/Main.yml (/dungeon, /dungeons): one menu for solo, party, quick match, join, invites, leave
  * - LuckPerms default: mythicdungeons.commands.rooms.*, dungeons.leave/chat/info
  * - Economy balancer: no money reward, fee or cooldown; loot cannot be sold
  * - DeluxeMenus DUNGEON/Locksmith.yml (08:58, GAMEPLAY FIXER round 3): forge keys, decipher books into vanilla
@@ -28,8 +29,10 @@ export const dungeon: WikiPage = {
     'lab of horrors',
     'draedon',
     'boss',
+    '/dungeon',
+    'play solo',
+    'quick match',
     '/mr',
-    '/mr menu',
     'party',
     'raid chest',
     'chamber key',
@@ -65,9 +68,9 @@ export const dungeon: WikiPage = {
       type: 'steps',
       items: [
         { title: 'Go to the entrance', text: 'The Dungeon Guard and Dungeon Master NPCs wait there.', command: '/warp dungeon' },
-        { title: 'Open a room', text: 'Use the menu (or click the Dungeon Master) to create a room or join one.', command: '/mr menu' },
-        { title: 'Invite your party', text: 'Invite each friend. A run holds up to 5 players.', command: '/mr invite <player>' },
-        { title: 'Start', text: 'Start from the room menu. After a short countdown you are in. Each door opens when its room is cleared.' },
+        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master or type the command. Play Solo starts a run right away. Play with Friends makes a party.', command: '/dungeon' },
+        { title: 'Fill your party', text: 'Invite a Friend, or let friends use Join a Party or Accept an Invite from the same menu. Quick Match groups you with other players. A run holds up to 5 players.' },
+        { title: 'Start', text: 'Click Start Dungeon and the whole party is teleported in. Each door opens when its room is cleared.' },
       ],
     },
     {
