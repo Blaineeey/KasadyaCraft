@@ -1,27 +1,62 @@
 /**
- * Central site configuration.
- * Edit this file to update links, server addresses, games and team info
- * without touching the page components.
+ * Central site configuration and shared facts.
+ *
+ * Owner: SITE ARCHITECT / INTEGRATOR. Every team READS this file; nobody else
+ * edits it. Need a change (a new fact, a nav item)? Put it in your report and
+ * the integrator applies it. Facts here were checked against the live server
+ * configs on 2026-11-25 (see docs/SITE_PLAN.md, "Server facts").
  */
+import type { PixelIconName } from '@/components/ui/pixel-icons'
 
 export const site = {
   name: 'KasadyaCraft',
   shortName: 'Kasadya',
-  tagline: 'People to play with. People to grow with. In games and in life.',
+  url: 'https://kasadyacraft.com',
+  /** What players type in Multiplayer > Add Server. */
+  address: 'play.kasadyacraft.com',
+  /**
+   * Player-facing version line. Via 5.12.3 on the backends accepts 1.13 to 26.3 (VERSIONS in
+   * src/content/guides/facts.ts); 1.21.10 stays recommended because the resource pack is made for it.
+   */
+  edition: 'Java Edition',
+  versionLabel: 'Java 1.21.x',
+  recommendedVersion: '1.21.10',
+  tagline: 'People to play with, people to grow with.',
+  /** Second line of the live MOTD (proxy config). Keep the two in step; there is no "City". */
+  motdLine: 'Survival | Dungeons | Plots | Shops',
   description:
-    'KasadyaCraft is a community for people who want more than a random lobby. We play together, host our own servers like Minecraft and Roblox, and show up for each other in and out of the game.',
+    'KasadyaCraft is a friendly Minecraft Java survival server with plots, player shops, daily quests and a dungeon with a real boss fight. Hop in at play.kasadyacraft.com.',
+  /** "Kasadya" means joy or festivity. The whole brand is a festival. */
+  meaning: 'Kasadya means joy, the feeling of a town fiesta.',
   founded: '2024',
   discord: 'https://discord.gg/8DY3eXHnAg',
   email: 'contact@semo.network',
-}
+} as const
 
-export type ServerStatus = 'online' | 'beta' | 'soon'
+/** How the network is put together. Used by the join guide, home and wiki. */
+export const network = {
+  hub: {
+    name: 'Hub',
+    blurb: 'Everyone lands in the festival plaza first. Walk through the portal, talk to the Survival Guide, or use the compass in your hotbar.',
+    returnCommand: '/hub',
+  },
+  survival: {
+    name: 'Survival',
+    blurb: 'Plots, homes, warps, player shops, quests and the Lab of Horrors dungeon.',
+  },
+  resourcePack: {
+    required: true,
+    why: 'Custom items, dungeon mobs and the menus all live in our resource pack. Accept it when you enter Survival.',
+  },
+} as const
+
+export type ServerStatusLabel = 'online' | 'beta' | 'soon'
 
 export interface GameServer {
   slug: string
   game: string
   name: string
-  status: ServerStatus
+  status: ServerStatusLabel
   address?: string
   joinUrl?: string
   joinLabel: string
@@ -34,14 +69,14 @@ export const servers: GameServer[] = [
   {
     slug: 'minecraft',
     game: 'Minecraft',
-    name: 'Kasadya SMP',
+    name: 'KasadyaCraft Survival',
     status: 'online',
-    address: 'play.kasadyacraft.online',
-    joinUrl: 'minecraft://play.kasadyacraft.online',
-    joinLabel: 'Launch Minecraft',
+    address: site.address,
+    joinLabel: 'How to join',
+    joinUrl: '/play',
     summary:
-      'Survival multiplayer with two core plugins: Slimefun for tech and automation, Epidemic for disease survival.',
-    tags: ['Java Edition', 'SMP', 'Slimefun', 'Epidemic'],
+      'Survival with plots, player shops in a shopping mall, daily quests, crates and the Lab of Horrors dungeon. You start in the hub, then hop into Survival.',
+    tags: ['Java 1.21.x', 'Survival', 'Plots', 'Dungeon', 'Player shops'],
     href: '/games/minecraft',
   },
   {
@@ -49,7 +84,7 @@ export const servers: GameServer[] = [
     game: 'Roblox',
     name: 'Kasadya on Roblox',
     status: 'soon',
-    // Replace with your Roblox group or experience link when it is live.
+    // Replace with the Roblox group or experience link when it is live.
     joinUrl: 'https://www.roblox.com',
     joinLabel: 'Open Roblox',
     summary:
@@ -58,6 +93,66 @@ export const servers: GameServer[] = [
     href: '/games/roblox',
   },
 ]
+
+/* --------------------------------------------------------------------------
+   Navigation
+   The main nav is a 9-slot HOTBAR fixed to the bottom of the screen.
+   Order matters: number keys 1-9 jump to the matching slot.
+   -------------------------------------------------------------------------- */
+export interface HotbarItem {
+  label: string
+  href: string
+  icon: PixelIconName
+  /** Short line shown above the hotbar when the slot is selected (like an item name). */
+  hint: string
+  external?: boolean
+}
+
+export const hotbar: HotbarItem[] = [
+  { label: 'Home', href: '/', icon: 'house', hint: 'Back to the plaza' },
+  { label: 'Play', href: '/play', icon: 'grass', hint: 'How to join in 3 steps' },
+  { label: 'Guides', href: '/guides', icon: 'book', hint: 'Starter guides for new players' },
+  { label: 'Wiki', href: '/wiki', icon: 'map', hint: 'Every feature, rank and command' },
+  { label: 'Store', href: '/store', icon: 'chest', hint: 'Ranks, keys and cosmetics' },
+  { label: 'Vote', href: '/vote', icon: 'star', hint: 'Voting opens soon' },
+  { label: 'Community', href: '/community', icon: 'heart', hint: 'Staff, events and support' },
+  { label: 'Games', href: '/games', icon: 'controller', hint: 'Everything else we play' },
+  { label: 'Discord', href: site.discord, icon: 'chat', hint: 'Chat with us on Discord', external: true },
+]
+
+/** Footer link columns. */
+export const footerLinks: { heading: string; links: { label: string; href: string; external?: boolean }[] }[] = [
+  {
+    heading: 'Start here',
+    links: [
+      { label: 'How to join', href: '/play' },
+      { label: 'Starter guides', href: '/guides' },
+      { label: 'Rules', href: '/wiki/rules' },
+      { label: 'FAQ', href: '/wiki/faq' },
+    ],
+  },
+  {
+    heading: 'Server',
+    links: [
+      { label: 'Wiki', href: '/wiki' },
+      { label: 'Store', href: '/store' },
+      { label: 'Vote', href: '/vote' },
+      { label: 'Lab of Horrors', href: '/wiki/dungeon' },
+    ],
+  },
+  {
+    heading: 'Community',
+    links: [
+      { label: 'Community', href: '/community' },
+      { label: 'Games we play', href: '/games' },
+      { label: 'Discord', href: site.discord, external: true },
+    ],
+  },
+]
+
+/* --------------------------------------------------------------------------
+   Community content (kept from the old site, used by /community and /games)
+   -------------------------------------------------------------------------- */
 
 /** What actually happens in the community. */
 export const activities = [
@@ -79,45 +174,31 @@ export const activities = [
   },
 ]
 
-/** Why people join. Shown on the home page. */
-export const reasons = [
-  {
-    title: 'Someone to play with',
-    body: 'No more empty friend lists or random lobbies. There is always someone here up for a session.',
-  },
-  {
-    title: 'Someone to grow with',
-    body: 'Get better at the games you love, and at the things outside them. Members share what they know freely.',
-  },
-  {
-    title: 'Someone in your corner',
-    body: 'A group that notices when you are gone, celebrates your wins and listens on the bad days.',
-  },
-]
-
+/*
+ * No logo field on purpose: the site never ships publishers' logos (no Mojang art at all,
+ * and the repo is public). GameStack draws its own pixel icons, picked by genre.
+ */
 export interface ShowcaseGame {
   name: string
   sub: string
-  /** Official logo file under /public/games, shown in its original colours */
-  logo: string
   hosted?: boolean
 }
 
-/** Popular games the community plays, shown as the stacked card showcase. Edit freely. */
+/** Popular games the community plays (the /games showcase). */
 export const popularGames: ShowcaseGame[] = [
-  { name: 'Minecraft', sub: 'Kasadya SMP', logo: '/games/minecraft.png', hosted: true },
-  { name: 'Roblox', sub: 'Kasadya group', logo: '/games/roblox.png', hosted: true },
-  { name: 'Valorant', sub: 'Ranked & customs', logo: '/games/valorant.svg' },
-  { name: 'League of Legends', sub: 'Flex queue', logo: '/games/lol.svg' },
-  { name: 'Dota 2', sub: 'Ranked & turbo', logo: '/games/dota2.png' },
-  { name: 'Counter-Strike 2', sub: 'Premier & casual', logo: '/games/cs2.svg' },
-  { name: 'Mobile Legends', sub: 'Squad nights', logo: '/games/mlbb.png' },
-  { name: 'Call of Duty', sub: 'Warzone', logo: '/games/cod.svg' },
-  { name: 'Fortnite', sub: 'Trios', logo: '/games/fortnite.svg' },
-  { name: 'Apex Legends', sub: 'Pubs & ranked', logo: '/games/apex.png' },
-  { name: 'Diablo IV', sub: 'Seasons & co-op', logo: '/games/diablo4.png' },
-  { name: 'GTA', sub: 'Online sessions', logo: '/games/gta.svg' },
-  { name: 'NBA 2K', sub: 'Park & MyTeam', logo: '/games/nba2k.svg' },
+  { name: 'Minecraft', sub: 'KasadyaCraft Survival', hosted: true },
+  { name: 'Roblox', sub: 'Kasadya group', hosted: true },
+  { name: 'Valorant', sub: 'Ranked & customs' },
+  { name: 'League of Legends', sub: 'Flex queue' },
+  { name: 'Dota 2', sub: 'Ranked & turbo' },
+  { name: 'Counter-Strike 2', sub: 'Premier & casual' },
+  { name: 'Mobile Legends', sub: 'Squad nights' },
+  { name: 'Call of Duty', sub: 'Warzone' },
+  { name: 'Fortnite', sub: 'Trios' },
+  { name: 'Apex Legends', sub: 'Pubs & ranked' },
+  { name: 'Diablo IV', sub: 'Seasons & co-op' },
+  { name: 'GTA', sub: 'Online sessions' },
+  { name: 'NBA 2K', sub: 'Park & MyTeam' },
 ]
 
 export interface TeamMember {
@@ -131,7 +212,7 @@ export const team: TeamMember[] = [
   {
     name: 'Rasasakeet',
     role: 'Senior Moderator',
-    focus: 'Player disputes, Slimefun support and keeping the peace.',
+    focus: 'Player disputes, server support and keeping the peace.',
     discord: 'I F R I T Z#0310',
   },
   {
@@ -150,23 +231,3 @@ export const team: TeamMember[] = [
     focus: 'New player onboarding and community questions.',
   },
 ]
-
-export const nav = [
-  { label: 'Community', href: '/community' },
-  { label: 'Games', href: '/games' },
-  { label: 'Products', href: '/products' },
-]
-
-export interface Product {
-  name: string
-  tag: string
-  body: string
-  href: string
-}
-
-/**
- * Things made by the community. Leave empty to show the "coming soon" state.
- * Example:
- * { name: 'Kasadya Tee', tag: 'Merch', body: 'Heavyweight black tee with the logo.', href: 'https://...' }
- */
-export const products: Product[] = []

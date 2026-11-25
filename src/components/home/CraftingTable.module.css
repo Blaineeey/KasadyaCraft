@@ -1,0 +1,229 @@
+/* Crafting table (home "What's inside"). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.table {
+  --slot: 44px;
+  display: grid;
+  gap: var(--s-5);
+  align-items: stretch;
+}
+
+@media (min-width: 480px) {
+  .table {
+    --slot: 52px;
+  }
+}
+
+@media (min-width: 960px) {
+  .table {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-6);
+  }
+}
+
+/* ---------- the grey container GUI ---------- */
+.gui {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  padding: var(--s-4);
+  color: var(--gui-ink);
+  background: var(--gui-bg);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-gui), var(--block-drop);
+}
+
+.label {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  color: var(--gui-ink);
+}
+
+.labelHint {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+}
+
+.bench {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, var(--slot));
+}
+
+.slot {
+  display: grid;
+  place-items: center;
+  width: var(--slot);
+  height: var(--slot);
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.arrow {
+  width: 40px;
+  height: 30px;
+  fill: var(--gui-dark);
+}
+
+.result {
+  --slot-lg: calc(var(--slot) + 20px);
+  width: var(--slot-lg);
+  height: var(--slot-lg);
+}
+
+.result[data-rarity='uncommon'] { box-shadow: var(--bevel-slot), inset 0 0 0 5px color-mix(in srgb, var(--rarity-uncommon) 55%, transparent); }
+.result[data-rarity='rare'] { box-shadow: var(--bevel-slot), inset 0 0 0 5px color-mix(in srgb, var(--rarity-rare) 55%, transparent); }
+.result[data-rarity='epic'] { box-shadow: var(--bevel-slot), inset 0 0 0 5px color-mix(in srgb, var(--rarity-epic) 55%, transparent); }
+.result[data-rarity='legendary'] { box-shadow: var(--bevel-slot), inset 0 0 0 5px color-mix(in srgb, var(--rarity-legendary) 60%, transparent); }
+
+.ingredient {
+  display: grid;
+  animation: dropIn 200ms steps(3, end) both;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+.resultItem {
+  display: grid;
+  animation: popOut 280ms steps(4, end) both;
+  animation-delay: calc(var(--i) * 70ms + 140ms);
+}
+
+@keyframes dropIn {
+  from { transform: translateY(-14px) scale(0.6); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@keyframes popOut {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- inventory row ---------- */
+.inventory {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.inv {
+  display: grid;
+  grid-template-columns: repeat(5, var(--slot));
+  justify-content: center;
+  list-style: none;
+}
+
+.inv > li,
+.inv :global(.kc-tip) {
+  display: grid;
+}
+
+@media (min-width: 600px) {
+  .inv {
+    grid-template-columns: repeat(9, var(--slot));
+  }
+}
+
+.invSlot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--slot);
+  height: var(--slot);
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.invSlot:hover {
+  background: color-mix(in srgb, var(--gui-slot) 70%, var(--gui-light));
+}
+
+.invSlot[aria-pressed='true'] {
+  outline: var(--bw) solid var(--gui-light);
+  outline-offset: -2px;
+  background: color-mix(in srgb, var(--gui-slot) 75%, var(--gui-light));
+}
+
+.invSlot:focus-visible {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 1px;
+  z-index: 1;
+}
+
+/* not discovered yet: a little gold sparkle */
+.invSlot[data-new]::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  background: var(--kc-gold);
+  box-shadow: 0 0 0 1px var(--edge);
+  animation: sparkle 1.4s steps(1, end) infinite;
+}
+
+@keyframes sparkle {
+  50% { transform: scale(0.5); }
+}
+
+.progress {
+  display: grid;
+  gap: var(--s-1);
+  margin-top: var(--s-2);
+}
+
+.progressText {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--gui-ink);
+}
+
+/* ---------- detail card ---------- */
+.detail {
+  display: grid;
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  height: 100%;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  color: var(--text);
+  line-height: var(--lh-body);
+}
+
+.cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.more {
+  justify-self: start;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  color: var(--link);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ingredient,
+  .resultItem,
+  .invSlot[data-new]::after {
+    animation: none !important;
+  }
+}

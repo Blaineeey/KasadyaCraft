@@ -1,0 +1,34 @@
+/* Depth bands (home). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.band {
+  --shade: rgba(0, 0, 0, 0.6);
+  position: relative;
+  padding-block: var(--s-8);
+  background: linear-gradient(var(--shade), var(--shade)), var(--tex) 0 0 / var(--tex-size), var(--base);
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+  /* closed kit tooltips near the edge must never widen the page on phones */
+  overflow-x: clip;
+}
+
+.band[data-material='dirt'] { --tex: var(--tex-dirt); --base: var(--mat-dirt); --shade: rgba(0, 0, 0, 0.55); border-top: 0; }
+.band[data-material='stone'] { --tex: var(--tex-stone); --base: var(--mat-stone); --shade: rgba(0, 0, 0, 0.62); }
+.band[data-material='deepslate'] { --tex: var(--tex-deepslate); --base: var(--mat-deepslate); --shade: rgba(0, 0, 0, 0.5); }
+.band[data-material='bedrock'] { --tex: var(--tex-obsidian); --base: var(--mat-obsidian); --shade: rgba(0, 0, 0, 0.35); }
+
+.inner {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.coords {
+  position: absolute;
+  top: var(--s-2);
+  right: var(--s-3);
+  padding: 0 var(--s-1);
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--text-dim);
+  background: rgba(0, 0, 0, 0.5);
+}

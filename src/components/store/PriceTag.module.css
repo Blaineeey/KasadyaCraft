@@ -1,0 +1,27 @@
+/* Owner: STORE ENGINEER. Tokens only (docs/SITE_PLAN.md section 4). */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-family: var(--font-term);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.sm {
+  font-size: var(--fs-lg);
+}
+
+.md {
+  font-size: var(--fs-term);
+}
+
+.lg {
+  gap: var(--s-2);
+  font-size: var(--fs-2xl);
+}
+
+.from {
+  font-size: 0.8em;
+  opacity: 0.85;
+}

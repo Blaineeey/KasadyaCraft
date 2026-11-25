@@ -1,0 +1,159 @@
+/* /vote. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.page {
+  display: grid;
+  gap: var(--s-7);
+  padding-block: var(--s-7) var(--s-8);
+}
+
+/* ---------- locked chest (stands on the pedestal in the hero's ballot scene) ---------- */
+/* column-reverse: the hint floats above the chest like a name tag, the chest stands on the pedestal */
+.chestBtn {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.chestBtn:hover .chestArt {
+  transform: translateY(-2px);
+}
+
+.chestArt {
+  display: grid;
+  filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.5));
+}
+
+.chestArt[data-rattle] {
+  animation: rattle 360ms steps(6, end);
+}
+
+@keyframes rattle {
+  0%, 100% { transform: none; }
+  20% { transform: translateX(-6px) rotate(-3deg); }
+  40% { transform: translateX(6px) rotate(3deg); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.chestHint {
+  padding: 2px var(--s-2) 0;
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+  background: rgba(0, 0, 0, 0.88); /* 5:1 for the small gold label even on the day sky */
+}
+
+/* ---------- to-do list ---------- */
+.todo {
+  display: grid;
+  gap: var(--s-4);
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .todo {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.todoItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+
+.todoBox {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--gui-slot-dark);
+  box-shadow: var(--bevel-down);
+}
+
+.todoTitle {
+  display: block;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.todoText {
+  display: block;
+  color: var(--text-dim);
+}
+
+/* ---------- vote crate ---------- */
+.crate,
+.today {
+  display: grid;
+  gap: var(--s-4);
+}
+
+/* the openers (oak sign, chat line) carry their own backing, so no extra plate here */
+.crate > :first-child,
+.today > :first-child {
+  justify-self: start;
+  margin-bottom: 0;
+}
+
+.crateRow {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 900px) {
+  .crateRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.card {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.contents {
+  display: grid;
+  gap: 2px;
+  padding-left: var(--s-4);
+  color: var(--text);
+}
+
+.price {
+  font-family: var(--font-term);
+  font-size: 1.5rem;
+  color: var(--chat-gold);
+}
+
+.priceNote {
+  font-size: 1.25rem;
+  color: var(--tooltip-text);
+}
+
+.crateCmds {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.todayList {
+  display: grid;
+  gap: var(--s-3);
+  list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chestArt[data-rattle] {
+    animation: none;
+  }
+}

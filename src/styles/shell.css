@@ -1,0 +1,1066 @@
+/* ==========================================================================
+   Shell styles: header, hotbar nav, page hero, footer, placeholder.
+   Owner: PIXEL UI DESIGNER.
+   ========================================================================== */
+
+:root {
+  /* Grass tufts + two little flowers, drawn on a 96x12 grid (original art).
+     Repeats along every ground strip at 2x. */
+  --tufts: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='12' shape-rendering='crispEdges'%3E%3Cpath fill='%234f8a2f' d='M6 6h2v6H6zM9 4h2v8H9zM12 7h2v5h-2zM28 8h2v4h-2zM31 6h2v6h-2zM55 8h2v4h-2zM58 5h2v7h-2zM61 8h2v4h-2zM84 7h2v5h-2zM87 9h2v3h-2z'/%3E%3Cpath fill='%2374b347' d='M9 4h1v8H9zM58 5h1v7h-1zM31 6h1v6h-1z'/%3E%3Cpath fill='%233f7226' d='M41 6h2v6h-2zM73 8h2v4h-2z'/%3E%3Cpath fill='%23e8203a' d='M40 2h4v4h-4z'/%3E%3Cpath fill='%23ffd23f' d='M41 3h2v2h-2zM72 5h4v3h-4z'/%3E%3C/svg%3E");
+}
+
+/* ---------- Header ------------------------------------------------------------ */
+.kc-header {
+  position: relative;
+  z-index: var(--z-header);
+  background-color: var(--mat-darkwood);
+  background-image: linear-gradient(rgba(10, 6, 2, 0.12), rgba(10, 6, 2, 0.12)), var(--tex-planks-dark);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  border-bottom: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* the eave beam the bunting hangs from */
+.kc-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 6px;
+  background: #24170c;
+  border-bottom: var(--bw) solid var(--edge);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.kc-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: var(--header-h);
+}
+
+.kc-header__bunting {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+}
+
+/* The home hero hangs its own bunting and lantern garland: show only one string. */
+body:has(.kc-sky--hero) .kc-header__bunting {
+  display: none;
+}
+
+.kc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.kc-brand:hover {
+  color: var(--text);
+}
+
+.kc-brand__logo {
+  width: 44px;
+  height: 44px;
+  image-rendering: auto;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.55));
+}
+
+.kc-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kc-brand__word {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-shadow: var(--text-outline);
+}
+
+.kc-brand__word span {
+  color: var(--kc-gold);
+}
+
+.kc-brand__motd {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--kc-teal);
+  text-shadow: 2px 2px 0 #000;
+  text-wrap: balance; /* 768-859px: two even lines, not a lone "SHOPS" */
+}
+
+.kc-header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+@media (max-width: 639px) {
+  .kc-brand__word {
+    font-size: var(--fs-lg);
+  }
+
+  .kc-header__ip,
+  .kc-header__status {
+    display: none !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .kc-brand__motd {
+    display: none;
+  }
+}
+
+/* 640-767px: the status and IP chips join the bar and leave the wordmark about 200px. At full
+   size "KasadyaCraft" ran into the player count, and the MOTD broke over three lines, so the
+   wordmark steps down a size and the MOTD waits for wider screens (the chips say the same). */
+@media (min-width: 640px) and (max-width: 767px) {
+  .kc-brand__word {
+    font-size: var(--fs-lg);
+  }
+
+  .kc-brand__motd {
+    display: none;
+  }
+}
+
+/* ---------- Hotbar (main nav)----------------------------------------------------- */
+.kc-hotbar {
+  /* 9 slots plus the E slot in its own frame must fit a 320px phone:
+     10 slots + 2 frames (12px each) + 4px gap = 10s + 28px, plus 20px spare, because 100vw
+     counts a desktop scrollbar (up to 17px) that a narrow window does not have room for.
+     Scoped here so other users of the token (MiningToy) keep the 9-slot size. */
+  --hotbar-slot: clamp(26px, calc((100vw - 48px) / 10), 44px);
+  position: fixed;
+  z-index: var(--z-hotbar);
+  left: 50%;
+  bottom: calc(var(--s-2) + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100vw - 8px);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .kc-hotbar {
+    --hotbar-slot: 56px;
+  }
+}
+
+.kc-hotbar__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.kc-hotbar__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(100vw - 16px);
+  padding: 3px var(--s-3) 4px;
+  font-family: var(--font-pixel);
+  line-height: 1.15;
+  text-align: center;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  background: var(--plate);
+  border: var(--bw-thin) solid var(--edge);
+  clip-path: var(--notch-2);
+  /* backwards, not both: a held end frame (opacity 1) would beat the fade-out below */
+  animation: kc-label-in var(--dur) steps(3) backwards;
+}
+
+/* Like the game's item name: up for about two seconds after a page load or a slot change, then it
+   fades (Hotbar.tsx sets data-asleep), so it never covers a button or a table row for long.
+   It keeps its space, so the bar does not jump. A mouse over the bar or keyboard focus in it
+   brings it back. Touch screens get no hover rule: a tapped slot stays :hover there. */
+.kc-hotbar__label[data-asleep] {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-slow) steps(4, end),
+    visibility 0s linear var(--dur-slow);
+}
+
+.kc-hotbar:has(.kc-hotbar__slot:focus-visible, .kc-hotbar__inv:focus-visible) .kc-hotbar__label {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}
+
+@media (hover: hover) {
+  .kc-hotbar:hover .kc-hotbar__label {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+}
+
+.kc-hotbar__label-name {
+  color: #fff;
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.kc-hotbar__label-hint {
+  color: var(--chat-gray);
+  font-size: var(--fs-xs);
+}
+
+/* the "opens in a new tab" arrow next to Discord's name */
+.kc-hotbar__label-ext {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: -1px;
+}
+
+@keyframes kc-label-in {
+  from { transform: translateY(4px); opacity: 0.4; }
+  to { transform: none; opacity: 1; }
+}
+
+/* the bar, and the E slot's own little frame next to it (like the off-hand slot) */
+.kc-hotbar__slots,
+.kc-hotbar__inv {
+  display: flex;
+  list-style: none;
+  padding: 3px;
+  pointer-events: auto;
+  background: #222;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 0 0 0 2px #6b6b6b,
+    0 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.kc-hotbar__inv {
+  flex: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-hotbar__inv:hover .kc-hotbar__slot {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.kc-hotbar__inv:hover .kc-icon {
+  transform: translateY(-2px);
+}
+
+.kc-hotbar__inv:active .kc-hotbar__slot {
+  box-shadow:
+    inset -2px -2px 0 rgba(0, 0, 0, 0.55),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* same focus look as a slot link: the ring sits inside the slot, not around the frame */
+.kc-hotbar__inv:focus-visible {
+  outline: none;
+}
+
+.kc-hotbar__inv:focus-visible .kc-hotbar__slot {
+  z-index: 2;
+  outline: var(--bw) solid var(--focus);
+  box-shadow: inset 0 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.kc-hotbar__cell {
+  display: block;
+}
+
+.kc-hotbar__slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--hotbar-slot);
+  height: var(--hotbar-slot);
+  color: #fff;
+  text-decoration: none;
+  background: rgba(139, 139, 139, 0.22);
+  box-shadow:
+    inset 2px 2px 0 rgba(0, 0, 0, 0.55),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.1);
+  outline-offset: -5px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-hotbar__slot .kc-icon {
+  width: calc(var(--hotbar-slot) - 10px);
+  height: calc(var(--hotbar-slot) - 10px);
+  transition: transform var(--dur-fast) steps(2);
+}
+
+.kc-hotbar__slot:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.kc-hotbar__slot:hover .kc-icon,
+.kc-hotbar__slot:focus-visible .kc-icon {
+  transform: translateY(-2px);
+}
+
+/* the selection frame: thick white square that pokes out past the slot */
+.kc-hotbar__slot[data-selected]::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: -5px;
+  border: var(--bw) solid #fff;
+  box-shadow:
+    0 0 0 2px var(--edge),
+    inset 0 0 0 2px var(--edge);
+  pointer-events: none;
+}
+
+.kc-hotbar__slot:focus-visible {
+  z-index: 2;
+  outline: var(--bw) solid var(--focus);
+  box-shadow: inset 0 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.kc-hotbar__key {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  display: none;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.65);
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Discord leaves the site: a small arrow badge in the slot's corner says so before the tap.
+   It hangs over the slot's top-right edge, like an item count, so it hides little of the icon. */
+.kc-hotbar__ext {
+  position: absolute;
+  z-index: 1;
+  top: -3px;
+  right: -3px;
+  pointer-events: none;
+}
+
+/* Touch screens have no hover, so the name plate alone left phone players guessing.
+   There the selected slot keeps a tiny caption hanging under its white frame, and the bar
+   sits 10px higher to make room. (--hotbar-h on phones already holds this extra: the bar
+   is narrower with 10 slots, and the asleep plate gives up a few px at most.) */
+.kc-hotbar__cap {
+  display: none;
+}
+
+@media (hover: none) {
+  .kc-hotbar {
+    bottom: calc(var(--s-2) + 10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .kc-hotbar__cap {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 5px);
+    left: 50%;
+    display: block;
+    padding: 3px 3px 1px 4px; /* Silkscreen sits high in its line box */
+    font-family: var(--font-label);
+    font-size: 10px;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--edge);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .kc-hotbar__slot .kc-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .kc-hotbar__ext {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (min-width: 768px) and (hover: hover) {
+  .kc-hotbar__key {
+    display: block;
+  }
+}
+
+@media (max-width: 479px) {
+  .kc-hotbar__label-hint {
+    display: none;
+  }
+}
+
+/* ---------- Inventory (the E slot: every page, with names) ---------------------------- */
+/* A grey container window, like the game's inventory. Full screen on phones, a centred
+   window from 768px. Native <dialog>: the page behind is inert and Esc closes it. */
+html:has(.kc-inv[open]) {
+  overflow: hidden;
+}
+
+.kc-inv {
+  --focus: var(--focus-on-light);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  color: var(--gui-ink);
+  background: transparent;
+  border: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.kc-inv::backdrop {
+  background: rgba(8, 6, 12, 0.78);
+}
+
+.kc-inv[open] {
+  animation: kc-inv-in var(--dur) steps(3) both;
+}
+
+@keyframes kc-inv-in {
+  from { transform: translateY(var(--s-4)); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.kc-inv__frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-height: 100%;
+  padding:
+    calc(var(--s-4) + env(safe-area-inset-top, 0px))
+    calc(var(--s-4) + env(safe-area-inset-right, 0px))
+    calc(var(--s-4) + env(safe-area-inset-bottom, 0px))
+    calc(var(--s-4) + env(safe-area-inset-left, 0px));
+  color: var(--gui-ink);
+  background: var(--gui-bg);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-gui);
+  text-shadow: none;
+}
+
+.kc-inv__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.kc-inv__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-xl);
+  color: var(--gui-ink);
+  text-shadow: none;
+}
+
+.kc-inv__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  background: var(--mat-stone-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.kc-inv__close:hover {
+  background: var(--mat-stone);
+}
+
+.kc-inv__close:active {
+  box-shadow: var(--bevel-down);
+}
+
+.kc-inv__lead {
+  max-width: 34em;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--gui-ink);
+}
+
+.kc-inv__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* 9 pages, 3 x 3, like a crafting grid. Arrow keys move between them (Hotbar.tsx). */
+.kc-inv__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.kc-inv__cell {
+  display: block;
+  min-width: 0;
+}
+
+.kc-inv__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: var(--s-2) var(--s-1) var(--s-3);
+  color: var(--gui-ink);
+  text-align: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-inv__item:hover {
+  color: var(--gui-ink);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.kc-inv__item:focus-visible {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 0;
+}
+
+.kc-inv__slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+/* the game's white hover wash over the item */
+.kc-inv__slot::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kc-inv__item:hover .kc-inv__slot::after,
+.kc-inv__item:focus-visible .kc-inv__slot::after {
+  opacity: 0.38;
+}
+
+/* "you are here": the same white selection frame as the hotbar */
+.kc-inv__slot[data-selected]::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: -5px;
+  border: var(--bw) solid #fff;
+  box-shadow:
+    0 0 0 2px var(--edge),
+    inset 0 0 0 2px var(--edge);
+  pointer-events: none;
+}
+
+.kc-inv__key {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  display: none;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+@media (hover: hover) {
+  .kc-inv__key {
+    display: block;
+  }
+}
+
+.kc-inv__ext {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 3px;
+}
+
+.kc-inv__name {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.1;
+  overflow-wrap: break-word; /* break only if a single word cannot fit */
+}
+
+.kc-inv__hint {
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: #444; /* 5.7:1 on the GUI grey */
+  overflow-wrap: break-word;
+}
+
+.kc-inv__newtab {
+  display: block;
+  margin-top: 2px;
+  font-weight: 700;
+  color: var(--gui-ink);
+}
+
+.kc-inv__sub {
+  margin-top: var(--s-2);
+  font-size: var(--fs-lg);
+  color: var(--gui-ink);
+  text-shadow: none;
+}
+
+.kc-inv__handy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+/* small raised GUI buttons that press in */
+.kc-inv__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--gui-ink);
+  text-decoration: none;
+  background: #d4d4d4;
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow:
+    inset 2px 2px 0 var(--gui-light),
+    inset -2px -2px 0 var(--gui-dark);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-inv__chip:hover {
+  color: var(--gui-ink);
+  background: #e2e2e2;
+}
+
+.kc-inv__chip:active {
+  box-shadow:
+    inset 2px 2px 0 var(--gui-dark),
+    inset -2px -2px 0 var(--gui-light);
+}
+
+.kc-inv__chip[aria-current='page'] {
+  background: var(--kc-gold);
+}
+
+.kc-inv__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: auto;
+  padding-top: var(--s-2);
+}
+
+/* keyboard tips only where there is probably a keyboard */
+.kc-inv__keys {
+  display: none;
+  font-size: var(--fs-xs);
+  color: var(--gui-ink);
+}
+
+@media (hover: hover) {
+  .kc-inv__keys {
+    display: block;
+  }
+}
+
+/* phones: a full-width Done button where the thumb already is */
+.kc-inv__done {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .kc-inv__slot {
+    width: 64px;
+    height: 64px;
+  }
+
+  .kc-inv__slot .kc-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .kc-inv__name {
+    font-size: var(--fs-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .kc-inv {
+    width: min(760px, calc(100vw - var(--s-7)));
+    height: fit-content;
+    max-height: calc(100dvh - var(--s-7));
+    margin: auto;
+  }
+
+  .kc-inv__frame {
+    min-height: 0;
+    padding: var(--s-5);
+  }
+
+  .kc-inv__grid {
+    gap: var(--s-3);
+  }
+
+  .kc-inv__done {
+    width: auto;
+    margin-left: auto;
+  }
+}
+
+/* ---------- Page hero ----------------------------------------------------------------- */
+.kc-pagehero {
+  position: relative;
+  padding-top: calc(var(--s-7) + var(--s-3));
+  padding-bottom: calc(var(--s-7) + 32px);
+}
+
+.kc-pagehero__lanterns {
+  --drop-extra: 38px; /* hang below the header bunting */
+  position: absolute !important;
+  top: 0;
+  right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  width: 220px;
+  display: none !important;
+}
+
+@media (min-width: 960px) {
+  .kc-pagehero__lanterns {
+    display: flex !important;
+  }
+}
+
+.kc-pagehero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+}
+
+.kc-pagehero__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.kc-pagehero__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+/* a wooden item frame for the page icon */
+.kc-pagehero__frame {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  background: #3a2716;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 0 0 0 6px var(--mat-plank),
+    inset 0 0 0 8px var(--mat-plank-dark),
+    inset 2px 2px 0 6px var(--mat-plank-light),
+    4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.kc-pagehero__frame .kc-icon {
+  width: 48px;
+  height: 48px;
+}
+
+@media (min-width: 768px) {
+  .kc-pagehero__frame {
+    width: 92px;
+    height: 92px;
+  }
+  .kc-pagehero__frame .kc-icon {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.kc-pagehero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px var(--s-2) 2px;
+  color: #000;
+  background: var(--kc-gold);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.25);
+  clip-path: var(--notch-2);
+}
+
+.kc-pagehero__title {
+  /* min(): desktop keeps --fs-3xl, small phones shrink so 'KasadyaCraft' fits whole (never split mid-word) */
+  font-size: min(var(--fs-3xl), 7.2vw);
+  color: #fff;
+  text-shadow: var(--text-outline);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.kc-pagehero__lead {
+  max-width: 40em; /* was 62ch: em, not ch, so the lead keeps its width when the font swaps in */
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--plate);
+  border: var(--bw-thin) solid var(--plate-edge);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.kc-pagehero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+/* the strip of blocks the hero stands on */
+.kc-pagehero__ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32px;
+  background: var(--tex-grass) 0 0 / 32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+}
+
+.kc-pagehero__ground::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 24px;
+  margin-bottom: var(--bw);
+  background: var(--tufts) 0 100% / 192px 24px repeat-x;
+  image-rendering: pixelated;
+}
+
+.kc-pagehero--stone .kc-pagehero__ground {
+  background-image: var(--tex-cobble);
+}
+
+.kc-pagehero--planks .kc-pagehero__ground {
+  background-image: var(--tex-planks);
+}
+
+.kc-pagehero--stone .kc-pagehero__ground::before,
+.kc-pagehero--planks .kc-pagehero__ground::before {
+  display: none;
+}
+
+.kc-pagehero--none {
+  padding-bottom: var(--s-6);
+}
+
+/* ---------- Footer ------------------------------------------------------------------------ */
+.kc-footer {
+  position: relative;
+  margin-top: calc(var(--s-8) + 24px);
+  /* run the deepslate layer down under the fixed hotbar instead of leaving empty page */
+  margin-bottom: calc(-1 * (var(--hotbar-h) + env(safe-area-inset-bottom, 0px)));
+}
+
+.kc-footer__grass {
+  position: relative;
+  height: 32px;
+  background: var(--tex-grass) 0 0 / 32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+}
+
+.kc-footer__grass::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 24px;
+  margin-bottom: var(--bw);
+  background: var(--tufts) 64px 100% / 192px 24px repeat-x;
+  image-rendering: pixelated;
+}
+
+.kc-footer__dirt {
+  padding-block: var(--s-7) var(--s-6);
+  background-color: var(--mat-dirt-dark);
+  background-image: linear-gradient(rgba(16, 9, 4, 0.6), rgba(16, 9, 4, 0.6)), var(--tex-dirt);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+}
+
+.kc-footer__grid {
+  display: grid;
+  gap: var(--s-6) var(--s-5);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .kc-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .kc-footer__grid {
+    grid-template-columns: 1.5fr repeat(3, minmax(0, 1fr));
+  }
+}
+
+.kc-footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+.kc-footer__name {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-shadow: var(--text-outline);
+}
+
+.kc-footer__name span {
+  color: var(--kc-gold);
+}
+
+.kc-footer__tagline {
+  max-width: 20.5em; /* was 32ch */
+  color: var(--text-dim);
+}
+
+.kc-footer__join {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.kc-footer__head {
+  margin-bottom: var(--s-2);
+  color: var(--kc-gold);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.kc-footer__join .kc-footer__head {
+  margin-bottom: 0;
+}
+
+.kc-footer__col ul {
+  list-style: none;
+  display: grid;
+}
+
+.kc-footer__col a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 40px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.kc-footer__arrow {
+  transition: transform var(--dur-fast) steps(2);
+}
+
+.kc-footer__col a:hover {
+  color: var(--kc-gold);
+  text-decoration: underline;
+}
+
+.kc-footer__col a:hover .kc-footer__arrow,
+.kc-footer__col a:focus-visible .kc-footer__arrow {
+  transform: translateX(3px);
+}
+
+.kc-footer__bedrock {
+  padding-top: var(--s-5);
+  padding-bottom: calc(var(--s-5) + var(--hotbar-h) + env(safe-area-inset-bottom, 0px));
+  background-color: var(--mat-deepslate-dark);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--tex-deepslate);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+}
+
+.kc-footer__legal {
+  display: grid;
+  gap: var(--s-2);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.kc-footer__meaning {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+@media (hover: none) {
+  .kc-footer__tip {
+    display: none;
+  }
+}

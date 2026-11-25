@@ -1,0 +1,106 @@
+/* Guide body + reading progress. Tokens only. Owner: STARTER-GUIDE WRITER. */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+/* ---- XP-style progress box ------------------------------------------------ */
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  /*
+   * 420px on desktop, never wider than the page on a phone. The hero's action row
+   * shrink-wraps its children and ignores percentage sizes while it measures itself, so a
+   * plain 420px pushed a 375px phone out to 436px, and `width: 100%` would shrink the box to
+   * its text on desktop (the XP bar has no width of its own). min() with vw caps both.
+   */
+  width: min(420px, calc(100vw - 2 * var(--gutter)));
+  max-width: 100%;
+  min-width: 0;
+  padding: var(--s-3) var(--s-4);
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-drop);
+}
+
+.progressHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.progressTitle {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+}
+
+.progressCount {
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  color: var(--chat-green);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.progressNext {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.progressNext a {
+  color: var(--link);
+}
+
+/* ---- "Read" mark on guide cards ------------------------------------------- */
+.readMark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  padding: 2px var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--chat-green);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* ---- End-of-guide button ---------------------------------------------------- */
+.mark {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.done {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  color: var(--ink);
+  background: var(--mat-paper-dark);
+  border: var(--bw) solid var(--edge);
+}
+
+.doneText {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+}
+
+.undo {
+  min-height: 44px;
+  padding: 0 var(--s-2);
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--link-on-light);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,52 @@
+/* /games/roblox page layout. Owner: PIXEL UI DESIGNER. Tokens only. */
+
+.quests {
+  display: grid;
+  gap: var(--s-5);
+  list-style: none;
+}
+
+.quest {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: var(--s-3);
+  align-items: start;
+}
+
+.questIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.questText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.questTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-xl);
+}
+
+.cta :global(.kc-panel__body) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.ctaTitle {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-2xl);
+  color: var(--kc-gold);
+}

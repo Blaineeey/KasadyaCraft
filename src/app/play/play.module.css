@@ -1,0 +1,172 @@
+/* /play. Tokens only. Owner: STARTER-GUIDE WRITER. */
+
+.heroStatus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--s-3);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+}
+
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.stepGrid {
+  display: grid;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .stepGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  }
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  max-width: 39em; /* was 60ch: ch grew 19% when Atkinson loaded, so the steps re-wrapped (CLS) */
+}
+
+.stepHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  font-family: var(--font-term); /* numbers: VT323 reads clearly at every size */
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--text);
+  background: var(--mat-grass);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-base);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.stepTitle {
+  font-size: var(--fs-2xl);
+  line-height: 1.1;
+}
+
+.list {
+  display: grid;
+  gap: var(--s-1);
+  padding-left: 1.3em;
+}
+
+.list li::marker {
+  color: var(--kc-gold);
+}
+
+.ways {
+  list-style: none;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+}
+
+.way {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.wayTitle {
+  font-size: var(--fs-lg);
+}
+
+.cmds {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.faqItem {
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+}
+
+.faqItem > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 48px;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faqItem > summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem > summary::before {
+  content: '+';
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  color: var(--ink);
+  background: var(--kc-gold);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.faqItem[open] > summary::before {
+  content: '-';
+}
+
+.faqBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: 0 var(--s-4) var(--s-4) calc(var(--s-4) + 24px + var(--s-3));
+  color: var(--text-dim);
+}
+
+.faqBody a {
+  color: var(--link);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}

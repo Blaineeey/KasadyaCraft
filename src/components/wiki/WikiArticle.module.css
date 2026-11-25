@@ -1,0 +1,275 @@
+/* /wiki/[slug] layout + table of contents, and the /wiki index layout. Owner: WIKI WRITER. */
+
+/* ---- Article page ---- */
+.layout {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+.aside {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-4));
+    max-height: calc(100vh - var(--header-h) - var(--hotbar-h) - var(--s-6));
+    overflow-y: auto;
+  }
+
+  .tocInline {
+    display: none;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+/* A section heading that follows a live insert gets its usual breathing room back. */
+.body > * + :global(.kc-prose) > h2:first-child {
+  margin-top: var(--s-5);
+}
+
+/* ---- Table of contents: a book-and-quill page ---- */
+.tocAside,
+.tocInline {
+  color: var(--ink);
+  background-color: var(--mat-paper);
+  background-image: var(--tex-paper);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-base);
+}
+
+.tocAside {
+  padding: var(--s-4);
+}
+
+.tocTitle,
+.tocSummary {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tocTitle {
+  margin-bottom: var(--s-2);
+}
+
+.tocInline {
+  padding: 0;
+}
+
+.tocSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  min-height: 48px;
+  padding: var(--s-2) var(--s-4);
+  cursor: pointer;
+  list-style: none;
+}
+
+.tocSummary::-webkit-details-marker {
+  display: none;
+}
+
+.tocSummary::after {
+  content: '+';
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+}
+
+.tocInline[open] .tocSummary::after {
+  content: '-';
+}
+
+.tocCount {
+  margin-left: auto;
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  color: var(--ink-dim);
+}
+
+.tocInline nav {
+  padding: 0 var(--s-4) var(--s-4);
+}
+
+.tocList {
+  list-style: none;
+  display: grid;
+  gap: 2px;
+  counter-reset: toc;
+}
+
+.tocList li {
+  counter-increment: toc;
+}
+
+.tocList a {
+  display: flex;
+  gap: var(--s-2);
+  min-height: 32px;
+  align-items: center;
+  padding: 2px var(--s-1);
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+  color: var(--link-on-light);
+  text-decoration: none;
+}
+
+.tocList a::before {
+  content: counter(toc) '.';
+  min-width: 1.6em;
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  color: var(--ink-dim);
+}
+
+.tocList a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.tocSub a {
+  padding-left: var(--s-5);
+}
+
+.tocSub a::before {
+  content: '-';
+}
+
+/* ---- Facts box under the TOC ---- */
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.factsLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.factsDate {
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  color: var(--kc-teal);
+}
+
+/* ---- Article footer ----
+ * This row sits between panels, so the fixed sky shows through behind it.
+ * On the day sky (and over clouds or the pale horizon) bare cream text drops
+ * to about 1.5:1, so it gets a solid dark plate like the facts box above.
+ * Text-dim and the gold link both clear 9:1 on --surface-1. */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.footer p {
+  margin: 0;
+}
+
+.pager {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+  .pager {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pagerNext {
+    grid-column: 2;
+    justify-self: end;
+  }
+}
+
+.pager :global(.kc-btn) {
+  max-width: 100%;
+}
+
+.pager :global(.kc-btn__label) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.related {
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+}
+
+/* ---- /wiki index ---- */
+.index {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.indexAside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+@media (min-width: 1024px) {
+  .index {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: start;
+  }
+
+  .indexAside {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-4));
+  }
+}

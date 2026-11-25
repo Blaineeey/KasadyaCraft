@@ -1,0 +1,288 @@
+/* /wiki search: a chat-style command box, creative-inventory tabs and item rows. Owner: WIKI WRITER. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+/* ---- Search box: looks like the chat input / creative search field ---- */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 56px;
+  padding: var(--s-2) var(--s-3);
+  background: var(--bg-deep);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--gui-slot-dark), var(--block-base);
+}
+
+/* Focus is drawn on the whole box with the site focus outline (the input's own outline moves here). */
+.bar:has(.input:focus-visible) {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 3px;
+}
+
+.prompt {
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  color: var(--kc-gold);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1.1;
+  color: var(--text);
+  caret-color: var(--kc-gold);
+  background: transparent;
+  border: 0;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+/* The box shows the outline instead (see .bar above). Browsers without :has() keep the default outline. */
+@supports selector(:has(*)) {
+  .input:focus-visible {
+    outline: none;
+  }
+}
+
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.kbd,
+.clear {
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  color: var(--gui-ink);
+  background: var(--gui-bg);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-gui);
+}
+
+.clear {
+  min-width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.clear:active {
+  box-shadow: var(--bevel-down);
+}
+
+.hint {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.hint kbd {
+  padding: 0 var(--s-1);
+  font-size: var(--fs-md);
+  color: var(--text);
+  background: var(--surface-3);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* ---- Popular searches ---- */
+.try {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.tryLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+}
+
+.chip {
+  min-height: 36px;
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  line-height: 1;
+  color: var(--text);
+  background: var(--surface-2);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+  cursor: pointer;
+}
+
+.chip:hover {
+  color: var(--kc-gold);
+}
+
+.chip:active {
+  box-shadow: var(--bevel-down);
+  transform: translateY(1px);
+}
+
+/* ---- Category tabs: creative inventory tabs ---- */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+  background: var(--surface-2);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-step);
+}
+
+.tab:hover {
+  transform: translateY(-2px);
+}
+
+.tab[aria-pressed='true'] {
+  color: var(--gui-ink);
+  text-shadow: none;
+  background: var(--gui-bg);
+  box-shadow: var(--bevel-gui);
+  transform: translateY(-2px);
+}
+
+.tabCount {
+  min-width: 22px;
+  padding: 0 var(--s-1);
+  font-family: var(--font-term);
+  font-size: var(--fs-md);
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text);
+  text-shadow: none;
+  background: var(--bg-deep);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+/* ---- Results ---- */
+.count {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: var(--bw) solid var(--edge);
+  box-shadow: 0 var(--bw-thin) 0 0 color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.sectionIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.sectionTitle {
+  font-size: var(--fs-xl);
+}
+
+.sectionBlurb {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.mark {
+  color: var(--ink);
+  background: var(--kc-gold);
+  text-shadow: none;
+  padding: 0 2px;
+}
+
+/* ---- Empty state ---- */
+.empty {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+  padding: var(--s-5);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.emptyTitle {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+}
+
+.emptyText {
+  margin-block: var(--s-1) var(--s-3);
+  color: var(--text-dim);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+@media (max-width: 479px) {
+  .tab {
+    font-size: var(--fs-xs);
+    padding-inline: var(--s-2);
+  }
+
+  .input {
+    font-size: var(--fs-lg);
+  }
+}

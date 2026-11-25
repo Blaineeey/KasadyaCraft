@@ -1,22 +1,38 @@
 import type { Metadata } from 'next'
-import Shell from '@/components/Shell'
-import { DiscordIcon } from '@/components/DiscordIcon'
+import PageHero from '@/components/shell/PageHero'
+import { Command, NameTag, Panel, PixelButton, PixelIcon, SectionHeading, type ChatColor, type PixelIconName } from '@/components/ui'
 import { activities, site, team } from '@/lib/site'
+import { pageMetadata } from '@/lib/seo'
+import styles from './community.module.css'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Community',
   description:
-    'KasadyaCraft is a community that plays together and grows together, in games and in life. See what happens here, meet the team and learn how to join.',
+    'KasadyaCraft is a community that plays together and grows together, in games and in life. See what happens here, meet the team and learn how to reach us.',
+  path: '/community',
+})
+
+/* One original icon per notice on the board, in the order of `activities`. */
+const activityIcons: PixelIconName[] = ['controller', 'firework', 'chat', 'flower']
+
+/* Short tag shown over each staff member, coloured like an in-game rank prefix. */
+const roleTag: Record<string, { prefix: string; tone: ChatColor }> = {
+  'Head Administrator': { prefix: 'Admin', tone: 'red' },
+  'Senior Moderator': { prefix: 'Sr. Mod', tone: 'gold' },
+  Moderator: { prefix: 'Mod', tone: 'aqua' },
+  Helper: { prefix: 'Helper', tone: 'green' },
 }
 
-const contactWays = [
+const contactWays: { title: string; icon: PixelIconName; body: string; commands?: { cmd: string; desc: string }[] }[] = [
   {
     title: 'Discord',
-    body: 'Fastest response. Ping a moderator or open a ticket in the support channel.',
+    icon: 'chat',
+    body: 'Fastest answer. Ping a moderator, or open a ticket in the support channel.',
   },
   {
     title: 'In game',
-    body: 'On the Minecraft server, message any online staff member directly.',
+    icon: 'grass',
+    body: 'On the Minecraft server you can message any staff member who is online.',
     commands: [
       { cmd: '/msg <staff>', desc: 'Private message' },
       { cmd: '/helpop <message>', desc: 'Alert online staff' },
@@ -24,171 +40,166 @@ const contactWays = [
   },
   {
     title: 'Tickets',
-    body: 'For appeals, lost items after a server issue, or anything that needs a paper trail.',
+    icon: 'scroll',
+    body: 'For appeals, lost items after a server issue, or anything that needs a paper trail. Tickets live in our Discord.',
   },
 ]
 
-const doContact = [
-  'Rule violations and griefing',
-  'Player disputes',
-  'Bugs and technical issues',
-  'Ban appeals',
-  'Lost items from server issues',
-]
+const doContact = ['Rule breaking and griefing', 'Arguments between players', 'Bugs and technical problems', 'Ban appeals', 'Items lost because of a server issue']
 
 const dontContact = [
-  'Basic gameplay questions (ask the community first)',
-  'Requests for items or currency',
+  'Basic gameplay questions (ask in chat first, someone usually knows)',
+  'Asking for free items or money',
   'Fair PvP deaths',
-  'Requests for staff positions',
+  'Asking to become staff',
 ]
 
 export default function CommunityPage() {
   return (
-    <Shell>
-      <section className="page-hero">
-        <div className="container">
-          <div className="stack">
-            <span className="eyebrow">Community</span>
-            <h1 className="display">People to play with. People to grow with.</h1>
-            <p className="lead">
-              Kasadya is for anyone tired of playing alone. We show up for game nights, share what we are working on,
-              and look out for each other when life gets in the way.
-            </p>
-            <div className="hero-actions">
-              <a href={site.discord} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                <DiscordIcon />
-                Join the Discord
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+    <>
+      <PageHero
+        scene="plaza"
+        eyebrow="Community"
+        title="People to play with. People to grow with."
+        icon="heart"
+        lead="Kasadya is for anyone tired of playing alone. We show up for game nights, share what we are working on, and look out for each other when life gets in the way."
+      >
+        <PixelButton href={site.discord} variant="discord" size="lg" icon="chat">
+          Join the Discord
+        </PixelButton>
+        <PixelButton href="/play" variant="grass" size="lg" icon="grass">
+          Hop on the server
+        </PixelButton>
+      </PageHero>
 
-      {/* What happens here */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="stack">
-              <span className="eyebrow">01 · What happens here</span>
-              <h2 className="h2">More than a server list</h2>
-            </div>
-            <p className="muted small" style={{ maxWidth: '34ch' }}>
-              No application, no skill check. Just show up.
-            </p>
-          </div>
-          <div className="list">
+      {/* What happens here: a town notice board */}
+      <section className="kc-container kc-section" aria-labelledby="board-title">
+        <SectionHeading variant="sign" eyebrow="What happens here" title="More than a server list" id="board-title" icon="lantern" />
+        <Panel material="darkwood" padding="lg" rivets className={styles.board}>
+          <ul className={styles.notes} role="list">
             {activities.map((a, i) => (
-              <div key={a.title} className="list-row">
-                <span className="index">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="h3">{a.title}</h3>
-                <p className="text-2">{a.body}</p>
-              </div>
+              <li key={a.title} className={styles.note} data-pin={i % 4}>
+                <span className={styles.noteIcon} aria-hidden="true">
+                  <PixelIcon name={activityIcons[i] ?? 'star'} size={32} />
+                </span>
+                <h3 className={styles.noteTitle}>{a.title}</h3>
+                <p>{a.body}</p>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+          <p className={styles.boardFoot}>No application, no skill check. Just show up.</p>
+        </Panel>
       </section>
 
-      {/* Team */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="stack">
-              <span className="eyebrow">02 · Team</span>
-              <h2 className="h2">Staff</h2>
-            </div>
-            <p className="muted small" style={{ maxWidth: '32ch' }}>
-              Open roles are filled from active members. Ask in Discord if you want to help.
-            </p>
-          </div>
-          <div className="grid grid-2">
-            {team.map((m, i) => {
-              const open = m.name === 'Open'
-              return (
-                <div key={`${m.role}-${i}`} className="member" data-open={open}>
-                  <div className="avatar" aria-hidden="true">
-                    {open ? '?' : m.name.slice(0, 1).toUpperCase()}
+      {/* Staff */}
+      <section className="kc-container kc-section" aria-labelledby="staff-title">
+        <SectionHeading
+          variant="chat"
+          eyebrow="The team"
+          title="Staff"
+          id="staff-title"
+          icon="shield"
+          lead="Open roles are filled from active members. If you want to help, say so in Discord."
+        />
+        <ul className={styles.staff} role="list">
+          {team.map((m, i) => {
+            const open = m.name === 'Open'
+            const tag = roleTag[m.role] ?? { prefix: m.role, tone: 'gold' as ChatColor }
+            return (
+              <li key={`${m.role}-${i}`} className={styles.member} data-open={open || undefined}>
+                <Panel material={open ? 'stone' : 'deepslate'} padding="md" className={styles.memberPanel}>
+                  <div className={styles.memberHead}>
+                    <NameTag prefix={tag.prefix} tone={tag.tone}>
+                      {open ? 'Open spot' : m.name}
+                    </NameTag>
+                    <span className={styles.avatar} aria-hidden="true">
+                      <PixelIcon name={open ? 'question' : 'player'} size={48} />
+                    </span>
                   </div>
-                  <div>
-                    <div className="role">{m.role}</div>
-                    <div className="name">{open ? 'Open position' : m.name}</div>
-                  </div>
-                  <p className="text-2 small">{m.focus}</p>
-                  {m.discord && (
-                    <div className="mono muted" style={{ textTransform: 'none', letterSpacing: 0 }}>
-                      Discord: {m.discord}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+                  <h3 className={styles.memberRole}>{m.role}</h3>
+                  <p className={styles.memberFocus}>{m.focus}</p>
+                  {m.discord ? (
+                    <p className={styles.memberDiscord}>
+                      <span className="t-label">Discord</span> <span className="t-term">{m.discord}</span>
+                    </p>
+                  ) : null}
+                  {open ? <p className={styles.memberDiscord}>Interested? Tell us in Discord.</p> : null}
+                </Panel>
+              </li>
+            )
+          })}
+        </ul>
       </section>
 
-      {/* Contact */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="stack">
-              <span className="eyebrow">03 · Support</span>
-              <h2 className="h2">How to reach us</h2>
-            </div>
-          </div>
-          <div className="grid grid-3">
-            {contactWays.map((c) => (
-              <div key={c.title} className="card">
-                <h3 className="card-title">{c.title}</h3>
-                <p className="card-description">{c.body}</p>
-                {c.commands && (
-                  <div className="command-list" style={{ marginTop: 6 }}>
+      {/* Support */}
+      <section className="kc-container kc-section" aria-labelledby="support-title">
+        <SectionHeading variant="frame" eyebrow="Support" title="How to reach us" id="support-title" icon="compass" />
+        <div className={styles.ways}>
+          {contactWays.map((c) => (
+            <Panel key={c.title} as="article" material="stone" padding="md" title={c.title} titleAs="h3" titleIcon={c.icon}>
+              <div className={styles.wayBody}>
+                <p>{c.body}</p>
+                {c.commands ? (
+                  <div className={styles.wayCmds}>
                     {c.commands.map((cmd) => (
-                      <div key={cmd.cmd} className="command-item">
-                        <div className="command-name">{cmd.cmd}</div>
-                        <div className="command-description">{cmd.desc}</div>
-                      </div>
+                      <Command key={cmd.cmd} command={cmd.cmd} description={cmd.desc} />
                     ))}
                   </div>
-                )}
+                ) : null}
               </div>
-            ))}
-          </div>
+            </Panel>
+          ))}
         </div>
       </section>
 
-      {/* Guidelines */}
-      <section className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="stack">
-              <span className="eyebrow">04 · Guidelines</span>
-              <h2 className="h2">When to contact staff</h2>
-            </div>
-          </div>
-          <div className="grid grid-2">
-            <div className="card">
-              <span className="card-index" style={{ color: 'var(--online)' }}>
-                Reach out for
-              </span>
-              <ul style={{ paddingLeft: 18, display: 'grid', gap: 6 }} className="text-2 small">
+      {/* When to contact staff */}
+      <section className="kc-container kc-section" aria-labelledby="guide-title">
+        <SectionHeading eyebrow="Guidelines" title="When to contact staff" id="guide-title" icon="book" />
+        <Panel material="gui" padding="lg">
+          <div className={styles.lists}>
+            <div>
+              <h3 className={styles.listTitle}>
+                <PixelIcon name="check" size={32} /> Reach out for
+              </h3>
+              <ul className={styles.checkList} role="list">
                 {doContact.map((t) => (
-                  <li key={t}>{t}</li>
+                  <li key={t}>
+                    <PixelIcon name="check" size={16} />
+                    {t}
+                  </li>
                 ))}
               </ul>
             </div>
-            <div className="card">
-              <span className="card-index" style={{ color: 'var(--danger)' }}>
-                Please skip
-              </span>
-              <ul style={{ paddingLeft: 18, display: 'grid', gap: 6 }} className="text-2 small">
+            <div>
+              <h3 className={styles.listTitle}>
+                <PixelIcon name="cross" size={32} /> Please skip
+              </h3>
+              <ul className={styles.checkList} role="list">
                 {dontContact.map((t) => (
-                  <li key={t}>{t}</li>
+                  <li key={t}>
+                    <PixelIcon name="cross" size={16} />
+                    {t}
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
+        </Panel>
       </section>
-    </Shell>
+
+      <section className="kc-container" aria-labelledby="cta-title">
+        <Panel material="planks" padding="lg" rivets className={styles.cta}>
+          <div>
+            <h2 id="cta-title" className={styles.ctaTitle} lang="tl">
+              Tara, laro tayo!
+            </h2>
+            <p>That means &ldquo;come on, let&apos;s play&rdquo;. Say hi in Discord, tell us what you play, and we will find you a squad.</p>
+          </div>
+          <PixelButton href={site.discord} variant="discord" icon="chat">
+            Open Discord
+          </PixelButton>
+        </Panel>
+      </section>
+    </>
   )
 }

@@ -1,0 +1,179 @@
+/* /games page layout. Owner: PIXEL UI DESIGNER. Tokens only. */
+
+/* ---------- Server list ---------- */
+.rows {
+  display: grid;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  padding: var(--s-3);
+  background: rgba(0, 0, 0, 0.45);
+  border: var(--bw-thin) solid transparent;
+}
+
+.row:hover,
+.row:focus-within {
+  border-color: var(--gui-slot);
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 80px 1fr;
+    gap: var(--s-4);
+    padding: var(--s-4);
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+@media (min-width: 640px) {
+  .icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* phones: icon beside the title, everything else uses the full row width */
+@media (max-width: 479px) {
+  .row {
+    grid-template-columns: 48px 1fr;
+    gap: var(--s-2) var(--s-3);
+  }
+
+  .icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .icon :global(.kc-icon) {
+    width: 32px;
+    height: 32px;
+  }
+
+  .row .info {
+    display: contents;
+  }
+
+  .row .titleRow,
+  .row .game {
+    grid-column: 2;
+  }
+
+  .row .motd,
+  .row .tags,
+  .row .actions {
+    grid-column: 1 / -1;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+}
+
+.name {
+  font-size: var(--fs-xl);
+  color: var(--text);
+}
+
+.game {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--chat-gray);
+}
+
+/* the summary reads like a server MOTD line */
+.motd {
+  max-width: 41.5em; /* was 64ch; em does not change when the font swaps in */
+  color: var(--text-dim);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+/* five signal bars, drawn in CSS (not the game's ping icon) */
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.bars span {
+  display: block;
+  width: 4px;
+  background: var(--idle);
+  box-shadow: 1px 1px 0 var(--edge);
+}
+
+.bars span:nth-child(1) { height: 4px; }
+.bars span:nth-child(2) { height: 7px; }
+.bars span:nth-child(3) { height: 10px; }
+.bars span:nth-child(4) { height: 13px; }
+.bars span:nth-child(5) { height: 16px; }
+
+.row[data-status='online'] .bars span {
+  background: var(--ok);
+}
+
+.row[data-status='beta'] .bars span:nth-child(-n + 3) {
+  background: var(--warn);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+/* ---------- Closing call ---------- */
+.cta :global(.kc-panel__body) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.ctaTitle {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-2xl);
+  color: var(--kc-gold);
+}

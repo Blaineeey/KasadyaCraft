@@ -1,0 +1,317 @@
+/* Lab of Horrors teaser + boss fight (home). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.wrap {
+  display: grid;
+  gap: var(--s-5);
+}
+
+@media (min-width: 960px) {
+  .wrap {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+}
+
+.intro,
+.side {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  background: rgba(0, 0, 0, 0.62);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 var(--s-1) 0 0 var(--kc-red), var(--block-drop);
+}
+
+.side {
+  box-shadow: inset 0 var(--s-1) 0 0 var(--kc-magenta), var(--block-drop);
+}
+
+.eyebrow,
+.sideLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--chat-red);
+}
+
+.sideLabel {
+  color: var(--chat-pink);
+}
+
+.title {
+  margin-top: calc(var(--s-3) * -1);
+  font-size: var(--fs-3xl);
+  color: var(--chat-red);
+  text-shadow: var(--text-shadow-pixel-lg);
+}
+
+.quote {
+  font-family: var(--font-term);
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--chat-green);
+}
+
+.lead {
+  color: var(--text);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+@media (min-width: 600px) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.fact {
+  padding: var(--s-2);
+  background: rgba(255, 255, 255, 0.05);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.fact dt {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.fact dd {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  color: var(--text);
+}
+
+.howto {
+  display: grid;
+  gap: var(--s-2);
+  padding-left: var(--s-5);
+  color: var(--text);
+}
+
+.howto li::marker {
+  font-family: var(--font-pixel);
+  color: var(--chat-red);
+}
+
+.bestiary {
+  border: var(--bw-thin) solid var(--edge);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.bestiary summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: var(--s-2) var(--s-3);
+  font-family: var(--font-pixel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.bestiary ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-3);
+  padding: 0 var(--s-3) var(--s-3);
+  list-style: none;
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  color: var(--chat-red);
+}
+
+.bossLine {
+  color: var(--chat-pink);
+}
+
+.keys {
+  justify-self: start;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.sideNote {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+/* ---------- boss fight ---------- */
+.fight {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.bossbar {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-1);
+}
+
+.bossName {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--chat-pink);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.immune {
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--kc-teal);
+  text-shadow: none;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  background: var(--bg-deep);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--edge) calc(10% - 2px) 10%),
+    var(--kc-magenta);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--hp, 1));
+  transition: transform 300ms steps(5, end);
+}
+
+.fight[data-immune] .fill {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), var(--edge) calc(10% - 2px) 10%),
+    repeating-linear-gradient(45deg, var(--kc-teal) 0 6px, var(--mat-deepslate) 6px 12px);
+}
+
+.hp {
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--text-dim);
+}
+
+.arena {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 170px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    var(--tex-deepslate) 0 0 / var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.boss {
+  display: grid;
+  animation: hover 1.6s steps(4, end) infinite alternate;
+}
+
+.boss[data-hit] {
+  animation:
+    shake 240ms steps(4, end),
+    hover 1.6s steps(4, end) 240ms infinite alternate;
+}
+
+.fight[data-down] .boss {
+  animation: none;
+  transform: rotate(90deg) translateX(24px);
+  opacity: 0.45;
+}
+
+@keyframes hover {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.souls {
+  position: absolute;
+  inset: var(--s-2);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  list-style: none;
+  pointer-events: none;
+}
+
+.soulSlot {
+  width: 52px;
+  height: 52px;
+}
+
+.soulSlot:nth-child(2) {
+  align-self: flex-end;
+}
+
+.soul {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.45);
+  border: var(--bw-thin) solid var(--kc-teal);
+  animation: hover 1.1s steps(3, end) infinite alternate;
+}
+
+.soul:hover {
+  background: color-mix(in srgb, var(--kc-teal) 18%, transparent);
+}
+
+.log {
+  min-height: 2.6em;
+  padding: var(--s-1) var(--s-2);
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  line-height: 1.15;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.fightBtns {
+  display: flex;
+  justify-content: center;
+}
+
+.fightBtns [aria-disabled='true'] {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boss,
+  .boss[data-hit],
+  .soul {
+    animation: none !important;
+  }
+
+  .fill {
+    transition: none;
+  }
+}

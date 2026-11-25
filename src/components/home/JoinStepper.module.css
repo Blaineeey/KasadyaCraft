@@ -1,0 +1,424 @@
+/* Join stepper (home). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.stepper {
+  display: grid;
+  gap: var(--s-4);
+}
+
+/* ---------- step tabs ---------- */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--s-1) var(--s-2) var(--s-1) var(--s-1);
+  text-align: left;
+  color: var(--text-dim);
+  background: rgba(0, 0, 0, 0.45);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.06);
+}
+
+.tab:hover {
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.tab[data-state='current'] {
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.7);
+  border-color: var(--kc-gold);
+  box-shadow: 0 0 0 var(--bw-thin) var(--edge);
+}
+
+.tabNum {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+  background: var(--gui-slot-dark);
+  box-shadow: var(--bevel-down);
+}
+
+.tab[data-state='current'] .tabNum {
+  color: var(--ink);
+  background: var(--kc-gold);
+  box-shadow: var(--bevel-up);
+}
+
+.tab[data-state='done'] .tabNum {
+  color: var(--ink);
+  background: var(--chat-green);
+  box-shadow: var(--bevel-up);
+}
+
+.tabLabel {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  line-height: 1.15;
+}
+
+.xp {
+  max-width: 100%;
+}
+
+/* ---------- panel ---------- */
+.panel {
+  display: grid;
+  gap: var(--s-4);
+  align-items: center;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .panel {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--s-5);
+  }
+}
+
+.stepNo {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-teal);
+}
+
+.title {
+  margin-top: var(--s-1);
+  font-size: var(--fs-xl);
+  color: var(--text);
+}
+
+.body {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  color: var(--text);
+}
+
+.body strong {
+  color: var(--kc-gold);
+}
+
+.small {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.nav [aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- the "screen" with pixel mock-ups ---------- */
+.screen {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-deep);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw) var(--mat-deepslate-dark), var(--block-drop);
+  font-family: var(--font-pixel);
+  animation: screenOn 260ms steps(4, end);
+}
+
+@keyframes screenOn {
+  from { opacity: 0; transform: scaleY(0.2); }
+  to { opacity: 1; transform: none; }
+}
+
+.fakeBtn {
+  display: inline-grid;
+  place-items: center;
+  min-width: 96px;
+  padding: var(--s-1) var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: var(--mat-stone);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.fakeBtn[data-hot] {
+  outline: var(--bw-thin) solid var(--text);
+  outline-offset: -4px;
+  background: var(--mat-stone-light);
+}
+
+/* step 1: launcher */
+.launcher {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  justify-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    var(--tex-deepslate) 0 0 / var(--tex-size);
+  image-rendering: pixelated;
+}
+
+.launcherBar {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22px;
+  background: var(--mat-darkwood);
+  border-bottom: var(--bw-thin) solid var(--edge);
+}
+
+.select {
+  display: grid;
+  min-width: 70%;
+  padding: var(--s-1) var(--s-3);
+  background: rgba(0, 0, 0, 0.6);
+  border: var(--bw-thin) solid var(--mat-stone-dark);
+}
+
+.selectLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.selectValue {
+  font-family: var(--font-term);
+  font-size: 1.35rem;
+  color: var(--text);
+}
+
+.bigPlay {
+  min-width: 70%;
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  background: var(--mat-grass);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 var(--s-1) 0 0 var(--mat-grass-dark);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+/* step 2: add server form (menu on a dirt background) */
+.form,
+.pack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    var(--tex-dirt) 0 0 / var(--tex-size);
+  image-rendering: pixelated;
+}
+
+.formTitle {
+  font-size: var(--fs-sm);
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.field {
+  display: grid;
+  gap: 2px;
+  width: min(100%, 300px);
+}
+
+.fieldLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 var(--s-2);
+  font-family: var(--font-term);
+  font-size: 1.3rem;
+  color: var(--text);
+  background: var(--edge);
+  border: var(--bw-thin) solid var(--text-muted);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.caret {
+  width: 8px;
+  height: 3px;
+  margin-left: 2px;
+  align-self: flex-end;
+  margin-bottom: 7px;
+  background: var(--text);
+  animation: caret 1s steps(1, end) infinite;
+}
+
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+/* step 3: hub plaza */
+.hub {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  padding: var(--s-2) var(--s-2) var(--s-2);
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-mid) 60%, var(--sky-horizon));
+}
+
+.bossbar {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 92%;
+}
+
+.bossText {
+  padding: 0 var(--s-1);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.55);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.bossTrack {
+  width: 100%;
+  height: 6px;
+  background: var(--chat-yellow);
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+.gate {
+  position: relative;
+  align-self: end;
+  width: 44%;
+  height: 70%;
+  border: 10px solid var(--mat-terracotta);
+  border-bottom: 0;
+  border-top-color: var(--kc-gold);
+  box-shadow: 0 0 0 var(--bw-thin) var(--edge);
+}
+
+.gateGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 8px, color-mix(in srgb, var(--text) 25%, transparent) 8px 12px),
+    color-mix(in srgb, var(--kc-teal) 70%, var(--kc-magenta));
+  background-size: 100% 24px;
+  animation: shimmer 1.2s steps(6, end) infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 0 24px, 0 0; }
+}
+
+.miniHotbar {
+  display: flex;
+  margin-top: var(--s-2);
+  background: var(--edge);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.miniSlot {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.55);
+  box-shadow: inset 0 0 0 2px var(--gui-slot-dark);
+}
+
+.miniSlot[data-on] {
+  box-shadow: inset 0 0 0 2px var(--text);
+}
+
+/* step 4: resource pack prompt */
+.packText {
+  max-width: 300px;
+  font-size: var(--fs-sm);
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.packBtns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-2);
+}
+
+.chat {
+  position: absolute;
+  left: var(--s-2);
+  right: var(--s-2);
+  bottom: var(--s-2);
+  padding: 2px var(--s-2);
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.chatLine {
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.chatLine::after {
+  content: '_';
+  animation: caret 1s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .caret,
+  .gateGlow,
+  .chatLine::after {
+    animation: none !important;
+  }
+}

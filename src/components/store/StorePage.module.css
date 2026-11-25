@@ -1,0 +1,854 @@
+/*
+ * /store page sections: currency strip, rank table, Tokens ladder, support, FAQ.
+ * Owner: STORE ENGINEER. Tokens only, square corners, bevels not blur.
+ */
+
+/* ---------- Page layout ----------------------------------------------------- */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding-block: var(--s-6);
+  scroll-margin-top: var(--s-4);
+}
+
+/* Section titles hang on a dark-oak signboard so they read on the night AND the day sky */
+.sectionTitle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  max-width: 100%;
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--fs-2xl);
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel-lg);
+  background-color: var(--mat-darkwood);
+  background-image: var(--tex-planks-dark);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-drop);
+}
+
+.statusLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm);
+}
+
+.statusLine strong {
+  font-family: var(--font-pixel);
+  color: var(--kc-gold);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.ctaText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  max-width: 39em; /* was 60ch */
+}
+
+.ctaTitle {
+  font-size: var(--fs-xl);
+}
+
+/* ---------- Currency strip ------------------------------------------------- */
+.currencies {
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
+
+.currency {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  padding: var(--s-3);
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.currencyArt {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.currencyText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.currencyName {
+  font-size: var(--fs-lg);
+  color: var(--text);
+}
+
+.currencySymbol {
+  font-family: var(--font-term);
+  color: var(--kc-gold);
+}
+
+.currencyKey {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--kc-teal);
+}
+
+/* ---------- Rank comparison table ------------------------------------------ */
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.tableWrap {
+  /* positioned, so absolutely positioned sr-only labels stay inside the scroll box
+     (otherwise they escape it and widen the whole page on phones) */
+  position: relative;
+  overflow-x: auto;
+  background: var(--mat-deepslate-dark);
+  border: var(--bw) solid var(--edge);
+  overscroll-behavior-x: contain;
+}
+
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.table th,
+.table td {
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--bw-thin) solid var(--surface-3);
+  vertical-align: middle;
+}
+
+.table td {
+  text-align: center;
+}
+
+.table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 180px;
+  max-width: 220px;
+  text-align: left;
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  background: var(--mat-deepslate-dark);
+  border-right: var(--bw-thin) solid var(--surface-3);
+}
+
+.corner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--mat-deepslate-dark);
+  border-right: var(--bw-thin) solid var(--surface-3);
+}
+
+.colHead {
+  --rank: var(--text);
+  text-align: center;
+  font-family: var(--font-pixel);
+  color: var(--rank);
+  background: var(--surface-1);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.colHead svg {
+  margin-inline: auto;
+}
+
+.colName {
+  display: block;
+  font-size: var(--fs-md);
+}
+
+.colSub {
+  display: block;
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  text-shadow: none;
+}
+
+.num {
+  font-family: var(--font-term);
+  font-size: var(--fs-lg);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.table td :global(.kc-icon) {
+  margin-inline: auto;
+}
+
+/* "not included": a flat pixel dash, big enough to read at a glance */
+.no {
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  vertical-align: middle;
+  background: var(--text-muted);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.45);
+}
+
+.yes {
+  flex: none;
+}
+
+.table .groupRow th {
+  position: static;
+  max-width: none;
+  padding-top: var(--s-4);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+  background: var(--surface-1);
+}
+
+.cmd {
+  display: block;
+  font-size: var(--fs-lg);
+  color: var(--chat-aqua);
+}
+
+.cmdDesc {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-xs);
+  line-height: 1.35;
+  color: var(--text-dim);
+}
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+  background-color: var(--surface-2);
+}
+
+.footnote {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.compareLead {
+  font-family: var(--font-pixel);
+  color: var(--text-dim);
+}
+
+/* Phones get the rank picker, wider screens the table. display:none also hides the
+   other one from screen readers, so nobody hears the ranks twice. */
+.tableBlock {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .picker {
+    display: none;
+  }
+
+  .tableBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+}
+
+/* ---------- Command groups inside the table -------------------------------- */
+.tableTools {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.toolButton {
+  min-height: 44px;
+  padding: 0 var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+  background: var(--mat-stone-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 3px 0 0 var(--mat-deepslate-dark);
+  margin-bottom: 3px;
+  transition: transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+}
+
+.toolButton:active {
+  transform: translateY(3px);
+  box-shadow: var(--bevel-down);
+}
+
+.table .cmdGroup th,
+.table .cmdGroup td {
+  background-color: var(--surface-1);
+}
+
+.cmdToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+}
+
+.cmdToggle:hover .cmdGroupName {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chevron {
+  flex: none;
+  transition: transform var(--dur-fast) steps(2);
+}
+
+.cmdToggle[aria-expanded='true'] .chevron {
+  transform: rotate(90deg);
+}
+
+.cmdGroupName {
+  color: var(--rank, var(--text));
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.cmdChips {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-term);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  line-height: 1.2;
+  word-spacing: 0.35em;
+  color: var(--chat-aqua);
+}
+
+.table .cmdRows th {
+  padding-left: calc(var(--s-3) + var(--s-5));
+}
+
+/* ---------- Rank picker (phones) ------------------------------------------ */
+.pickerSet {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pickerLegend {
+  margin-bottom: var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+.segments {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s-1);
+}
+
+.segment {
+  --rank: var(--text);
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* the real radio sits on top of the face, invisible: native arrows, focus and taps */
+.segmentInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.segmentFace {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0 2px;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+  background: var(--mat-deepslate-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 3px 0 0 var(--edge);
+  margin-bottom: 3px;
+  transition: transform var(--dur-fast) steps(2), box-shadow var(--dur-fast) steps(2);
+}
+
+.segmentInput:checked + .segmentFace {
+  color: var(--ink);
+  text-shadow: none;
+  background: var(--rank);
+  box-shadow: var(--bevel-down);
+  transform: translateY(3px);
+}
+
+.segmentInput:focus-visible + .segmentFace {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 399.98px) {
+  .segmentFace {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* The chosen rank, drawn as an item tooltip: dark panel, purple edge */
+.pick {
+  --rank: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+  padding: var(--s-3);
+  color: var(--tooltip-text);
+  background: var(--tooltip-bg);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--tooltip-edge-top), inset 0 calc(var(--bw-thin) * -2) 0 0 var(--tooltip-edge-bottom);
+}
+
+.pickHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.pickSlot {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.pickHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pickName {
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.pickPrice {
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  color: var(--chat-yellow);
+}
+
+.pickTagline {
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.pickNeeds {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.pickStats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.pickStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--s-2) var(--s-1);
+  text-align: center;
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--tooltip-edge-bottom);
+}
+
+.pickStatNum {
+  font-family: var(--font-term);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--text);
+}
+
+.pickStatLabel {
+  font-size: var(--fs-xs);
+  line-height: 1.25;
+  color: var(--text-dim);
+}
+
+.newBadge {
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--chat-green);
+}
+
+.pickSub {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding-top: var(--s-2);
+  font-size: var(--fs-lg);
+  color: var(--rank);
+  text-shadow: var(--text-shadow-pixel);
+  border-top: var(--bw-thin) solid var(--tooltip-edge-bottom);
+}
+
+.pickCount {
+  flex: none;
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--ink);
+  text-shadow: none;
+  background: var(--kc-gold);
+}
+
+.pickList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.pickItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+}
+
+.pickItemText {
+  min-width: 0;
+}
+
+.keptList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.keptChip {
+  padding: 0 var(--s-1);
+  font-family: var(--font-term);
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  color: var(--text-dim);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--surface-3);
+}
+
+/* ---------- Tokens ladder (advancements on an XP track) --------------------- */
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.ladderSteps {
+  position: relative;
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  padding-left: var(--s-6);
+}
+
+/* XP track, vertical on phones */
+.ladderSteps::before {
+  content: '';
+  position: absolute;
+  top: var(--s-2);
+  bottom: var(--s-2);
+  left: var(--s-2);
+  width: 10px;
+  background: var(--kc-leaf);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 0 0 0 2px var(--mat-grass-dark);
+}
+
+.ladderStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'icon level'
+    'icon time'
+    'gain gain'
+    'total total';
+  column-gap: var(--s-3);
+  padding: var(--s-3);
+  color: var(--text);
+  background: var(--surface-2);
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--gui-dark), var(--block-drop);
+}
+
+.ladderIcon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: var(--surface-3);
+  box-shadow: var(--bevel-up);
+}
+
+.ladderLevel {
+  grid-area: level;
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  color: var(--chat-yellow);
+}
+
+.ladderTime {
+  grid-area: time;
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+.ladderGain {
+  grid-area: gain;
+  margin-top: var(--s-2);
+  font-family: var(--font-term);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--chat-green);
+}
+
+.ladderTotal {
+  grid-area: total;
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.ladderHead {
+  font-size: var(--fs-lg);
+  color: var(--kc-gold);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.ladderHead:not(:first-child) {
+  margin-top: var(--s-2);
+}
+
+/* the command a repeat source is claimed with, in the "total" slot of the card */
+.ladderCmd {
+  grid-area: total;
+  justify-self: start;
+  margin-top: var(--s-1);
+  font-size: var(--fs-sm);
+  color: var(--chat-aqua);
+}
+
+@media (min-width: 760px) {
+  .ladderSteps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-left: 0;
+    padding-top: var(--s-6);
+  }
+
+  .ladderSteps::before {
+    top: var(--s-2);
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 10px;
+  }
+}
+
+.ladderNote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  max-width: 45.5em; /* was 70ch */
+  color: var(--text-dim);
+}
+
+.ladderNote strong {
+  color: var(--kc-gold);
+}
+
+/* ---------- Support tab (inside the grey store window) --------------------- */
+.support {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  color: var(--ink);
+}
+
+.supportLead {
+  max-width: 42em; /* was 65ch */
+}
+
+.supportList {
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+}
+
+.supportItem {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  font-size: var(--fs-sm);
+}
+
+.supportIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.supportTitle {
+  font-size: var(--fs-lg);
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.supportActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+/* ---------- FAQ (signposts) ------------------------------------------------- */
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.faqItem {
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.faqQ {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: var(--s-2) var(--s-8) var(--s-2) var(--s-4);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faqQ::-webkit-details-marker {
+  display: none;
+}
+
+/* Chunky plus / minus block on the right */
+.faqQ::after {
+  content: '+';
+  position: absolute;
+  right: var(--s-3);
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  margin-top: -16px;
+  font-family: var(--font-term);
+  font-size: var(--fs-xl);
+  line-height: 1;
+  color: var(--ink);
+  background: var(--kc-gold);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.faqItem[open] > .faqQ::after {
+  content: '-';
+  background: var(--kc-teal);
+}
+
+.faqItem[open] > .faqQ {
+  color: var(--kc-gold);
+  border-bottom: var(--bw-thin) solid var(--surface-3);
+}
+
+.faqA {
+  padding: var(--s-3) var(--s-4) var(--s-4);
+  max-width: 48.5em; /* was 75ch */
+  color: var(--text-dim);
+}
+
+.faqA a {
+  color: var(--link);
+}

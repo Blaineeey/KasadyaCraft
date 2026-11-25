@@ -1,0 +1,828 @@
+/* ==========================================================================
+   Interactive component styles (src/components/interactive/*): sky, live
+   status, copy-IP, day/night toggle, toast exit, Konami fireworks.
+   Owner: INTERACTIVITY ENGINEER. Home sections use CSS Modules in
+   src/components/home/. Colours come from tokens (derived shades use color-mix).
+   Motion: short and steppy, transforms/opacity only, all off under
+   prefers-reduced-motion (block at the end of this file + the global rule).
+   ========================================================================== */
+
+/* ---------- Day/night colour fade (only after a real toggle) ------------------ */
+@property --sky-top { syntax: '<color>'; inherits: true; initial-value: #0a0f30; }
+@property --sky-mid { syntax: '<color>'; inherits: true; initial-value: #1d1d57; }
+@property --sky-horizon { syntax: '<color>'; inherits: true; initial-value: #5b2a6a; }
+@property --sky-glow { syntax: '<color>'; inherits: true; initial-value: rgba(255, 138, 26, 0.35); }
+@property --cloud { syntax: '<color>'; inherits: true; initial-value: rgba(255, 255, 255, 0.07); }
+
+:root[data-sky-anim] {
+  transition:
+    --sky-top 900ms steps(9, end),
+    --sky-mid 900ms steps(9, end),
+    --sky-horizon 900ms steps(9, end),
+    --sky-glow 900ms steps(9, end),
+    --cloud 900ms steps(9, end);
+}
+
+/* ---------- Sky: base ---------------------------------------------------------- */
+.kc-sky {
+  pointer-events: none;
+  overflow: hidden;
+  /* derived silhouette colours follow the sky tokens, so day/night just works */
+  --town-far: color-mix(in srgb, var(--sky-horizon) 42%, var(--bg-deep));
+  --town-near: color-mix(in srgb, var(--sky-horizon) 18%, var(--bg-deep));
+  --town-win: var(--kc-gold);
+  --town-rope: color-mix(in srgb, var(--town-near) 55%, var(--text-muted));
+  --halo: color-mix(in srgb, var(--kc-orange) 22%, transparent);
+}
+
+:root[data-time='day'] .kc-sky {
+  --town-far: color-mix(in srgb, var(--sky-horizon) 60%, var(--sky-mid));
+  --town-near: color-mix(in srgb, var(--sky-mid) 40%, var(--mat-deepslate));
+  --town-win: color-mix(in srgb, var(--sky-horizon) 30%, var(--mat-deepslate));
+  --town-rope: color-mix(in srgb, var(--town-near) 70%, var(--sky-horizon));
+  --halo: transparent;
+}
+
+.kc-sky--page {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sky);
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-horizon) 100%);
+}
+
+/* warm festival glow on the horizon, in hard bands rather than a soft blur */
+.kc-sky--page::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  background: linear-gradient(
+    180deg,
+    transparent 0 25%,
+    color-mix(in srgb, var(--sky-glow) 35%, transparent) 25% 50%,
+    color-mix(in srgb, var(--sky-glow) 70%, transparent) 50% 75%,
+    var(--sky-glow) 75% 100%
+  );
+}
+
+/* ---------- Sky: stars ----------------------------------------------------------- */
+.kc-sky__stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 2px;
+  box-shadow: var(--stars);
+  transition: opacity 600ms steps(4, end);
+}
+
+.kc-sky__stars--twinkle {
+  will-change: opacity;
+  animation: kc-twinkle 2.6s steps(2, jump-none) infinite alternate;
+}
+
+:root[data-time='day'] .kc-sky__stars {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes kc-twinkle {
+  from { opacity: 1; }
+  to { opacity: 0.2; }
+}
+
+/* ---------- Sky: sun + moon -------------------------------------------------------- */
+.kc-sky__orbit {
+  position: absolute;
+  inset: 0;
+}
+
+.kc-sky__sun,
+.kc-sky__moon {
+  position: absolute;
+  top: calc(var(--header-h) + 6vh);
+  right: 12vw;
+}
+
+:root[data-sky-anim] .kc-sky__sun,
+:root[data-sky-anim] .kc-sky__moon {
+  transition: transform 1200ms steps(12, end);
+}
+
+.kc-sky__sun {
+  width: 64px;
+  height: 64px;
+  background: var(--kc-gold);
+  box-shadow:
+    inset -6px -6px 0 0 color-mix(in srgb, var(--kc-orange) 70%, var(--kc-gold)),
+    0 0 0 8px color-mix(in srgb, var(--kc-gold) 35%, transparent),
+    0 0 0 16px color-mix(in srgb, var(--kc-gold) 14%, transparent);
+  transform: translate3d(0, 90vh, 0);
+}
+
+.kc-sky__moon {
+  width: 48px;
+  height: 48px;
+  background: var(--mat-paper);
+  box-shadow:
+    inset -6px -6px 0 0 var(--mat-paper-dark),
+    0 0 0 6px color-mix(in srgb, var(--mat-paper) 12%, transparent);
+}
+
+.kc-sky__moon::before {
+  /* craters */
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+  background: var(--mat-paper-dark);
+  box-shadow:
+    18px 6px 0 -1px var(--mat-paper-dark),
+    6px 20px 0 1px var(--mat-paper-dark);
+}
+
+:root[data-time='day'] .kc-sky__sun { transform: none; }
+:root[data-time='day'] .kc-sky__moon { transform: translate3d(0, 90vh, 0); }
+
+/* ---------- Sky: blocky clouds (two depths = parallax) ----------------------------- */
+.kc-sky__clouds {
+  position: absolute;
+  left: 0;
+  width: calc(100% + var(--tile));
+  height: var(--tile-h);
+  background: var(--cloud);
+  -webkit-mask-image: var(--cloud-mask);
+  mask-image: var(--cloud-mask);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: var(--tile) var(--tile-h);
+  mask-size: var(--tile) var(--tile-h);
+  will-change: transform;
+  animation: kc-cloud-drift var(--speed) linear infinite;
+  --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='96' viewBox='0 0 512 96' shape-rendering='crispEdges'><path d='M48 24h48v8H48zM32 32h96v8H32zM16 40h144v16H16zM40 56h88v8H40zM316 48h32v8h-32zM300 56h88v8h-88zM284 64h128v8H284z'/></svg>");
+}
+
+.kc-sky__clouds--far {
+  top: calc(var(--header-h) + 4vh);
+  opacity: 0.6;
+  --tile: 384px;
+  --tile-h: 72px;
+  --speed: 260s;
+}
+
+.kc-sky__clouds--near {
+  top: calc(var(--header-h) + 18vh);
+  --tile: 768px;
+  --tile-h: 144px;
+  --speed: 150s;
+}
+
+@keyframes kc-cloud-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(var(--tile) * -1), 0, 0); }
+}
+
+/* ---------- Sky: far-off festival town ---------------------------------------------- */
+.kc-sky__town {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(120px, 26vh, 240px);
+}
+
+.kc-sky__town svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kc-sky__town-far { fill: var(--town-far); }
+.kc-sky__town-near { fill: var(--town-near); }
+.kc-sky__town-win { fill: var(--town-win); }
+.kc-sky__town-rope { fill: var(--town-rope); }
+.kc-sky__town-halo { fill: var(--halo); }
+.kc-sky__town-lantern[data-hue='0'] { fill: var(--kc-red); }
+.kc-sky__town-lantern[data-hue='1'] { fill: var(--kc-gold); }
+.kc-sky__town-lantern[data-hue='2'] { fill: var(--kc-orange); }
+.kc-sky__town-lantern[data-hue='3'] { fill: var(--kc-magenta); }
+
+/* Scroll-driven parallax where supported (Chromium today): as you scroll, the
+   moon (or sun) sets toward the town and the town sinks a little. No JS. */
+@supports (animation-timeline: scroll()) {
+  .kc-sky--page .kc-sky__orbit {
+    animation: kc-sky-set auto linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  .kc-sky--page .kc-sky__town {
+    animation: kc-sky-sink auto linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes kc-sky-set {
+  to { transform: translate3d(-34vw, 22vh, 0); }
+}
+
+@keyframes kc-sky-sink {
+  to { transform: translate3d(0, 28%, 0); }
+}
+
+/* ---------- Sky: hero foreground (lantern garland + fireflies) ----------------------- */
+.kc-sky--hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.kc-sky__garland {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 120px;
+  /* hang between the bunting pennants rather than on top of them */
+  transform: translateX(2.5%);
+}
+
+.kc-sky__lantern {
+  --hue: var(--kc-red);
+  position: absolute;
+  top: 0;
+  left: var(--left);
+  width: 22px;
+  height: calc(var(--drop) + 46px);
+  transform-origin: 50% 0;
+  animation: kc-sway 3.2s steps(4, end) var(--delay) infinite alternate;
+}
+
+.kc-sky__lantern[data-hue='1'] { --hue: var(--kc-gold); }
+.kc-sky__lantern[data-hue='2'] { --hue: var(--kc-orange); }
+.kc-sky__lantern[data-hue='3'] { --hue: var(--kc-magenta); }
+
+/* cord */
+.kc-sky__lantern::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  width: 2px;
+  height: calc(var(--drop) + 14px);
+  background: var(--edge);
+}
+
+/* lantern body: dark caps, coloured paper, bright inner stripe */
+.kc-sky__lantern::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 22px;
+  height: 30px;
+  background:
+    linear-gradient(90deg, transparent 8px, color-mix(in srgb, var(--hue) 45%, var(--text)) 8px 14px, transparent 14px),
+    var(--hue);
+  border-block: 4px solid var(--mat-darkwood-dark);
+  box-shadow:
+    0 0 0 2px var(--edge),
+    0 0 0 8px color-mix(in srgb, var(--hue) 22%, transparent);
+}
+
+:root[data-time='day'] .kc-sky__lantern::after {
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+@keyframes kc-sway {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
+
+.kc-sky__fireflies {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 2px;
+  box-shadow: var(--flies);
+  opacity: 0.85;
+  will-change: transform;
+  animation: kc-float 4s steps(6, end) infinite alternate;
+}
+
+:root[data-time='day'] .kc-sky__fireflies {
+  display: none;
+}
+
+@keyframes kc-float {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6px, -14px, 0); }
+}
+
+/* ---------- Live status: chip + inline -------------------------------------------------- */
+.kc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.kc-status--chip {
+  min-height: 36px;
+  padding: var(--s-1) var(--s-3);
+  background: rgba(0, 0, 0, 0.6);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.08);
+}
+
+.kc-status--inline {
+  white-space: normal;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.kc-status__light {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  background: var(--idle);
+  box-shadow: 0 0 0 2px var(--edge);
+}
+
+.kc-status[data-state='online'] .kc-status__light {
+  background: var(--ok);
+  animation: kc-blink 2s steps(1, end) infinite;
+}
+
+.kc-status[data-state='offline'] .kc-status__light { background: var(--bad); }
+.kc-status[data-state='checking'] .kc-status__light { background: var(--warn); }
+
+@keyframes kc-blink {
+  0%, 85% { box-shadow: 0 0 0 2px var(--edge); }
+  86%, 100% { box-shadow: 0 0 0 2px var(--edge), 0 0 0 5px color-mix(in srgb, var(--ok) 35%, transparent); }
+}
+
+/* ---------- Live status: card = a server list entry --------------------------------------- */
+.kc-status--card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  width: 100%;
+  max-width: 560px;
+  padding: var(--s-3);
+  white-space: normal;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.62)),
+    var(--tex-deepslate) 0 0 / var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) rgba(255, 255, 255, 0.14), var(--block-drop);
+}
+
+.kc-status__icon {
+  width: 48px;
+  height: 48px;
+  image-rendering: auto;
+  border: var(--bw-thin) solid var(--edge);
+  background: var(--bg-deep);
+}
+
+/* minmax(0, 1fr): the inner track may not grow past its column. With the implicit auto track
+   the unbreakable address set the width (161px) and the MOTD ran under the player count. */
+.kc-status__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  min-width: 0;
+}
+
+.kc-status__name {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.kc-status__motd {
+  font-family: var(--font-term);
+  font-size: 1.3rem;
+  line-height: 1.05;
+  color: var(--kc-gold);
+  overflow-wrap: anywhere;
+}
+
+.kc-status__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1) var(--s-2);
+  font-family: var(--font-term);
+  font-size: 1.2rem;
+  line-height: 1.1;
+  color: var(--text-dim);
+}
+
+/* last resort only: below 380px the card gives the text column enough room for it */
+.kc-status__addr {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.kc-status__ver {
+  padding: 0 var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--kc-teal);
+  border: var(--bw-thin) solid currentColor;
+}
+
+.kc-status__side {
+  display: grid;
+  justify-items: end;
+  gap: var(--s-1);
+  align-self: start;
+}
+
+.kc-status__count {
+  font-family: var(--font-term);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.kc-status__max {
+  color: var(--text-muted);
+}
+
+.kc-status--card[data-state='offline'] .kc-status__count { color: var(--bad); }
+.kc-status--card[data-state='unknown'] .kc-status__count,
+.kc-status--card[data-state='checking'] .kc-status__count {
+  font-size: 1.25rem;
+  color: var(--text-dim);
+}
+
+.kc-status__sample,
+.kc-status__note {
+  grid-column: 1 / -1;
+  padding-top: var(--s-2);
+  border-top: var(--bw-thin) solid rgba(255, 255, 255, 0.1);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.kc-status__sample-label {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  color: var(--kc-teal);
+}
+
+@media (min-width: 420px) {
+  .kc-status--card { padding: var(--s-3) var(--s-4); }
+  .kc-status__icon { width: 64px; height: 64px; }
+}
+
+/* Small phones: three columns leave the name and MOTD about 135px at 320px. The signal bars and
+   player count move under the icon, so the text column gets the rest of the card (~195px) and
+   nothing can run into the count. The card stays the same height. */
+@media (max-width: 379px) {
+  .kc-status--card {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .kc-status__icon {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  .kc-status__main {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .kc-status__side {
+    grid-column: 1;
+    grid-row: 2;
+    justify-items: center;
+  }
+}
+
+/* signal bars */
+.kc-status__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 18px;
+}
+
+.kc-status__bar {
+  width: 4px;
+  background: var(--chat-dark-gray);
+  box-shadow: 0 0 0 1px var(--edge);
+}
+
+.kc-status__bar:nth-child(1) { height: 6px; }
+.kc-status__bar:nth-child(2) { height: 9px; }
+.kc-status__bar:nth-child(3) { height: 12px; }
+.kc-status__bar:nth-child(4) { height: 15px; }
+.kc-status__bar:nth-child(5) { height: 18px; }
+
+.kc-status__bars[data-state='online'] .kc-status__bar { background: var(--ok); }
+.kc-status__bars[data-state='offline'] .kc-status__bar { background: color-mix(in srgb, var(--bad) 55%, var(--edge)); }
+
+.kc-status__bars[data-state='checking'] .kc-status__bar {
+  animation: kc-ping 1.25s steps(1, end) infinite;
+}
+
+.kc-status__bars[data-state='checking'] .kc-status__bar:nth-child(2) { animation-delay: 0.25s; }
+.kc-status__bars[data-state='checking'] .kc-status__bar:nth-child(3) { animation-delay: 0.5s; }
+.kc-status__bars[data-state='checking'] .kc-status__bar:nth-child(4) { animation-delay: 0.75s; }
+.kc-status__bars[data-state='checking'] .kc-status__bar:nth-child(5) { animation-delay: 1s; }
+
+@keyframes kc-ping {
+  0%, 20% { background: var(--text-dim); }
+  21%, 100% { background: var(--chat-dark-gray); }
+}
+
+/* ---------- Copy IP ------------------------------------------------------------------------ */
+.kc-copyip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  max-width: 100%;
+}
+
+.kc-copyip__btn {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  margin-bottom: var(--press-depth);
+  background: rgba(0, 0, 0, 0.72);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), 0 var(--press-depth) 0 0 var(--edge);
+  color: var(--text);
+  text-align: left;
+  transition: transform var(--dur-fast) var(--ease-step), box-shadow var(--dur-fast) var(--ease-step);
+}
+
+.kc-copyip__btn:hover .kc-copyip__addr {
+  color: var(--kc-gold);
+}
+
+.kc-copyip__btn:active {
+  transform: translateY(var(--press-depth));
+  box-shadow: var(--bevel-down);
+}
+
+.kc-copyip__addr {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--s-1) var(--s-3);
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+/* One line, always. The sizes below fit the full address from 320px up; the ellipsis is only a
+   guard so the block can never break onto two lines. Selecting the text (a click, or the
+   manual-copy fallback) only recolours it and never changes the box. */
+.kc-copyip__text {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fixed width: "Copy" and "Copied!" are stacked in one grid cell and only the active label is
+   visible, so the block is as wide as the longer label in every state and every font. */
+.kc-copyip__action {
+  flex: none;
+  display: grid;
+  place-items: center;
+  white-space: nowrap;
+  padding: 0 var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--kc-gold);
+  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5), inset -3px -3px 0 rgba(0, 0, 0, 0.25);
+  border-left: var(--bw) solid var(--edge);
+}
+
+.kc-copyip__label {
+  grid-area: 1 / 1;
+}
+
+.kc-copyip__label:not([data-on]) {
+  visibility: hidden;
+}
+
+.kc-copyip[data-state='copied'] .kc-copyip__action {
+  color: var(--text);
+  background: var(--mat-grass);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.kc-copyip__btn:active .kc-copyip__action {
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.3), inset -3px -3px 0 rgba(255, 255, 255, 0.3);
+}
+
+.kc-copyip--sm .kc-copyip__btn { margin-bottom: 0; box-shadow: var(--bevel-up); }
+.kc-copyip--sm .kc-copyip__btn:active { transform: none; box-shadow: var(--bevel-down); }
+/* Trimmed so the header block, now always "Copied!" wide, is no wider than the old idle "Copy" one. */
+.kc-copyip--sm .kc-copyip__addr { font-size: 1.15rem; padding: 2px 6px; }
+.kc-copyip--sm .kc-copyip__action { padding: 0 6px; font-size: var(--fs-xs); }
+/* VT323 is 0.4em per glyph. With the action block always "Copied!" wide, these sizes keep
+   "play.kasadyacraft.com" on one line with room to spare from 320px up (measured in Chrome). */
+.kc-copyip--md .kc-copyip__addr { font-size: clamp(1.15rem, 5.4vw, 1.6rem); }
+.kc-copyip--lg .kc-copyip__addr { font-size: clamp(1.15rem, 5.75vw, 2.6rem); padding: var(--s-2) var(--s-4); }
+.kc-copyip--lg .kc-copyip__action { font-size: var(--fs-lg); padding: 0 var(--s-4); }
+
+@media (max-width: 479px) {
+  .kc-copyip__addr { padding-inline: var(--s-2); }
+  .kc-copyip--lg .kc-copyip__addr { padding: var(--s-2); }
+  .kc-copyip__action,
+  .kc-copyip--lg .kc-copyip__action { padding: 0 var(--s-2); font-size: var(--fs-sm); }
+}
+
+/* Fill: spans the parent, and the address box is a size container, so the text is sized from the
+   exact room left beside the "Copied!" block instead of from the viewport. 100cqi is that room;
+   each VT323 glyph is 0.4em, and the extra 5% keeps sub-pixel rounding off the ellipsis. */
+.kc-copyip--fill { width: 100%; }
+.kc-copyip--fill .kc-copyip__btn { width: 100%; }
+.kc-copyip--fill .kc-copyip__addr { container-type: inline-size; }
+.kc-copyip--fill.kc-copyip--lg .kc-copyip__text {
+  font-size: clamp(1.15rem, 100cqi / (var(--kc-copyip-chars, 21) * 0.42), 2.6rem);
+}
+
+/* Narrower than any phone we design for: show the whole address over two lines rather than cut it. */
+@media (max-width: 319px) {
+  .kc-copyip__text { white-space: normal; overflow-wrap: anywhere; text-overflow: clip; }
+}
+
+/* The hint often sits straight on the day sky (hero), where light text failed contrast
+   (1.5:1). On its own dark plate it reads on sky, textures and panels alike (11:1). */
+.kc-copyip__hint {
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 3px var(--s-2) 2px;
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-shadow: none;
+  background: var(--plate);
+  border: var(--bw-thin) solid var(--plate-edge);
+  clip-path: var(--notch-2);
+}
+
+.kc-copyip__hint[data-manual] {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--kc-gold);
+}
+
+/* ---------- Day / night toggle ------------------------------------------------------------- */
+.kc-timetoggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 40px;
+  padding: var(--s-1) var(--s-2);
+  background: rgba(0, 0, 0, 0.55);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.12), inset -2px -2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.kc-timetoggle:hover { background: rgba(0, 0, 0, 0.75); }
+.kc-timetoggle:active { box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.5), inset -2px -2px 0 rgba(255, 255, 255, 0.1); }
+
+/* Which face shows is driven by <html data-time>, so it is right before hydration. */
+.kc-timetoggle__face {
+  display: none;
+  grid-area: 1 / 1;
+}
+
+:root:not([data-time='day']) .kc-timetoggle__face--moon,
+:root[data-time='day'] .kc-timetoggle__face--sun {
+  display: block;
+  animation: kc-pop var(--dur) var(--ease-step) both;
+}
+
+@keyframes kc-pop {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* ---------- Shared sprite palette (PixelSprite.tsx) ------------------------------------------ */
+.kc-sprite { image-rendering: pixelated; }
+.kc-px-y { fill: var(--kc-gold); }
+.kc-px-o { fill: var(--kc-orange); }
+.kc-px-r { fill: var(--kc-red); }
+.kc-px-p { fill: var(--kc-magenta); }
+.kc-px-v { fill: var(--tooltip-edge-top); }
+.kc-px-t { fill: var(--kc-teal); }
+.kc-px-g { fill: var(--kc-leaf); }
+.kc-px-w { fill: var(--text); }
+.kc-px-k { fill: var(--edge); }
+.kc-px-s { fill: var(--mat-stone); }
+.kc-px-d { fill: var(--mat-deepslate); }
+.kc-px-m { fill: var(--mat-paper); }
+.kc-px-c { fill: var(--mat-paper-dark); }
+.kc-px-n { fill: var(--mat-dirt); }
+
+/* ---------- Toasts: exit animation + never block the header underneath -------------------- */
+.kc-toast-stack {
+  pointer-events: none;
+}
+
+.kc-toast-slot[data-leaving] {
+  animation: kc-toast-out 320ms steps(5, end) forwards;
+}
+
+@keyframes kc-toast-out {
+  to { transform: translateX(120%); opacity: 0; }
+}
+
+/* ---------- Konami fireworks ---------------------------------------------------------------- */
+.kc-fireworks {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-toast) - 1);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.kc-fireworks__burst {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+}
+
+/* the rocket climbing to the burst point */
+.kc-fireworks__burst::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 0;
+  width: 4px;
+  height: 10px;
+  background: var(--kc-gold);
+  opacity: 0;
+  animation: kc-rocket 520ms steps(6, end) var(--delay) both;
+}
+
+.kc-fireworks__spark {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  background: var(--c);
+  box-shadow: 0 0 0 1px var(--edge);
+  opacity: 0;
+  animation: kc-spark 1100ms steps(8, end) calc(var(--delay) + 520ms) both;
+}
+
+@keyframes kc-rocket {
+  0% { transform: translateY(70vh); opacity: 1; }
+  99% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+@keyframes kc-spark {
+  0% { transform: rotate(var(--a)) translateX(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: rotate(var(--a)) translateX(var(--r)) translateY(18px); opacity: 0; }
+}
+
+/* ---------- Reduced motion: freeze everything decorative ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-sky-anim] { transition: none; }
+
+  .kc-sky *,
+  .kc-sky::after,
+  .kc-status__light,
+  .kc-status__bar,
+  .kc-timetoggle__face,
+  .kc-fireworks * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .kc-copyip__btn { transition: none; }
+}

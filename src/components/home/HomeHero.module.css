@@ -1,0 +1,206 @@
+/* Home hero. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.bunting {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-areas: 'logo' 'join' 'sign';
+  justify-items: center;
+  gap: var(--s-5);
+  padding-block: var(--s-7) var(--s-5);
+}
+
+@media (min-width: 960px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'logo join' 'sign join';
+    align-items: center;
+    column-gap: var(--s-7);
+    row-gap: var(--s-4);
+    padding-block: var(--s-7) var(--s-4);
+  }
+}
+
+/* ---------- logo + sign ---------- */
+.title {
+  grid-area: logo;
+  line-height: 0;
+  text-shadow: none;
+}
+
+.logo {
+  width: min(220px, 60vw);
+  height: auto;
+  filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.55));
+}
+
+@media (min-width: 960px) {
+  .title {
+    align-self: end;
+  }
+
+  .logo {
+    width: 340px;
+  }
+}
+
+/* Phones: a smaller logo and tighter gaps, so "How to join" sits fully above the hotbar in the
+   first screen (390x844: button bottom 796 -> under 740, the hotbar name plate starts at 747). */
+@media (max-width: 599px) {
+  .inner {
+    gap: var(--s-4);
+  }
+
+  .logo {
+    width: min(176px, 48vw);
+  }
+}
+
+.sign {
+  grid-area: sign;
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  padding: var(--s-4) var(--s-5);
+  background: var(--tex-planks-dark) 0 0 / var(--tex-size), var(--mat-darkwood);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-drop);
+  text-align: left;
+}
+
+/* iron nails in the corners */
+.sign::before,
+.sign::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--mat-stone-light) 0 4px,
+    transparent 4px calc(100% - 4px),
+    var(--mat-stone-light) calc(100% - 4px)
+  );
+}
+
+.sign::before { top: 7px; }
+.sign::after { bottom: 7px; }
+
+.tagline {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--kc-gold);
+  text-shadow: var(--text-shadow-pixel);
+  text-wrap: balance;
+}
+
+.lead {
+  margin-top: var(--s-2);
+  color: var(--text);
+}
+
+/* ---------- right: join column ---------- */
+.join {
+  grid-area: join;
+  display: grid;
+  gap: var(--s-3);
+  width: 100%;
+  max-width: 560px;
+}
+
+.joinLabel {
+  justify-self: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--s-2);
+  padding: 2px var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.72);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.coords {
+  font-family: var(--font-term);
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--kc-teal);
+}
+
+.plate {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    var(--tex-obsidian) 0 0 / var(--tex-size),
+    var(--mat-obsidian);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 0 0 var(--bw-thin) rgba(255, 255, 255, 0.08), var(--block-drop);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* ---------- ground the blocks stand on ---------- */
+.ground {
+  position: relative;
+  z-index: 2;
+  padding: var(--s-2) var(--gutter) 0;
+}
+
+.ground::after {
+  content: '';
+  display: block;
+  height: var(--tex-size);
+  margin: calc(var(--s-5) * -1) calc(var(--gutter) * -1) 0;
+  background: var(--tex-grass) 0 0 / var(--tex-size) var(--tex-size) repeat-x, var(--mat-dirt);
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+  position: relative;
+  z-index: -1;
+}
+
+/* Phones: the big copy block right under the card already shows the address, so the card drops
+   its small copy of it (the in-game server list does not show it either). */
+@media (max-width: 599px) {
+  .join :global(.kc-status__addr) {
+    display: none;
+  }
+}
+
+/* ---------- small phones ---------- */
+@media (max-width: 479px) {
+  .plate {
+    padding: var(--s-3);
+  }
+
+  .sign {
+    padding: var(--s-4);
+  }
+}

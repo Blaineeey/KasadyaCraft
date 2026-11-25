@@ -1,0 +1,262 @@
+/* Guide illustrations ("pixel callouts"). Tokens only. Owner: STARTER-GUIDE WRITER. */
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin: var(--s-2) 0;
+  max-width: 100%;
+}
+
+/* Numbers in figures use VT323: Pixelify draws 5 like an S. */
+.figure :global(.kc-slot__count) {
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  line-height: 1;
+}
+
+.cards :global(.kc-tooltip__lines) {
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  line-height: 1.1;
+}
+
+.caption {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  max-width: 39em; /* was 60ch */
+}
+
+/* Captions on dark surfaces (the /play page, overview) */
+.onDark .caption {
+  color: var(--text-dim);
+}
+
+/* ---- Tooltip card grids (shop prices, kits) ------------------------------ */
+.cards {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fill, minmax(min(190px, 100%), 1fr));
+  align-items: start;
+}
+
+.cardsWide {
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+}
+
+/* ---- Plot map --------------------------------------------------------------- */
+.plotMap {
+  --road: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--road);
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  padding: var(--road);
+  background: var(--gui-light);
+  background-image: repeating-linear-gradient(90deg, transparent 0 7px, var(--gui-bg) 7px 8px);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--block-drop);
+}
+
+.plot,
+.plotYours {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background-color: var(--mat-grass);
+  background-image: var(--tex-grass-top);
+  background-size: 32px;
+  image-rendering: pixelated;
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--mat-grass-dark);
+}
+
+.plotYours {
+  box-shadow: inset 0 0 0 var(--bw) var(--kc-gold);
+}
+
+.plotTag {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 2px var(--s-1);
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+/* ---- Chat mock -------------------------------------------------------------- */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface-1);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-down);
+  font-family: var(--font-term);
+  font-size: var(--fs-term);
+  line-height: 1.15;
+  color: var(--text);
+  text-shadow: var(--text-shadow-pixel);
+  overflow-wrap: anywhere;
+}
+
+.chatNote {
+  color: var(--chat-gray);
+  font-style: italic;
+}
+
+.chatNote::before {
+  content: '* ';
+}
+
+.chatGreen { color: var(--chat-green); }
+.chatYellow { color: var(--chat-yellow); }
+.chatAqua { color: var(--chat-aqua); }
+.chatPink { color: var(--chat-pink); }
+
+.chatName {
+  color: var(--kc-gold);
+}
+
+/* ---- Dungeon route ---------------------------------------------------------- */
+.route {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--s-4) var(--s-3);
+  padding: var(--s-4);
+  background-color: var(--mat-deepslate);
+  background-image: var(--tex-deepslate);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-drop);
+  color: var(--text);
+}
+
+.stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  text-align: center;
+}
+
+.stop:not(:last-child)::after {
+  /* steppy pixel arrow towards the next stop */
+  content: '';
+  position: absolute;
+  top: 22px;
+  right: calc(var(--s-3) / -2 - 4px);
+  width: 8px;
+  height: 8px;
+  background: var(--kc-gold);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.tile {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  font-family: var(--font-term);
+  font-size: var(--fs-2xl);
+  line-height: 1;
+  color: var(--text);
+  background: var(--surface-2);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.tileBoss {
+  background: var(--kc-red);
+}
+
+.tileGold {
+  background: var(--mat-plank);
+}
+
+.tileTeal {
+  background: var(--surface-3);
+  box-shadow: inset 0 0 0 var(--bw-thin) var(--kc-teal);
+}
+
+.stopName {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.stopSub {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  line-height: 1.2;
+}
+
+/* ---- Locksmith recipes ------------------------------------------------------- */
+.recipes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.recipe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.recipeTitle {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.recipeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+}
+
+.recipeArrow {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  background: var(--ink-dim);
+  clip-path: polygon(0 30%, 50% 30%, 50% 0, 100% 50%, 50% 100%, 50% 70%, 0 70%);
+}
+
+.recipeText {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+}
+
+/* ---- Hotbar mock -------------------------------------------------------------- */
+.hotbar :global(.kc-slotgrid__cells) {
+  flex-wrap: nowrap; /* the cells container is flex: one row of 9, compass stays in the middle */
+}
+
+@media (max-width: 479px) {
+  .hotbar {
+    --slot: min(34px, calc((100vw - 104px) / 9));
+    padding: 6px;
+  }
+
+  .hotbar :global(.kc-slot) {
+    width: var(--slot);
+    height: var(--slot);
+  }
+
+  .hotbar :global(.kc-slot) svg {
+    width: 24px;
+    height: 24px;
+  }
+}

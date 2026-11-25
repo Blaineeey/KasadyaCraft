@@ -1,0 +1,315 @@
+/* /guides and /guides/[slug]. Tokens only. Owner: STARTER-GUIDE WRITER. */
+
+/* ---------------------------------------------------------------- index */
+.stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-7);
+}
+
+.stageBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.cards {
+  list-style: none;
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3) var(--s-4);
+  align-items: start;
+  padding: var(--s-4);
+  color: var(--ink);
+  background-color: var(--mat-paper);
+  background-image: var(--tex-paper);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 8px 0 0 var(--mat-paper-dark), var(--bevel-up), var(--block-drop);
+  transition: transform var(--dur-fast) var(--ease-step), box-shadow var(--dur-fast) var(--ease-step);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: inset 8px 0 0 var(--kc-gold), var(--bevel-up), var(--block-drop);
+}
+
+.cardBadge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.cardNum {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--s-1);
+  font-family: var(--font-term); /* Pixelify digits read ambiguously at small sizes */
+  font-size: var(--fs-term);
+  line-height: 1;
+  color: var(--text);
+  background: var(--mat-grass);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+  text-shadow: var(--text-shadow-pixel);
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: var(--fs-lg);
+  line-height: 1.15;
+  text-shadow: none;
+}
+
+.cardLink {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* the whole card is the link target; the title keeps the accessible name */
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.card:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.cardSummary {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.help {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+/* ----------------------------------------------------------------- guide */
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.layout {
+  display: grid;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+
+.book:global(.kc-panel) {
+  box-shadow: inset 12px 0 0 var(--mat-paper-dark), inset 15px 0 0 var(--edge), var(--bevel-up), var(--block-drop);
+  min-width: 0;
+}
+
+.book:global(.kc-panel) > :global(.kc-panel__body) {
+  padding-left: calc(var(--s-6) + 12px);
+}
+
+@media (max-width: 599px) {
+  .book:global(.kc-panel) > :global(.kc-panel__body) {
+    padding: var(--s-4) var(--s-4) var(--s-5) calc(var(--s-4) + 12px);
+  }
+}
+
+/* the red bookmark ribbon */
+.book::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--bw) * -1);
+  right: var(--s-6);
+  width: 20px;
+  height: 56px;
+  background: var(--kc-red);
+  border: var(--bw-thin) solid var(--edge);
+  border-top: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  pointer-events: none;
+}
+
+.tocMobile {
+  margin-bottom: var(--s-5);
+  border: var(--bw-thin) solid var(--edge);
+  background: var(--mat-paper-dark);
+}
+
+.tocMobile > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-3);
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tocMobile > ol {
+  padding: 0 var(--s-3) var(--s-3) calc(var(--s-3) + 1.2em);
+}
+
+@media (min-width: 1000px) {
+  .tocMobile {
+    display: none;
+  }
+}
+
+.tocList {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.tocList a {
+  display: inline-block;
+  padding: 2px 0;
+}
+
+/* The global reset zeroes list padding, so in the sidebar panel the numbers hung outside its
+   left border. Room for two-digit numbers, set in the terminal font like F3 coordinates. */
+.side .tocList {
+  padding-left: 1.9em;
+}
+
+.side .tocList > li::marker {
+  font-family: var(--font-term);
+  font-size: 1.2em;
+  color: var(--kc-gold);
+}
+
+.side {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .side {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-4));
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+}
+
+.sideTitle {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-lg);
+}
+
+.related {
+  list-style: none;
+  display: grid;
+  gap: var(--s-2);
+}
+
+.related a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+}
+
+.bookFoot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: var(--bw-thin) dashed var(--ink-dim);
+}
+
+.pageNo {
+  color: var(--ink-dim);
+}
+
+.relatedInline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+@media (min-width: 1000px) {
+  .relatedInline {
+    display: none;
+  }
+}
+
+.relatedInline ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+}
+
+.relatedInline a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}

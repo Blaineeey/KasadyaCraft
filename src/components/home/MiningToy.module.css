@@ -1,0 +1,306 @@
+/* Mining toy on the home hero ground. Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.toy {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+}
+
+.hint {
+  padding: 2px var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.72);
+  border: var(--bw-thin) solid var(--edge);
+}
+
+.hint span {
+  color: var(--kc-gold);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-3);
+  list-style: none;
+}
+
+.cell {
+  position: relative;
+}
+
+/* Wide screens: two blocks each side, so the centred hotbar never hides them. */
+@media (min-width: 960px) {
+  .toy {
+    justify-items: stretch;
+  }
+
+  .hint,
+  .loot {
+    justify-self: start;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: auto auto minmax(calc(var(--hotbar-slot) * 9 + 48px), 1fr) auto auto;
+    gap: var(--s-3);
+  }
+
+  .cell:nth-child(3) { grid-column: 4; }
+  .cell:nth-child(4) { grid-column: 5; }
+}
+
+/* ---------- the block button ---------- */
+.blockBtn {
+  --size: 52px;
+  --half: calc(var(--size) / 2);
+  --rot: rotateX(-24deg) rotateY(-45deg);
+  display: grid;
+  place-items: center;
+  width: calc(var(--size) * 1.5);
+  height: calc(var(--size) * 1.6);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: crosshair;
+}
+
+.blockBtn[aria-disabled='true'] {
+  cursor: default;
+}
+
+/* four blocks must fit one row on a 320px phone */
+@media (max-width: 399px) {
+  .row {
+    gap: var(--s-1);
+  }
+
+  .blockBtn {
+    --size: 44px;
+  }
+}
+
+@media (min-width: 640px) {
+  .blockBtn {
+    --size: 64px;
+  }
+}
+
+.blockBtn[data-material='grass'] { --tex-t: var(--tex-grass-top); --tex-s: var(--tex-grass); --chip: var(--mat-grass); }
+.blockBtn[data-material='stone'] { --tex-t: var(--tex-stone); --tex-s: var(--tex-stone); --chip: var(--mat-stone); }
+.blockBtn[data-material='planks'] { --tex-t: var(--tex-planks); --tex-s: var(--tex-planks); --chip: var(--mat-plank); }
+.blockBtn[data-material='fiesta'] { --tex-t: var(--tex-terracotta); --tex-s: var(--tex-terracotta); --chip: var(--kc-orange); }
+
+.cube {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  transform-style: preserve-3d;
+  transform: var(--rot);
+}
+
+.cube[data-bump='0'] { animation: bumpA 160ms steps(2, end); }
+.cube[data-bump='1'] { animation: bumpB 160ms steps(2, end); }
+
+.blockBtn[data-broken] .cube {
+  animation: breakAway 150ms steps(3, end) forwards;
+}
+
+@keyframes bumpA {
+  from { transform: var(--rot) scale(0.86); }
+  to { transform: var(--rot) scale(1); }
+}
+
+@keyframes bumpB {
+  from { transform: var(--rot) scale(0.86); }
+  to { transform: var(--rot) scale(1); }
+}
+
+@keyframes breakAway {
+  to { transform: var(--rot) scale(0); opacity: 0; }
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  background: var(--tex-s) 0 0 / 100% 100%;
+  image-rendering: pixelated;
+  outline: 2px solid var(--edge);
+  outline-offset: -1px;
+}
+
+.top {
+  background-image: var(--tex-t);
+  transform: rotateX(90deg) translateZ(var(--half));
+}
+
+.front {
+  transform: translateZ(var(--half));
+}
+
+.side {
+  transform: rotateY(90deg) translateZ(var(--half));
+}
+
+/* light from the top-left: front a bit darker, side darker still */
+.front::after,
+.side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.side::after {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+/* fiesta block: a gold diamond stamped on each face */
+.blockBtn[data-material='fiesta'] .face::after {
+  background: var(--kc-gold);
+  -webkit-mask: var(--stamp) 0 0 / 100% 100%;
+  mask: var(--stamp) 0 0 / 100% 100%;
+  --stamp: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path d='M7 3h2v2H7zM5 5h2v2H5zM9 5h2v2H9zM3 7h2v2H3zM11 7h2v2h-2zM5 9h2v2H5zM9 9h2v2H9zM7 11h2v2H7zM7 7h2v2H7z'/></svg>");
+}
+
+.blockBtn[data-material='fiesta'] .side::after {
+  background: color-mix(in srgb, var(--kc-gold) 70%, var(--edge));
+}
+
+/* crack stages, hand-drawn on the 16px grid */
+.face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--crack, none) 0 0 / 100% 100%;
+  image-rendering: pixelated;
+}
+
+.cube[data-stage='1'] { --crack: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill-opacity='.62' d='M7 7h2v1H7zM8 8h1v2H8z'/></svg>"); }
+.cube[data-stage='2'] { --crack: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill-opacity='.62' d='M7 7h2v1H7zM8 8h1v2H8zM5 5h2v1H5zM9 10h2v1H9zM6 9h1v1H6zM10 6h1v1h-1z'/></svg>"); }
+.cube[data-stage='3'] { --crack: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill-opacity='.62' d='M7 7h2v1H7zM8 8h1v2H8zM5 5h2v1H5zM9 10h2v1H9zM6 9h1v1H6zM10 6h1v1h-1zM3 4h2v1H3zM11 11h1v2h-1zM11 5h2v1h-2zM4 10h2v1H4zM12 3h1v1h-1z'/></svg>"); }
+.cube[data-stage='4'] { --crack: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'><path fill-opacity='.62' d='M7 7h2v1H7zM8 8h1v2H8zM5 5h2v1H5zM9 10h2v1H9zM6 9h1v1H6zM10 6h1v1h-1zM3 4h2v1H3zM11 11h1v2h-1zM11 5h2v1h-2zM4 10h2v1H4zM12 3h1v1h-1zM2 2h1v2H2zM13 13h1v1h-1zM12 8h2v1h-2zM6 12h1v2H6zM9 2h1v2H9zM1 8h2v1H1zM3 12h2v1H3zM14 5h1v2h-1z'/></svg>"); }
+
+.blockBtn:focus-visible {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- break burst + dropped item ---------- */
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
+
+.chip {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--chip);
+  box-shadow: 0 0 0 1px var(--edge);
+  animation: chipFly 620ms steps(6, end) forwards;
+}
+
+.chip[data-material='grass'] { --chip: var(--mat-grass); }
+.chip[data-material='stone'] { --chip: var(--mat-stone); }
+.chip[data-material='planks'] { --chip: var(--mat-plank); }
+.chip[data-material='fiesta'] { --chip: var(--kc-orange); }
+
+@keyframes chipFly {
+  0% { transform: translate(0, 0); opacity: 1; }
+  55% { transform: translate(var(--dx), var(--dy)); opacity: 1; }
+  100% { transform: translate(var(--dx), calc(var(--dy) + 36px)); opacity: 0; }
+}
+
+.drop {
+  position: absolute;
+  left: -16px;
+  top: -10px;
+  animation:
+    dropIn 360ms steps(4, end) both,
+    bob 900ms steps(4, end) 360ms 2 alternate,
+    pickUp 320ms steps(3, end) 2.2s forwards;
+}
+
+@keyframes dropIn {
+  from { transform: translateY(-24px) scale(0.5); }
+  to { transform: translateY(0) scale(1); }
+}
+
+@keyframes bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+@keyframes pickUp {
+  to { transform: translateY(40px) scale(0.5); opacity: 0; }
+}
+
+/* ---------- picked-up items ---------- */
+.loot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-1) var(--s-2);
+  background: var(--gui-bg);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-gui);
+}
+
+.lootLabel {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  color: var(--gui-ink);
+}
+
+.lootSlots {
+  display: flex;
+  list-style: none;
+}
+
+.lootSlot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+.lootCount {
+  position: absolute;
+  right: 2px;
+  bottom: -2px;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  text-shadow: 2px 2px 0 var(--gui-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube,
+  .chip,
+  .drop {
+    animation: none !important;
+  }
+
+  .blockBtn[data-broken] .cube {
+    opacity: 0;
+  }
+
+  .chip {
+    display: none;
+  }
+}
