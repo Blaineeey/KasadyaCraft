@@ -64,7 +64,9 @@ export const worldAndWarps: WikiPage = {
       caption: 'Survival worlds at a glance',
       head: ['World', 'Get there', 'Size', 'Keep inventory', 'What it is for'],
       rows: [
-        ['Spawn', '`/spawn`', '250 blocks across', 'On', 'Shop NPCs, crates, the AFK pool and the dungeon entrance. Fully protected.'],
+        ['Spawn', '`/spawn`', '250 blocks across', 'On', 'Shop NPCs, crates, the AFK pool and the dungeon entrance. Fully protected. No pearls, wind charges, chorus fruit or elytra here.'],
+        ['PvP field', '`/warp pvp`', 'At spawn', 'On', 'An open field to fight in.'],
+        ['Duel pit', '`/warp duel`', 'At spawn', 'Off', 'A pit with no way out. The loser drops everything.'],
         ['The Wild', '`/wild`', '10,000 blocks across', 'Off', 'Mining, exploring, farms. No land claims.'],
         ['Nether', '`/nethertp` or a portal', '5,000 blocks across', 'Off', 'Quartz, gold, netherite, blazes and the daily quests.'],
         ['The End', '`/endtp` or a portal', '5,000 blocks across', 'Off', 'Endermen, shulkers and elytra hunting.'],
@@ -75,13 +77,13 @@ export const worldAndWarps: WikiPage = {
     },
     {
       type: 'p',
-      text: 'PvP is on in the Wild, the Nether and the End. Spawn and the Shopping Mall are safe zones.',
+      text: 'PvP is on in the Wild, the Nether, the End, the PvP field and the duel pit. The rest of spawn and the Shopping Mall are safe zones.',
     },
     {
       type: 'callout',
       tone: 'warn',
       title: 'No graves',
-      text: 'Keep inventory is **off** in the Wild, Nether, End and plot world, and there are no graves. If you die out there, your items drop on the spot. Run back fast.',
+      text: 'Keep inventory is **off** in the Wild, Nether, End, plot world and duel pit, and there are no graves. If you die out there, your items drop on the spot. Run back fast.',
     },
     {
       type: 'callout',
@@ -100,6 +102,8 @@ export const worldAndWarps: WikiPage = {
         { command: '/warp crates', description: 'Open your crate keys here.' },
         { command: '/warp afk', description: 'The AFK pool. Earn points while you are away.' },
         { command: '/warp dungeon', description: 'Entrance to the Lab of Horrors.' },
+        { command: '/warp pvp', description: 'The PvP field. You keep your items if you die.' },
+        { command: '/warp duel', description: 'The duel pit. You drop your items if you die.' },
       ],
     },
     { type: 'h2', text: 'Homes' },
@@ -144,7 +148,7 @@ export const worldAndWarps: WikiPage = {
       type: 'list',
       items: [
         'The Wild has no land claims. Anything you build there is unprotected, so keep your main base on your plot.',
-        'Taking damage puts you in combat for 10 seconds. While in combat you cannot send `/tpa` requests, and logging out kills you.',
+        'Hitting a player or being hit by one puts you in combat for 10 seconds. While in combat you cannot use commands (messages still work), fly, use an elytra or run into a safe zone, and logging out kills you.',
         'You are never kicked for being AFK. After 5 minutes you are just marked as AFK.',
         'The Wild is big. Note your coordinates (F3) before you leave a good spot, or set a home there.',
       ],

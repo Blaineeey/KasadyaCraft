@@ -33,7 +33,8 @@ export const safetyAndRules: Guide = {
       head: ['Place', 'Keep items when you die?', 'Who can build'],
       rows: [
         ['Hub', 'Yes (and nothing can hurt you)', 'Nobody'],
-        ['Survival spawn', 'Yes', 'Nobody'],
+        ['Survival spawn and the PvP field', 'Yes', 'Nobody'],
+        ['Duel pit', 'No, you drop everything', 'Nobody'],
         ['Shopping Mall', 'Yes', 'Each renter, inside their own stall'],
         ['Your plot', 'No', 'You and the people you add'],
         ['The wild, nether and end', 'No, you drop everything', 'Anyone. Nothing there is protected'],
@@ -41,7 +42,7 @@ export const safetyAndRules: Guide = {
     },
     {
       type: 'p',
-      text: 'PvP is off at the hub, at spawn and in the mall. In the wild, the nether and the end it is on, so other players can attack you there.',
+      text: 'PvP is off at the hub, at spawn and in the mall. In the wild, the nether and the end it is on, so other players can attack you there. Two places at spawn are made for fighting: `/warp pvp`, where you keep your items, and `/warp duel`, a pit with no way out where the loser drops everything.',
     },
     {
       type: 'callout',
@@ -52,7 +53,7 @@ export const safetyAndRules: Guide = {
     { type: 'h2', text: 'Combat logging' },
     {
       type: 'p',
-      text: `When you hit another player or get hit by one, you are in combat for ${COMBAT_TAG_SECONDS} seconds. Log out during that time and you die on the spot. Wait for the timer to run out first.`,
+      text: `When you hit another player or get hit by one, you are in combat for ${COMBAT_TAG_SECONDS} seconds. Log out during that time and you die on the spot. Until the timer runs out you also cannot use commands (messages still work), fly, use an elytra or run into a safe zone.`,
     },
     { type: 'h2', text: 'Trading safely' },
     {
