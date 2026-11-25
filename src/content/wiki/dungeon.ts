@@ -95,7 +95,7 @@ export const dungeon: WikiPage = {
       ],
     },
     { type: 'h2', text: 'Boss: Draedon' },
-    { type: 'p', text: 'Draedon has **10,000 health**. Here is what he throws at you:' },
+    { type: 'p', text: 'Draedon has **2,048 health**. Here is what he throws at you:' },
     {
       type: 'list',
       items: [
@@ -114,7 +114,7 @@ export const dungeon: WikiPage = {
     { type: 'h2', text: 'Supply chests' },
     {
       type: 'p',
-      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each gives 1 or 2 items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book.',
+      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each holds 2 or 3 stacks of ores, food or supplies, plus 1 or 2 dungeon items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book. You can loot 36 supply chests a day.',
     },
     { type: 'h2', text: 'Raid chests' },
     {

@@ -201,7 +201,7 @@ export const dungeonItems: WikiPage = {
       type: 'p',
       text: 'Each chest picks a fixed number of items from its table. The higher the weight, the more likely that item is. Compare weights inside one table: in the Diamond chest a Lab Sample (1,000) is about 60 times more likely than a Rare book (16).',
     },
-    { type: 'h3', text: 'Supply chests (1 or 2 items)' },
+    { type: 'h3', text: 'Supply chests (1 or 2 of these, plus 2 or 3 stacks of ores, food or supplies)' },
     {
       type: 'table',
       head: ['Item', 'Amount', 'Weight'],
