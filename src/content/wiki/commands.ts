@@ -61,7 +61,7 @@ export const commands: WikiPage = {
       type: 'commands',
       items: [
         { command: '/spawn', description: 'Go to the Survival spawn.' },
-        { command: '/warp <name>', description: 'Warps: spawn, shop, mall, crates, afk, dungeon.' },
+        { command: '/warp <name>', description: 'Warps: spawn, shop, mall, crates, afk, dungeon, pvp, duel.' },
         { command: '/sethome <name>', description: 'Save a home where you stand.' },
         { command: '/home <name>', description: 'Go to a home. With just one home, `/home` is enough.' },
         { command: '/delhome <name>', description: 'Delete a home.' },
@@ -135,6 +135,7 @@ export const commands: WikiPage = {
         { command: '/tags', description: 'Buy and wear chat tags.' },
         { command: '/cosmetics', description: 'Chat colours, glow and tags.' },
         { command: '/chatcolor', description: 'Pick a chat colour you unlocked.' },
+        { command: '/paint', description: 'Draw pixel art, look at your paintings and show them to friends. See [Painting](/wiki/painting).' },
       ],
     },
     { type: 'h2', text: 'Lab of Horrors' },

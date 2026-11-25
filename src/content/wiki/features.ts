@@ -86,6 +86,11 @@ export const features: WikiPage = {
       type: 'p',
       text: 'Buy a chat tag with in-game money in `/tags`, unlock chat colours with points in `/cosmetics`, and pick a glow colour for free. See [Chat tags](/wiki/tags).',
     },
+    { type: 'h2', text: 'Painting' },
+    {
+      type: 'p',
+      text: 'Draw your own pixel art with `/paint`, hang it on your plot as a map, or show it to your friends from My Paintings. See [Painting](/wiki/painting).',
+    },
     {
       type: 'callout',
       tone: 'tip',

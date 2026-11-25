@@ -53,12 +53,12 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'Do I keep my items when I die?' },
     {
       type: 'p',
-      text: 'Only at spawn, in the Shopping Mall and inside the Lab of Horrors. In the Wild, Nether, End and on plots your items drop, and there are no graves.',
+      text: 'Only at spawn (including the PvP field, but not the duel pit), in the Shopping Mall and inside the Lab of Horrors. In the Wild, Nether, End and on plots your items drop, and there are no graves.',
     },
     { type: 'h3', text: 'Is there PvP?' },
     {
       type: 'p',
-      text: 'Yes, in the Wild, the Nether and the End. Spawn and the Mall are safe zones. Taking damage puts you in combat for 10 seconds, and you cannot use `/tpa` while in combat. If you log out in combat, you die.',
+      text: 'Yes, in the Wild, the Nether and the End, and at `/warp pvp` (you keep your items) and `/warp duel` (you drop them). The rest of spawn and the Mall are safe zones. A fight with a player puts you in combat for 10 seconds: no commands, no elytra, no safe zone. If you log out in combat, you die.',
     },
     { type: 'h3', text: 'Why can my animals not breed on my plot?' },
     {
