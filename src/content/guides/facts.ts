@@ -231,7 +231,7 @@ export const DUNGEON = {
   maxPlayers: 5,
   rooms: 7,
   supplyChests: 12,
-  rewardRoomMinutes: 2,
+  rewardRoomMinutes: 3,
   discipleHealth: 1000,
   bossHealth: 2048,
   roomMonsters: [21, 13, 13, 13, 9, 11, 21],

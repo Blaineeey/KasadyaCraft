@@ -33,8 +33,8 @@ export const firstDungeon: Guide = {
       items: [
         'Wear your best armour. Bring a sword or bow, food and healing.',
         `Go solo or take a party of up to **${DUNGEON.maxPlayers} players**.`,
-        'There is no entry cost and no time limit.',
-        'You keep your items and XP if you die. You come back at the last door you reached.',
+        'There is no entry cost. A run lasts up to 2 hours.',
+        'You keep your items and XP if you die. You come back at the last door you reached, or inside the boss room during the fight, with 5 seconds of protection.',
         'Inside, you cannot place or break blocks, and most commands are blocked.',
       ],
     },
@@ -91,7 +91,7 @@ export const firstDungeon: Guide = {
     },
     {
       type: 'p',
-      text: `When Draedon falls, you go back to the rewards room for **${DUNGEON.rewardRoomMinutes} minutes**. Its three **Raid Chests** only open with a Chamber Key. Hold the key and right-click the chest. The key is used up, and each player opens one chest per boss kill.`,
+      text: `When Draedon falls, you go back to the rewards room for **${DUNGEON.rewardRoomMinutes} minutes**. Its three **Raid Chests** only open with a Chamber Key. Click the matching chest with the key in your inventory. No key yet? \`/locksmith\` works inside the lab too. The key is used up, and each player opens one chest per boss kill.`,
     },
     {
       type: 'table',
@@ -116,7 +116,7 @@ export const firstDungeon: Guide = {
     {
       type: 'callout',
       tone: 'tip',
-      text: 'Need to leave a run early? Type `/dungeon` and click **Leave Dungeon**. Your party can carry on without you.',
+      text: 'Need to leave a run early? Type `/dungeon` and click **Leave Dungeon**, or type `/dungeon leave`. Alone you leave at once. In a party the others are asked: you all leave together when everyone agrees, or after 2 minutes anyway.',
     },
   ],
 }

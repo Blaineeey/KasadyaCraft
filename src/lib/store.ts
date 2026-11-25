@@ -678,7 +678,7 @@ const keyItems: StoreItem[] = [
     id: 'key-vote',
     category: 'keys',
     name: 'Vote crate key',
-    summary: 'A grab bag of iron gear, supplies and a small shot at diamonds or a totem.',
+    summary: 'A grab bag of diamond gear, supplies and a small shot at diamonds or a totem.',
     icon: 'key',
     rarity: 'common',
     price: { currency: 'tokens', amount: 20 },
@@ -687,7 +687,7 @@ const keyItems: StoreItem[] = [
     sprite: { shape: 'key', tone: 'vote' },
     commands: ['/keys', '/warp crates'],
     contents: [
-      'Iron vote armour, sword, tools and a shield',
+      'Diamond vote armour, sword, tools and a shield',
       '2 diamonds',
       'Totem of undying',
       'Turtle shell',

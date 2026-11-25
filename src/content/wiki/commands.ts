@@ -146,6 +146,7 @@ export const commands: WikiPage = {
         { command: '/dungeon', description: 'The dungeon menu: play solo, make a party, quick match, join or accept an invite, start, or leave a run.' },
         { command: '/mr invite <player>', description: 'Invite a friend to your party (the menu does this for you too).' },
         { command: '/room accept <player>', description: 'Accept a party invite.' },
+        { command: '/dungeon leave', description: 'Leave a run. In a party the others are asked first, and you leave together.' },
         { command: '/dungeoninfo', description: 'The Dungeon Codex: mobs, boss and loot. `/codex` works too.' },
         { command: '/locksmith', description: 'Forge Chamber Keys, decipher dungeon books and trade loot for crate keys.' },
         { command: '/dchat <message>', description: 'Talk only to your dungeon party.' },
