@@ -134,6 +134,7 @@ export const commands: WikiPage = {
         { command: '/tags', description: 'Buy and wear chat tags.' },
         { command: '/cosmetics', description: 'Chat colours, glow and tags.' },
         { command: '/chatcolor', description: 'Pick a chat colour you unlocked.' },
+        { command: '/paint', description: 'Draw pixel art, look at your paintings and show them to friends. See [Painting](/wiki/painting).' },
       ],
     },
     { type: 'h2', text: 'Lab of Horrors' },

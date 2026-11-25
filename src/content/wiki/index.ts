@@ -18,6 +18,7 @@ import { economy } from './economy'
 import { faq } from './faq'
 import { features } from './features'
 import { legendaryWeapons } from './legendary-weapons'
+import { painting } from './painting'
 import { playerShops } from './player-shops'
 import { plots } from './plots'
 import { ranks } from './ranks'
@@ -44,6 +45,7 @@ export const wikiPages: WikiPage[] = [
   crates,
   spawners,
   legendaryWeapons,
+  painting,
   // dungeon
   dungeon,
   dungeonItems,
