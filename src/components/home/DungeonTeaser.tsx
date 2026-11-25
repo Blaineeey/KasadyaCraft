@@ -45,7 +45,7 @@ export default function DungeonTeaser() {
             Go to the lab with <code className="kc-cmd-inline">/warp dungeon</code>.
           </li>
           <li>
-            Make a party with <code className="kc-cmd-inline">/mr menu</code> and invite friends.
+            Open <code className="kc-cmd-inline">/dungeon</code> and play solo or with friends.
           </li>
           <li>
             Check what drops where with <code className="kc-cmd-inline">/dungeoninfo</code>.
