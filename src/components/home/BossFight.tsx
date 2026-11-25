@@ -8,13 +8,13 @@ import s from './DungeonTeaser.module.css'
 
 /**
  * A pocket-sized Draedon fight that follows the real boss rules from the
- * dungeon codex (DeluxeMenus DUNGEON/Codex.yml): 10,000 health, at 80/50/25/10%
+ * dungeon codex (DeluxeMenus DUNGEON/Codex.yml): 2,048 health, at 80/50/25/10%
  * he floats up and rains soul lanterns, and from 50% he is immune until the
  * Lost Souls are dead. Silly on purpose; the real fight is in game.
  * Owner: INTERACTIVITY ENGINEER.
  */
 
-const MAX_HP = 10_000
+const MAX_HP = 2048
 const PHASES = [0.8, 0.5, 0.25, 0.1]
 const SOULS = 3
 
@@ -79,7 +79,7 @@ export default function BossFight() {
       setLog('He is immune! Kill the Lost Souls first.')
       return
     }
-    const dmg = 600 + Math.floor(Math.random() * 500)
+    const dmg = 123 + Math.floor(Math.random() * 102)
     const next = Math.max(0, hp - dmg)
     setHits((h) => h + 1)
     setHp(next)

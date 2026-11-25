@@ -87,7 +87,7 @@ export const firstDungeon: Guide = {
     { type: 'h2', text: 'Loot and raid chests' },
     {
       type: 'p',
-      text: `There are **${DUNGEON.supplyChests} supply chests** hidden in the lab, and every player gets their own loot from each one. They mostly hold Key Fragments, plus Cobalt and Mithril Ingots and sometimes an Undeciphered Book. Monsters drop Infected Flesh.`,
+      text: `There are **${DUNGEON.supplyChests} supply chests** hidden in the lab, and every player gets their own loot from each one. Each holds ores, food or supplies plus dungeon materials: mostly Key Fragments, sometimes Cobalt or Mithril Ingots or an Undeciphered Book. You can loot 36 supply chests a day. Monsters drop Infected Flesh.`,
     },
     {
       type: 'p',

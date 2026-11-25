@@ -87,7 +87,7 @@ export default function DungeonTeaser() {
         <p className={s.sideLabel}>Try the boss fight (website edition)</p>
         <BossFight />
         <p className={s.sideNote}>
-          The real Draedon has 10,000 health, a close-range Wave of Pain, Soul Blast and Sonic Boom, and he summons lab
+          The real Draedon has 2,048 health, a close-range Wave of Pain, Soul Blast and Sonic Boom, and he summons lab
           subjects to help. At 80, 50, 25 and 10% he floats up and rains soul lanterns. From 50% he is immune until you kill
           the Lost Souls.
         </p>
