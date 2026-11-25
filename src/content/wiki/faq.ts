@@ -2,6 +2,7 @@ import { FACTS_CHECKED, TOKEN_SOURCES_TEXT } from '@/content/facts'
 import { VERSIONS } from '@/content/guides/facts'
 import type { WikiPage } from '@/lib/content'
 import { site } from '@/lib/site'
+import { voteRewards, voteSites } from '@/lib/vote'
 
 /*
  * Answers summarise facts verified for the other wiki pages (see their source notes) plus:
@@ -10,7 +11,7 @@ import { site } from '@/lib/site'
  *   26.x clients connect (VERSIONS in src/content/guides/facts.ts); the pack is made for site.recommendedVersion
  * - survival server.properties require-resource-pack=true; hub sends no pack
  * - CombatLogX default-timer 10, punish.yml kill on disconnect
- * - vote.sk: voting not open, no Votifier
+ * - Voting: KasadyaVote config.yml + NuVotifier (numbers from src/lib/vote.ts)
  */
 export const faq: WikiPage = {
   slug: 'faq',
@@ -95,7 +96,11 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'Can I vote for rewards?' },
     {
       type: 'p',
-      text: 'Voting is not open yet. When it opens, we will post the links on Discord and on the [vote page](/vote).',
+      text: `Yes. There are **${voteSites.length} vote sites** and every vote gives you **${voteRewards.keysPerVote} Vote crate key**. Type \`/vote\` and click a site to get its link in chat, or open the [vote page](/vote). Use your exact Minecraft name on the site and keep one inventory slot free. If you are offline, your vote waits up to ${voteRewards.pendingDays} days.`,
+    },
+    {
+      type: 'p',
+      text: `Every ${voteRewards.partyVotes} votes there is a vote party: everyone online on Survival gets ${voteRewards.partyKeys} Vote key.`,
     },
     { type: 'h2', text: 'Help' },
     { type: 'h3', text: 'How do I report a player or a bug?' },

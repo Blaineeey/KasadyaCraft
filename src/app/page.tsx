@@ -8,6 +8,7 @@ import HomeHero from '@/components/home/HomeHero'
 import homeStyles from '@/components/home/Home.module.css'
 import JoinStepper from '@/components/home/JoinStepper'
 import StoreTeaser from '@/components/home/StoreTeaser'
+import VoteRack from '@/components/home/VoteRack'
 import { Panel, SectionHeading } from '@/components/ui'
 import { pageMetadata } from '@/lib/seo'
 import { site } from '@/lib/site'
@@ -22,8 +23,8 @@ export const metadata: Metadata = pageMetadata({
 /*
  * HOME. Owner: INTERACTIVITY ENGINEER.
  * Reads top to bottom like digging down: the festival plaza at the surface,
- * then dirt (how to join), stone (what's inside), deepslate (the dungeon) and
- * bedrock (store + community). Sections live in src/components/home/*.
+ * then dirt (how to join), stone (what's inside), a cobblestone storeroom (the
+ * vote keys on their rack), deepslate (the dungeon) and bedrock (store + community). Sections live in src/components/home/*.
  */
 export default function HomePage() {
   return (
@@ -56,6 +57,10 @@ export default function HomePage() {
         <p className={homeStyles.aside}>
           Want the full list? <Link href="/wiki/features">Every feature</Link> and <Link href="/wiki/commands">every command</Link> is in the wiki.
         </p>
+      </DepthBand>
+
+      <DepthBand material="cobble" y={-8} id="vote" labelledBy="home-vote">
+        <VoteRack />
       </DepthBand>
 
       <DepthBand material="deepslate" y={-30} id="dungeon" labelledBy="home-dungeon">

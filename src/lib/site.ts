@@ -7,6 +7,7 @@
  * configs on 2026-11-25 (see docs/SITE_PLAN.md, "Server facts").
  */
 import type { PixelIconName } from '@/components/ui/pixel-icons'
+import { voteRewards, voteSites } from '@/lib/vote'
 
 export const site = {
   name: 'KasadyaCraft',
@@ -106,6 +107,10 @@ export interface HotbarItem {
   /** Short line shown above the hotbar when the slot is selected (like an item name). */
   hint: string
   external?: boolean
+  /** A stack count in the slot's bottom-right corner. `unit` names it for screen readers ("Vote, 7 sites"). */
+  stack?: { count: number; unit: string }
+  /** Gold slot: the one page every player should notice. Never two at once, or neither stands out. */
+  featured?: boolean
 }
 
 export const hotbar: HotbarItem[] = [
@@ -114,7 +119,15 @@ export const hotbar: HotbarItem[] = [
   { label: 'Guides', href: '/guides', icon: 'book', hint: 'Starter guides for new players' },
   { label: 'Wiki', href: '/wiki', icon: 'map', hint: 'Every feature, rank and command' },
   { label: 'Store', href: '/store', icon: 'chest', hint: 'Ranks, keys and cosmetics' },
-  { label: 'Vote', href: '/vote', icon: 'star', hint: 'Voting opens soon' },
+  {
+    label: 'Vote',
+    href: '/vote',
+    icon: 'star',
+    // No site count in here: the name plate is Pixelify, whose 7 reads as a 1. The stack count says it.
+    hint: `${voteRewards.keysPerVote} Vote crate key per vote`,
+    stack: { count: voteSites.length, unit: 'sites' },
+    featured: true,
+  },
   { label: 'Community', href: '/community', icon: 'heart', hint: 'Staff, events and support' },
   { label: 'Games', href: '/games', icon: 'controller', hint: 'Everything else we play' },
   { label: 'Discord', href: site.discord, icon: 'chat', hint: 'Chat with us on Discord', external: true },

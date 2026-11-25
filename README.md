@@ -26,6 +26,7 @@ The full plan, routes, ownership and component contracts are in [`docs/SITE_PLAN
 
 - `src/lib/site.ts`: shared facts (address, version, Discord), hotbar navigation, footer links, community content
 - `src/lib/store.ts`: ranks and store catalogue (single source for the store and the wiki)
+- `src/lib/vote.ts`: vote sites and vote rewards (single source, mirrors the KasadyaVote config)
 - `src/content/guides/*`, `src/content/wiki/*`: starter guides and wiki pages as typed data (`src/lib/content.ts`)
 - `src/components/ui/*`: the pixel UI kit (buttons, panels, inventory slots, tooltips, toasts)
 - `src/components/interactive/*`: live server status, copy-IP, sky, day/night, toasts
@@ -40,7 +41,7 @@ The full plan, routes, ownership and component contracts are in [`docs/SITE_PLAN
 | `/guides`, `/guides/[slug]` | Starter guides |
 | `/wiki`, `/wiki/[slug]` | Server wiki |
 | `/store` | Ranks, crate keys, cosmetics |
-| `/vote` | Voting (not live yet) |
+| `/vote` | Vote sites and what a vote gives |
 | `/community` | Team, events and support |
 | `/games`, `/games/minecraft`, `/games/roblox` | Everything the community plays |
 | `/api/status` | Live server status JSON |

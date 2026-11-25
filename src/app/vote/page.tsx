@@ -1,35 +1,61 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import LiveStatus from '@/components/interactive/LiveStatus'
 import PageHero from '@/components/shell/PageHero'
-import { Callout, Command, Panel, PixelButton, PixelIcon, SectionHeading, TooltipCard } from '@/components/ui'
-import { formatPrice, getStoreItem, priceLabel } from '@/lib/store'
-import { site } from '@/lib/site'
+import StoreSprite from '@/components/store/StoreSprite'
+import { Command, Panel, PixelButton, PixelIcon, SectionHeading, TooltipCard, type PixelIconName } from '@/components/ui'
 import { pageMetadata } from '@/lib/seo'
+import { site } from '@/lib/site'
+import { formatPrice, getStoreItem, priceLabel } from '@/lib/store'
+import { voteRewards, voteSites } from '@/lib/vote'
 import VoteChest from './VoteChest'
+import VoteList from './VoteList'
 import s from './vote.module.css'
 
 /*
  * /vote. Owner: INTERACTIVITY ENGINEER.
- * Honest placeholder. Facts checked 2026-11-25:
- * - No Votifier plugin is installed and KasadyaCraft is not on any vote site yet
- *   (plugins/Skript/scripts/vote.sk; /root/launch/CHANGELOG.md).
- * - In game, /vote says: "Voting for KasadyaCraft opens soon! Vote links and rewards
- *   will be announced on our Discord."
- * - The Vote crate is placed at /warp crates; its key and contents come from
- *   src/lib/store.ts (PURCHASE/Keys.yml + ExcellentCrates vote_crate.yml).
+ * Sites and rewards: src/lib/vote.ts (mirrors KasadyaVote config.yml). Crate contents and the
+ * Token price: src/lib/store.ts. Numbers are never typed by hand here.
  */
+const { keysPerVote, partyVotes, partyKeys, pendingDays, pendingMax } = voteRewards
+const total = voteSites.length
+
+function count(n: number, name: string) {
+  return `${n} ${name}${n === 1 ? '' : 's'}`
+}
+
 export const metadata: Metadata = pageMetadata({
   title: 'Vote',
-  description: 'Voting for KasadyaCraft is not open yet. Here is what is missing, what already exists, and what you can do today.',
+  description: `Vote for ${site.name} on ${total} server list sites. Every vote gives you ${count(keysPerVote, 'Vote crate key')}, and every ${partyVotes} votes everyone online on Survival gets ${count(partyKeys, 'Vote key')}.`,
   path: '/vote',
 })
 
-const NEEDED = [
-  { title: 'Listings on server-list sites', text: 'KasadyaCraft has to be listed before there is anything to vote on.' },
-  { title: 'A vote plugin on the server', text: 'It connects a vote on a site to your player, so the reward reaches you.' },
-  { title: 'Rewards, announced on Discord', text: 'We will say exactly what a vote gives once it is set up. No guesses here.' },
+/** "Most take one vote a day. TopG takes one every 6 hours." */
+const paceText = [
+  'Most take one vote a day.',
+  ...voteSites.filter((v) => v.cooldownHours < 24).map((v) => `${v.name} takes one every ${v.cooldownHours} hours.`),
+].join(' ')
+
+const STEPS: { icon: PixelIconName; title: string; text: ReactNode }[] = [
+  {
+    icon: 'player',
+    title: 'Enter your exact name',
+    text: 'Open a site and type your Minecraft name, spelled exactly like in game.',
+  },
+  { icon: 'star', title: 'Vote', text: `Do it on as many of the ${total} as you like. ${paceText}` },
+  {
+    icon: 'key',
+    title: 'Come online on Survival',
+    text: (
+      <>
+        Your key arrives there. Keep one inventory slot free. Open keys at <code className="kc-cmd-inline">/warp crates</code>.
+        If you are offline, votes wait up to {pendingDays} days, {pendingMax} at most.
+      </>
+    ),
+  },
 ]
 
-const TODAY = [
+const MORE = [
   { command: '/rewards', description: 'Your daily reward. Claim it every day you log in.' },
   { command: '/dquests', description: 'Fresh daily quests with their own rewards.' },
   { command: '/levels', description: 'Playtime milestones. Some of them pay out Tokens.' },
@@ -43,41 +69,73 @@ export default function VotePage() {
     <>
       <PageHero
         scene="ballot"
-        art={<VoteChest size={192} />}
-        title="Voting opens soon"
-        eyebrow="Ballot box: locked"
+        art={<VoteChest />}
+        title={`Vote for ${site.name}`}
+        eyebrow="Ballot chest: unlocked"
         icon="chest"
         lead={
           <>
-            We are not on any server-list sites yet, so there is nothing to vote on today. Type{' '}
-            <code className="kc-cmd-inline">/vote</code> in game and you get the same news. When voting opens, the links and
-            rewards go up on Discord first.
+            Every vote gives you {count(keysPerVote, 'Vote crate key')} on Survival. Use all {total} sites, or type{' '}
+            <code className="kc-cmd-inline">/vote</code> in game for the same list.
           </>
         }
       >
-        <PixelButton href={site.discord} variant="discord" icon="chat">
-          Get told on Discord
-        </PixelButton>
+        {/* Phones and tablets only: on wide screens the list is already in view. */}
+        <div className={s.jump}>
+          <PixelButton href="#vote-sites" variant="gold" block>
+            Pick a vote site
+          </PixelButton>
+        </div>
       </PageHero>
 
       <div className={`kc-container ${s.page}`}>
-        <Panel material="stone" padding="lg" as="section" aria-labelledby="vote-needed">
-          <SectionHeading variant="frame" icon="quest" as="h2" id="vote-needed" eyebrow="To do" title="What voting still needs" />
-          <ol className={s.todo}>
-            {NEEDED.map((n) => (
-              <li key={n.title} className={s.todoItem}>
-                <span className={s.todoBox} aria-hidden="true">
-                  <PixelIcon name="cross" size={16} />
-                </span>
-                <span>
-                  <strong className={s.todoTitle}>{n.title}</strong>
-                  <span className={s.todoText}>{n.text}</span>
-                  <span className="kc-sr-only"> Not done yet.</span>
-                </span>
-              </li>
-            ))}
-          </ol>
-        </Panel>
+        <div className={s.board}>
+          <section id="vote-sites" className={s.screen} aria-labelledby="vote-sites-title">
+            <div className={s.screenHead}>
+              <span className={s.slot} aria-hidden="true">
+                <PixelIcon name="star" size={32} />
+              </span>
+              <h2 id="vote-sites-title" className={s.screenTitle}>
+                Vote on these sites
+              </h2>
+              <p className={s.perVote}>
+                <StoreSprite shape="key" tone="vote" size={32} />
+                {count(keysPerVote, 'key')} per vote
+              </p>
+            </div>
+            <VoteList />
+          </section>
+
+          <div className={s.aside}>
+            <LiveStatus variant="card" highlight className={s.server} />
+            <Panel material="darkwood" as="section" title="How it works" titleIcon="quest" aria-label="How voting works">
+              <ol className={s.steps} role="list">
+                {STEPS.map((st) => (
+                  <li key={st.title} className={s.step}>
+                    <span className={s.slot} aria-hidden="true">
+                      <PixelIcon name={st.icon} size={32} />
+                    </span>
+                    <div>
+                      <h3 className={s.stepTitle}>{st.title}</h3>
+                      <p className={s.stepText}>{st.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </Panel>
+            <section className={s.party} aria-labelledby="vote-party">
+              <PixelIcon name="firework" size={48} />
+              <div>
+                <h2 id="vote-party" className={s.partyTitle}>
+                  Vote party
+                </h2>
+                <p>
+                  Every {partyVotes} votes, everyone online on Survival gets {count(partyKeys, 'Vote key')}.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
 
         {voteKey ? (
           <section className={s.crate} aria-labelledby="vote-crate">
@@ -86,12 +144,19 @@ export default function VotePage() {
               icon="key"
               as="h2"
               id="vote-crate"
-              eyebrow="Already in game"
-              title="The Vote crate is waiting"
-              lead="The crate is set up at the crates warp, and you can open it today with a key from the store."
+              eyebrow="What the key opens"
+              title="Inside the Vote crate"
+              lead="Every vote gives you a key for free. The store sells the same key for Tokens."
             />
             <div className={s.crateRow}>
-              <TooltipCard title={voteKey.name} rarity={voteKey.rarity} lines={[voteKey.summary]} as="article" className={s.card}>
+              <TooltipCard
+                title={voteKey.name}
+                titleAs="h3"
+                rarity={voteKey.rarity}
+                lines={[voteKey.summary]}
+                as="article"
+                className={s.card}
+              >
                 {voteKey.contents && voteKey.contents.length > 0 ? (
                   <ul className={s.contents} aria-label="What can be inside">
                     {voteKey.contents.map((c) => (
@@ -102,13 +167,13 @@ export default function VotePage() {
                 <p className={s.price}>
                   <span aria-hidden="true">{formatPrice(voteKey.price)}</span>
                   <span className="kc-sr-only">Price: {priceLabel(voteKey.price)}</span>
-                  <span className={s.priceNote}> per key, paid in Tokens</span>
+                  <span className={s.priceNote}> per key in the store, free when you vote</span>
                 </p>
               </TooltipCard>
               <div className={s.crateCmds}>
-                <Command command="/warp crates" description="Walk to the crates at spawn" />
+                <Command command="/warp crates" description="Open your keys here" />
                 <Command command={voteKey.commands?.[0] ?? '/keys'} description="Opens the key shop. Vote keys cost Tokens." />
-                <PixelButton href="/store" variant="gold" icon="key">
+                <PixelButton href="/store" variant="wood" icon="key">
                   Keys in the store
                 </PixelButton>
               </div>
@@ -116,20 +181,17 @@ export default function VotePage() {
           </section>
         ) : null}
 
-        <section className={s.today} aria-labelledby="vote-today">
-          <SectionHeading variant="chat" as="h2" id="vote-today" eyebrow="Meanwhile" title="Free things you can do today" />
-          <Panel material="paper" padding="lg">
-            <ul className={s.todayList}>
-              {TODAY.map((t) => (
+        <section className={s.more} aria-labelledby="vote-more">
+          <SectionHeading variant="chat" as="h2" id="vote-more" eyebrow="Also free" title="More rewards in game" />
+          <Panel material="stone" padding="md">
+            <ul className={s.moreList}>
+              {MORE.map((t) => (
                 <li key={t.command}>
                   <Command command={t.command} description={t.description} />
                 </li>
               ))}
             </ul>
           </Panel>
-          <Callout tone="lore" title="Straight talk">
-            No placeholder vote links here. When voting is live, this page changes and Discord hears it first.
-          </Callout>
         </section>
       </div>
     </>

@@ -165,6 +165,7 @@ body:has(.kc-sky--hero) .kc-header__bunting {
 @media (min-width: 768px) {
   .kc-hotbar {
     --hotbar-slot: 56px;
+    --gold-edge: 3px;
   }
 }
 
@@ -310,6 +311,15 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   transition: transform var(--dur-fast) steps(2);
 }
 
+/* The featured slot (Vote, from src/lib/site.ts): a gold block edge inside the slot. It sits inside the
+   white selection frame, which hangs outside, so "look here" and "you are here" never mix. No motion. */
+.kc-hotbar__slot[data-featured] {
+  background: color-mix(in srgb, var(--kc-gold) 20%, transparent);
+  box-shadow:
+    inset 0 0 0 var(--gold-edge, 2px) var(--kc-gold),
+    inset calc(var(--gold-edge, 2px) + 2px) calc(var(--gold-edge, 2px) + 2px) 0 var(--btn-gold-base);
+}
+
 .kc-hotbar__slot:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -348,6 +358,38 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   line-height: 1;
   color: rgba(255, 255, 255, 0.65);
   text-shadow: 1px 1px 0 #000;
+}
+
+/* A stack count, like the number on a stack of items: white with a black pixel outline, so it reads
+   over any icon. Silkscreen, because Pixelify's 7 looks like a hook at this size. */
+.kc-hotbar__count,
+.kc-inv__count {
+  --px: 1px;
+  position: absolute;
+  z-index: 1;
+  right: 3px;
+  bottom: 1px;
+  font-family: var(--font-label);
+  font-size: 16px;
+  line-height: 1;
+  color: #fff;
+  text-shadow:
+    var(--px) 0 0 var(--edge),
+    calc(-1 * var(--px)) 0 0 var(--edge),
+    0 var(--px) 0 var(--edge),
+    0 calc(-1 * var(--px)) 0 var(--edge),
+    var(--px) var(--px) 0 var(--edge),
+    calc(-1 * var(--px)) calc(-1 * var(--px)) 0 var(--edge),
+    var(--px) calc(-1 * var(--px)) 0 var(--edge),
+    calc(-1 * var(--px)) var(--px) 0 var(--edge);
+  pointer-events: none;
+}
+
+/* 320px phones: 26-28px slots, the digit would cover half the star */
+@media (max-width: 359px) {
+  .kc-hotbar__count {
+    display: none;
+  }
 }
 
 /* Discord leaves the site: a small arrow badge in the slot's corner says so before the tap.
@@ -401,6 +443,18 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   .kc-hotbar__ext {
     width: 18px;
     height: 18px;
+  }
+
+  .kc-hotbar__slot[data-featured] .kc-hotbar__key {
+    top: 6px;
+    left: 7px;
+  }
+
+  .kc-hotbar__count {
+    --px: 3px; /* one Silkscreen pixel at 24px */
+    right: 5px;
+    bottom: 3px;
+    font-size: 24px;
   }
 }
 
@@ -565,6 +619,19 @@ html:has(.kc-inv[open]) {
   box-shadow: var(--bevel-slot);
 }
 
+/* the featured page: same gold edge as its hotbar slot */
+.kc-inv__slot[data-featured] {
+  background: color-mix(in srgb, var(--kc-gold) 20%, var(--gui-slot-dark));
+  box-shadow:
+    inset 0 0 0 3px var(--kc-gold),
+    inset 5px 5px 0 var(--btn-gold-base);
+}
+
+.kc-inv__slot[data-featured] .kc-inv__key {
+  top: 7px;
+  left: 8px;
+}
+
 /* the game's white hover wash over the item */
 .kc-inv__slot::after {
   content: '';
@@ -609,6 +676,14 @@ html:has(.kc-inv[open]) {
   .kc-inv__key {
     display: block;
   }
+}
+
+.kc-inv__count {
+  --px: 3px;
+  z-index: 2;
+  right: 5px;
+  bottom: 3px;
+  font-size: 24px;
 }
 
 .kc-inv__ext {

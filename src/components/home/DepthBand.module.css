@@ -13,6 +13,7 @@
 
 .band[data-material='dirt'] { --tex: var(--tex-dirt); --base: var(--mat-dirt); --shade: rgba(0, 0, 0, 0.55); border-top: 0; }
 .band[data-material='stone'] { --tex: var(--tex-stone); --base: var(--mat-stone); --shade: rgba(0, 0, 0, 0.62); }
+.band[data-material='cobble'] { --tex: var(--tex-cobble); --base: var(--mat-stone-dark); --shade: rgba(0, 0, 0, 0.6); }
 .band[data-material='deepslate'] { --tex: var(--tex-deepslate); --base: var(--mat-deepslate); --shade: rgba(0, 0, 0, 0.5); }
 .band[data-material='bedrock'] { --tex: var(--tex-obsidian); --base: var(--mat-obsidian); --shade: rgba(0, 0, 0, 0.35); }
 

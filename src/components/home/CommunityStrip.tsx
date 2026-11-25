@@ -5,14 +5,15 @@ import s from './CommunityStrip.module.css'
 /**
  * Community block for the home page: Discord, what Kasadya means, and a chat
  * box with real lines the server actually shows players (hub boss bar from
- * TAB animations.yml, the /vote reply from Skript vote.sk). No made-up quotes.
+ * TAB animations.yml, the vote broadcast from KasadyaVote, with <player> in
+ * place of a name). No made-up quotes, no real player names.
  * Owner: INTERACTIVITY ENGINEER.
  */
 
-const CHAT: { tag: string; tone: 'gold' | 'teal' | 'pink'; text: string }[] = [
+const CHAT: { tag: string; tone: 'gold' | 'teal' | 'pink'; sep?: string; text: string }[] = [
   { tag: 'HUB', tone: 'gold', text: 'Welcome to KASADYACRAFT! Step through the portal to play Survival' },
   { tag: 'HUB', tone: 'gold', text: 'Type /hub on any server to come back here' },
-  { tag: 'VOTE', tone: 'pink', text: 'Voting for KasadyaCraft opens soon!' },
+  { tag: 'VOTE', tone: 'pink', sep: '»', text: '<player> voted and earned a Vote Crate Key! /vote' },
   { tag: 'HUB', tone: 'teal', text: 'Join the community: discord.gg/8DY3eXHnAg' },
 ]
 
@@ -37,7 +38,7 @@ export default function CommunityStrip() {
                 {l.tag}
               </span>{' '}
               <span className={s.sep} aria-hidden="true">
-                |
+                {l.sep ?? '|'}
               </span>{' '}
               {l.text}
             </li>

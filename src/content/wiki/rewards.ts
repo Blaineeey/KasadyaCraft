@@ -15,6 +15,7 @@ import {
   roman,
 } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
+import { voteRewards, voteSites } from '@/lib/vote'
 
 /*
  * Every table below renders from src/content/facts.ts (one list per fact, shared with the guides).
@@ -27,13 +28,14 @@ import type { WikiPage } from '@/lib/content'
  * - DeluxeMenus BASIC/Playtime.yml LEVEL_N_CLAIM click_commands (money scaled x0.3 on L15, L16, L19-L28; TempFly
  *   swapped for crate keys on L3, L8, L27)
  * - Skript commanddixes.sk: /rewards -> dailyrewards, /quests -> dailyquests
+ * - Voting: KasadyaVote config.yml (numbers from src/lib/vote.ts)
  */
 const keyLevels = joinAnd(PLAYTIME_KEY_LEVELS.map((l) => `level ${roman(l.level)} (${l.key})`))
 const tokenLevels = joinAnd(PLAYTIME_TOKEN_LEVELS.map((l) => roman(l.level)))
 export const rewards: WikiPage = {
   slug: 'rewards',
   title: 'Quests and rewards',
-  summary: 'Free stuff for playing: the starter kit, daily quests, daily, weekly and monthly rewards, playtime levels, the AFK pool, chat games and tags.',
+  summary: 'Free stuff for playing: the starter kit, daily quests, daily, weekly and monthly rewards, vote keys, playtime levels, the AFK pool, chat games and tags.',
   icon: 'gift',
   category: 'features',
   order: 1,
@@ -45,6 +47,9 @@ export const rewards: WikiPage = {
     '/dailyrewards',
     '/playtime',
     '/levels',
+    '/vote',
+    'vote',
+    'voting',
     'daily',
     'weekly',
     'monthly',
@@ -74,6 +79,15 @@ export const rewards: WikiPage = {
       type: 'callout',
       tone: 'tip',
       text: 'Make room in your inventory first. The menu will not hand out rewards into a full inventory.',
+    },
+    { type: 'h2', text: 'Voting' },
+    {
+      type: 'p',
+      text: `Type \`/vote\`, click a site and open the link you get in chat. The same links are on the [vote page](/vote). There are ${voteSites.length} sites, and every vote gives you **${voteRewards.keysPerVote} Vote crate key**. Keep one inventory slot free for it.`,
+    },
+    {
+      type: 'p',
+      text: `Every ${voteRewards.partyVotes} votes there is a vote party: everyone online on Survival gets ${voteRewards.partyKeys} Vote key.`,
     },
     { type: 'h2', text: 'Daily quests' },
     {

@@ -1,0 +1,236 @@
+/* Key rack: the vote teaser (home). Owner: INTERACTIVITY ENGINEER. Tokens only. */
+
+.board {
+  display: grid;
+  gap: var(--s-5);
+  padding: var(--s-5);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    var(--tex-planks-dark) 0 0 / var(--tex-size),
+    var(--mat-darkwood);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-up), var(--block-drop);
+}
+
+/* ---------- words + button ---------- */
+.head {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.words {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.eyebrow {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+.title {
+  font-size: var(--fs-2xl);
+  color: var(--text);
+}
+
+.lead {
+  max-width: 50em;
+  color: var(--text);
+}
+
+@media (min-width: 760px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: var(--s-5);
+  }
+}
+
+/* ---------- the rack: small screens hang the keys down one upright plank ---------- */
+.rack {
+  display: grid;
+  list-style: none;
+}
+
+.hook {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.key {
+  display: grid;
+  place-items: center;
+  background: var(--tex-planks) 0 0 / 32px, var(--mat-plank);
+  border-inline: var(--bw) solid var(--edge);
+}
+
+.hook:first-child .key {
+  border-top: var(--bw) solid var(--edge);
+}
+
+.hook:last-child .key {
+  border-bottom: var(--bw) solid var(--edge);
+}
+
+.key svg {
+  width: 32px;
+  height: 32px;
+}
+
+.tag {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--s-2);
+  margin: var(--s-1) 0;
+  padding: var(--s-2);
+  color: var(--ink);
+  background: var(--mat-paper);
+  border: var(--bw-thin) solid var(--edge);
+  border-left: 0;
+  box-shadow: inset calc(var(--bw-thin) * -1) calc(var(--bw-thin) * -1) 0 var(--mat-paper-dark);
+}
+
+.name {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.timer {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: var(--ink-dim);
+}
+
+/* ---------- wider: a rail with hooks, keys hanging below, paper tags on strings ---------- */
+@media (min-width: 600px) {
+  .rack {
+    --rail: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: var(--s-4);
+  }
+
+  .hook {
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    padding-top: calc(var(--rail) - var(--s-1));
+  }
+
+  /* each hook brings its piece of the rail, so the rail stays whole however the row wraps */
+  .hook::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--rail);
+    background: var(--tex-planks) 0 0 / 32px, var(--mat-plank);
+    border-block: var(--bw) solid var(--edge);
+  }
+
+  .hook:first-child::before {
+    border-left: var(--bw) solid var(--edge);
+  }
+
+  .hook:last-child::before {
+    border-right: var(--bw) solid var(--edge);
+  }
+
+  /* the iron hook, seen through the bow of the key */
+  .hook::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: calc(50% - 5px);
+    width: 10px;
+    height: 20px;
+    background: var(--mat-stone-light);
+    border: var(--bw-thin) solid var(--edge);
+  }
+
+  .key,
+  .hook:first-child .key,
+  .hook:last-child .key {
+    position: relative;
+    z-index: 1;
+    justify-self: center;
+    padding-bottom: var(--s-2);
+    background: none;
+    border: 0;
+  }
+
+  /* the bow is the top left corner of the sprite: move it under the hook */
+  .key svg {
+    position: relative;
+    left: 10px;
+    width: 48px;
+    height: 48px;
+  }
+
+  /* string from the bow down to its tag */
+  .key::after {
+    content: '';
+    position: absolute;
+    left: calc(50% - 1px);
+    bottom: 0;
+    width: 2px;
+    height: 34px;
+    background: var(--mat-paper-dark);
+  }
+
+  .name {
+    font-size: var(--fs-sm);
+  }
+
+  .tag {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px;
+    margin: 0 var(--s-1);
+    padding: var(--s-2) var(--s-1);
+    text-align: center;
+    border-left: var(--bw-thin) solid var(--edge);
+  }
+}
+
+@media (min-width: 1040px) {
+  .rack {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+/* ---------- vote party ---------- */
+.party {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--text);
+}
+
+.party strong {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  color: var(--kc-gold);
+}
+
+.party svg {
+  flex: none;
+}
+
+@media (max-width: 479px) {
+  .board {
+    padding: var(--s-3);
+  }
+}

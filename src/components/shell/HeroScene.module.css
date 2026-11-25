@@ -1,7 +1,7 @@
 /* ==========================================================================
    Hero scenes: one signature first screen per site section.
    wiki = bookshelf wall + hanging sign, store = market stall, community = plaza,
-   vote = locked ballot chest, guides = signpost on a dirt path.
+   vote = ballot chest, guides = signpost on a dirt path.
    Original art only (CSS shapes + /public/textures). Tokens only, square corners,
    hard shadows, no blur. Owner: PIXEL UI DESIGNER.
    ========================================================================== */
@@ -784,7 +784,7 @@
 }
 
 /* ==========================================================================
-   Vote: the locked ballot chest
+   Vote: the ballot chest
    ========================================================================== */
 .ballotInner {
   grid-template-areas: 'crumbs' 'altar' 'text';
@@ -819,7 +819,7 @@
   justify-items: center;
 }
 
-/* square, stepped "enchanted lock" glow behind the chest (no blur) */
+/* square, stepped "enchanted" glow behind the chest (no blur) */
 .halo {
   position: absolute;
   z-index: 0;

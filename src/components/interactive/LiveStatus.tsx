@@ -12,6 +12,11 @@ export interface LiveStatusProps {
    * inline = plain text for a sentence ("3 players online right now").
    */
   variant?: 'chip' | 'card' | 'inline'
+  /**
+   * Card only: draw it as the selected server. A thick white frame (the hotbar's selection frame)
+   * and a bigger icon, name and player count when there is room. Static on purpose.
+   */
+  highlight?: boolean
   className?: string
 }
 
@@ -22,7 +27,7 @@ type State = 'checking' | 'online' | 'offline' | 'unknown'
  * offline, unknown. Never a fake number. All instances share one poller.
  * Owner: INTERACTIVITY ENGINEER.
  */
-export default function LiveStatus({ variant = 'chip', className }: LiveStatusProps) {
+export default function LiveStatus({ variant = 'chip', highlight = false, className }: LiveStatusProps) {
   const { status, loading } = useServerStatus()
 
   let state: State = 'checking'
@@ -31,14 +36,16 @@ export default function LiveStatus({ variant = 'chip', className }: LiveStatusPr
 
   const online = status?.players.online ?? 0
   const max = status?.players.max ?? 0
-  const cls = ['kc-status', `kc-status--${variant}`, className].filter(Boolean).join(' ')
+  const framed = variant === 'card' && highlight
+  const cls = ['kc-status', `kc-status--${variant}`, framed ? undefined : className].filter(Boolean).join(' ')
 
   if (variant === 'card') {
     const tagline = motdTagline(status?.motd) ?? site.motdLine
     const sample = state === 'online' ? status?.players.sample : undefined
-    return (
+    const iconPx = framed ? 96 : 64
+    const card = (
       <div className={cls} data-state={state}>
-        <Image src="/logo.png" alt="" width={64} height={64} className="kc-status__icon" />
+        <Image src="/logo.png" alt="" width={iconPx} height={iconPx} className="kc-status__icon" />
         <div className="kc-status__main">
           <p className="kc-status__name">{site.name}</p>
           <p className="kc-status__motd">{tagline}</p>
@@ -84,6 +91,7 @@ export default function LiveStatus({ variant = 'chip', className }: LiveStatusPr
         ) : null}
       </div>
     )
+    return framed ? <div className={['kc-status-pick', className].filter(Boolean).join(' ')}>{card}</div> : card
   }
 
   let text = 'Checking server...'

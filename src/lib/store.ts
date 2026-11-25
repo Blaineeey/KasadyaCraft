@@ -45,6 +45,7 @@
 import type { SpriteRef } from '@/components/store/sprites'
 import type { PixelIconName } from '@/components/ui/pixel-icons'
 import type { RankId, Rarity } from '@/lib/content'
+import { voteRewards } from '@/lib/vote'
 
 export type { RankId }
 
@@ -613,7 +614,7 @@ export interface TokenSource {
  * - DailyRewards config.yml: daily +10, weekly +50, monthly +150 (normal and premium lists)
  * - ODailyQuests config.yml global_reward (all 3 daily quests done): +25, next to $1,500 + a diamond block
  * - DeluxeMenus BASIC/Playtime.yml: 850 in total (tokenMilestones)
- * Not a source: mob or mining drops (FlareTokens drops.yml is empty), voting (no Votifier yet), the dungeon.
+ * Not a source: mob or mining drops (FlareTokens drops.yml is empty), voting (it gives Vote crate keys, see src/lib/vote.ts), the dungeon.
  */
 export const tokenSources: TokenSource[] = [
   { id: 'daily', name: 'Daily reward', command: '/rewards', tokens: 10, every: 'Every day', repeats: true },
@@ -696,7 +697,12 @@ const keyItems: StoreItem[] = [
       'A trim or resource crate key',
     ],
     odds: 'Diamonds, totem and enchanted golden apple about 3% each, turtle shell, cobblestone generator, trim key and resource key about 8% each, everything else about 5% each.',
-    alsoFrom: ['Playtime level III', 'A resource crate (sometimes)', 'Voting, once voting opens'],
+    alsoFrom: [
+      `Voting (/vote): ${voteRewards.keysPerVote} per vote`,
+      `Vote party: ${voteRewards.partyKeys} for everyone online on Survival, every ${voteRewards.partyVotes} votes`,
+      'Playtime level III',
+      'A resource crate (sometimes)',
+    ],
     packSizes: [1, 12],
     maxQuantity: 64,
     web: { tebexPackageId: null, price: { PHP: 15, USD: 0.29 }, placeholder: true },

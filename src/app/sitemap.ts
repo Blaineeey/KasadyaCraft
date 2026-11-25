@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/wiki', wikiChecked, 0.8, 'weekly'),
     ...wikiPages.map((p) => entry(`/wiki/${p.slug}`, p.updated, 0.6, 'monthly')),
     entry('/store', siteChecked, 0.7, 'monthly'),
-    entry('/vote', siteChecked, 0.4, 'monthly'),
+    entry('/vote', siteChecked, 0.8, 'monthly'),
     entry('/community', siteChecked, 0.5, 'monthly'),
     entry('/games', siteChecked, 0.5, 'monthly'),
     entry('/games/minecraft', siteChecked, 0.7, 'monthly'),

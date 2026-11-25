@@ -1,14 +1,19 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { CopyIp, LiveStatus, SkyBackdrop } from '@/components/interactive'
+import StoreSprite from '@/components/store/StoreSprite'
 import { Bunting, PixelButton } from '@/components/ui'
 import { site } from '@/lib/site'
+import { voteRewards, voteSites } from '@/lib/vote'
 import MiningToy from './MiningToy'
 import s from './HomeHero.module.css'
 
 /**
  * Home hero: the festival plaza at the surface. Logo + a wooden sign on the
- * left, the "server list" entry with live players, the big copy-IP block and
- * the two ways in on the right, then the grass ground with minable blocks.
+ * left. On the right the selected "server list" entry with live players, the
+ * big copy-IP block with the way in, and the vote row. Then the grass ground
+ * with minable blocks. Starter guides are a link on the sign, so the join
+ * column never stacks four buttons on a phone.
  * Owner: INTERACTIVITY ENGINEER.
  */
 export default function HomeHero() {
@@ -46,17 +51,26 @@ export default function HomeHero() {
             </span>
             Join from the multiplayer screen
           </p>
-          <LiveStatus variant="card" />
+          <LiveStatus variant="card" highlight className={s.card} />
           <div className={s.plate}>
             <CopyIp size="lg" showHint fill />
-            <div className={s.actions}>
-              <PixelButton href="/play" icon="grass" size="lg">
-                How to join
-              </PixelButton>
-              <PixelButton href="/guides" variant="wood" icon="book">
-                Starter guides
-              </PixelButton>
-            </div>
+            <PixelButton href="/play" icon="grass" size="lg" block>
+              How to join
+            </PixelButton>
+          </div>
+          <div className={s.vote}>
+            <span className={s.voteSlot} aria-hidden="true">
+              <StoreSprite shape="key" tone="vote" size={32} />
+            </span>
+            <p className={s.voteText}>
+              <strong>
+                {voteRewards.keysPerVote} Vote crate {voteRewards.keysPerVote === 1 ? 'key' : 'keys'}
+              </strong>{' '}
+              per vote, on {voteSites.length} sites
+            </p>
+            <PixelButton href="/vote" variant="gold" icon="star" className={s.voteBtn}>
+              Vote
+            </PixelButton>
           </div>
         </div>
 
@@ -64,7 +78,7 @@ export default function HomeHero() {
           <p className={s.tagline}>{site.tagline}</p>
           <p className={s.lead}>
             Survival with your own plot, player shops, daily quests and a dungeon boss that hits back. Java Edition, free to
-            join. Tara, laro tayo!
+            join. Tara, laro tayo! New here? Read the <Link href="/guides">starter guides</Link>.
           </p>
         </div>
       </div>
