@@ -1,5 +1,5 @@
 # KasadyaCraft
-
+ 
 Website for KasadyaCraft, a Minecraft Java survival server (`play.kasadyacraft.com`) and the gaming community around it.
 
 Built with Next.js 15 (App Router), React 19 and plain CSS. No Tailwind, no component library. The look is
