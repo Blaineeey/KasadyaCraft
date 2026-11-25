@@ -207,6 +207,8 @@ export default function PlayPage() {
         <Panel as="section" material="stone" padding="lg" aria-labelledby="hub">
           <div className={s.section}>
             <SectionHeading
+              variant="frame"
+              icon="portal"
               id="hub"
               eyebrow="Then what?"
               title="You land in the hub"
@@ -262,7 +264,7 @@ export default function PlayPage() {
 
         <Panel as="section" material="obsidian" padding="lg" aria-labelledby="trouble">
           <div className={s.section}>
-            <SectionHeading id="trouble" eyebrow="Stuck?" title="Fixes for common problems" />
+            <SectionHeading variant="chat" id="trouble" eyebrow="Stuck?" title="Fixes for common problems" />
             <div className={s.faq}>
               {troubles.map((t) => (
                 <details key={t.q} className={s.faqItem}>

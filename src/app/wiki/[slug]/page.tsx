@@ -56,11 +56,11 @@ export default async function WikiArticlePage({ params }: Props) {
   return (
     <>
       <PageHero
+        scene="bookshelf"
         title={page.title}
         eyebrow={category?.label}
         lead={page.summary}
         icon={page.icon}
-        ground="stone"
         crumbs={[
           { label: 'Wiki', href: '/wiki' },
           ...(category ? [{ label: category.label, href: `/wiki?c=${category.id}` }] : []),

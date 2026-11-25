@@ -28,7 +28,7 @@ const CHEST = [
  * that points to Discord. Pure fun; the real info is in the page text.
  * Owner: INTERACTIVITY ENGINEER.
  */
-export default function VoteChest() {
+export default function VoteChest({ size = 112 }: { size?: number }) {
   const [tries, setTries] = useState(0)
   const { toast } = useToast()
 
@@ -41,8 +41,14 @@ export default function VoteChest() {
 
   return (
     <button type="button" className={s.chestBtn} onClick={rattle}>
-      <span className={s.chestArt} key={tries} data-rattle={tries > 0 || undefined}>
-        <PixelSprite rows={CHEST} size={112} />
+      {/* The sprite's bottom row is empty: pull it down one sprite pixel so the chest stands on what is under it. */}
+      <span
+        className={s.chestArt}
+        key={tries}
+        data-rattle={tries > 0 || undefined}
+        style={{ marginBottom: -Math.round(size / 16) }}
+      >
+        <PixelSprite rows={CHEST} size={size} />
       </span>
       <span className={s.chestHint}>
         <span className="kc-sr-only">Locked ballot box: </span>

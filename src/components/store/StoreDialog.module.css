@@ -316,11 +316,15 @@
 
 .soonNote {
   flex: 1 1 16rem;
-  max-width: 44ch;
+  max-width: 28.5em; /* was 44ch */
   margin: 0;
   font-size: var(--fs-sm);
   line-height: 1.45;
   color: var(--ink-dim);
+}
+
+.soonNote a {
+  color: var(--link-on-light); /* dark brown on GUI grey, readable */
 }
 
 .soon {
@@ -443,7 +447,7 @@
 }
 
 .stepper output {
-  min-width: 2.5ch;
+  min-width: 1em; /* was 2.5ch of VT323 */
   font-family: var(--font-term);
   font-size: var(--fs-xl);
   text-align: center;

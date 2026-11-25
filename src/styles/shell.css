@@ -144,6 +144,11 @@ body:has(.kc-sky--hero) .kc-header__bunting {
 
 /* ---------- Hotbar (main nav)----------------------------------------------------- */
 .kc-hotbar {
+  /* 9 slots plus the E slot in its own frame must fit a 320px phone:
+     10 slots + 2 frames (12px each) + 4px gap = 10s + 28px, plus 20px spare, because 100vw
+     counts a desktop scrollbar (up to 17px) that a narrow window does not have room for.
+     Scoped here so other users of the token (MiningToy) keep the 9-slot size. */
+  --hotbar-slot: clamp(26px, calc((100vw - 48px) / 10), 44px);
   position: fixed;
   z-index: var(--z-hotbar);
   left: 50%;
@@ -155,6 +160,18 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   gap: 6px;
   max-width: calc(100vw - 8px);
   pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .kc-hotbar {
+    --hotbar-slot: 56px;
+  }
+}
+
+.kc-hotbar__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .kc-hotbar__label {
@@ -186,7 +203,7 @@ body:has(.kc-sky--hero) .kc-header__bunting {
     visibility 0s linear var(--dur-slow);
 }
 
-.kc-hotbar:has(.kc-hotbar__slot:focus-visible) .kc-hotbar__label {
+.kc-hotbar:has(.kc-hotbar__slot:focus-visible, .kc-hotbar__inv:focus-visible) .kc-hotbar__label {
   opacity: 1;
   visibility: visible;
   transition: none;
@@ -211,12 +228,21 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   font-size: var(--fs-xs);
 }
 
+/* the "opens in a new tab" arrow next to Discord's name */
+.kc-hotbar__label-ext {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: -1px;
+}
+
 @keyframes kc-label-in {
   from { transform: translateY(4px); opacity: 0.4; }
   to { transform: none; opacity: 1; }
 }
 
-.kc-hotbar__slots {
+/* the bar, and the E slot's own little frame next to it (like the off-hand slot) */
+.kc-hotbar__slots,
+.kc-hotbar__inv {
   display: flex;
   list-style: none;
   padding: 3px;
@@ -226,6 +252,36 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   box-shadow:
     inset 0 0 0 2px #6b6b6b,
     0 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.kc-hotbar__inv {
+  flex: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-hotbar__inv:hover .kc-hotbar__slot {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.kc-hotbar__inv:hover .kc-icon {
+  transform: translateY(-2px);
+}
+
+.kc-hotbar__inv:active .kc-hotbar__slot {
+  box-shadow:
+    inset -2px -2px 0 rgba(0, 0, 0, 0.55),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* same focus look as a slot link: the ring sits inside the slot, not around the frame */
+.kc-hotbar__inv:focus-visible {
+  outline: none;
+}
+
+.kc-hotbar__inv:focus-visible .kc-hotbar__slot {
+  z-index: 2;
+  outline: var(--bw) solid var(--focus);
+  box-shadow: inset 0 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .kc-hotbar__cell {
@@ -294,10 +350,57 @@ body:has(.kc-sky--hero) .kc-header__bunting {
   text-shadow: 1px 1px 0 #000;
 }
 
+/* Discord leaves the site: a small arrow badge in the slot's corner says so before the tap.
+   It hangs over the slot's top-right edge, like an item count, so it hides little of the icon. */
+.kc-hotbar__ext {
+  position: absolute;
+  z-index: 1;
+  top: -3px;
+  right: -3px;
+  pointer-events: none;
+}
+
+/* Touch screens have no hover, so the name plate alone left phone players guessing.
+   There the selected slot keeps a tiny caption hanging under its white frame, and the bar
+   sits 10px higher to make room. (--hotbar-h on phones already holds this extra: the bar
+   is narrower with 10 slots, and the asleep plate gives up a few px at most.) */
+.kc-hotbar__cap {
+  display: none;
+}
+
+@media (hover: none) {
+  .kc-hotbar {
+    bottom: calc(var(--s-2) + 10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .kc-hotbar__cap {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 5px);
+    left: 50%;
+    display: block;
+    padding: 3px 3px 1px 4px; /* Silkscreen sits high in its line box */
+    font-family: var(--font-label);
+    font-size: 10px;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: var(--edge);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+}
+
 @media (min-width: 768px) {
   .kc-hotbar__slot .kc-icon {
     width: 48px;
     height: 48px;
+  }
+
+  .kc-hotbar__ext {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -310,6 +413,347 @@ body:has(.kc-sky--hero) .kc-header__bunting {
 @media (max-width: 479px) {
   .kc-hotbar__label-hint {
     display: none;
+  }
+}
+
+/* ---------- Inventory (the E slot: every page, with names) ---------------------------- */
+/* A grey container window, like the game's inventory. Full screen on phones, a centred
+   window from 768px. Native <dialog>: the page behind is inert and Esc closes it. */
+html:has(.kc-inv[open]) {
+  overflow: hidden;
+}
+
+.kc-inv {
+  --focus: var(--focus-on-light);
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  color: var(--gui-ink);
+  background: transparent;
+  border: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.kc-inv::backdrop {
+  background: rgba(8, 6, 12, 0.78);
+}
+
+.kc-inv[open] {
+  animation: kc-inv-in var(--dur) steps(3) both;
+}
+
+@keyframes kc-inv-in {
+  from { transform: translateY(var(--s-4)); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.kc-inv__frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-height: 100%;
+  padding:
+    calc(var(--s-4) + env(safe-area-inset-top, 0px))
+    calc(var(--s-4) + env(safe-area-inset-right, 0px))
+    calc(var(--s-4) + env(safe-area-inset-bottom, 0px))
+    calc(var(--s-4) + env(safe-area-inset-left, 0px));
+  color: var(--gui-ink);
+  background: var(--gui-bg);
+  border: var(--bw) solid var(--edge);
+  box-shadow: var(--bevel-gui);
+  text-shadow: none;
+}
+
+.kc-inv__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.kc-inv__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-xl);
+  color: var(--gui-ink);
+  text-shadow: none;
+}
+
+.kc-inv__close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  background: var(--mat-stone-dark);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.kc-inv__close:hover {
+  background: var(--mat-stone);
+}
+
+.kc-inv__close:active {
+  box-shadow: var(--bevel-down);
+}
+
+.kc-inv__lead {
+  max-width: 34em;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--gui-ink);
+}
+
+.kc-inv__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+/* 9 pages, 3 x 3, like a crafting grid. Arrow keys move between them (Hotbar.tsx). */
+.kc-inv__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-2);
+  list-style: none;
+}
+
+.kc-inv__cell {
+  display: block;
+  min-width: 0;
+}
+
+.kc-inv__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: var(--s-2) var(--s-1) var(--s-3);
+  color: var(--gui-ink);
+  text-align: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-inv__item:hover {
+  color: var(--gui-ink);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.kc-inv__item:focus-visible {
+  outline: var(--bw) solid var(--focus);
+  outline-offset: 0;
+}
+
+.kc-inv__slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  background: var(--gui-slot);
+  box-shadow: var(--bevel-slot);
+}
+
+/* the game's white hover wash over the item */
+.kc-inv__slot::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kc-inv__item:hover .kc-inv__slot::after,
+.kc-inv__item:focus-visible .kc-inv__slot::after {
+  opacity: 0.38;
+}
+
+/* "you are here": the same white selection frame as the hotbar */
+.kc-inv__slot[data-selected]::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: -5px;
+  border: var(--bw) solid #fff;
+  box-shadow:
+    0 0 0 2px var(--edge),
+    inset 0 0 0 2px var(--edge);
+  pointer-events: none;
+}
+
+.kc-inv__key {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  display: none;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+@media (hover: hover) {
+  .kc-inv__key {
+    display: block;
+  }
+}
+
+.kc-inv__ext {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 3px;
+}
+
+.kc-inv__name {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.1;
+  overflow-wrap: break-word; /* break only if a single word cannot fit */
+}
+
+.kc-inv__hint {
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: #444; /* 5.7:1 on the GUI grey */
+  overflow-wrap: break-word;
+}
+
+.kc-inv__newtab {
+  display: block;
+  margin-top: 2px;
+  font-weight: 700;
+  color: var(--gui-ink);
+}
+
+.kc-inv__sub {
+  margin-top: var(--s-2);
+  font-size: var(--fs-lg);
+  color: var(--gui-ink);
+  text-shadow: none;
+}
+
+.kc-inv__handy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+}
+
+/* small raised GUI buttons that press in */
+.kc-inv__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--gui-ink);
+  text-decoration: none;
+  background: #d4d4d4;
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow:
+    inset 2px 2px 0 var(--gui-light),
+    inset -2px -2px 0 var(--gui-dark);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-inv__chip:hover {
+  color: var(--gui-ink);
+  background: #e2e2e2;
+}
+
+.kc-inv__chip:active {
+  box-shadow:
+    inset 2px 2px 0 var(--gui-dark),
+    inset -2px -2px 0 var(--gui-light);
+}
+
+.kc-inv__chip[aria-current='page'] {
+  background: var(--kc-gold);
+}
+
+.kc-inv__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: auto;
+  padding-top: var(--s-2);
+}
+
+/* keyboard tips only where there is probably a keyboard */
+.kc-inv__keys {
+  display: none;
+  font-size: var(--fs-xs);
+  color: var(--gui-ink);
+}
+
+@media (hover: hover) {
+  .kc-inv__keys {
+    display: block;
+  }
+}
+
+/* phones: a full-width Done button where the thumb already is */
+.kc-inv__done {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .kc-inv__slot {
+    width: 64px;
+    height: 64px;
+  }
+
+  .kc-inv__slot .kc-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .kc-inv__name {
+    font-size: var(--fs-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .kc-inv {
+    width: min(760px, calc(100vw - var(--s-7)));
+    height: fit-content;
+    max-height: calc(100dvh - var(--s-7));
+    margin: auto;
+  }
+
+  .kc-inv__frame {
+    min-height: 0;
+    padding: var(--s-5);
+  }
+
+  .kc-inv__grid {
+    gap: var(--s-3);
+  }
+
+  .kc-inv__done {
+    width: auto;
+    margin-left: auto;
   }
 }
 
@@ -401,14 +845,17 @@ body:has(.kc-sky--hero) .kc-header__bunting {
 }
 
 .kc-pagehero__title {
-  font-size: var(--fs-3xl);
+  /* min(): desktop keeps --fs-3xl, small phones shrink so 'KasadyaCraft' fits whole (never split mid-word) */
+  font-size: min(var(--fs-3xl), 7.2vw);
   color: #fff;
   text-shadow: var(--text-outline);
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .kc-pagehero__lead {
-  max-width: 62ch;
+  max-width: 40em; /* was 62ch: em, not ch, so the lead keeps its width when the font swaps in */
   padding: var(--s-3) var(--s-4);
   font-size: var(--fs-lg);
   line-height: 1.5;
@@ -541,7 +988,7 @@ body:has(.kc-sky--hero) .kc-header__bunting {
 }
 
 .kc-footer__tagline {
-  max-width: 32ch;
+  max-width: 20.5em; /* was 32ch */
   color: var(--text-dim);
 }
 

@@ -3,6 +3,13 @@
    Owner: PIXEL UI DESIGNER.
    .kc-prose--dark  = on stone/deepslate panels (wiki)
    .kc-prose--light = on paper/GUI panels and books (guides)
+
+   Column widths use em, never ch (here and in the page modules). One ch is the
+   width of the digit 0 in the font that is showing, and Atkinson's 0 is about
+   19% wider than its fallback, so a ch width grew when the web font arrived,
+   the text re-wrapped and everything below jumped (CLS). The em values match
+   the old ch widths in the real fonts (0 = 0.648em in Atkinson, 0.586em in
+   Pixelify, 0.4em in VT323), e.g. 72ch = 46.5em, 62ch = 40em, 60ch = 39em.
    ========================================================================== */
 
 .kc-prose {
@@ -15,7 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-4);
-  max-width: 72ch;
+  max-width: 46.5em; /* was 72ch, see the note at the top */
   color: var(--prose-text);
 }
 

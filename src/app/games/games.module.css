@@ -109,7 +109,7 @@
 
 /* the summary reads like a server MOTD line */
 .motd {
-  max-width: 64ch;
+  max-width: 41.5em; /* was 64ch; em does not change when the font swaps in */
   color: var(--text-dim);
 }
 

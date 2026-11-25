@@ -10,7 +10,7 @@
 .caption {
   font-size: var(--fs-sm);
   color: var(--text-dim);
-  max-width: 60ch;
+  max-width: 39em; /* was 60ch */
 }
 
 /* ---- dialog mock (dirt backdrop, like a game options screen) ------------- */
@@ -40,7 +40,7 @@
 }
 
 .dialogText {
-  max-width: 34ch;
+  max-width: 20em; /* was 34ch of Pixelify */
   color: var(--chat-gold);
   font-family: var(--font-pixel);
 }

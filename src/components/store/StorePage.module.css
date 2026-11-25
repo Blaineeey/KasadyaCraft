@@ -56,7 +56,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-1);
-  max-width: 60ch;
+  max-width: 39em; /* was 60ch */
 }
 
 .ctaTitle {
@@ -725,7 +725,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-2);
-  max-width: 70ch;
+  max-width: 45.5em; /* was 70ch */
   color: var(--text-dim);
 }
 
@@ -742,7 +742,7 @@
 }
 
 .supportLead {
-  max-width: 65ch;
+  max-width: 42em; /* was 65ch */
 }
 
 .supportList {
@@ -845,7 +845,7 @@
 
 .faqA {
   padding: var(--s-3) var(--s-4) var(--s-4);
-  max-width: 75ch;
+  max-width: 48.5em; /* was 75ch */
   color: var(--text-dim);
 }
 

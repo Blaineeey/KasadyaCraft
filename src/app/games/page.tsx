@@ -36,7 +36,7 @@ export default function GamesPage() {
 
       {/* Hosted servers, laid out like a multiplayer server list */}
       <section className="kc-container kc-section" aria-labelledby="hosted-title">
-        <SectionHeading eyebrow="Hosted by us" title="Our servers" id="hosted-title" icon="portal" />
+        <SectionHeading variant="chat" eyebrow="Hosted by us" title="Our servers" id="hosted-title" icon="portal" />
         <Panel material="obsidian" padding="sm" className={styles.list}>
           <ul className={styles.rows} role="list">
             {servers.map((s) => {
@@ -91,6 +91,7 @@ export default function GamesPage() {
       {/* What the crew plays */}
       <section className="kc-container kc-section" aria-labelledby="shelf-title">
         <SectionHeading
+          variant="sign"
           eyebrow="On game night"
           title="What the crew plays"
           id="shelf-title"

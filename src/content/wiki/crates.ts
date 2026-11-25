@@ -129,7 +129,7 @@ export const crates: WikiPage = {
     { type: 'h2', text: 'Spawner crate' },
     {
       type: 'p',
-      text: 'Gives a placeable spawner that you can move later with a Silk Touch diamond or netherite pickaxe. It stands with the other crates at `/warp crates`. Buy a Spawner key in `/keys` for 100 Tokens, or get one free at playtime level XXVII. These are the odds:',
+      text: 'Gives a placeable spawner that you can move later with a Silk Touch diamond or netherite pickaxe. It stands with the other crates at `/warp crates`. Buy a Spawner key in `/keys` for 100 Tokens, get one free at playtime level XXVII, or trade Lab of Horrors loot for one at `/locksmith`. These are the odds:',
     },
     {
       type: 'table',

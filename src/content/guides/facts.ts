@@ -7,7 +7,7 @@
  * Owner: STARTER-GUIDE WRITER. Change a number here and every guide follows.
  */
 import type { GuideArtName } from '@/components/guides/guide-art'
-import { PLAYTIME_LADDER, playtimeReward, roman, shopPrices } from '@/content/facts'
+import { PLAYTIME_LADDER, playtimeReward, roman, shopPrice, shopPrices } from '@/content/facts'
 import type { RankId } from '@/lib/content'
 
 /* Shop prices, the playtime ladder, daily quests and money() are shared with the wiki: src/content/facts.ts. */
@@ -177,23 +177,34 @@ export const KITS: { kit: string; title: string; every: string; items: string[] 
 /**
  * The /shop prices the guides show (PriceTooltips, first-day). The numbers live in ONE list shared
  * with the wiki economy page: SHOP in src/content/facts.ts (EconomyShopGUI shops/*.yml, re-read after
- * the round 3 reprice of 07:22: Iron Ingot 6/1.5, Raw Iron 11.2/2.8, Glass 1.6, Golden Apple 86.1).
- * Raw iron pays more than the ingot, so the first-day guide quotes raw iron. The economy team is
- * still tuning, so re-check <srv>/plugins/EconomyShopGUI/shops/*.yml right before each release.
+ * the round 3 reprice of 07:22: Iron Ingot 6/1.5, Gold Ingot 10/2.5, Diamond 400/100, Glass 1.6).
+ * Raw iron, raw gold, netherite scrap, chests and golden apples are NOT listed: they only live in the
+ * Z_EverythingElse section, which is switched off (SHOP_SECTIONS in src/content/facts.ts), so /shop can
+ * neither sell nor buy them. The filter drops any item whose section is off, so a card can never show a
+ * price players cannot get. The economy team is still tuning, so re-check
+ * <srv>/plugins/EconomyShopGUI/{sections,shops}/*.yml right before each release.
  */
 export const SHOP_PRICES = shopPrices([
   'Cobblestone',
   'Oak Log',
   'Sugar Cane',
-  'Raw Iron',
+  'Coal',
   'Iron Ingot',
+  'Gold Ingot',
   'Diamond',
-  'Netherite Scrap',
   'Glass',
-  'Chest',
-  'Golden Apple',
   'Emerald',
-])
+]).filter((p) => p.inShop)
+
+/**
+ * True once /shop really buys raw iron and raw gold (their section is on and they have a sell price).
+ * While false (2026-11-25: Z_EverythingElse is off), the guides tell players to smelt them into ingots
+ * first. Turn the section back on in SHOP_SECTIONS only after a live `/sellall RAW_IRON 1` probe passes.
+ */
+export const RAW_ORES_SELL = (['Raw Iron', 'Raw Gold'] as const).every((item) => {
+  const p = shopPrice(item)
+  return p.inShop && p.sell !== null
+})
 
 /**
  * The command that opens the playtime levels menu. DeluxeMenus BASIC/Playtime.yml open_command is

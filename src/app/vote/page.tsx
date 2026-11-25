@@ -42,11 +42,18 @@ export default function VotePage() {
   return (
     <>
       <PageHero
+        scene="ballot"
+        art={<VoteChest size={192} />}
         title="Voting opens soon"
-        eyebrow="Vote"
-        icon="star"
-        ground="stone"
-        lead="Voting is not open yet. We are not on any server-list sites, so there is nothing to vote on today. When it opens, the links go up on Discord first."
+        eyebrow="Ballot box: locked"
+        icon="chest"
+        lead={
+          <>
+            We are not on any server-list sites yet, so there is nothing to vote on today. Type{' '}
+            <code className="kc-cmd-inline">/vote</code> in game and you get the same news. When voting opens, the links and
+            rewards go up on Discord first.
+          </>
+        }
       >
         <PixelButton href={site.discord} variant="discord" icon="chat">
           Get told on Discord
@@ -54,40 +61,29 @@ export default function VotePage() {
       </PageHero>
 
       <div className={`kc-container ${s.page}`}>
-        <div className={s.top}>
-          <Panel material="deepslate" padding="lg" as="section" aria-labelledby="vote-locked">
-            <VoteChest />
-            <h2 id="vote-locked" className={s.h2}>
-              The ballot box is still locked
-            </h2>
-            <p className={s.p}>
-              Type <code className="kc-cmd-inline">/vote</code> in game and you get the same news: voting opens soon, and the
-              links and rewards will be announced on our Discord.
-            </p>
-          </Panel>
-
-          <Panel material="stone" padding="lg" as="section" aria-labelledby="vote-needed">
-            <SectionHeading as="h2" id="vote-needed" eyebrow="To do" title="What voting still needs" />
-            <ol className={s.todo}>
-              {NEEDED.map((n) => (
-                <li key={n.title} className={s.todoItem}>
-                  <span className={s.todoBox} aria-hidden="true">
-                    <PixelIcon name="cross" size={16} />
-                  </span>
-                  <span>
-                    <strong className={s.todoTitle}>{n.title}</strong>
-                    <span className={s.todoText}>{n.text}</span>
-                    <span className="kc-sr-only"> Not done yet.</span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </Panel>
-        </div>
+        <Panel material="stone" padding="lg" as="section" aria-labelledby="vote-needed">
+          <SectionHeading variant="frame" icon="quest" as="h2" id="vote-needed" eyebrow="To do" title="What voting still needs" />
+          <ol className={s.todo}>
+            {NEEDED.map((n) => (
+              <li key={n.title} className={s.todoItem}>
+                <span className={s.todoBox} aria-hidden="true">
+                  <PixelIcon name="cross" size={16} />
+                </span>
+                <span>
+                  <strong className={s.todoTitle}>{n.title}</strong>
+                  <span className={s.todoText}>{n.text}</span>
+                  <span className="kc-sr-only"> Not done yet.</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </Panel>
 
         {voteKey ? (
           <section className={s.crate} aria-labelledby="vote-crate">
             <SectionHeading
+              variant="sign"
+              icon="key"
               as="h2"
               id="vote-crate"
               eyebrow="Already in game"
@@ -121,7 +117,7 @@ export default function VotePage() {
         ) : null}
 
         <section className={s.today} aria-labelledby="vote-today">
-          <SectionHeading as="h2" id="vote-today" eyebrow="Meanwhile" title="Free things you can do today" />
+          <SectionHeading variant="chat" as="h2" id="vote-today" eyebrow="Meanwhile" title="Free things you can do today" />
           <Panel material="paper" padding="lg">
             <ul className={s.todayList}>
               {TODAY.map((t) => (

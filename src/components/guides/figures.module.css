@@ -24,7 +24,7 @@
 .caption {
   font-size: var(--fs-sm);
   color: var(--ink-dim);
-  max-width: 60ch;
+  max-width: 39em; /* was 60ch */
 }
 
 /* Captions on dark surfaces (the /play page, overview) */
@@ -241,13 +241,18 @@
 
 /* ---- Hotbar mock -------------------------------------------------------------- */
 .hotbar :global(.kc-slotgrid__cells) {
-  grid-template-columns: repeat(9, auto);
+  flex-wrap: nowrap; /* the cells container is flex: one row of 9, compass stays in the middle */
 }
 
 @media (max-width: 479px) {
+  .hotbar {
+    --slot: min(34px, calc((100vw - 104px) / 9));
+    padding: 6px;
+  }
+
   .hotbar :global(.kc-slot) {
-    width: 34px;
-    height: 34px;
+    width: var(--slot);
+    height: var(--slot);
   }
 
   .hotbar :global(.kc-slot) svg {

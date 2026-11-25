@@ -58,6 +58,7 @@ export default function CommunityPage() {
   return (
     <>
       <PageHero
+        scene="plaza"
         eyebrow="Community"
         title="People to play with. People to grow with."
         icon="heart"
@@ -73,7 +74,7 @@ export default function CommunityPage() {
 
       {/* What happens here: a town notice board */}
       <section className="kc-container kc-section" aria-labelledby="board-title">
-        <SectionHeading eyebrow="What happens here" title="More than a server list" id="board-title" icon="lantern" />
+        <SectionHeading variant="sign" eyebrow="What happens here" title="More than a server list" id="board-title" icon="lantern" />
         <Panel material="darkwood" padding="lg" rivets className={styles.board}>
           <ul className={styles.notes} role="list">
             {activities.map((a, i) => (
@@ -93,6 +94,7 @@ export default function CommunityPage() {
       {/* Staff */}
       <section className="kc-container kc-section" aria-labelledby="staff-title">
         <SectionHeading
+          variant="chat"
           eyebrow="The team"
           title="Staff"
           id="staff-title"
@@ -131,7 +133,7 @@ export default function CommunityPage() {
 
       {/* Support */}
       <section className="kc-container kc-section" aria-labelledby="support-title">
-        <SectionHeading eyebrow="Support" title="How to reach us" id="support-title" icon="compass" />
+        <SectionHeading variant="frame" eyebrow="Support" title="How to reach us" id="support-title" icon="compass" />
         <div className={styles.ways}>
           {contactWays.map((c) => (
             <Panel key={c.title} as="article" material="stone" padding="md" title={c.title} titleAs="h3" titleIcon={c.icon}>

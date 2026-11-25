@@ -1,13 +1,26 @@
-import { DAILY_QUEST_BONUS, FACTS_CHECKED, TOKEN_SOURCES_TEXT, money, shopPrice, shopPrices, type ShopItem } from '@/content/facts'
+import {
+  DAILY_QUEST_BONUS,
+  FACTS_CHECKED,
+  LIVE_SHOP_SECTIONS,
+  TOKEN_SOURCES_TEXT,
+  joinAnd,
+  money,
+  shopPrice,
+  shopPrices,
+  type ShopItem,
+} from '@/content/facts'
 import type { ContentBlock, WikiPage } from '@/lib/content'
 
 /*
  * Sources (read-only, 2026-11-25):
  * - Essentials config: starting-balance 250, currency $, /sell disabled
- * - EconomyShopGUI shops/*.yml (8 sections, 843 entries, ~190 sellable materials). The price table renders from
- *   SHOP in src/content/facts.ts (shared with the guides), re-read after the round 3 reprice (files dated 07:22);
- *   raw iron 2.8 and raw gold 3.8 now sell for more than the ingots (1.5 / 2.5), so the page says sell them raw;
- *   economy balancer log in /root/launch/CHANGELOG.md (sell = 25% of buy, loop fixes, totem 3500/20)
+ * - EconomyShopGUI sections/*.yml + shops/*.yml: 8 section files, but Z_EverythingElse has `enable: false`
+ *   (re-read 09:28), so the live /shop is 7 sections with 338 items. Raw iron, raw gold, nuggets, netherite
+ *   scrap, chests, torches and golden apples only live in that section, so players cannot buy OR sell them.
+ *   The price table renders from SHOP in src/content/facts.ts (shared with the guides) and drops rows whose
+ *   `inShop` is false; the section list comes from LIVE_SHOP_SECTIONS. Prices re-read after the round 3
+ *   reprice (files dated 07:22). Economy balancer log in /root/launch/CHANGELOG.md (sell = 25% of buy,
+ *   loop fixes, totem 3500/20)
  * - ToastedAFK denied_commands: /shop
  * - CustomFishing config: earnings-multiplier 0.25, daily limitation 2500 (balancer log)
  * - AxTrade config: /trade, max distance 10, request expires 60 s, confirm 5 s, abort on move; currencies money, points, exp
@@ -33,14 +46,31 @@ const priceRows = shopPrices([
   'Emerald',
   'Netherite Ingot',
   'Totem of Undying',
-]).map((p) => [p.item, money(p.buy), p.sell === null ? 'Buy only' : money(p.sell)])
+])
+  // Raw ores sit in the switched-off Everything Else section: no row until it is back on.
+  .filter((p) => p.inShop)
+  .map((p) => [p.item, money(p.buy), p.sell === null ? 'Buy only' : money(p.sell)])
 
-/** What the shop pays for one item (0 when it will not buy it). */
-const sells = (item: ShopItem) => shopPrice(item).sell ?? 0
+/** True when the item is in a live section AND the shop buys it back. */
+const shopBuys = (item: ShopItem) => {
+  const p = shopPrice(item)
+  return p.inShop && p.sell !== null
+}
 
-/* Only give the "sell it raw" advice while the live prices back it up (round 3 reprice: yes). */
-const sellRawTip: ContentBlock[] =
-  sells('Raw Iron') > sells('Iron Ingot') && sells('Raw Gold') > sells('Gold Ingot')
+/** What the shop pays for one item (0 when it will not buy it, or it is not in the shop at all). */
+const sells = (item: ShopItem) => (shopBuys(item) ? (shopPrice(item).sell ?? 0) : 0)
+
+/*
+ * Iron and gold advice follows the live shop, not just the price list:
+ * - raw ore in the shop and paying more than ingots: tell players to sell it raw;
+ * - raw ore not in the shop (Everything Else is off, 2026-11-25): tell them to smelt first,
+ *   because /shop only takes the ingots.
+ */
+const rawOresLive = shopBuys('Raw Iron') && shopBuys('Raw Gold')
+const ingotsLive = shopBuys('Iron Ingot') && shopBuys('Gold Ingot')
+
+const ironGoldTip: ContentBlock[] =
+  rawOresLive && sells('Raw Iron') > sells('Iron Ingot') && sells('Raw Gold') > sells('Gold Ingot')
     ? [
         {
           type: 'callout',
@@ -48,7 +78,19 @@ const sellRawTip: ContentBlock[] =
           text: `Sell iron and gold raw. Raw iron pays ${money(sells('Raw Iron'))} and raw gold ${money(sells('Raw Gold'))}, but the ingots only get ${money(sells('Iron Ingot'))} and ${money(sells('Gold Ingot'))}. Smelting first loses you money.`,
         },
       ]
-    : []
+    : !rawOresLive && ingotsLive
+      ? [
+          {
+            type: 'callout',
+            tone: 'tip',
+            text: `Smelt your iron and gold before you sell. \`/shop\` does not take raw ore right now, but it pays ${money(sells('Iron Ingot'))} for an iron ingot and ${money(sells('Gold Ingot'))} for a gold ingot.`,
+          },
+        ]
+      : []
+
+/** "Blocks, Farming, Foraging, Mob Drops, Ores, Redstone and Tools" */
+const liveSections = joinAnd(LIVE_SHOP_SECTIONS)
+const everythingElseLive = LIVE_SHOP_SECTIONS.includes('Everything Else')
 
 export const economy: WikiPage = {
   slug: 'economy',
@@ -100,7 +142,7 @@ export const economy: WikiPage = {
     { type: 'h2', text: 'The server shop' },
     {
       type: 'p',
-      text: '`/shop` has 8 sections: Blocks, Farming, Foraging, Mob Drops, Ores, Redstone, Tools and Everything Else. You can **buy** almost anything there. You can only **sell** raw materials back.',
+      text: `\`/shop\` has ${LIVE_SHOP_SECTIONS.length} sections: ${liveSections}. You can **buy** blocks, crops, logs, mob drops, ores, redstone parts and handy tools there. You can only **sell** raw materials back.`,
     },
     {
       type: 'list',
@@ -108,6 +150,11 @@ export const economy: WikiPage = {
         'Selling always pays **25%** of the buy price. Put the other way round: buying costs 4 times what selling gives.',
         'Gear (tools, armour, weapons), rank kit items, crate gear and dungeon loot cannot be sold to the shop.',
         'Some things are buy-only, like emeralds, copper ingots, stone and netherite ingots.',
+        ...(everythingElseLive
+          ? []
+          : [
+              'Some things are not in the shop at all right now: raw iron and gold, nuggets, netherite scrap, chests, torches and golden apples. Craft them, or buy them from other players.',
+            ]),
       ],
     },
     {
@@ -116,7 +163,7 @@ export const economy: WikiPage = {
       head: ['Item', 'Buy', 'Sell'],
       rows: priceRows,
     },
-    ...sellRawTip,
+    ...ironGoldTip,
     {
       type: 'p',
       text: 'We rebalance now and then, so the shop itself always has the latest price.',

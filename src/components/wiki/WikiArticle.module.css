@@ -192,15 +192,27 @@
   color: var(--kc-teal);
 }
 
-/* ---- Article footer ---- */
+/* ---- Article footer ----
+ * This row sits between panels, so the fixed sky shows through behind it.
+ * On the day sky (and over clouds or the pale horizon) bare cream text drops
+ * to about 1.5:1, so it gets a solid dark plate like the facts box above.
+ * Text-dim and the gold link both clear 9:1 on --surface-1. */
 .footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-3);
+  gap: var(--s-2) var(--s-3);
+  padding: var(--s-2) var(--s-3);
   font-size: var(--fs-sm);
   color: var(--text-dim);
+  background: var(--surface-1);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: var(--bevel-up);
+}
+
+.footer p {
+  margin: 0;
 }
 
 .pager {

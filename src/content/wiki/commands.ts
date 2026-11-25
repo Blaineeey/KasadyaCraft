@@ -145,7 +145,7 @@ export const commands: WikiPage = {
         { command: '/mr invite <player>', description: 'Invite a friend to your room.' },
         { command: '/md leave', description: 'Leave the dungeon run.' },
         { command: '/dungeoninfo', description: 'The Dungeon Codex: mobs, boss and loot. `/codex` works too.' },
-        { command: '/locksmith', description: 'Forge Chamber Keys.' },
+        { command: '/locksmith', description: 'Forge Chamber Keys, decipher dungeon books and trade loot for crate keys.' },
         { command: '/dchat <message>', description: 'Talk only to your dungeon party.' },
       ],
     },

@@ -91,11 +91,21 @@ export default async function GuidePage({ params }: Props) {
   return (
     <>
       <PageHero
+        scene="signpost"
         title={guide.title}
         eyebrow={`Starter guide ${n} of ${total} · ${guideStageLabels[guide.stage]}`}
         lead={guide.summary}
         icon={guide.icon}
         crumbs={[{ label: 'Guides', href: '/guides' }, { label: guide.title }]}
+        pointersLabel="Other guides"
+        pointers={[
+          prev
+            ? { label: prev.title, hint: 'Previous guide', href: `/guides/${prev.slug}`, dir: 'left' }
+            : { label: 'All guides', hint: 'Back to the list', href: '/guides', dir: 'left' },
+          next
+            ? { label: next.title, hint: 'Next guide', href: `/guides/${next.slug}` }
+            : { label: 'The wiki', hint: 'All guides done', href: '/wiki' },
+        ]}
       >
         <span className={s.meta}>
           <PixelIcon name="clock" size={16} />

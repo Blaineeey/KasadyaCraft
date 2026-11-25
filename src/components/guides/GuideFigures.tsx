@@ -3,7 +3,7 @@ import PixelIcon from '@/components/ui/PixelIcon'
 import Slot from '@/components/ui/Slot'
 import SlotGrid from '@/components/ui/SlotGrid'
 import TooltipCard, { type Rarity, type TooltipLine } from '@/components/ui/TooltipCard'
-import { CHAMBER_KEYS, CHECKED, DUNGEON, KITS, PLOT, SHOP_PRICES, money } from '@/content/guides/facts'
+import { CHAMBER_KEYS, CHECKED, DUNGEON, KITS, PLOT, RAW_ORES_SELL, SHOP_PRICES, money } from '@/content/guides/facts'
 import GuideArt from './GuideArt'
 import type { GuideArtName } from './guide-art'
 import s from './figures.module.css'
@@ -93,11 +93,14 @@ export function PriceTooltips() {
           if (p.sell === null) lines.push({ text: 'Shop pays: nothing', color: 'red' })
           else lines.push({ text: `Shop pays: ${money(p.sell)}`, color: 'green' })
           if (p.note) lines.push({ text: p.note === 'Crafted' ? 'Crafted, so sell it to players' : p.note, color: 'gold' })
-          const rare = p.item === 'Diamond' || p.item === 'Netherite Scrap' || p.item === 'Golden Apple'
+          const rare = p.item === 'Diamond' || p.item === 'Emerald'
           return <TooltipCard key={p.item} title={p.item} rarity={rare ? 'rare' : 'common'} lines={lines} />
         })}
       </div>
-      <Caption>Real /shop prices, checked {formatDate(CHECKED)}. Raw materials pay a quarter of the shop price. Crafted items pay nothing.</Caption>
+      <Caption>
+        Real /shop prices, checked {formatDate(CHECKED)}. Gathered materials pay a quarter of the shop price. Crafted items pay
+        nothing.{RAW_ORES_SELL ? null : ' Raw iron and raw gold have to be smelted into ingots first.'}
+      </Caption>
     </figure>
   )
 }
@@ -243,13 +246,13 @@ export function LocksmithRecipes() {
                 <Slot
                   label={k.name}
                   rarity="rare"
-                  lines={[`Opens a ${k.opens}`, { text: `${k.items} items inside`, color: 'gray' }]}
+                  lines={[`Opens ${/^[aeiou]/i.test(k.opens) ? 'an' : 'a'} ${k.opens}`, { text: `${k.items} items inside`, color: 'gray' }]}
                   art={<GuideArt name={k.art} size={32} />}
                 />
               </SlotGrid>
             </div>
             <p className={s.recipeText}>
-              {k.recipe.map((i) => `${i.count} ${i.item}`).join(', ')}. Opens a {k.opens} ({k.items} items).
+              {k.recipe.map((i) => `${i.count} ${i.item}`).join(', ')}. Opens {/^[aeiou]/i.test(k.opens) ? 'an' : 'a'} {k.opens} ({k.items} items).
             </p>
           </div>
         ))}

@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { HEXTECH_TAG } from './locksmith'
 
 /*
  * Sources (read-only, 2026-11-25):
@@ -11,6 +12,8 @@ import type { WikiPage } from '@/lib/content'
  * - Citizens NPCs at spawn: Dungeon Guard, Dungeon Master (/mr menu), Dungeon Codex (/dungeoninfo)
  * - LuckPerms default: mythicdungeons.commands.rooms.*, dungeons.leave/chat/info
  * - Economy balancer: no money reward, fee or cooldown; loot cannot be sold
+ * - DeluxeMenus DUNGEON/Locksmith.yml (08:58, GAMEPLAY FIXER round 3): forge keys, decipher books into vanilla
+ *   enchanted books, trade loot for Epic/Spawner crate keys and the dungeon-only [HEXTECH] tag (see ./locksmith.ts)
  */
 export const dungeon: WikiPage = {
   slug: 'dungeon',
@@ -31,6 +34,8 @@ export const dungeon: WikiPage = {
     'raid chest',
     'chamber key',
     '/locksmith',
+    'decipher',
+    'hextech',
     '/dungeoninfo',
     '/codex',
     'mythicdungeons',
@@ -52,7 +57,7 @@ export const dungeon: WikiPage = {
         ['Time limit', 'None'],
         ['If you die', 'You respawn at the last door you reached and keep your items and XP.'],
         ['Inside', 'Adventure mode: no breaking or placing blocks, no PvP, most commands blocked.'],
-        ['Money', 'The dungeon pays no money. The loot is for Chamber Keys and bragging rights.'],
+        ['Money', `No money, but the loot turns into Chamber Keys, enchanted books, crate keys and the ${HEXTECH_TAG} tag.`],
       ],
     },
     { type: 'h2', text: 'Start a run' },
@@ -125,7 +130,7 @@ export const dungeon: WikiPage = {
     },
     {
       type: 'p',
-      text: 'Keys are forged at the **Locksmith** with `/locksmith`. Every recipe and drop table is on [Lab of Horrors items](/wiki/dungeon-items).',
+      text: 'Keys are forged at the **Locksmith** with `/locksmith`. The Locksmith also deciphers your books into enchanted books and trades Raw Hextech, Warden Ingots and Hextech Crystals for crate keys. Every recipe, trade and drop table is on [Lab of Horrors items](/wiki/dungeon-items).',
     },
     { type: 'h2', text: 'Tips' },
     {

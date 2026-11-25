@@ -23,7 +23,7 @@ export const features: WikiPage = {
     { type: 'h2', text: 'How the network works' },
     {
       type: 'p',
-      text: 'Join `play.kasadyacraft.com` on Java Edition 1.21.x and you land in the **hub**, our festival plaza. Walk through the portal, click the **Survival Guide** NPC or right-click the compass in hotbar slot 4 to enter Survival. `/hub` brings you back any time.',
+      text: 'Join `play.kasadyacraft.com` on Java Edition 1.21.x and you land in the **hub**, our festival plaza. Walk through the portal, click the **Survival Guide** NPC or right-click the compass in the middle hotbar slot (key 5) to enter Survival. `/hub` brings you back any time.',
     },
     {
       type: 'p',
@@ -42,7 +42,7 @@ export const features: WikiPage = {
     { type: 'h2', text: 'Money and trading' },
     {
       type: 'p',
-      text: 'You start with **$250**. The server `/shop` sells almost everything but only buys back raw materials, at 25% of the buy price. The best deals happen between players. Read [Money and the shop](/wiki/economy).',
+      text: 'You start with **$250**. The server `/shop` sells blocks, crops, logs, mob drops, ores, redstone and tools, but only buys back raw materials, at 25% of the buy price. The best deals happen between players. Read [Money and the shop](/wiki/economy).',
     },
     {
       type: 'p',
@@ -63,7 +63,7 @@ export const features: WikiPage = {
     { type: 'h2', text: 'The Lab of Horrors' },
     {
       type: 'p',
-      text: 'Our dungeon. Bring up to 5 players, clear 7 rooms, beat the Draedon Disciple and then fight **Draedon** himself. Dungeon loot goes into Chamber Keys for the raid chests. Start with [Lab of Horrors](/wiki/dungeon).',
+      text: 'Our dungeon. Bring up to 5 players, clear 7 rooms, beat the Draedon Disciple and then fight **Draedon** himself. Dungeon loot goes into Chamber Keys for the raid chests, enchanted books, crate keys and a dungeon-only chat tag. Start with [Lab of Horrors](/wiki/dungeon).',
     },
     { type: 'h2', text: 'Crates, spawners and legendary weapons' },
     {

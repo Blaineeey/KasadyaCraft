@@ -13,6 +13,20 @@ const nextConfig: NextConfig = {
   // images.formats stays on the default (WebP). AVIF was measured on the hero logo, the LCP image:
   // 384w 21.9 KB AVIF vs 22.0 KB WebP, 640w 24.7 KB vs 23.3 KB. No saving, and AVIF is slower to
   // encode on a cold cache and to decode on low-end phones.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
+        ],
+      },
+    ]
+  },
   async redirects() {
     return [
       // ---- Old site structure -------------------------------------------------

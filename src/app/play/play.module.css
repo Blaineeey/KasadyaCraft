@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s-3);
-  max-width: 60ch;
+  max-width: 39em; /* was 60ch: ch grew 19% when Atkinson loaded, so the steps re-wrapped (CLS) */
 }
 
 .stepHead {

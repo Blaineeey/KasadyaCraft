@@ -2,7 +2,7 @@
 
 .aside {
   justify-self: start;
-  max-width: 64ch;
+  max-width: 41.5em; /* was 64ch */
   padding: var(--s-2) var(--s-3);
   font-size: var(--fs-sm);
   color: var(--text);

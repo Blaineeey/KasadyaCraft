@@ -1,0 +1,1237 @@
+/* ==========================================================================
+   Hero scenes: one signature first screen per site section.
+   wiki = bookshelf wall + hanging sign, store = market stall, community = plaza,
+   vote = locked ballot chest, guides = signpost on a dirt path.
+   Original art only (CSS shapes + /public/textures). Tokens only, square corners,
+   hard shadows, no blur. Owner: PIXEL UI DESIGNER.
+   ========================================================================== */
+
+.scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* minmax(0, 1fr), not the implicit auto track: the breadcrumb trail never wraps, and an
+   auto track would grow to its full width and push the sign off a 360px screen. */
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+  padding-top: calc(var(--s-7) + var(--s-3));
+}
+
+.crumbs {
+  grid-area: crumbs;
+  justify-self: start;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+/* Big outlined pixel title straight on the sky (readable day and night). */
+.skyTitle {
+  font-size: min(var(--fs-3xl), 7.2vw); /* shrink on phones; never split a word */
+  color: #fff;
+  text-shadow: var(--text-outline);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+/* A strip of blocks a scene stands on. */
+.ground {
+  position: relative;
+  height: 32px;
+  background: var(--tex-grass) 0 0 / 32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+}
+
+.groundCobble {
+  background-image: var(--tex-cobble);
+}
+
+.groundStone {
+  background-image: var(--tex-stone);
+}
+
+/* Two hanging lanterns at the right, like the plain hero (wide screens only). */
+.sceneLanterns {
+  --drop-extra: 38px;
+  position: absolute !important;
+  z-index: 2;
+  top: 0;
+  right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  width: 150px;
+  display: none !important;
+}
+
+@media (min-width: 960px) {
+  .sceneLanterns {
+    display: flex !important;
+  }
+}
+
+/* ==========================================================================
+   Wiki: bookshelf wall
+   ========================================================================== */
+.wall {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--mat-darkwood);
+  background-image: linear-gradient(rgba(14, 8, 3, 0.4), rgba(14, 8, 3, 0.4)), var(--tex-bookshelf);
+  background-size: auto, var(--tex-size);
+  background-position: 0 0, 50% 0;
+  image-rendering: pixelated;
+  /* stepped shade under the header's eave */
+  box-shadow:
+    inset 0 9px 0 rgba(0, 0, 0, 0.45),
+    inset 0 18px 0 rgba(0, 0, 0, 0.2);
+}
+
+.shelfInner {
+  grid-template-areas: 'crumbs' 'sign' 'note' 'actions';
+  padding-bottom: var(--s-7);
+}
+
+@media (min-width: 900px) {
+  .shelfInner {
+    /* the note hangs right next to the sign instead of at the far wall */
+    grid-template-columns: fit-content(36em) minmax(0, 26em);
+    grid-template-areas:
+      'crumbs crumbs'
+      'sign note'
+      'sign actions';
+    grid-template-rows: auto auto 1fr;
+    justify-content: start;
+    column-gap: var(--s-8);
+    align-items: start;
+  }
+}
+
+/* the hanging sign: a dark beam stub, two chains, a light oak board */
+.hsign {
+  grid-area: sign;
+  position: relative;
+  justify-self: start;
+  max-width: 100%;
+  padding-top: 38px;
+}
+
+.bracket {
+  position: absolute;
+  top: 0;
+  left: -10px;
+  right: -10px;
+  height: 14px;
+  background: var(--mat-darkwood-dark);
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.1),
+    4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.chain {
+  position: absolute;
+  top: 14px;
+  width: 8px;
+  height: 24px;
+  /* original 8x12 chain tile: front link with a hole, then a thin side link */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' shape-rendering='crispEdges'%3E%3Cpath fill='%2318181c' d='M0 0h8v8H0zM2 8h4v4H2z'/%3E%3Cpath fill='%23a4a4b0' d='M1 1h6v6H1z'/%3E%3Cpath fill='%23d0d0da' d='M1 1h6v1H1z'/%3E%3Cpath fill='%2318181c' d='M3 3h2v2H3z'/%3E%3Cpath fill='%237a7a86' d='M3 8h2v4H3z'/%3E%3C/svg%3E")
+    0 0 / 8px 12px repeat-y;
+  image-rendering: pixelated;
+}
+
+.chainL {
+  left: 28px;
+}
+
+.chainR {
+  right: 28px;
+}
+
+.hsignBoard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  max-width: 34em;
+  padding: var(--s-4) var(--s-5);
+  color: var(--ink);
+  background-color: #c19f70;
+  /* light overlay on the planks: ink passes 4.5:1 even on the darkest grain */
+  background-image: linear-gradient(rgba(255, 236, 196, 0.34), rgba(255, 236, 196, 0.34)), var(--tex-planks);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 3px 3px 0 rgba(255, 255, 255, 0.35),
+    inset -3px -3px 0 rgba(70, 42, 14, 0.35),
+    6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.hsignIcon {
+  filter: drop-shadow(2px 2px 0 rgba(60, 36, 12, 0.45));
+}
+
+.hsignText {
+  min-width: 0;
+}
+
+.hsignEyebrow {
+  display: block;
+  margin-bottom: var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.hsignTitle {
+  font-size: min(var(--fs-3xl), 6.4vw); /* shrink on phones; never split a word */
+  color: var(--ink);
+  /* carved look: a light edge under the letters instead of a dark outline */
+  text-shadow: 2px 2px 0 rgba(255, 244, 220, 0.5);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+@media (max-width: 599px) {
+  .hsignBoard {
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+  }
+
+  .hsignIcon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* the lead on a paper note pinned to the shelf */
+.note {
+  grid-area: note;
+  position: relative;
+  max-width: 40em;
+  padding: var(--s-4) var(--s-4) var(--s-4);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--mat-paper);
+  background-image: var(--tex-paper);
+  background-size: var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow:
+    inset -3px -3px 0 rgba(150, 110, 50, 0.22),
+    6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* the red pin */
+.note::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 12px;
+  background: var(--kc-red);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow:
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.45);
+}
+
+.note a {
+  color: var(--link-on-light);
+}
+
+.note :focus-visible {
+  outline-color: var(--focus-on-light);
+}
+
+@media (min-width: 900px) {
+  .note {
+    margin-top: 52px;
+  }
+}
+
+.shelfActions {
+  grid-area: actions;
+}
+
+/* an oak floor under the shelves */
+.floor {
+  height: 24px;
+  background: var(--tex-planks) 0 0 / 32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Store: market stall
+   ========================================================================== */
+.marketInner {
+  grid-template-areas: 'crumbs' 'stall';
+  padding-bottom: 0;
+}
+
+.stall {
+  grid-area: stall;
+  position: relative;
+  margin-top: var(--s-2);
+}
+
+/* red and cream wool stripes; the drop-shadows draw a hard black edge under the scallops */
+.awning {
+  position: relative;
+  z-index: 2;
+  height: 44px;
+  margin-inline: calc(-1 * var(--s-3));
+  background-color: #efe7d6;
+  background-image: repeating-linear-gradient(90deg, var(--kc-red) 0 32px, transparent 32px 64px), var(--tex-wool);
+  background-size: auto, 32px;
+  background-blend-mode: multiply, normal;
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  border-bottom: 0;
+  box-shadow:
+    inset 0 6px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -10px 0 rgba(0, 0, 0, 0.16);
+  filter: drop-shadow(0 3px 0 var(--edge)) drop-shadow(0 6px 0 rgba(0, 0, 0, 0.35));
+}
+
+/* the scalloped valance: same stripes, cut by an original stepped half-round mask */
+.valance {
+  --scallop: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8' width='16' height='8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0H16V3H15V5H14V6H13V7H11V8H5V7H3V6H2V5H1V3H0Z'/%3E%3C/svg%3E");
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 16px;
+  background: inherit;
+  background-blend-mode: inherit;
+  box-shadow: none;
+  -webkit-mask: var(--scallop) 0 0 / 32px 16px repeat-x;
+  mask: var(--scallop) 0 0 / 32px 16px repeat-x;
+}
+
+.stallBack {
+  --post: 16px;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'sign' 'tag' 'actions' 'goods';
+  gap: var(--s-4);
+  padding: calc(var(--s-6) + 12px) calc(var(--post) + var(--s-4)) 0;
+  border-inline: var(--bw) solid var(--edge);
+}
+
+/* the dark back wall, on its own layer so the pixelated texture does not leak into children */
+.stallBack::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--mat-darkwood-dark);
+  background-image: linear-gradient(rgba(10, 6, 2, 0.45), rgba(10, 6, 2, 0.45)), var(--tex-planks-dark);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  /* the two corner posts */
+  box-shadow:
+    inset var(--post) 0 0 var(--mat-darkwood),
+    inset calc(var(--post) + 3px) 0 0 var(--edge),
+    inset calc(-1 * var(--post)) 0 0 var(--mat-darkwood),
+    inset calc(-1 * var(--post) - 3px) 0 0 var(--edge);
+}
+
+@media (min-width: 900px) {
+  .stallBack {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22em);
+    grid-template-areas:
+      'sign tag'
+      'actions tag'
+      'goods goods';
+    column-gap: var(--s-7);
+    padding-inline: calc(var(--post) + var(--s-6));
+  }
+}
+
+/* the painted shop sign, hanging from the valance on two ropes */
+.shopSign {
+  grid-area: sign;
+  position: relative;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  max-width: 100%;
+  padding: var(--s-3) var(--s-5) var(--s-4);
+  color: var(--ink);
+  background-color: #efe7d6;
+  background-image: var(--tex-wool);
+  background-size: 32px;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    inset 0 0 0 4px var(--mat-plank-dark),
+    inset 0 0 0 6px var(--edge),
+    6px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.shopSign::before,
+.shopSign::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  width: 6px;
+  height: calc(var(--s-6) + 12px + var(--bw));
+  background: repeating-linear-gradient(180deg, #d8b878 0 3px, #8a6a36 3px 6px);
+  border-inline: 1px solid var(--edge);
+}
+
+.shopSign::before {
+  left: 24px;
+}
+
+.shopSign::after {
+  right: 24px;
+}
+
+.shopIcon {
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3));
+}
+
+@media (max-width: 599px) {
+  .shopSign {
+    padding: var(--s-3) var(--s-4) var(--s-3);
+  }
+
+  .shopIcon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.shopEyebrow {
+  display: block;
+  margin-bottom: var(--s-1);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* dark red on cream wool: 6:1 */
+.shopTitle {
+  font-size: min(var(--fs-3xl), 6.4vw); /* shrink on phones; never split a word */
+  color: #a8142a;
+  text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.45);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+/* the lead on a paper price tag with stepped corners and a string hole */
+.tagWrap {
+  grid-area: tag;
+  align-self: start;
+  max-width: 40em;
+  filter: drop-shadow(3px 0 0 var(--edge)) drop-shadow(-3px 0 0 var(--edge)) drop-shadow(0 3px 0 var(--edge))
+    drop-shadow(0 -3px 0 var(--edge)) drop-shadow(5px 5px 0 rgba(0, 0, 0, 0.45));
+}
+
+.tag {
+  position: relative;
+  padding: var(--s-4) var(--s-4) var(--s-4) calc(var(--s-4) + 24px);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--mat-paper);
+  background-image: var(--tex-paper);
+  background-size: var(--tex-size);
+  clip-path: polygon(
+    24px 0,
+    100% 0,
+    100% 100%,
+    24px 100%,
+    24px calc(100% - 8px),
+    16px calc(100% - 8px),
+    16px calc(100% - 16px),
+    8px calc(100% - 16px),
+    8px calc(100% - 24px),
+    0 calc(100% - 24px),
+    0 24px,
+    8px 24px,
+    8px 16px,
+    16px 16px,
+    16px 8px,
+    24px 8px
+  );
+}
+
+/* the string hole */
+.tag::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - 5px);
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  background: var(--mat-darkwood-dark);
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 900px) {
+  .tagWrap {
+    margin-top: var(--s-5);
+  }
+}
+
+.stallActions {
+  grid-area: actions;
+}
+
+/* goods standing on the counter */
+.goods {
+  grid-area: goods;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: var(--s-3);
+  padding-top: var(--s-3);
+}
+
+.good {
+  display: grid;
+  place-items: center;
+}
+
+.good svg {
+  filter: drop-shadow(4px 0 0 rgba(0, 0, 0, 0.45));
+}
+
+@media (max-width: 599px) {
+  .good:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+.counter {
+  position: relative;
+  height: 52px;
+  margin-inline: calc(-1 * var(--s-2));
+  background-color: var(--mat-darkwood);
+  background-image: linear-gradient(var(--edge), var(--edge)), var(--tex-planks), var(--tex-planks-dark);
+  background-size:
+    100% 3px,
+    32px 16px,
+    32px;
+  background-position:
+    0 16px,
+    0 0,
+    0 0;
+  background-repeat: no-repeat, repeat-x, repeat;
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  border-bottom: 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Community: the plaza
+   ========================================================================== */
+.plazaInner {
+  grid-template-areas: 'text' 'crowd';
+  row-gap: var(--s-5);
+  padding-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .plazaInner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 31em);
+    grid-template-areas: 'text crowd';
+    column-gap: var(--s-6);
+    align-items: end;
+  }
+}
+
+.plazaText {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .plazaText {
+    padding-bottom: var(--s-7);
+  }
+}
+
+/* the eyebrow floats over the title like a name tag */
+.floatTag {
+  padding: 2px var(--s-2) 0;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: 1.3;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+
+/* the lead as an in-game chat line (0.78 black keeps white text at 4.5:1 on the day sky) */
+.chatLead {
+  max-width: 40em;
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.78);
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+
+.chatTag {
+  font-family: var(--font-pixel);
+  font-weight: 600;
+  color: var(--chat-gold);
+}
+
+/* shrink-wrapped, so the lamp posts are the two ends and the bunting runs lamp to lamp */
+.crowd {
+  grid-area: crowd;
+  position: relative;
+  justify-self: center;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-2);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* a short string of bunting tied between the two lamp posts (16px = half a lantern) */
+.crowdBunting {
+  position: absolute !important;
+  z-index: 0;
+  top: 6px;
+  left: 16px;
+  right: 16px;
+}
+
+@media (min-width: 900px) {
+  .crowd {
+    justify-self: end;
+    gap: var(--s-3);
+  }
+
+  .player > svg {
+    width: 64px;
+    height: 128px;
+  }
+}
+
+.player {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  animation: plaza-bob 2.4s steps(1) infinite;
+  animation-delay: var(--bob, 0s);
+}
+
+.player > svg {
+  filter: drop-shadow(3px 0 0 rgba(0, 0, 0, 0.3));
+}
+
+.playerTag {
+  font-size: var(--fs-sm);
+}
+
+/* a little speech bubble with an emote, beside one player's head */
+.playerEmote {
+  margin-inline-end: 18px;
+}
+
+.emote {
+  position: absolute;
+  z-index: 1;
+  top: 34px;
+  right: -26px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 24px;
+  background: #fff;
+  border: var(--bw-thin) solid var(--edge);
+  animation: plaza-emote 4.8s steps(1) infinite;
+}
+
+.emote::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border: var(--bw-thin) solid var(--edge);
+  border-top: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+@keyframes plaza-bob {
+  0%,
+  100% {
+    transform: none;
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes plaza-emote {
+  0%,
+  60% {
+    visibility: visible;
+  }
+  61%,
+  100% {
+    visibility: hidden;
+  }
+}
+
+/* lamp posts: a lantern on a thin dark post, with a square stepped glow at night */
+.lamp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-end;
+}
+
+.lamp::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  left: calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+  box-shadow:
+    0 0 0 10px var(--lantern-glow),
+    0 0 0 22px var(--lantern-glow-far);
+}
+
+/* the post is taller than the players so the bunting clears their name tags */
+.lamp::after {
+  content: '';
+  width: 10px;
+  height: 140px;
+  margin-top: -2px;
+  background: var(--mat-darkwood);
+  border: var(--bw-thin) solid var(--edge);
+  box-shadow: inset 2px 0 0 rgba(255, 255, 255, 0.14);
+}
+
+@media (min-width: 900px) {
+  .lamp::after {
+    height: 184px;
+  }
+}
+
+@media (max-width: 599px) {
+  .playerExtra {
+    display: none;
+  }
+}
+
+@media (max-width: 379px) {
+  .lamp,
+  .crowdBunting {
+    display: none !important;
+  }
+}
+
+/* terracotta plaza floor with a checker tint */
+.plazaFloor {
+  height: 40px;
+  background-color: var(--mat-terracotta);
+  background-image: repeating-conic-gradient(rgba(0, 0, 0, 0.2) 0 25%, transparent 0 50%), var(--tex-terracotta);
+  background-size:
+    64px 64px,
+    32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+  box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* ==========================================================================
+   Vote: the locked ballot chest
+   ========================================================================== */
+.ballotInner {
+  grid-template-areas: 'crumbs' 'altar' 'text';
+  row-gap: var(--s-5);
+  padding-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .ballotInner {
+    grid-template-columns: minmax(0, 20em) minmax(0, 1fr);
+    grid-template-areas:
+      'crumbs crumbs'
+      'altar text';
+    column-gap: var(--s-8);
+    align-items: end;
+  }
+}
+
+.altar {
+  grid-area: altar;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+}
+
+.altarArt {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+}
+
+/* square, stepped "enchanted lock" glow behind the chest (no blur) */
+.halo {
+  position: absolute;
+  z-index: 0;
+  left: calc(50% - 80px);
+  bottom: 80px;
+  width: 160px;
+  height: 140px;
+  background: rgba(214, 46, 138, 0.16);
+  box-shadow:
+    0 0 0 14px rgba(214, 46, 138, 0.1),
+    0 0 0 28px rgba(91, 31, 214, 0.07);
+  animation: ballot-pulse 3.2s steps(1) infinite;
+}
+
+@keyframes ballot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* four cobble blocks with a smooth stone cap, a bit wider than the chest */
+.pedestal {
+  position: relative;
+  display: block;
+  width: 256px;
+  height: 64px;
+  background: var(--tex-cobble) 0 8px / 64px;
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  border-bottom: 0;
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.25);
+}
+
+.pedestal::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--bw) - 8px);
+  right: calc(-1 * var(--bw) - 8px);
+  top: calc(-1 * var(--bw));
+  height: 14px;
+  background: var(--tex-stone) 0 0 / 32px;
+  border: var(--bw) solid var(--edge);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ballotText {
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  min-width: 0;
+  padding-bottom: var(--s-6);
+}
+
+/* the lead as an item tooltip: near-black panel, purple frame, notched corners */
+.lore {
+  position: relative;
+  max-width: 36em;
+  padding: var(--s-3) var(--s-4) var(--s-4);
+  color: var(--tooltip-text);
+  background: var(--tooltip-bg);
+  clip-path: var(--notch-2);
+}
+
+.lore::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 2px solid transparent;
+  border-image: linear-gradient(var(--tooltip-edge-top), var(--tooltip-edge-bottom)) 1;
+  pointer-events: none;
+}
+
+.loreTitle {
+  display: block;
+  margin-bottom: var(--s-1);
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--rarity-epic);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
+}
+
+.loreText {
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Guides: signpost on a dirt path
+   ========================================================================== */
+.trailInner {
+  grid-template-areas: 'crumbs' 'post' 'side';
+  row-gap: var(--s-5);
+  padding-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .trailInner {
+    grid-template-columns: minmax(0, 34em) minmax(0, 1fr);
+    grid-template-areas:
+      'crumbs crumbs'
+      'post side';
+    column-gap: var(--s-7);
+    align-items: end;
+  }
+}
+
+.signpost {
+  grid-area: post;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+  min-width: 0;
+  padding-bottom: var(--s-5);
+}
+
+@media (min-width: 900px) {
+  .signpost {
+    padding-bottom: var(--s-7);
+  }
+}
+
+/* The post runs from behind the big board down behind the ground strip (which sits above
+   the inner layer), so on phones it also passes behind the progress box under the sign. */
+.post {
+  position: absolute;
+  z-index: 0;
+  top: var(--s-5);
+  bottom: -480px;
+  left: calc(50% - 12px);
+  width: 24px;
+  background: var(--mat-darkwood);
+  border: var(--bw) solid var(--edge);
+  border-bottom: 0;
+  box-shadow:
+    inset 5px 0 0 rgba(255, 255, 255, 0.1),
+    inset -6px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.postBoard {
+  position: relative;
+  z-index: 1;
+  padding: var(--s-4) var(--s-5) var(--s-5);
+  color: var(--text);
+  background-color: var(--mat-darkwood);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), var(--tex-planks-dark);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  border: var(--bw) solid var(--edge);
+  box-shadow:
+    var(--bevel-up),
+    6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* two nail heads */
+.postBoard::before,
+.postBoard::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: #1b120a;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.18);
+}
+
+.postBoard::before {
+  left: 8px;
+}
+
+.postBoard::after {
+  right: 8px;
+}
+
+.postEyebrow {
+  display: block;
+  margin-bottom: var(--s-2);
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--kc-gold);
+}
+
+.postHead {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.postIcon {
+  filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.5));
+}
+
+.postTitle {
+  min-width: 0;
+  font-size: min(var(--fs-3xl), 6vw); /* shrink on phones; never split a word */
+  color: #fff;
+  text-shadow: 3px 3px 0 #000;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+.postLead {
+  max-width: 40em;
+  margin-top: var(--s-3);
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+@media (max-width: 599px) {
+  .postBoard {
+    padding: var(--s-3) var(--s-4) var(--s-4);
+  }
+
+  .postIcon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* arrow boards: real links, light oak, stepped pixel points */
+.arrowList {
+  display: grid;
+  gap: var(--s-3);
+  list-style: none;
+}
+
+.arrowItem {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  /* outline + hard shadow that follow the arrow shape */
+  filter: drop-shadow(3px 0 0 var(--edge)) drop-shadow(-3px 0 0 var(--edge)) drop-shadow(0 3px 0 var(--edge))
+    drop-shadow(0 -3px 0 var(--edge)) drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.4));
+}
+
+/* keyboard focus: the outline turns teal and follows the arrow */
+.arrowItem:focus-within {
+  filter: drop-shadow(3px 0 0 var(--focus)) drop-shadow(-3px 0 0 var(--focus)) drop-shadow(0 3px 0 var(--focus))
+    drop-shadow(0 -3px 0 var(--focus)) drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.4));
+}
+
+.arrowItem[data-dir='right'] {
+  justify-content: flex-start;
+}
+
+.arrowItem[data-dir='left'] {
+  justify-content: flex-end;
+}
+
+@media (min-width: 600px) {
+  .arrowItem[data-dir='right'] {
+    padding-left: calc(50% - 36px);
+  }
+
+  .arrowItem[data-dir='left'] {
+    padding-right: calc(50% - 36px);
+  }
+}
+
+.arrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 56px;
+  padding: var(--s-2) calc(var(--s-4) + 24px) var(--s-2) var(--s-4);
+  color: var(--ink);
+  text-decoration: none;
+  background-color: #c19f70;
+  background-image: linear-gradient(rgba(255, 236, 196, 0.34), rgba(255, 236, 196, 0.34)), var(--tex-planks);
+  background-size: auto, var(--tex-size);
+  image-rendering: pixelated;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 24px) 0,
+    calc(100% - 24px) 20%,
+    calc(100% - 12px) 20%,
+    calc(100% - 12px) 40%,
+    100% 40%,
+    100% 60%,
+    calc(100% - 12px) 60%,
+    calc(100% - 12px) 80%,
+    calc(100% - 24px) 80%,
+    calc(100% - 24px) 100%,
+    0 100%
+  );
+  transition: transform var(--dur) var(--ease-step);
+}
+
+.arrowItem[data-dir='left'] .arrow {
+  align-items: flex-end;
+  padding: var(--s-2) var(--s-4) var(--s-2) calc(var(--s-4) + 24px);
+  text-align: right;
+  clip-path: polygon(
+    24px 0,
+    100% 0,
+    100% 100%,
+    24px 100%,
+    24px 80%,
+    12px 80%,
+    12px 60%,
+    0 60%,
+    0 40%,
+    12px 40%,
+    12px 20%,
+    24px 20%
+  );
+}
+
+.arrow:hover {
+  color: var(--ink);
+  background-color: #d4b384;
+  transform: translateX(4px);
+}
+
+.arrowItem[data-dir='left'] .arrow:hover {
+  transform: translateX(-4px);
+}
+
+/* the browser ring would be clipped by the arrow shape; the li draws a teal one instead */
+.arrow:focus-visible {
+  outline: none;
+  background-color: #d4b384;
+}
+
+.arrowLabel {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.arrowHint {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.trailSide {
+  grid-area: side;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding-bottom: var(--s-6);
+}
+
+/* a low oak fence along the path on wide screens */
+.fence {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 32px;
+  display: none;
+  width: 46%;
+  height: 40px;
+  background:
+    linear-gradient(var(--mat-plank-dark), var(--mat-plank-dark)) 0 9px / 100% 6px no-repeat,
+    linear-gradient(var(--mat-plank-dark), var(--mat-plank-dark)) 0 24px / 100% 6px no-repeat,
+    repeating-linear-gradient(90deg, var(--edge) 0 2px, var(--mat-plank) 2px 10px, var(--edge) 10px 12px, transparent 12px 56px);
+}
+
+@media (min-width: 900px) {
+  .fence {
+    display: block;
+  }
+}
+
+.trailGround {
+  position: relative;
+  z-index: 2;
+  height: 32px;
+  background: var(--tex-grass) 0 0 / 32px;
+  image-rendering: pixelated;
+  border-top: var(--bw) solid var(--edge);
+}
+
+/* grass tufts on the left part, the path takes the rest */
+.trailGround::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18%;
+  bottom: 100%;
+  height: 24px;
+  margin-bottom: var(--bw);
+  background: var(--tufts) 0 100% / 192px 24px repeat-x;
+  image-rendering: pixelated;
+}
+
+/* the dirt path, one pixel lower than the grass like a path block */
+.path {
+  position: absolute;
+  top: 3px;
+  bottom: 0;
+  left: 18%;
+  right: 0;
+  background: var(--tex-dirt) 0 0 / 32px;
+  border-top: var(--bw) solid var(--edge);
+  border-left: var(--bw) solid var(--edge);
+  box-shadow: inset 0 4px 0 rgba(0, 0, 0, 0.25);
+}

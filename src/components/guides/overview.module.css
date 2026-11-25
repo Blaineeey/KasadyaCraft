@@ -121,10 +121,17 @@
 
 .fact {
   display: grid;
-  grid-template-columns: minmax(110px, 30%) 1fr;
+  grid-template-columns: minmax(110px, 30%) minmax(0, 1fr); /* value column may shrink: no overflow on small phones */
   gap: var(--s-3);
   padding: var(--s-2) var(--s-3);
   background: var(--surface-1);
+}
+
+@media (max-width: 400px) {
+  .fact {
+    grid-template-columns: minmax(0, 1fr); /* label above value on narrow phones */
+    gap: var(--s-1);
+  }
 }
 
 .fact:nth-child(even) {
@@ -138,7 +145,7 @@
 
 .fact dd {
   color: var(--text-dim);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .fact a {

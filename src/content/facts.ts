@@ -51,49 +51,80 @@ export function roman(n: number): string {
 
 /* ------------------------------------------------------------- server shop */
 
+/**
+ * <srv>/plugins/EconomyShopGUI/sections/*.yml `enable:` flags (re-read 2026-11-25 09:28).
+ * A section with `enable: false` does not load at all: its items cannot be bought OR sold.
+ * Z_EverythingElse (505 entries: raw ores, nuggets, netherite scrap, chests, torches, golden apples...)
+ * is switched off, so the live /shop has 7 sections and 338 items. When the server team turns it
+ * back on, flip `enabled` here and every page that checks `inShop` picks the items up again.
+ */
+export const SHOP_SECTIONS = [
+  { id: 'Blocks', label: 'Blocks', enabled: true },
+  { id: 'Farming', label: 'Farming', enabled: true },
+  { id: 'Foraging', label: 'Foraging', enabled: true },
+  { id: 'Mobdrops', label: 'Mob Drops', enabled: true },
+  { id: 'Ores', label: 'Ores', enabled: true },
+  { id: 'Redstone', label: 'Redstone', enabled: true },
+  { id: 'Tools', label: 'Tools', enabled: true },
+  { id: 'Z_EverythingElse', label: 'Everything Else', enabled: false },
+] as const
+
+export type ShopSection = (typeof SHOP_SECTIONS)[number]['id']
+
+/** Labels of the sections players can open right now, in the order of this list. */
+export const LIVE_SHOP_SECTIONS: string[] = SHOP_SECTIONS.filter((s) => s.enabled).map((s) => s.label)
+
+const sectionIsLive = (id: ShopSection): boolean => SHOP_SECTIONS.find((s) => s.id === id)?.enabled ?? false
+
 interface PriceEntry {
   buy: number
   /** What the shop pays. null = the shop will not buy it (sell -1 in the config). */
   sell: number | null
+  /** The shops/<section>.yml file the item is listed in. */
+  section: ShopSection
   note?: string
 }
 
 /**
  * <srv>/plugins/EconomyShopGUI/shops/*.yml, buy / sell per item (re-read after the round 3 reprice,
- * files dated 2026-11-25 07:22). Raw materials sell for 25% of the buy price. Raw iron and raw gold
- * pay more than the smelted ingots, so the guides tell players to sell them raw.
+ * files dated 2026-11-25 07:22). Raw materials sell for 25% of the buy price.
+ * Raw iron, raw gold, netherite scrap, chests and golden apples are only listed in Z_EverythingElse,
+ * which is switched off (see SHOP_SECTIONS), so check `inShop` before quoting them to players.
+ * Do NOT tell players to sell iron or gold raw while that section is off: the shop will not take them.
  */
 const SHOP = {
-  Diamond: { buy: 400, sell: 100 },
-  'Gold Ingot': { buy: 10, sell: 2.5 },
-  'Raw Gold': { buy: 15.2, sell: 3.8 },
-  'Iron Ingot': { buy: 6, sell: 1.5 },
-  'Raw Iron': { buy: 11.2, sell: 2.8 },
-  Coal: { buy: 8, sell: 2 },
-  'Lapis Lazuli': { buy: 8, sell: 2 },
-  'Oak Log': { buy: 4, sell: 1 },
-  Cod: { buy: 4, sell: 1 },
-  'Sugar Cane': { buy: 1, sell: 0.25 },
-  Bone: { buy: 1.2, sell: 0.3 },
-  Cobblestone: { buy: 0.4, sell: 0.1 },
-  'Netherite Scrap': { buy: 320, sell: 80 },
-  Emerald: { buy: 24, sell: null, note: 'Not on the sell list' },
-  'Netherite Ingot': { buy: 1386, sell: null },
-  'Totem of Undying': { buy: 3500, sell: 20 },
-  Glass: { buy: 1.6, sell: null, note: 'Crafted' },
-  Chest: { buy: 6.62, sell: null, note: 'Crafted' },
-  'Golden Apple': { buy: 86.1, sell: null, note: 'Crafted' },
+  Diamond: { buy: 400, sell: 100, section: 'Ores' },
+  'Gold Ingot': { buy: 10, sell: 2.5, section: 'Ores' },
+  'Raw Gold': { buy: 15.2, sell: 3.8, section: 'Z_EverythingElse' },
+  'Iron Ingot': { buy: 6, sell: 1.5, section: 'Ores' },
+  'Raw Iron': { buy: 11.2, sell: 2.8, section: 'Z_EverythingElse' },
+  Coal: { buy: 8, sell: 2, section: 'Ores' },
+  'Lapis Lazuli': { buy: 8, sell: 2, section: 'Ores' },
+  'Oak Log': { buy: 4, sell: 1, section: 'Foraging' },
+  Cod: { buy: 4, sell: 1, section: 'Mobdrops' },
+  'Sugar Cane': { buy: 1, sell: 0.25, section: 'Farming' },
+  Bone: { buy: 0.6, sell: 0.15, section: 'Mobdrops' },
+  Cobblestone: { buy: 0.4, sell: 0.1, section: 'Blocks' },
+  'Netherite Scrap': { buy: 320, sell: 80, section: 'Z_EverythingElse' },
+  Emerald: { buy: 24, sell: null, section: 'Ores', note: 'Not on the sell list' },
+  'Netherite Ingot': { buy: 1386, sell: null, section: 'Ores' },
+  'Totem of Undying': { buy: 3500, sell: 20, section: 'Tools' },
+  Glass: { buy: 1.6, sell: null, section: 'Blocks', note: 'Crafted' },
+  Chest: { buy: 6.62, sell: null, section: 'Z_EverythingElse', note: 'Crafted' },
+  'Golden Apple': { buy: 86.1, sell: null, section: 'Z_EverythingElse', note: 'Crafted' },
 } satisfies Record<string, PriceEntry>
 
 export type ShopItem = keyof typeof SHOP
 
 export interface ShopPrice extends PriceEntry {
   item: ShopItem
+  /** True when the item's section is switched on, so players can actually buy (and maybe sell) it today. */
+  inShop: boolean
 }
 
 export function shopPrice(item: ShopItem): ShopPrice {
   const entry: PriceEntry = SHOP[item]
-  return { item, ...entry }
+  return { item, ...entry, inShop: sectionIsLive(entry.section) }
 }
 
 export const shopPrices = (items: ShopItem[]): ShopPrice[] => items.map(shopPrice)

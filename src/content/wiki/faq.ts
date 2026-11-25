@@ -41,7 +41,7 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'I joined but I am in a plaza. Where is Survival?' },
     {
       type: 'p',
-      text: 'That is the hub. Walk through the portal, click the Survival Guide NPC, use the compass in slot 4, or type `/survival`.',
+      text: 'That is the hub. Walk through the portal, click the Survival Guide NPC, use the compass in the middle hotbar slot (key 5), or type `/survival`.',
     },
     { type: 'h2', text: 'Playing' },
     { type: 'h3', text: 'How do I protect my stuff?' },

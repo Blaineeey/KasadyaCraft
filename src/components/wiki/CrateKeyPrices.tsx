@@ -1,5 +1,6 @@
 import TableFrame from '@/components/content/TableFrame'
 import Callout from '@/components/ui/Callout'
+import { LOCKSMITH } from '@/content/wiki/locksmith'
 import { formatPrice, priceLabel, storeItems } from '@/lib/store'
 import s from './WikiData.module.css'
 
@@ -9,6 +10,22 @@ import s from './WikiData.module.css'
  */
 const COL_PRICE = 'Price in Tokens'
 const COL_OTHER = 'Other ways to get it'
+
+/*
+ * The Lab of Horrors Locksmith trades loot for crate keys (DeluxeMenus DUNGEON/Locksmith.yml, live since
+ * 2026-11-25 08:28). store.ts `alsoFrom` does not list it yet, so the wiki adds it here. As soon as store.ts
+ * has its own entry mentioning the Locksmith for a key, this extra line is skipped (no duplicates).
+ */
+const LOCKSMITH_SOURCES: Record<string, string> = {
+  'key-epic': `Lab of Horrors loot: ${LOCKSMITH.rawHextechPerEpicKey} Raw Hextech at /locksmith`,
+  'key-spawner': `Lab of Horrors loot: ${LOCKSMITH.wardenIngotsPerSpawnerKey} Warden Ingots, or 1 Hextech Crystal for ${LOCKSMITH.spawnerKeysPerCrystal} keys, at /locksmith`,
+}
+
+function otherSources(id: string, alsoFrom: string[] = []): string[] {
+  const extra = LOCKSMITH_SOURCES[id]
+  if (!extra || alsoFrom.some((a) => /locksmith/i.test(a))) return alsoFrom
+  return [...alsoFrom, extra]
+}
 
 export default function CrateKeyPrices() {
   const keys = storeItems.filter((i) => i.category === 'keys')
@@ -49,6 +66,7 @@ export default function CrateKeyPrices() {
           <tbody role="rowgroup">
             {keys.map((k) => {
               const packs = k.packSizes && k.packSizes.length > 1 ? `Buy ${k.packSizes.join(' or ')} at a time.` : null
+              const sources = otherSources(k.id, k.alsoFrom)
               return (
                 <tr key={k.id} role="row">
                   <th scope="row" role="rowheader">
@@ -69,11 +87,11 @@ export default function CrateKeyPrices() {
                     )}
                   </td>
                   <td role="cell" data-label={COL_OTHER}>
-                    {k.status === 'coming-soon' && !k.alsoFrom?.length ? (
+                    {k.status === 'coming-soon' && !sources.length ? (
                       'Not handed out yet'
-                    ) : k.alsoFrom?.length ? (
+                    ) : sources.length ? (
                       <ul className={s.inlineList}>
-                        {k.alsoFrom.map((a) => (
+                        {sources.map((a) => (
                           <li key={a}>{a}</li>
                         ))}
                       </ul>

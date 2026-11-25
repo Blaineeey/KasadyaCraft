@@ -35,6 +35,7 @@ export default function StorePage() {
   return (
     <>
       <PageHero
+        scene="market"
         eyebrow="Ranks, keys and cosmetics"
         title="The Store"
         icon="chest"

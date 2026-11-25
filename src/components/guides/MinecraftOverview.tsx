@@ -102,7 +102,7 @@ export default function MinecraftOverview() {
 
       <Panel as="section" material="darkwood" padding="lg" aria-labelledby="network">
         <div className={s.section}>
-          <SectionHeading id="network" eyebrow="How it works" title="Hub first, then Survival" />
+          <SectionHeading variant="sign" id="network" eyebrow="How it works" title="Hub first, then Survival" />
           <ol className={s.flow}>
             <li className={s.flowStep}>
               <h3>
@@ -133,7 +133,7 @@ export default function MinecraftOverview() {
 
       <Panel as="section" material="stone" padding="lg" aria-labelledby="facts">
         <div className={s.section}>
-          <SectionHeading id="facts" eyebrow="Quick facts" title="The short version" />
+          <SectionHeading variant="frame" icon="scroll" id="facts" eyebrow="Quick facts" title="The short version" />
           <dl className={s.facts}>
             <div className={s.fact}>
               <dt>Address</dt>
@@ -142,7 +142,7 @@ export default function MinecraftOverview() {
             <div className={s.fact}>
               <dt>Version</dt>
               <dd>
-                {site.edition} {site.versionLabel} ({site.recommendedVersion} recommended). No Bedrock yet.
+                {site.edition} {site.versionLabel.replace(/^Java\s*/, '')} ({site.recommendedVersion} recommended). No Bedrock yet.
               </dd>
             </div>
             <div className={s.fact}>

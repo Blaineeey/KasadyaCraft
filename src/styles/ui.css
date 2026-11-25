@@ -800,7 +800,7 @@ button.kc-slot:hover::after,
 
 /* lead text on the open sky gets a plate; inside panels and books it does not */
 .kc-heading__lead {
-  max-width: 62ch;
+  max-width: 40em; /* was 62ch: em, not ch, so it keeps its width when the font swaps in */
   padding: var(--s-2) var(--s-3);
   color: var(--text);
   background: var(--plate);
@@ -1012,29 +1012,55 @@ button.kc-slot:hover::after,
 }
 
 /* ---------- Breadcrumbs --------------------------------------------------------------------- */
+/* Always one line. If the trail is too long, the last crumb (the current page, which the h1
+   repeats right below) is cut with "...". It used to wrap: at 360px the fallback font is wider
+   than Silkscreen, so "WIKI > RANKS AND PERKS > RANKS" took two lines until Silkscreen arrived
+   and then one, and the whole hero jumped up 33px (CLS 0.19 on /wiki/ranks). */
+.kc-crumbs {
+  max-width: 100%; /* the hero is a flex column: without this the nav grows to the trail's width */
+}
+
 .kc-crumbs ol {
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0 var(--s-2);
+  max-width: 100%;
+  overflow: hidden;
   padding: 2px var(--s-3);
   list-style: none;
   font-family: var(--font-label);
   font-size: var(--fs-xs);
   text-transform: uppercase;
+  white-space: nowrap;
   background: var(--plate);
   border: var(--bw-thin) solid var(--plate-edge);
 }
 
 .kc-crumbs li {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--s-2);
 }
 
+.kc-crumbs li:last-child {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
 .kc-crumbs li + li::before {
   content: '>';
+  flex-shrink: 0;
   color: var(--kc-gold);
+}
+
+.kc-crumbs li:last-child span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .kc-crumbs a,
@@ -1044,6 +1070,9 @@ button.kc-slot:hover::after,
 }
 
 .kc-crumbs a {
+  /* 3px of room for the focus ring, taken back with the margin so the trail does not move */
+  padding-inline: 3px;
+  margin-inline: -3px;
   color: var(--text-dim);
   text-decoration: none;
 }
@@ -1051,6 +1080,12 @@ button.kc-slot:hover::after,
 .kc-crumbs a:hover {
   color: var(--kc-gold);
   text-decoration: underline;
+}
+
+/* The ol clips its overflow, which would cut the top and bottom off the normal focus ring
+   (3px wide, 3px out). Pull it in so the whole ring stays inside the plate. */
+.kc-crumbs a:focus-visible {
+  outline-offset: -1px;
 }
 
 .kc-crumbs [aria-current='page'] {

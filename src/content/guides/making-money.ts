@@ -1,6 +1,17 @@
 import { DAILY_QUESTS_LINE, DAILY_REWARDS, TOKEN_SOURCES_TEXT, dailyRewardText } from '@/content/facts'
 import type { Guide } from '@/lib/content'
-import { AFK_POOL, CHECKED, MALL, PLAYTIME_COMMAND, PLAYTIME_LEVELS, QUICKSHOP, SELL_PERCENT, STARTING_BALANCE, money } from './facts'
+import {
+  AFK_POOL,
+  CHECKED,
+  MALL,
+  PLAYTIME_COMMAND,
+  PLAYTIME_LEVELS,
+  QUICKSHOP,
+  RAW_ORES_SELL,
+  SELL_PERCENT,
+  STARTING_BALANCE,
+  money,
+} from './facts'
 
 /*
  * Sources: EconomyShopGUI shops/*.yml (sell = 25% of buy on raw materials; crafted items and emeralds
@@ -31,8 +42,17 @@ export const makingMoney: Guide = {
     { type: 'h2', text: 'Selling to the server shop' },
     {
       type: 'p',
-      text: `Open \`/shop\` or walk over with \`/warp shop\`. The shop sells almost anything, but it only **buys back raw materials**: logs, ores and most ingots, crops, mob drops and fish. It pays **${SELL_PERCENT}%** of its own price.`,
+      text: `Open \`/shop\` or walk over with \`/warp shop\`. The shop sells building blocks, crops, mob drops, ores, redstone parts and tools. It only **buys back raw materials**: logs, coal, iron and gold ingots, diamonds, crops, mob drops and fish. It pays **${SELL_PERCENT}%** of its own price.`,
     },
+    ...(RAW_ORES_SELL
+      ? []
+      : [
+          {
+            type: 'callout' as const,
+            tone: 'tip' as const,
+            text: 'Raw iron and raw gold are not on the shop list. Smelt them into ingots first, then sell.',
+          },
+        ]),
     { type: 'h3', text: 'Selling tricks' },
     {
       type: 'list',
@@ -47,7 +67,7 @@ export const makingMoney: Guide = {
       type: 'p',
       text: 'The server shop will not buy crafted items. Glass, chests, stone bricks, torches and golden apples all get a no. That is on purpose: crafted and rare things are worth more to other players than to the server.',
     },
-    { type: 'p', text: 'So if you farm, smelt or craft, sell it in a player shop. You set the price.' },
+    { type: 'p', text: 'So anything you craft, like glass or chests, belongs in a player shop. You set the price.' },
     {
       type: 'list',
       items: [

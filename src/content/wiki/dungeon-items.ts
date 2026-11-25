@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { DECIPHER, HEXTECH_TAG, LOCKSMITH, LOCKSMITH_TRADES } from './locksmith'
 
 /*
  * Sources (read-only, 2026-11-25):
@@ -6,9 +7,12 @@ import type { WikiPage } from '@/lib/content'
  * - plugins/MythicMobs/droptables/LabOfHorrors/loh.yml (loh_diamondchest TotalItems 2, emerald/star TotalItems 3, weights)
  * - plugins/MythicDungeons/loottables/loh_lootchest.yml (supply chests: 1-2 items, weights)
  * - plugins/MythicMobs/mobs/LabOfHorrors/loh.yml (INFECTED_FLESH drop chances)
- * - plugins/MythicMobs/skills/LabOfHorrors/locksmith.yml (exact take/give amounts, all-or-nothing checks)
- * - grep over plugins/: Raw Hextech, Warden Ingot, Soulsteel (except Star key), Hextech Crystal and the books
- *   are used by no recipe today.
+ * - plugins/DeluxeMenus/gui_menus/DUNGEON/Locksmith.yml ("Keys, Decipher & Trade", 08:58): exact take/give amounts
+ *   for the 3 forges (same as the old MythicMobs skills/LabOfHorrors/locksmith.yml), 4 deciphers and 4 trades,
+ *   every count checked before anything is taken. Decipher/trade facts live in ./locksmith.ts.
+ * - loh_items.yml lore (08:28): Raw Hextech "Trade 8 ... for an Epic Crate Key", Warden Ingot "Trade 4 ... for a
+ *   Spawner Crate Key", Hextech Crystal "1 = 2 Spawner Crate Keys, 3 = the [HEXTECH] chat tag", books "Decipher it
+ *   at the Locksmith (/locksmith)". Codex.yml LOOT_* lines say the same.
  * Tier glyphs map to site rarity: ꁉ common, ꁊ uncommon, ꁋ rare, ꁌ epic, ꁍ legendary.
  * NOTE: the Codex says Lab Samples are "guaranteed" in raid chests; the droptable gives them weight 1000, not 100%.
  */
@@ -17,7 +21,7 @@ const loh = { text: 'Lab of Horrors', color: 'dark-gray' } as const
 export const dungeonItems: WikiPage = {
   slug: 'dungeon-items',
   title: 'Lab of Horrors items',
-  summary: 'Every Lab of Horrors item, what it is for and exactly where it drops, plus the Locksmith recipes for Chamber Keys.',
+  summary: 'Every Lab of Horrors item, what it is for and exactly where it drops, plus the Locksmith: Chamber Key recipes, book deciphering and loot trades.',
   icon: 'gem',
   category: 'dungeon',
   order: 2,
@@ -33,6 +37,10 @@ export const dungeonItems: WikiPage = {
     'soulsteel',
     'hextech crystal',
     'undeciphered book',
+    'decipher',
+    'enchanted book',
+    'hextech tag',
+    'trade',
     'chamber key',
     'diamond key',
     'emerald key',
@@ -46,7 +54,7 @@ export const dungeonItems: WikiPage = {
   body: [
     {
       type: 'p',
-      text: 'Lab of Horrors items are custom items from our resource pack. You cannot sell them to `/shop`, craft with them, enchant them or put them in an anvil. They are for the Locksmith, and for showing off.',
+      text: 'Lab of Horrors items are custom items from our resource pack. You cannot sell them to `/shop`, craft with them, enchant them or put them in an anvil. Everything you loot goes to the **Locksmith** (`/locksmith`): forge Chamber Keys, decipher books into real enchanted books, or trade materials for crate keys.',
     },
     {
       type: 'slots',
@@ -60,18 +68,37 @@ export const dungeonItems: WikiPage = {
         { label: 'Mithril Ingot', icon: 'gem', rarity: 'uncommon', lines: ['Supply and raid chests.', 'Emerald and Star keys.', loh] },
         { label: 'Lab Sample', icon: 'potion', rarity: 'uncommon', lines: ['In almost every raid chest.', 'Emerald and Star keys.', loh] },
         { label: 'Soulsteel Ingot', icon: 'gem', rarity: 'rare', lines: ['Star raid chests.', 'Star key.', loh] },
-        { label: 'Warden Ingot', icon: 'gem', rarity: 'epic', lines: ['Emerald and Star raid chests.', 'No recipe yet.', loh] },
-        { label: 'Raw Hextech', icon: 'gem', rarity: 'legendary', lines: ['All raid chests.', 'No recipe yet.', loh] },
+        {
+          label: 'Warden Ingot',
+          icon: 'gem',
+          rarity: 'epic',
+          lines: ['Emerald and Star raid chests.', `Trade ${LOCKSMITH.wardenIngotsPerSpawnerKey} at the Locksmith`, 'for a Spawner crate key.', loh],
+        },
+        {
+          label: 'Raw Hextech',
+          icon: 'gem',
+          rarity: 'legendary',
+          lines: ['All raid chests.', `Trade ${LOCKSMITH.rawHextechPerEpicKey} at the Locksmith`, 'for an Epic crate key.', loh],
+        },
         {
           label: 'Hextech Crystal',
           icon: 'gem',
           rarity: 'epic',
-          lines: ['A magical artifact capable of', 'harnessing extremely volatile', 'hextech energy.', loh],
+          lines: [
+            'A magical artifact capable of',
+            'harnessing extremely volatile',
+            'hextech energy.',
+            `Locksmith: 1 = ${LOCKSMITH.spawnerKeysPerCrystal} Spawner crate keys,`,
+            `${LOCKSMITH.crystalsForTag} = the ${HEXTECH_TAG} chat tag.`,
+            loh,
+          ],
         },
-        { label: 'Undeciphered Book (Common)', icon: 'book', rarity: 'uncommon', lines: ['An ancient tome sealed with', 'a forgotten enchantment.', loh] },
-        { label: 'Undeciphered Book (Rare)', icon: 'book', rarity: 'rare', lines: ['An ancient tome sealed with', 'a forgotten enchantment.', loh] },
-        { label: 'Undeciphered Book (Legendary)', icon: 'book', rarity: 'epic', lines: ['An ancient tome sealed with', 'a forgotten enchantment.', loh] },
-        { label: 'Undeciphered Book (Fabled)', icon: 'book', rarity: 'legendary', lines: ['An ancient tome sealed with', 'a forgotten enchantment.', loh] },
+        ...DECIPHER.map((d) => ({
+          label: `Undeciphered Book (${d.book})`,
+          icon: 'book' as const,
+          rarity: d.rarity,
+          lines: ['An ancient tome sealed with', 'a forgotten enchantment.', 'Decipher it at the Locksmith.', loh],
+        })),
         { label: 'Diamond Chamber Key', icon: 'key', rarity: 'rare', lines: ['Opens a Diamond raid chest.', 'Consumed on use!', loh] },
         { label: 'Emerald Chamber Key', icon: 'key', rarity: 'epic', lines: ['Opens an Emerald raid chest.', 'Consumed on use!', loh] },
         { label: 'Star Chamber Key', icon: 'key', rarity: 'legendary', lines: ['Opens a Star raid chest.', 'Consumed on use!', loh] },
@@ -89,16 +116,19 @@ export const dungeonItems: WikiPage = {
         ['Mithril Ingot', 'Supply chests (uncommon) and every raid chest', 'Emerald and Star keys'],
         ['Lab Sample', 'Every raid chest, top of the drop table', 'Emerald and Star keys'],
         ['Soulsteel Ingot', 'Star raid chests', 'Star key'],
-        ['Raw Hextech', 'Every raid chest', 'No recipe yet'],
-        ['Warden Ingot', 'Emerald and Star raid chests', 'No recipe yet'],
-        ['Hextech Crystal', 'Emerald and Star raid chests (rare)', 'No recipe yet'],
-        ['Undeciphered Books', 'Common and Rare: supply and raid chests. Legendary: Emerald and Star chests. Fabled: Star chests only', 'No recipe yet'],
+        ['Raw Hextech', 'Every raid chest', `Trade ${LOCKSMITH.rawHextechPerEpicKey} for 1 Epic crate key`],
+        ['Warden Ingot', 'Emerald and Star raid chests', `Trade ${LOCKSMITH.wardenIngotsPerSpawnerKey} for 1 Spawner crate key`],
+        [
+          'Hextech Crystal',
+          'Emerald and Star raid chests (rare)',
+          `Trade 1 for ${LOCKSMITH.spawnerKeysPerCrystal} Spawner crate keys, or ${LOCKSMITH.crystalsForTag} for the ${HEXTECH_TAG} chat tag`,
+        ],
+        [
+          'Undeciphered Books',
+          'Common and Rare: supply and raid chests. Legendary: Emerald and Star chests. Fabled: Star chests only',
+          `Decipher into an enchanted book. A Fabled book also unlocks the ${HEXTECH_TAG} tag`,
+        ],
       ],
-    },
-    {
-      type: 'callout',
-      tone: 'lore',
-      text: 'Raw Hextech, Warden Ingots, Hextech Crystals and the Undeciphered Books have no recipe yet. For now they are collectibles. A Fabled book is a serious flex.',
     },
     { type: 'h2', text: 'Chamber Keys (Locksmith)' },
     {
@@ -130,6 +160,41 @@ export const dungeonItems: WikiPage = {
         'Emeralds are buy-only in `/shop` at $24 each, so 64 cost $1,536 there. Trading with villagers is much cheaper.',
         'The Star key needs no diamonds or emeralds at all, only dungeon materials. You need Soulsteel from a Star chest though, so a friend with a Star key helps.',
       ],
+    },
+    { type: 'h2', text: 'Decipher and trade' },
+    {
+      type: 'p',
+      text: 'The Locksmith does more than keys. Under the key recipes you will find a row of books to decipher and a row of trades. Same rule as the forge: it checks first, so nothing is taken unless you get paid. None of it pays money.',
+    },
+    { type: 'h3', text: 'Decipher a book' },
+    {
+      type: 'p',
+      text: 'Carry an Undeciphered Book and click its rarity. You get a normal enchanted book back, ready for your anvil. One book per click.',
+    },
+    {
+      type: 'table',
+      caption: 'What each Undeciphered Book turns into',
+      head: ['Book', 'You get one of these'],
+      rows: DECIPHER.map((d) => [d.book, d.gives]),
+    },
+    { type: 'h3', text: 'Trade your loot' },
+    {
+      type: 'table',
+      caption: 'Locksmith trades',
+      head: ['You give', 'You get'],
+      rows: LOCKSMITH_TRADES,
+    },
+    {
+      type: 'list',
+      items: [
+        'Open your crate keys at `/warp crates`. See [Crates and keys](/wiki/crates) for what is inside.',
+        `Once you own the ${HEXTECH_TAG} tag, its button shows a tick. Trade spare crystals for Spawner keys instead.`,
+      ],
+    },
+    {
+      type: 'callout',
+      tone: 'lore',
+      text: `The **${HEXTECH_TAG}** tag is dungeon-only. Money cannot buy it. Trade ${LOCKSMITH.crystalsForTag} Hextech Crystals or decipher your first Fabled book, then wear it from \`/tags\`.`,
     },
     { type: 'h2', text: 'Drop tables' },
     {

@@ -31,11 +31,11 @@ export default function WikiIndexPage() {
   return (
     <>
       <PageHero
+        scene="bookshelf"
         title="Wiki"
         eyebrow="KasadyaCraft Survival"
         lead={`Every feature, command and rule on the server, in ${wikiPages.length} pages. Written by us, checked against the live server.`}
         icon="map"
-        ground="stone"
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Wiki' }]}
       />
 

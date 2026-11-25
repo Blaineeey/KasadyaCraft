@@ -31,10 +31,20 @@ export default function GuidesIndexPage() {
   return (
     <>
       <PageHero
+        scene="signpost"
         title="Starter guides"
         eyebrow={`${guides.length} guides · about ${Math.round(totalMinutes / 5) * 5} minutes`}
         lead="Short guides in the order most players need them. Start at the top, or jump straight to what you need."
         icon="book"
+        pointersLabel="Jump to a stage"
+        pointers={guideStageOrder.map((stage, i) => {
+          const count = guidesByStage(stage).length
+          return {
+            label: guideStageLabels[stage],
+            href: `#stage-${stage}`,
+            hint: `Stage ${i + 1} · ${count} ${count === 1 ? 'guide' : 'guides'}`,
+          }
+        })}
       >
         <GuideProgress items={items} />
       </PageHero>
@@ -44,6 +54,7 @@ export default function GuidesIndexPage() {
           <Panel key={stage} as="section" material="deepslate" padding="lg" aria-labelledby={`stage-${stage}`}>
             <div className={s.stageBody}>
               <SectionHeading
+                variant="sign"
                 id={`stage-${stage}`}
                 eyebrow={`Stage ${i + 1}`}
                 title={guideStageLabels[stage]}

@@ -54,11 +54,11 @@
 
 .title {
   font-family: var(--font-pixel);
-  font-size: var(--fs-lg);
+  font-size: min(var(--fs-lg), 4.6vw);
   font-weight: 600;
   line-height: var(--lh-tight);
   text-shadow: var(--text-shadow-pixel);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .summary {

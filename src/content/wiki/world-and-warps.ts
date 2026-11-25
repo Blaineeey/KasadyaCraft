@@ -50,7 +50,7 @@ export const worldAndWarps: WikiPage = {
       items: [
         'Walk through the big portal at the gate.',
         'Click the **Survival Guide** NPC.',
-        'Right-click the compass in hotbar slot 4 and choose Survival.',
+        'Right-click the compass in the middle hotbar slot (key 5) and choose Survival.',
         'Type `/survival` (or `/smp`).',
       ],
     },

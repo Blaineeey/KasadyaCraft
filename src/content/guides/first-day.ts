@@ -6,6 +6,7 @@ import {
   PLAYTIME_COMMAND,
   PLAYTIME_LEVELS,
   PLOT,
+  RAW_ORES_SELL,
   RTP_COOLDOWN_SECONDS,
   STARTING_BALANCE,
   WILD_SIZE,
@@ -19,8 +20,16 @@ import {
  * PlotSquared (free claims, 51x51), DailyRewards config.yml, ODailyQuests config.yml + quests/global.yml
  * (global mode only; quest and reward facts live in src/content/facts.ts).
  */
-/** What the shop pays for one item (EconomyShopGUI sell price, shared SHOP list in src/content/facts.ts). */
-const price = (item: ShopItem) => money(shopPrice(item).sell ?? 0)
+/**
+ * What the shop pays for one item (EconomyShopGUI sell price, shared SHOP list in src/content/facts.ts).
+ * Fails the build instead of quoting a price players cannot get: an item from a switched-off section
+ * (raw iron, 2026-11-25) or one the shop will not buy.
+ */
+const price = (item: ShopItem) => {
+  const p = shopPrice(item)
+  if (!p.inShop || p.sell === null) throw new Error(`first-day guide quotes ${item}, but /shop does not buy it right now`)
+  return money(p.sell)
+}
 const level = (n: string) => PLAYTIME_LEVELS.find((l) => l.level === n)!
 
 export const firstDay: Guide = {
@@ -93,7 +102,7 @@ export const firstDay: Guide = {
     { type: 'h2', text: 'Gather and sell' },
     {
       type: 'p',
-      text: `**Minute 15.** Chop logs, mine stone, look for iron. Then head back with \`/spawn\` and open \`/shop\`. The shop pays for raw materials: an oak log sells for ${price('Oak Log')}, a piece of raw iron for ${price('Raw Iron')} and a diamond for ${price('Diamond')}. Sell raw iron, not ingots: an iron ingot only gets ${price('Iron Ingot')}, so skip the furnace.`,
+      text: `**Minute 15.** Chop logs, mine stone, look for iron. Then head back with \`/spawn\` and open \`/shop\`. The shop pays for what you gather: an oak log sells for ${price('Oak Log')}, an iron ingot for ${price('Iron Ingot')}, a gold ingot for ${price('Gold Ingot')} and a diamond for ${price('Diamond')}.${RAW_ORES_SELL ? '' : ' It will not take raw iron or raw gold, so put them in a furnace first.'}`,
     },
     {
       type: 'callout',

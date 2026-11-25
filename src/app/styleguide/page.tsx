@@ -376,6 +376,26 @@ export default function StyleguidePage() {
         </section>
 
         {/* ---------------------------------------------------------------- */}
+        <section aria-labelledby="sg-openers">
+          <SectionHeading
+            variant="frame"
+            icon="flag"
+            eyebrow="Kit"
+            title="Section openers"
+            id="sg-openers"
+            lead="Four ways to open a section. Mix them on a page so sections do not all start the same way. Big section heroes use PageHero scene: bookshelf (wiki), market (store), plaza (community), ballot (vote), signpost (guides)."
+          />
+          <Panel material="deepslate" padding="md">
+            <div className={styles.stack}>
+              <SectionHeading as="h3" variant="chip" eyebrow="chip" title="Gold chip and sunburst rule" lead="The original opener." />
+              <SectionHeading as="h3" variant="sign" icon="lantern" eyebrow="sign" title="An oak wall sign" lead="Title and lead painted on the board." />
+              <SectionHeading as="h3" variant="frame" icon="compass" eyebrow="frame" title="Icon in an item frame" />
+              <SectionHeading as="h3" variant="chat" eyebrow="chat" title="An in-game chat line" lead="The lead reads as the next chat line." />
+            </div>
+          </Panel>
+        </section>
+
+        {/* ---------------------------------------------------------------- */}
         <section aria-labelledby="sg-prose">
           <SectionHeading eyebrow="Content" title="Guide and wiki bodies" id="sg-prose" icon="map" lead="ContentBlocks on a dark wiki panel and on a paper guide panel." />
           <div className={styles.grid2}>
