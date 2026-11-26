@@ -17,6 +17,8 @@ import { HEXTECH_TAG } from './locksmith'
  * - Economy balancer: no money reward, fee or cooldown; loot cannot be sold
  * - DeluxeMenus DUNGEON/Locksmith.yml (08:58, GAMEPLAY FIXER round 3): forge keys, decipher books into vanilla
  *   enchanted books, trade loot for Epic/Spawner crate keys and the dungeon-only [HEXTECH] tag (see ./locksmith.ts)
+ * - KasadyaDelves 1.0.0 (2026-11-26): /dungeon outside a run opens its Dungeons menu first (config dungeon-hub true);
+ *   its Lab of Horrors button opens DUNGEON/Main.yml. Inside the lab /dungeon is still MythicDungeons'.
  */
 export const dungeon: WikiPage = {
   slug: 'dungeon',
@@ -46,7 +48,7 @@ export const dungeon: WikiPage = {
     'mythicdungeons',
     'disciple',
   ],
-  related: ['dungeon-items', 'commands', 'economy'],
+  related: ['dungeon-items', 'delves', 'commands', 'economy'],
   body: [
     {
       type: 'p',
@@ -70,7 +72,7 @@ export const dungeon: WikiPage = {
       type: 'steps',
       items: [
         { title: 'Go to the entrance', text: 'The Dungeon Guard and Dungeon Master NPCs wait there.', command: '/warp dungeon' },
-        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master or type the command. Play Solo starts a run right away. Play with Friends makes a party.', command: '/dungeon' },
+        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master, or type the command and click **Lab of Horrors**. Play Solo starts a run right away. Play with Friends makes a party.', command: '/dungeon' },
         { title: 'Fill your party', text: 'Invite a Friend, or let friends use Join a Party or Accept an Invite from the same menu. Quick Match groups you with other players. A run holds up to 5 players.' },
         { title: 'Start', text: 'Click Start Dungeon and the whole party is teleported in. Each door opens when its room is cleared.' },
       ],

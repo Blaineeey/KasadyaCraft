@@ -10,6 +10,11 @@ import type { WikiPage } from '@/lib/content'
  *   EconomyShopGUI (shop/sellall/sellgui default true), CombatLogX
  * - DeluxeMenus open_command lists, Skript scripts (commanddixes.sk, rtp.sk, nightvision.sk, discord.sk, website.sk)
  * - KasadyaVote (/vote)
+ * - KasadyaDelves 1.0.0 (2026-11-26): /dungeon outside a run opens its Dungeons menu (config dungeon-hub true; the Lab of Horrors
+ *   button opens the old menu). Words from core/command/DungeonCommands.java (leave, stay/no, agree/yes, cancel, vote, menu),
+ *   ui/party/PartyService.WORDS + help() (solo, create, quick, invite, accept, decline, open, close, list, join, kick, promote,
+ *   start, stop, leave, help) and the module commands guide, trail, codex, claim. Inside the Lab of Horrors /dungeon still goes
+ *   to MythicDungeons, so the Lab of Horrors section below is unchanged.
  * - Hub: KasadyaLobby (/survival /smp), Velocity KasadyaHub (/hub /lobby)
  * - GSit poses are rank perks since the GAMEPLAY FIXER round 2 (CHANGELOG 06:17-06:48, LP export 07:25): default has
  *   gsit.sit/lay/layback/bellyflop/spin/crawl = false; VIP gsit.sit, VIP+ gsit.lay/layback/bellyflop/spin, MVP gsit.crawl
@@ -24,7 +29,7 @@ export const commands: WikiPage = {
   category: 'basics',
   order: 4,
   updated: '2026-11-25',
-  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i'],
+  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve'],
   related: ['world-and-warps', 'ranks', 'economy', 'faq'],
   body: [
     {
@@ -146,13 +151,54 @@ export const commands: WikiPage = {
       type: 'commands',
       items: [
         { command: '/warp dungeon', description: 'Go to the dungeon entrance.' },
-        { command: '/dungeon', description: 'The dungeon menu: play solo, make a party, quick match, join or accept an invite, start, or leave a run.' },
+        { command: '/dungeon', description: 'The dungeon menu. Click **Lab of Horrors** for its menu: play solo, make a party, quick match, join or accept an invite, start, or leave a run.' },
         { command: '/mr invite <player>', description: 'Invite a friend to your party (the menu does this for you too).' },
         { command: '/room accept <player>', description: 'Accept a party invite.' },
         { command: '/dungeon leave', description: 'Leave a run. In a party the others are asked first, and you leave together.' },
         { command: '/dungeoninfo', description: 'The Dungeon Codex: mobs, boss and loot. `/codex` works too.' },
         { command: '/locksmith', description: 'Forge Chamber Keys, decipher dungeon books and trade loot for crate keys.' },
         { command: '/dchat <message>', description: 'Talk only to your dungeon party.' },
+      ],
+    },
+    { type: 'h2', text: 'Delves' },
+    {
+      type: 'p',
+      text: 'Gloomhold Keep and Cinderworks. Type `gloomhold` or `cinderworks` where a command needs a delve. How it all works: [Delves](/wiki/delves).',
+    },
+    {
+      type: 'commands',
+      title: 'Before a run',
+      items: [
+        { command: '/dungeon', description: 'The dungeon menu: pick a delve, see open parties and invitations, read the codex. In a party it opens your party.' },
+        { command: '/dungeon solo <delve>', description: 'Go in alone, at once.' },
+        { command: '/dungeon create <delve>', description: 'Make a party for up to 5 players.' },
+        { command: '/dungeon quick <delve>', description: 'Join an open party, or wait for other players.' },
+        { command: '/dungeon invite <player>', description: 'Invite a friend to your party.' },
+        { command: '/dungeon accept', description: 'Accept an invitation. `/dungeon decline` says no.' },
+        { command: '/dungeon list', description: 'Open parties that anyone can join.' },
+        { command: '/dungeon join <player>', description: "Join that player's open party." },
+        { command: '/dungeon open', description: 'Let anyone join your party. `/dungeon close` makes it invite only.' },
+        { command: '/dungeon start', description: 'Leader only: start the run. `/dungeon stop` stops the countdown.' },
+        { command: '/dungeon kick <player>', description: 'Leader only: remove someone from your party.' },
+        { command: '/dungeon promote <player>', description: 'Leader only: make someone else the leader.' },
+        { command: '/dungeon leave', description: 'Leave your party.' },
+        { command: '/dungeon claim', description: 'Delve rewards that did not fit in your inventory.' },
+        { command: '/dungeon help', description: 'A short list of these commands in chat.' },
+      ],
+    },
+    {
+      type: 'commands',
+      title: 'Inside a run',
+      items: [
+        { command: '/dungeon', description: 'The Guide menu: your goal, progress, tips, lives, the trail switch, the codex and Leave.' },
+        { command: '/dungeon guide', description: 'The same Guide menu.' },
+        { command: '/dungeon trail', description: 'Hide or show the glowing floor that leads the way. Only for you.' },
+        { command: '/dungeon codex', description: 'Monsters, dangers and the boss of this delve. `/codex` works too. Outside a run it lists every delve.' },
+        { command: '/dungeon leave', description: 'Leave. Alone you go at once. In a party the others are asked, and everyone leaves together.' },
+        { command: '/dungeon agree', description: 'Agree to leave. `/dungeon yes` works too.' },
+        { command: '/dungeon stay', description: 'Not done yet. `/dungeon no` works too.' },
+        { command: '/dungeon cancel', description: 'Take back your own leave request.' },
+        { command: '/dungeon vote', description: 'Open the leave vote menu again.' },
       ],
     },
     { type: 'h2', text: 'Chat and friends' },

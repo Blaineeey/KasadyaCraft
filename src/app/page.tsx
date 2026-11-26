@@ -15,7 +15,7 @@ import { site } from '@/lib/site'
 
 /* No title: the home page keeps the root layout's default title. */
 export const metadata: Metadata = pageMetadata({
-  socialTitle: `${site.name}: Minecraft survival with plots, shops and a dungeon`,
+  socialTitle: `${site.name}: Minecraft survival with plots, shops and dungeons`,
   description: site.description,
   path: '/',
 })
@@ -24,7 +24,7 @@ export const metadata: Metadata = pageMetadata({
  * HOME. Owner: INTERACTIVITY ENGINEER.
  * Reads top to bottom like digging down: the festival plaza at the surface,
  * then dirt (how to join), stone (what's inside), a cobblestone storeroom (the
- * vote keys on their rack), deepslate (the dungeon) and bedrock (store + community). Sections live in src/components/home/*.
+ * vote keys on their rack), deepslate (the dungeons) and bedrock (store + community). Sections live in src/components/home/*.
  */
 export default function HomePage() {
   return (

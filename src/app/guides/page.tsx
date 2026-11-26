@@ -19,7 +19,7 @@ import s from './guides.module.css'
  */
 export const metadata: Metadata = pageMetadata({
   title: 'Starter guides',
-  description: 'New to KasadyaCraft? Eight short guides that take you from your first join to your first dungeon run.',
+  description: 'New to KasadyaCraft? Nine short guides that take you from your first join to your first dungeon runs.',
   path: '/guides',
 })
 

@@ -1,3 +1,4 @@
+import { DELVE_LIST, DELVE_REWARDS, DELVE_RULES, livesFor } from '@/content/wiki/delve-facts'
 import { PixelButton, Slot, SlotGrid } from '@/components/ui'
 import BossFight from './BossFight'
 import s from './DungeonTeaser.module.css'
@@ -5,6 +6,8 @@ import s from './DungeonTeaser.module.css'
 /**
  * Lab of Horrors teaser. Every fact comes from the in-game dungeon codex and
  * locksmith menus (plugins/DeluxeMenus/gui_menus/DUNGEON/Codex.yml, Locksmith.yml).
+ * Below it, the two delves (KasadyaDelves 1.0.0, 2026-11-26): names, difficulty, menu line, boss, gear,
+ * lives and points from src/content/wiki/delve-facts.ts (script-A/B.json, rewards.yml, config.yml).
  * Owner: INTERACTIVITY ENGINEER.
  */
 
@@ -45,7 +48,7 @@ export default function DungeonTeaser() {
             Go to the lab with <code className="kc-cmd-inline">/warp dungeon</code>.
           </li>
           <li>
-            Open <code className="kc-cmd-inline">/dungeon</code> and play solo or with friends.
+            Open <code className="kc-cmd-inline">/dungeon</code>, click Lab of Horrors and play solo or with friends.
           </li>
           <li>
             Check what drops where with <code className="kc-cmd-inline">/dungeoninfo</code>.
@@ -92,6 +95,69 @@ export default function DungeonTeaser() {
           the Lost Souls.
         </p>
       </div>
+
+      <section className={s.delves} aria-labelledby="home-delves">
+        <p className={s.eyebrow}>New dungeons</p>
+        <h2 id="home-delves" className={s.delvesTitle}>
+          The delves
+        </h2>
+        <p className={s.lead}>
+          Five floors and a boss each, and every floor teaches you one idea. The boss bar, an arrow and a glowing floor show the
+          way. Go alone or bring up to {DELVE_RULES.maxPlayers - 1} friends, on Java or Bedrock.
+        </p>
+        <ul className={s.delveCards}>
+          {DELVE_LIST.map((d) => (
+            <li key={d.id} className={s.delveCard} data-delve={d.id}>
+              <h3 className={s.delveName}>{d.name}</h3>
+              <p className={s.delveAbout}>{d.about}</p>
+              <dl className={s.delveFacts}>
+                <div>
+                  <dt>Difficulty</dt>
+                  <dd>{d.difficulty}</dd>
+                </div>
+                <div>
+                  <dt>Boss</dt>
+                  <dd>{d.boss}</dd>
+                </div>
+                <div>
+                  <dt>Meter</dt>
+                  <dd>{d.meter}</dd>
+                </div>
+                <div>
+                  <dt>Points</dt>
+                  <dd>{d.points} per clear</dd>
+                </div>
+              </dl>
+              <p className={s.delveGear}>Gear: {d.gear}</p>
+              <PixelButton href={`/wiki/${d.slug}`} variant="stone" icon={d.id === 'gloomhold' ? 'lantern' : 'spawner'}>
+                {d.name}
+              </PixelButton>
+            </li>
+          ))}
+        </ul>
+        <ol className={s.howto}>
+          <li>
+            Open <code className="kc-cmd-inline">/dungeon</code> and click a delve, or type{' '}
+            <code className="kc-cmd-inline">/dungeon solo gloomhold</code>.
+          </li>
+          <li>
+            The party shares {livesFor(1)} lives alone, {DELVE_RULES.livesPerPlayer} more per extra player. You keep your items when you
+            die.
+          </li>
+          <li>
+            Beat the boss for points, the vault and a chance at a crate key or special gear. {DELVE_REWARDS.paidClearsPerDay} paid
+            clears a day.
+          </li>
+        </ol>
+        <div className={s.ctas}>
+          <PixelButton href="/wiki/delves" variant="redstone" icon="boss">
+            Delves guide
+          </PixelButton>
+          <PixelButton href="/guides/first-delve" variant="stone" icon="book">
+            Your first delve
+          </PixelButton>
+        </div>
+      </section>
     </div>
   )
 }

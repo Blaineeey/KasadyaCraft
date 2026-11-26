@@ -10,6 +10,7 @@ import { CHECKED, DUNGEON } from './facts'
  * DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo) + DUNGEON/Locksmith.yml (/locksmith) + DUNGEON/Main.yml (/dungeon:
  * Play Solo, Play with Friends, Quick Match, Join a Party, Accept an Invite, Start, Leave Dungeon), locale en_US.yml,
  * Citizens NPCs in the dungeon hall (Dungeon Master opens /dungeon), warp dungeon.
+ * KasadyaDelves 1.0.0 (2026-11-26): typed /dungeon opens the Dungeons menu first; its Lab of Horrors button opens Main.yml.
  */
 export const firstDungeon: Guide = {
   slug: 'first-dungeon',
@@ -20,8 +21,8 @@ export const firstDungeon: Guide = {
   order: 3,
   minutes: 7,
   updated: CHECKED,
-  next: 'ranks-and-kits',
-  related: ['dungeon', 'commands', 'features'],
+  next: 'first-delve',
+  related: ['dungeon', 'delves', 'commands', 'features'],
   body: [
     {
       type: 'p',
@@ -43,7 +44,7 @@ export const firstDungeon: Guide = {
       type: 'steps',
       items: [
         { title: 'Go to the dungeon hall', text: 'It is at spawn. Say hi to the Dungeon Guard on the way in.', command: '/warp dungeon' },
-        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master or type the command. Click **Play Solo** to jump straight in, or **Play with Friends** to make a party.', command: '/dungeon' },
+        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master, or type the command and click **Lab of Horrors**. Click **Play Solo** to jump straight in, or **Play with Friends** to make a party.', command: '/dungeon' },
         { title: 'Bring your friends', text: 'Click **Invite a Friend** and type their name. They can also open the same menu and use **Join a Party** or **Accept an Invite**. No friends online? **Quick Match** teams you up with other players.' },
         { title: 'Start and meet at the gate', text: 'Click **Start Dungeon**. Inside, the whole party stands at the lab gate together to open it.' },
       ],

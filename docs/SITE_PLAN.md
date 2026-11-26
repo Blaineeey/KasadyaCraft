@@ -49,7 +49,8 @@ Permanent (old URLs): `/servers/*` to `/games/*`, `/smp` to `/games/minecraft`, 
 The old wiki (Slimefun, Epidemic, diseases, machines) was from another modpack and is deleted; git history keeps it.
 
 Vanity (temporary, mirror in-game commands): `/join` `/ip` to `/play`, `/start` `/guide` to `/guides`,
-`/rules` `/faq` `/ranks` `/commands` `/dungeon` to the matching `/wiki/<slug>`, `/shop` `/buy` to `/store`,
+`/rules` `/faq` `/ranks` `/commands` `/dungeon` to the matching `/wiki/<slug>`, `/delves` `/gloomhold` `/cinderworks`
+to `/wiki/delves`, `/wiki/gloomhold-keep`, `/wiki/cinderworks`, `/shop` `/buy` to `/store`,
 `/discord` to the invite. Those wiki slugs MUST exist (section 7).
 
 ## 2. Ownership map
@@ -237,7 +238,8 @@ render custom JSX in your own route file.
 
 Wiki (`/wiki/<slug>`): `features` (overview of everything), `commands`, `ranks`, `economy`, `player-shops`
 (QuickShop in plots + Shopping Mall stalls), `plots`, `dungeon` (Lab of Horrors), `spawners`, `crates`,
-`rewards` (daily quests, /rewards, playtime, AFK pool, chat games, tags), `rules`, `faq`.
+`rewards` (daily quests, /rewards, playtime, AFK pool, chat games, tags), `rules`, `faq`,
+`delves`, `gloomhold-keep`, `cinderworks` (KasadyaDelves, redirect targets since 2026-11-26).
 More pages are welcome (e.g. `hub`, `homes-and-warps`, `tags`, `trading`, `legendary-weapons`).
 
 Guides (`/guides/<slug>`): `joining` (stage join), `first-day`, `making-money` (stage first-day),

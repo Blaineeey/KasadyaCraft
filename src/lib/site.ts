@@ -28,7 +28,7 @@ export const site = {
   /** Second line of the live MOTD (proxy config). Keep the two in step; there is no "City". */
   motdLine: 'Survival | Dungeons | Plots | Shops',
   description:
-    'KasadyaCraft is a friendly Minecraft survival server for Java and Bedrock with plots, player shops, daily quests and a dungeon with a real boss fight. Hop in at play.kasadyacraft.com.',
+    'KasadyaCraft is a friendly Minecraft survival server for Java and Bedrock with plots, player shops, daily quests and dungeons with real boss fights. Hop in at play.kasadyacraft.com.',
   /** "Kasadya" means joy or festivity. The whole brand is a festival. */
   meaning: 'Kasadya means joy, the feeling of a town fiesta.',
   founded: '2024',
@@ -45,7 +45,7 @@ export const network = {
   },
   survival: {
     name: 'Survival',
-    blurb: 'Plots, homes, warps, player shops, quests and the Lab of Horrors dungeon.',
+    blurb: 'Plots, homes, warps, player shops, quests and three dungeons: the Lab of Horrors, Gloomhold Keep and Cinderworks.',
   },
   resourcePack: {
     required: true,
@@ -78,8 +78,8 @@ export const servers: GameServer[] = [
     joinLabel: 'How to join',
     joinUrl: '/play',
     summary:
-      'Survival with plots, player shops in a shopping mall, daily quests, crates and the Lab of Horrors dungeon. You start in the hub, then hop into Survival.',
-    tags: ['Java 1.21.x', 'Survival', 'Plots', 'Dungeon', 'Player shops'],
+      'Survival with plots, player shops in a shopping mall, daily quests, crates and three dungeons with boss fights. You start in the hub, then hop into Survival.',
+    tags: ['Java 1.21.x', 'Survival', 'Plots', 'Dungeons', 'Player shops'],
     href: '/games/minecraft',
   },
   {
@@ -153,6 +153,7 @@ export const footerLinks: { heading: string; links: { label: string; href: strin
       { label: 'Store', href: '/store' },
       { label: 'Vote', href: '/vote' },
       { label: 'Lab of Horrors', href: '/wiki/dungeon' },
+      { label: 'Delves', href: '/wiki/delves' },
     ],
   },
   {

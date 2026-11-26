@@ -1,10 +1,12 @@
 import { DAILY_QUEST_BONUS, DAILY_QUESTS, count } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
 import { voteRewards, voteSites } from '@/lib/vote'
+import { DELVE_RULES, DELVES } from './delve-facts'
 
 /*
  * Overview of every feature. Facts checked 2026-11-25 against the live Survival
  * and Hub configs (see the per-page files for the exact sources; shared numbers in src/content/facts.ts).
+ * The delves section: KasadyaDelves 1.0.0 data, 2026-11-26 (see ./delve-facts.ts).
  */
 export const features: WikiPage = {
   slug: 'features',
@@ -15,7 +17,7 @@ export const features: WikiPage = {
   order: 1,
   updated: '2026-11-25',
   keywords: ['overview', 'features', 'what to do', 'survival', 'hub', 'start', 'new player'],
-  related: ['world-and-warps', 'plots', 'economy', 'dungeon', 'rewards', 'faq'],
+  related: ['world-and-warps', 'plots', 'economy', 'dungeon', 'delves', 'rewards', 'faq'],
   body: [
     {
       type: 'p',
@@ -65,7 +67,12 @@ export const features: WikiPage = {
     { type: 'h2', text: 'The Lab of Horrors' },
     {
       type: 'p',
-      text: 'Our dungeon. Bring up to 5 players, clear 7 rooms, beat the Draedon Disciple and then fight **Draedon** himself. Dungeon loot goes into Chamber Keys for the raid chests, enchanted books, crate keys and a dungeon-only chat tag. Start with [Lab of Horrors](/wiki/dungeon).',
+      text: 'Our first dungeon. Bring up to 5 players, clear 7 rooms, beat the Draedon Disciple and then fight **Draedon** himself. Dungeon loot goes into Chamber Keys for the raid chests, enchanted books, crate keys and a dungeon-only chat tag. Start with [Lab of Horrors](/wiki/dungeon).',
+    },
+    { type: 'h2', text: 'The delves' },
+    {
+      type: 'p',
+      text: `Two more dungeons, each with five floors and a boss: **${DELVES.gloomhold.name}** (${DELVES.gloomhold.difficulty}), where you bring the light back, and **${DELVES.cinderworks.name}** (${DELVES.cinderworks.difficulty}), a burning manor. Go alone or with up to ${DELVE_RULES.maxPlayers - 1} friends. The party shares one pool of lives: ${DELVE_RULES.livesBase}, plus ${DELVE_RULES.livesPerPlayer} per player. A clear pays points, sometimes a crate key or special gear. Type \`/dungeon\` and read [Delves](/wiki/delves).`,
     },
     { type: 'h2', text: 'Crates, spawners and legendary weapons' },
     {

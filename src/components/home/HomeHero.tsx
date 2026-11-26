@@ -77,7 +77,7 @@ export default function HomeHero() {
         <div className={s.sign}>
           <p className={s.tagline}>{site.tagline}</p>
           <p className={s.lead}>
-            Survival with your own plot, player shops, daily quests and a dungeon boss that hits back. Java and Bedrock, free to
+            Survival with your own plot, player shops, daily quests and dungeon bosses that hit back. Java and Bedrock, free to
             join. Tara, laro tayo! New here? Read the <Link href="/guides">starter guides</Link>.
           </p>
         </div>

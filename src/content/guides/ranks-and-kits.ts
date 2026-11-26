@@ -20,7 +20,7 @@ export const ranksAndKits: Guide = {
   summary: 'What VIP to MVP++ change, how kits work, and how you earn the Tokens to buy a rank.',
   icon: 'crown',
   stage: 'next-steps',
-  order: 4,
+  order: 5,
   minutes: 4,
   updated: CHECKED,
   related: ['ranks', 'crates', 'commands'],

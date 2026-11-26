@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { MALL, PLOT, STARTING_BALANCE, WILD_SIZE, money } from '@/content/guides/facts'
+import { DELVE_RULES, DELVES } from '@/content/wiki/delve-facts'
 import Panel from '@/components/ui/Panel'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
@@ -10,7 +11,8 @@ import s from './overview.module.css'
 
 /*
  * Body of /games/minecraft: a short tour of KasadyaCraft Survival for the multi-game section.
- * Every line is a checked fact (see src/content/guides/facts.ts). Owner: STARTER-GUIDE WRITER.
+ * Every line is a checked fact (see src/content/guides/facts.ts; the delves card: src/content/wiki/delve-facts.ts).
+ * Owner: STARTER-GUIDE WRITER.
  */
 const features: { icon: PixelIconName; title: string; body: string; href: string }[] = [
   {
@@ -30,6 +32,12 @@ const features: { icon: PixelIconName; title: string; body: string; href: string
     title: 'Lab of Horrors',
     body: 'Seven rooms, a disciple and the boss Draedon. Solo or with a party of up to 5.',
     href: '/wiki/dungeon',
+  },
+  {
+    icon: 'lantern',
+    title: 'The delves',
+    body: `${DELVES.gloomhold.name} (${DELVES.gloomhold.difficulty}) and ${DELVES.cinderworks.name} (${DELVES.cinderworks.difficulty}): five floors and a boss each. Solo or up to ${DELVE_RULES.maxPlayers}, open them with /dungeon.`,
+    href: '/wiki/delves',
   },
   {
     icon: 'quest',
@@ -78,7 +86,7 @@ export default function MinecraftOverview() {
             id="inside"
             eyebrow={site.motdLine}
             title="What you can do"
-            lead="A friendly survival server where you build your own place, trade with other players and team up for a real boss fight."
+            lead="A friendly survival server where you build your own place, trade with other players and team up for real boss fights."
           />
           <ul className={s.features}>
             {features.map((f) => (

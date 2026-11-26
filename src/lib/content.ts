@@ -87,7 +87,7 @@ export const wikiCategoryLabels: Record<WikiCategory, string> = {
   basics: 'Getting around',
   economy: 'Money and trading',
   features: 'Features',
-  dungeon: 'Dungeon',
+  dungeon: 'Dungeons',
   ranks: 'Ranks and perks',
   rules: 'Rules',
   help: 'Help',

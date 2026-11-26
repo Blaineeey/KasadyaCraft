@@ -1,5 +1,6 @@
 import { FACTS_CHECKED, TOKEN_SOURCES_TEXT } from '@/content/facts'
 import { VERSIONS } from '@/content/guides/facts'
+import { DELVE_RULES, DELVES, livesFor } from '@/content/wiki/delve-facts'
 import type { WikiPage } from '@/lib/content'
 import { site } from '@/lib/site'
 import { voteRewards, voteSites } from '@/lib/vote'
@@ -12,7 +13,14 @@ import { voteRewards, voteSites } from '@/lib/vote'
  * - survival server.properties require-resource-pack=true; hub sends no pack
  * - CombatLogX default-timer 10, punish.yml kill on disconnect
  * - Voting: KasadyaVote config.yml + NuVotifier (numbers from src/lib/vote.ts)
+ * - Dungeon answers (2026-11-26): Lab of Horrors general.yml DeathLimit none / MinPlayer 1 / MaxPlayer 5 (see ./dungeon.ts);
+ *   the delves from KasadyaDelves 1.0.0 (./delve-facts.ts: lives, gear, difficulty, config.yml bedrock factors,
+ *   RunImpl.telegraphTicks 30 / 40 ticks, API rule 11: everything a player needs works with fake blocks, particles,
+ *   boss bar, action bar, chat and menus). Monster counts scale with the party (balance.json waves_by_party).
  */
+const G = DELVES.gloomhold
+const C = DELVES.cinderworks
+
 export const faq: WikiPage = {
   slug: 'faq',
   title: 'FAQ',
@@ -21,7 +29,7 @@ export const faq: WikiPage = {
   category: 'help',
   order: 1,
   updated: FACTS_CHECKED,
-  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money'],
+  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo'],
   related: ['features', 'commands', 'rules', 'world-and-warps'],
   body: [
     { type: 'h2', text: 'Joining' },
@@ -61,7 +69,7 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'Do I keep my items when I die?' },
     {
       type: 'p',
-      text: 'Only at spawn (including the PvP field, but not the duel pit), in the Shopping Mall and inside the Lab of Horrors. In the Wild, Nether, End and on plots your items drop, and there are no graves.',
+      text: 'Only at spawn (including the PvP field, but not the duel pit), in the Shopping Mall and inside the dungeons (the Lab of Horrors and both delves). In the Wild, Nether, End and on plots your items drop, and there are no graves.',
     },
     { type: 'h3', text: 'Is there PvP?' },
     {
@@ -83,10 +91,25 @@ export const faq: WikiPage = {
       type: 'p',
       text: 'You need Silk Touch on a diamond or netherite pickaxe. Anything else destroys it. See [Spawners](/wiki/spawners).',
     },
-    { type: 'h3', text: 'Do I lose my gear if I die in the dungeon?' },
+    { type: 'h3', text: 'Do I lose my gear if I die in a dungeon?' },
     {
       type: 'p',
-      text: 'No. You keep your items and XP and respawn at the last door you reached. See [Lab of Horrors](/wiki/dungeon).',
+      text: `No. In all three dungeons you keep your items and XP. In the Lab of Horrors you come back at the last door you reached. In a delve you come back at the last landing, and the party loses one of its shared lives. See [Lab of Horrors](/wiki/dungeon) and [Delves](/wiki/delves).`,
+    },
+    { type: 'h3', text: 'Which dungeon should I try first?' },
+    {
+      type: 'p',
+      text: `The [Lab of Horrors](/wiki/dungeon) has no limit on deaths, so it is a gentle start. Of the two delves, [${G.name}](/wiki/${G.slug}) is ${G.difficulty}: diamond armour and a sword with level II enchantments are enough. [${C.name}](/wiki/${C.slug}) is ${C.difficulty}: diamond III gear alone, diamond II in a party. Type \`/dungeon\` to see all three.`,
+    },
+    { type: 'h3', text: 'Can I play the dungeons alone?' },
+    {
+      type: 'p',
+      text: `Yes. All three take 1 to 5 players. In the Lab of Horrors click Play Solo. For a delve type \`/dungeon solo gloomhold\` or \`/dungeon solo cinderworks\`, or click Play solo in \`/dungeon\`. Alone in a delve you get ${livesFor(1)} lives, and the monsters are scaled for one player.`,
+    },
+    { type: 'h3', text: 'Do the delves work on Bedrock?' },
+    {
+      type: 'p',
+      text: `Yes. The delves are built so you can play them on Bedrock: everything you need is shown with blocks, particles, the boss bar, the action bar, chat and menus. To make up for touch controls, Bedrock players deal ${DELVE_RULES.bedrockDealtPercent}% more damage and take ${DELVE_RULES.bedrockTakenPercent}% less in the delves, and boss floor warnings last ${DELVE_RULES.floorWarningSecondsBedrock} seconds instead of ${DELVE_RULES.floorWarningSeconds} when a Bedrock player is in the run.`,
     },
     { type: 'h2', text: 'Money and ranks' },
     { type: 'h3', text: 'Why will the shop not buy my diamond sword?' },
