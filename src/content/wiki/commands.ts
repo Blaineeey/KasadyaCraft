@@ -32,7 +32,7 @@ export const commands: WikiPage = {
   category: 'basics',
   order: 4,
   updated: '2026-11-27',
-  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve', '/fish', '/ae', '/fly', '/msg'],
+  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve', '/fish', '/ae', '/fly', '/msg', '/ah'],
   related: ['world-and-warps', 'ranks', 'economy', 'faq'],
   body: [
     {
@@ -154,6 +154,8 @@ export const commands: WikiPage = {
     {
       type: 'commands',
       items: [
+        { command: '/ah', description: 'Everything for sale in the Shopping Mall. Buy it from anywhere.' },
+        { command: '/ah <name>', description: 'Search the Mall shops, for example `/ah diamond`.' },
         { command: '/qs find <item>', description: 'Find the nearest shop that sells an item.' },
         { command: '/qs price <amount>', description: 'Change the price of the shop you are looking at. Costs $50.' },
         { command: '/qs buy', description: 'Turn the shop you are looking at into a buying shop.' },

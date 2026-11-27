@@ -10,16 +10,19 @@ import type { WikiPage } from '@/lib/content'
  *   vent-1 is misconfigured), 10 x $10,000 per 7 days (max 60 days ahead), payback 0, autorestore true;
  *   config.yml Limits default 1; DeluxeMenus BASIC/Guide.yml (5x5 fixed / 10x10 editable tents)
  * - shoppingmall gamerule keepInventory true; WorldGuard mall region denies pvp + mob-spawning (QA / zSpawner logs)
+ * - 2026-11-27 KasadyaMall 1.0.0 (/ah): lists QuickShop SELLING shops in world shoppingmall with stock (not buying, frozen
+ *   or sold-out shops), buys through QuickShop's own actionSelling (same price, 5% tax, owner message); amounts 1/8/16/32/64/max;
+ *   'Visit the stall' runs /warp mall. Plot shops are never listed. Sandbox test t/ahtest.js 31/31.
  */
 export const playerShops: WikiPage = {
   slug: 'player-shops',
   title: 'Player shops and the Shopping Mall',
-  summary: 'Sell to other players with chest shops on your plot, or rent a tent stall in the Shopping Mall.',
+  summary: 'Sell to other players with chest shops on your plot, or rent a tent stall in the Shopping Mall, where everyone can buy from you with /ah.',
   icon: 'shop',
   category: 'economy',
   order: 2,
-  updated: '2026-11-25',
-  keywords: ['quickshop', '/qs', 'chest shop', 'mall', 'stall', 'tent', 'rent', '/warp mall', '/arm', 'tax', 'sell to players'],
+  updated: '2026-11-27',
+  keywords: ['quickshop', '/qs', 'chest shop', 'mall', 'stall', 'tent', 'rent', '/warp mall', '/arm', 'tax', 'sell to players', '/ah', 'auction', 'auction house', 'buy from anywhere'],
   related: ['economy', 'plots', 'ranks'],
   body: [
     {
@@ -40,7 +43,7 @@ export const playerShops: WikiPage = {
     { type: 'h2', text: 'Buying from a shop' },
     {
       type: 'p',
-      text: 'Left-click a shop chest or its sign, then type how many you want in chat. The money goes straight to the owner.',
+      text: 'Left-click a shop chest or its sign, then type how many you want in chat. The money goes straight to the owner. Shops in the Shopping Mall can also be bought from anywhere with `/ah`, see below.',
     },
     { type: 'h2', text: 'Running your shop' },
     {
@@ -99,6 +102,28 @@ export const playerShops: WikiPage = {
       tone: 'warn',
       title: 'Do not let your rent run out',
       text: 'When rent runs out, the stall resets to how it was before you rented it, and what you left inside is gone. Pay ahead in time.',
+    },
+    { type: 'h2', text: 'Buy from the Mall anywhere: /ah' },
+    {
+      type: 'p',
+      text: '`/ah` lists everything the shops in the Shopping Mall are selling right now, and you can buy it from anywhere on Survival. It is not an auction: you pay the shop\u2019s own price.',
+    },
+    {
+      type: 'steps',
+      items: [
+        { title: 'Open the list', text: 'Every item for sale in a mall stall, with its price, stock and seller. Sort by newest, price or name. Search with `/ah <name>`, for example `/ah diamond`.', command: '/ah' },
+        { title: 'Pick an item', text: 'Choose how many: 1, 8, 16, 32, 64 or the most you can afford and carry. The total is shown before you buy.' },
+        { title: 'Confirm', text: 'You pay the same price as at the chest and the items go into your inventory. The owner gets the money (minus the 5% tax) and a message.' },
+      ],
+    },
+    {
+      type: 'list',
+      items: [
+        'Only shops in the Mall are listed. Chest shops on plots are not: to buy from those, visit the plot.',
+        'Shops that buy items from players, frozen shops and sold-out shops do not show up.',
+        '**Visit the stall** in the buy menu takes you to `/warp mall` and tells you where that stall is.',
+        'If the owner changes the price while you look, the purchase stops and the menu shows the new price.',
+      ],
     },
     { type: 'h2', text: 'Other ways to trade' },
     {

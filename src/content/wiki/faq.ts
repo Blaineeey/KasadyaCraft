@@ -31,7 +31,7 @@ export const faq: WikiPage = {
   category: 'help',
   order: 1,
   updated: FACTS_CHECKED,
-  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo', 'fly', 'fishing', 'muted', 'filter'],
+  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo', 'fly', 'fishing', 'muted', 'filter', '/ah', 'auction'],
   related: ['features', 'commands', 'rules', 'world-and-warps'],
   body: [
     { type: 'h2', text: 'Joining' },
@@ -123,6 +123,11 @@ export const faq: WikiPage = {
     {
       type: 'p',
       text: 'Yes: about $1,100 an hour with a starter rod and up to about $2,800 with better rods. Sell at `/fishmarket`, not in `/shop`. See [Fishing](/wiki/fishing).',
+    },
+    { type: 'h3', text: 'Is there an auction house?' },
+    {
+      type: 'p',
+      text: 'Not an auction, but `/ah` lists everything the shops in the Shopping Mall sell, and you can buy it from anywhere at the shop\u2019s price. Want your items in it? Rent a mall stall. See [Player shops](/wiki/player-shops).',
     },
     { type: 'h3', text: 'Why will the shop not buy my diamond sword?' },
     {

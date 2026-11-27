@@ -8,6 +8,7 @@ import { CHECKED, MALL, QUICKSHOP, RANK_LADDER, money } from './facts'
  * interaction.yml (left-click sign or chest = trade, right-click sign = control panel),
  * lang en-US messages.yml (chat prompts), AdvancedRegionMarket regions.yml + config.yml (Limits,
  * SignClickActions, RentRegionExpirationWarningTime 2d, autorestore), WorldGuard stall regions.
+ * KasadyaMall 1.0.0 (2026-11-27): /ah lists and sells the selling shops in world shoppingmall from anywhere; plot shops are not listed.
  */
 const stallLimit = (name: string) => RANK_LADDER.find((r) => r.name === name)!.stalls
 
@@ -91,6 +92,12 @@ export const openAShop: Guide = {
     {
       type: 'p',
       text: `The mall is where everyone goes to shop: \`/warp mall\`. It has ${MALL.stalls} stalls you rent with in-game money.`,
+    },
+    {
+      type: 'callout',
+      tone: 'tip',
+      title: 'Mall shops sell while nobody walks by',
+      text: 'Everything a mall stall sells shows up in `/ah`, so players can buy from you from anywhere on the server. A chest shop on your plot only sells to players who come and visit. More on [Player shops](/wiki/player-shops).',
     },
     {
       type: 'table',
