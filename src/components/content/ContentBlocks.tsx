@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Badge, Callout, Command, Slot, SlotGrid } from '@/components/ui'
+import GuideArt from '@/components/guides/GuideArt'
 import { slugify, type ContentBlock, type RankId } from '@/lib/content'
 import { renderInline } from './RichText'
 import TableFrame from './TableFrame'
@@ -178,7 +179,15 @@ export default function ContentBlocks({ blocks, tone = 'dark', className }: Cont
             return (
               <SlotGrid key={i} label={b.label} title={b.title} columns={b.columns}>
                 {b.items.map((it, j) => (
-                  <Slot key={`${it.label}-${j}`} label={it.label} icon={it.icon} count={it.count} rarity={it.rarity} lines={it.lines} />
+                  <Slot
+                    key={`${it.label}-${j}`}
+                    label={it.label}
+                    icon={it.art ? undefined : it.icon}
+                    art={it.art ? <GuideArt name={it.art} size={32} /> : undefined}
+                    count={it.count}
+                    rarity={it.rarity}
+                    lines={it.lines}
+                  />
                 ))}
               </SlotGrid>
             )

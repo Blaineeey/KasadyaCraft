@@ -82,7 +82,7 @@ const atkinson = Atkinson_Hyperlegible_Next({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Minecraft survival with plots, shops and a dungeon`,
+    default: `${site.name} | Minecraft survival with plots, shops and dungeons`,
     template: `%s | ${site.name}`,
   },
   description: site.description,

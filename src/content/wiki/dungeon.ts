@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { DUNGEON } from '@/content/guides/facts'
 import { HEXTECH_TAG } from './locksmith'
 
 /*
@@ -8,13 +9,17 @@ import { HEXTECH_TAG } from './locksmith'
  *   BlockCommands true, GameMode ADVENTURE, no cooldown/money/items/stamina requirement, AutoStartTimer 30
  * - plugins/MythicMobs/mobs/LabOfHorrors/{loh,draedon}.yml: health/damage, drops (INFECTED_FLESH 0.1 / 0.5 / 1-3)
  * - plugins/MythicDungeons/loottables/loh_lootchest.yml (supply chests), MythicMobs droptables/LabOfHorrors/loh.yml (raid chests)
- * - DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo, /codex): 7 rooms, 12 supply chests, boss phases, 2 minute rewards room
+ * - DeluxeMenus DUNGEON/Codex.yml (/dungeoninfo, /codex): 7 rooms, 12 supply chests, boss phases, 3 minute rewards room
+ * - KasadyaDungeon 1.2.0: raid chests (any click, key anywhere in the inventory), respawn protection 5 s, party leave vote 120 s,
+ *   a run with nobody online closes after 5 min; general.yml Expire.Time 7200; boss sounds v=0.5
  * - Citizens NPCs at spawn: Dungeon Guard, Dungeon Master (/dungeon), Dungeon Codex (/dungeoninfo)
  * - DeluxeMenus DUNGEON/Main.yml (/dungeon, /dungeons): one menu for solo, party, quick match, join, invites, leave
  * - LuckPerms default: mythicdungeons.commands.rooms.*, dungeons.leave/chat/info
  * - Economy balancer: no money reward, fee or cooldown; loot cannot be sold
  * - DeluxeMenus DUNGEON/Locksmith.yml (08:58, GAMEPLAY FIXER round 3): forge keys, decipher books into vanilla
  *   enchanted books, trade loot for Epic/Spawner crate keys and the dungeon-only [HEXTECH] tag (see ./locksmith.ts)
+ * - KasadyaDelves 1.0.0 (2026-11-26): /dungeon outside a run opens its Dungeons menu first (config dungeon-hub true);
+ *   its Lab of Horrors button opens DUNGEON/Main.yml. Inside the lab /dungeon is still MythicDungeons'.
  */
 export const dungeon: WikiPage = {
   slug: 'dungeon',
@@ -44,7 +49,7 @@ export const dungeon: WikiPage = {
     'mythicdungeons',
     'disciple',
   ],
-  related: ['dungeon-items', 'commands', 'economy'],
+  related: ['dungeon-items', 'delves', 'commands', 'economy'],
   body: [
     {
       type: 'p',
@@ -57,9 +62,13 @@ export const dungeon: WikiPage = {
       rows: [
         ['Players', '1 to 5 per run'],
         ['Cost to enter', 'Free. No cooldown, no entry fee.'],
-        ['Time limit', 'None'],
-        ['If you die', 'You respawn at the last door you reached and keep your items and XP.'],
-        ['Inside', 'Adventure mode: no breaking or placing blocks, no PvP, most commands blocked.'],
+        ['Time limit', '2 hours per run'],
+        ['If you die', 'You respawn at the last door you reached, or inside the boss room during the fight. You keep your items and XP and cannot be hurt for 5 seconds.'],
+        ['Inside', 'Adventure mode: no breaking or placing blocks, no PvP, most commands blocked. `/dungeon`, `/dungeoninfo` and `/locksmith` work.'],
+        [
+          'Points',
+          `${DUNGEON.pointsPerClear} points per clear, ${DUNGEON.firstClearBonus} more for your first clear of the day. ${DUNGEON.paidClearsPerDay} paid clears a day; later clears still count for the leaderboard.`,
+        ],
         ['Money', `No money, but the loot turns into Chamber Keys, enchanted books, crate keys and the ${HEXTECH_TAG} tag.`],
       ],
     },
@@ -68,7 +77,11 @@ export const dungeon: WikiPage = {
       type: 'steps',
       items: [
         { title: 'Go to the entrance', text: 'The Dungeon Guard and Dungeon Master NPCs wait there.', command: '/warp dungeon' },
-        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master or type the command. Play Solo starts a run right away. Play with Friends makes a party.', command: '/dungeon' },
+        {
+          title: 'Open the dungeon menu',
+          text: `Talk to the Dungeon Master, or type the command and click **Lab of Horrors**. Its card shows a **Today** block: paid clears used (like ■■□□□ 2/${DUNGEON.paidClearsPerDay}), supply chests looted (out of ${DUNGEON.supplyChestsPerDay}) and the points of your next clear. Play Solo starts a run right away. Play with Friends makes a party.`,
+          command: '/dungeon',
+        },
         { title: 'Fill your party', text: 'Invite a Friend, or let friends use Join a Party or Accept an Invite from the same menu. Quick Match groups you with other players. A run holds up to 5 players.' },
         { title: 'Start', text: 'Click Start Dungeon and the whole party is teleported in. Each door opens when its room is cleared.' },
       ],
@@ -111,15 +124,20 @@ export const dungeon: WikiPage = {
       tone: 'tip',
       text: 'Bring a party and give one player Lost Soul duty at 50%. The fight goes much faster.',
     },
+    { type: 'h2', text: 'Points per clear' },
+    {
+      type: 'p',
+      text: `Every clear pays **${DUNGEON.pointsPerClear} points**, and your first clear of the day pays **${DUNGEON.firstClearBonus} more** (${DUNGEON.pointsPerClear + DUNGEON.firstClearBonus} in total). You get **${DUNGEON.paidClearsPerDay} paid clears a day**. After that, clears still count for your total and the leaderboard, but give no points: the Today block in \`/dungeon\` then says the points are used up. A second boss kill within ${DUNGEON.repeatGuardMinutes} minutes of your last clear does not count. The day resets at midnight, Philippine time.`,
+    },
     { type: 'h2', text: 'Supply chests' },
     {
       type: 'p',
-      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each holds 2 or 3 stacks of ores, food or supplies, plus 1 or 2 dungeon items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book. You can loot 36 supply chests a day.',
+      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each holds 2 or 3 stacks of ores, food or supplies, plus 1 or 2 dungeon items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book. You can loot 36 supply chests a day; after that they open again at midnight (Philippine time).',
     },
     { type: 'h2', text: 'Raid chests' },
     {
       type: 'p',
-      text: 'Beat Draedon and you go back to the rewards room for **2 minutes**. Hold a Chamber Key and right-click the matching chest. You can open **one chest per player** each time the boss falls.',
+      text: 'Beat Draedon and you go back to the rewards room for **3 minutes**. Click the matching chest with a Chamber Key in your inventory and 3 free slots. If something is missing, the chat tells you what. You can open **one chest per player** each time the boss falls.',
     },
     {
       type: 'table',
@@ -135,6 +153,19 @@ export const dungeon: WikiPage = {
       type: 'p',
       text: 'Keys are forged at the **Locksmith** with `/locksmith`. The Locksmith also deciphers your books into enchanted books and trades Raw Hextech, Warden Ingots and Hextech Crystals for crate keys. Every recipe, trade and drop table is on [Lab of Horrors items](/wiki/dungeon-items).',
     },
+    { type: 'h2', text: 'Leaving a run' },
+    {
+      type: 'p',
+      text: 'Alone you can leave any time with `/dungeon leave`, or with the Leave button in `/dungeon`. In a party you go together: the others get a message and a menu to agree. When everyone agrees, you all leave. If not, everyone leaves after **2 minutes** anyway. If the boss dies while you wait, the 2 minutes start again, so everyone can loot.',
+    },
+    {
+      type: 'commands',
+      items: [
+        { command: '/dungeon leave', description: 'Ask your party to leave, or agree when someone else asked.' },
+        { command: '/dungeon stay', description: 'Say that you are not done yet.' },
+        { command: '/dungeon leave cancel', description: 'Take your own request back.' },
+      ],
+    },
     { type: 'h2', text: 'Tips' },
     {
       type: 'list',
@@ -142,7 +173,7 @@ export const dungeon: WikiPage = {
         'Your first runs are for materials. Save Key Fragments and Infected Flesh for your first Diamond Chamber Key.',
         'The Diamond key also costs 64 diamonds. Start saving early.',
         'Your inventory is safe inside, but bring food, potions and good armour. Poison adds up.',
-        '`/md leave` takes you out of a run. Talk to just your party with `/dchat <message>`.',
+        'Talk to just your party with `/dchat <message>`.',
       ],
     },
   ],

@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { voteRewards } from '@/lib/vote'
 
 /*
  * Sources (read-only, 2026-11-25):
@@ -9,6 +10,8 @@ import type { WikiPage } from '@/lib/content'
  * - LuckPerms default: plots.plot.1, plots.auto/claim/home/trust/untrust/kick/visit.other, plots.set.home/biome,
  *   plots.permpack.basic (add, remove, deny, delete, clear, merge, info, list...)
  * - QuickShop config: shops allowed in PlotWorld (not blacklisted)
+ * - Fly time (2026-11-27): Skript tempfly.sk (/fly, /tempfly, cap 480 min, counts only in the air, 10 s no fall damage) +
+ *   KasadyaPlotFly (kasadya.plotfly.here: plot owner or trusted, checked 5x a second; leaving the plot = fly off at once).
  */
 export const plots: WikiPage = {
   slug: 'plots',
@@ -17,8 +20,8 @@ export const plots: WikiPage = {
   icon: 'plot',
   category: 'basics',
   order: 3,
-  updated: '2026-11-25',
-  keywords: ['/plot auto', '/plot home', '/plot add', '/plot trust', '/plot visit', 'plotsquared', 'claim', 'base', 'land', 'protect', 'build'],
+  updated: '2026-11-27',
+  keywords: ['/plot auto', '/plot home', '/plot add', '/plot trust', '/plot visit', '/fly', '/tempfly', 'fly time', 'plotsquared', 'claim', 'base', 'land', 'protect', 'build'],
   related: ['player-shops', 'world-and-warps', 'spawners', 'ranks'],
   body: [
     {
@@ -72,6 +75,25 @@ export const plots: WikiPage = {
         { command: '/plot merge', description: 'Join your plot with a neighbouring plot you also own.' },
         { command: '/plot set biome <biome>', description: 'Change the biome of your plot.' },
       ],
+    },
+    { type: 'h2', text: 'Fly time' },
+    {
+      type: 'p',
+      text: `Every vote gives you **${voteRewards.flyMinutes} minutes of fly time** (see [Voting](/wiki/rewards#voting)). Type \`/fly\` to turn flying on or off. It works only on **your own plots and plots where you are trusted**: on roads, someone else’s plot or anywhere else it will not turn on.`,
+    },
+    {
+      type: 'list',
+      items: [
+        'Time only counts down while you are in the air. Standing or walking with fly on costs nothing.',
+        'Fly over the edge of your plot and flying switches off at once, so nobody can hover over other players’ builds. You take no fall damage for the next 10 seconds.',
+        'You can save up to 8 hours. Your time left is in the sidebar, and `/tempfly` shows it in chat.',
+        'Players a plot owner only **added** (not trusted) cannot fly there.',
+      ],
+    },
+    {
+      type: 'callout',
+      tone: 'info',
+      text: 'Ranks with their own `/fly` (see [Ranks](/wiki/ranks)) fly without using vote fly time.',
     },
     { type: 'h2', text: 'What works on a plot' },
     {

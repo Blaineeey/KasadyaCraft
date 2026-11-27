@@ -16,7 +16,7 @@ import { pageMetadata } from '@/lib/seo'
 export const metadata: Metadata = pageMetadata({
   title: 'Wiki',
   description:
-    'Every KasadyaCraft feature in one place: commands, ranks, money and shops, crates, spawners, the Lab of Horrors dungeon, rules and FAQ. Checked against the live server.',
+    'Every KasadyaCraft feature in one place: commands, ranks, money and shops, crates, spawners, the Lab of Horrors and the delves, rules and FAQ. Checked against the live server.',
   path: '/wiki',
 })
 

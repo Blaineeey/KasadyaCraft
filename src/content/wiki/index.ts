@@ -3,20 +3,28 @@
  * Owner: WIKI WRITER.
  *
  * Every fact was checked read-only against the live Survival + Hub configs on
- * 2026-11-25 (each page file lists its sources). Rank perks/prices and crate key
+ * 2026-11-25 (each page file lists its sources); chat, fishing, custom-enchants, chat-games, tags, plots (fly time), the
+ * vote facts and the Lab/delve daily limits were (re)checked on 2026-11-27. The delves pages (delves, gloomhold-keep, cinderworks)
+ * were checked against the KasadyaDelves plugin data on 2026-11-26 (see ./delve-facts.ts). Rank perks/prices and crate key
  * prices are NOT stored here: they render from src/lib/store.ts.
  */
 import type { PixelIconName } from '@/components/ui/pixel-icons'
 import { tocFromBlocks, wikiCategoryLabels, type WikiCategory, type WikiPage } from '@/lib/content'
 import { afkPool } from './afk-pool'
+import { chat } from './chat'
 import { chatGames } from './chat-games'
+import { cinderworks } from './cinderworks'
 import { commands } from './commands'
 import { crates } from './crates'
+import { customEnchants } from './custom-enchants'
+import { delves } from './delves'
 import { dungeon } from './dungeon'
 import { dungeonItems } from './dungeon-items'
 import { economy } from './economy'
 import { faq } from './faq'
 import { features } from './features'
+import { fishing } from './fishing'
+import { gloomholdKeep } from './gloomhold-keep'
 import { legendaryWeapons } from './legendary-weapons'
 import { painting } from './painting'
 import { playerShops } from './player-shops'
@@ -34,12 +42,15 @@ export const wikiPages: WikiPage[] = [
   worldAndWarps,
   plots,
   commands,
+  chat,
   // economy
   economy,
   playerShops,
   // features
   rewards,
   tags,
+  fishing,
+  customEnchants,
   afkPool,
   chatGames,
   crates,
@@ -49,6 +60,9 @@ export const wikiPages: WikiPage[] = [
   // dungeon
   dungeon,
   dungeonItems,
+  delves,
+  gloomholdKeep,
+  cinderworks,
   // ranks, rules, help
   ranks,
   rules,
@@ -57,10 +71,10 @@ export const wikiPages: WikiPage[] = [
 
 /** Category order on /wiki, with an icon and a one-line blurb for each section. */
 export const wikiCategories: { id: WikiCategory; label: string; icon: PixelIconName; blurb: string }[] = [
-  { id: 'basics', label: wikiCategoryLabels.basics, icon: 'compass', blurb: 'The map, your plot, warps and every command.' },
+  { id: 'basics', label: wikiCategoryLabels.basics, icon: 'compass', blurb: 'The map, your plot, warps, chat and every command.' },
   { id: 'economy', label: wikiCategoryLabels.economy, icon: 'coin', blurb: 'Money, the server shop and player shops.' },
-  { id: 'features', label: wikiCategoryLabels.features, icon: 'star', blurb: 'Rewards, crates, spawners and the fun extras.' },
-  { id: 'dungeon', label: wikiCategoryLabels.dungeon, icon: 'skull', blurb: 'The Lab of Horrors and everything it drops.' },
+  { id: 'features', label: wikiCategoryLabels.features, icon: 'star', blurb: 'Rewards, fishing, custom enchants, crates, spawners and the fun extras.' },
+  { id: 'dungeon', label: wikiCategoryLabels.dungeon, icon: 'skull', blurb: 'The Lab of Horrors, the delves Gloomhold Keep and Cinderworks, and their loot.' },
   { id: 'ranks', label: wikiCategoryLabels.ranks, icon: 'crown', blurb: 'What each rank adds and how to get it.' },
   { id: 'rules', label: wikiCategoryLabels.rules, icon: 'shield', blurb: 'How we keep the server friendly.' },
   { id: 'help', label: wikiCategoryLabels.help, icon: 'question', blurb: 'Quick answers to common questions.' },

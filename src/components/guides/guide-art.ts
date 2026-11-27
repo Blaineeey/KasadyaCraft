@@ -338,6 +338,140 @@ const sample = [
 
 /* -------------------------------------------------------------- the set */
 
+/* Added 2026-11-27: fishing, custom enchants, fly time and the Lab items that had no art yet. */
+const fish = [
+  '................',
+  '................',
+  '................',
+  '......KKKKKK....',
+  '....KKwwwbbbKK..',
+  '.KK.KwwbbbbbbbK.',
+  '.KbKbbbbbbbbbeK.',
+  '.KbbbbbbbbbbbbbK',
+  '.KBKBbbbbbbbbbK.',
+  '.KK.KBBbbbbbbK..',
+  '....KKBBBBBBK...',
+  '......KKKKKK....',
+  '................',
+  '................',
+  '................',
+  '................',
+]
+
+const rod = [
+  '................',
+  '............KK..',
+  '...........KhKl.',
+  '..........KhK.l.',
+  '.........KhK..l.',
+  '........KhK...l.',
+  '.......KhK....l.',
+  '......KhK.....l.',
+  '.....KhK......l.',
+  '....KsK.......l.',
+  '...KsK........l.',
+  '..KsK.......K.l.',
+  '.KsK........KKK.',
+  '.KK.............',
+  '................',
+  '................',
+]
+
+const worm = [
+  '................',
+  '................',
+  '................',
+  '................',
+  '..........KKK...',
+  '.........KpppK..',
+  '..KKK...KpPKpK..',
+  '.KpppK.KpPK.KK..',
+  '.KpPppKpPK......',
+  '..KPPppPK.......',
+  '...KKPPK........',
+  '.....KK.........',
+  '................',
+  '................',
+  '................',
+  '................',
+]
+
+const bookShape = [
+  '................',
+  '................',
+  '...KKKKKKKKKK...',
+  '..KppppppppppK..',
+  '..KpgppppppppK..',
+  '..KpppgppppppK..',
+  '..KppppppgpppK..',
+  '..KpppppppgppK..',
+  '..KppppppppppK..',
+  '..KPPPPPPPPPPK..',
+  '..KwwwwwwwwwwK..',
+  '..KKKKKKKKKKKK..',
+  '................',
+  '................',
+  '................',
+  '................',
+]
+
+const dust = [
+  '................',
+  '................',
+  '................',
+  '.......w........',
+  '......www....w..',
+  '.......w....www.',
+  '.............w..',
+  '.....KKKKKK.....',
+  '....KddddddK....',
+  '...KdDddddddK...',
+  '..KdddDddddddK..',
+  '..KDDDDDDDDDDK..',
+  '...KKKKKKKKKK...',
+  '................',
+  '................',
+  '................',
+]
+
+const scroll = [
+  '................',
+  '................',
+  '..KKKKKKKKKKKK..',
+  '.KwwwwwwwwwwwwK.',
+  '..KKKKKKKKKKKK..',
+  '...KwwwwwwwwK...',
+  '...KwllllllwK...',
+  '...KwwwwwwwwK...',
+  '...KwllllllwK...',
+  '...KwwwwwwwwK...',
+  '..KKKKKKKKKKKK..',
+  '.KwwwwwwwwwwwwK.',
+  '..KKKKKKKKKKKK..',
+  '................',
+  '................',
+  '................',
+]
+
+const feather = [
+  '................',
+  '............KK..',
+  '...........KwwK.',
+  '..........KwwfK.',
+  '.........KwwfK..',
+  '........KwwfK...',
+  '.......KwwfK....',
+  '......KwwfK.....',
+  '.....KwwfK......',
+  '....KwffK.......',
+  '...KffK.........',
+  '..KqK...........',
+  '.KqK............',
+  '.KK.............',
+  '................',
+  '................',
+]
+
 export type GuideArtName =
   | 'wooden-sword'
   | 'wooden-pickaxe'
@@ -360,6 +494,21 @@ export type GuideArtName =
   | 'key-diamond'
   | 'key-emerald'
   | 'key-star'
+  | 'fish-common'
+  | 'fish-uncommon'
+  | 'fish-rare'
+  | 'fish-epic'
+  | 'fish-legendary'
+  | 'fishing-rod'
+  | 'bait'
+  | 'enchanted-book'
+  | 'undeciphered-book'
+  | 'magic-dust'
+  | 'white-scroll'
+  | 'feather'
+  | 'hextech-crystal'
+  | 'raw-hextech'
+  | 'ingot-warden'
 
 export const guideArt: Record<GuideArtName, PixelIconDef> = {
   'wooden-sword': { palette: { K, ...WOOD, g: '#5a3c25', s: '#4a321c' }, rows: sword },
@@ -383,4 +532,19 @@ export const guideArt: Record<GuideArtName, PixelIconDef> = {
   'key-diamond': { palette: { K, k: '#74b4b8' }, rows: key },
   'key-emerald': { palette: { K, k: '#80b874' }, rows: key },
   'key-star': { palette: { K, k: '#94a7c6' }, rows: key },
+  'fish-common': { palette: { K, b: '#9fb8c9', B: '#5f7a8c', w: '#e3eef5', e: K }, rows: fish },
+  'fish-uncommon': { palette: { K, b: '#7bc96f', B: '#3e8a3a', w: '#d8f5d0', e: K }, rows: fish },
+  'fish-rare': { palette: { K, b: '#d6dde3', B: '#8c99a3', w: '#ffffff', e: K }, rows: fish },
+  'fish-epic': { palette: { K, b: '#f2c94c', B: '#b8892a', w: '#fff3c4', e: K }, rows: fish },
+  'fish-legendary': { palette: { K, b: '#b98cf2', B: '#6f45b8', w: '#efe2ff', e: K }, rows: fish },
+  'fishing-rod': { palette: { K, h: '#a8743e', s: '#4a321c', l: '#e6e6e6' }, rows: rod },
+  'bait': { palette: { K, p: '#e889a3', P: '#b5506e' }, rows: worm },
+  'enchanted-book': { palette: { K, p: '#7a4fc9', P: '#4a2c86', g: '#e6d2ff', w: '#efe6d0' }, rows: bookShape },
+  'undeciphered-book': { palette: { K, p: '#8a6a4a', P: '#5a4128', g: '#c9b48a', w: '#d9cfb8' }, rows: bookShape },
+  'magic-dust': { palette: { K, d: '#f2c94c', D: '#b8892a', w: '#fff7d6' }, rows: dust },
+  'white-scroll': { palette: { K, w: '#f4f1e8', l: '#b8b3a6' }, rows: scroll },
+  'feather': { palette: { K, w: '#f7f7f7', f: '#cfd8e3', q: '#a08060' }, rows: feather },
+  'hextech-crystal': { palette: { K, w: '#ffffff', b: '#7fe3ff', B: '#7a4fc9' }, rows: gem },
+  'raw-hextech': { palette: { K, w: '#e6d2ff', f: '#9a6ad9', F: '#5a3a99' }, rows: fragment },
+  'ingot-warden': { palette: { K, w: '#9fe8e0', m: '#1f8a85', d: '#0d4a52' }, rows: ingot },
 }

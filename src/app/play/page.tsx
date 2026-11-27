@@ -23,7 +23,9 @@ import s from './play.module.css'
  * ViaVersion + ViaBackwards 5.12.3 on hub + Survival (since the 05:13-05:19 restarts) accept 1.13 to 26.3
  * (VERSIONS in content/guides/facts.ts); older clients get "Minecraft 1.13 or newer" (Via block message /
  * Velocity), newer than 26.3 are refused by Velocity; 1.21.10 stays recommended because the pack is made for it;
- * online mode (paid accounts), no Geyser (no Bedrock); Survival server.properties require-resource-pack=true,
+ * VeloAuth 1.6.2 on the proxy (2026-11-25): paid accounts are checked with Mojang and log in by themselves, other names get a login
+ * room with /register and /login (8+ characters, kicked after 120 s, names of paid accounts are reserved, 5 accounts per address);
+ * Geyser 2.12.1 + Floodgate 2.2.5: Bedrock on port 19132, names start with a dot, no password; Survival server.properties require-resource-pack=true,
  * so the game shows Proceed / Disconnect; Disconnect makes the client close its connection to the proxy,
  * so the player leaves the whole network (no failover to the hub);
  * Hub KasadyaLobby: portal, Survival Guide NPC, compass in the middle hotbar slot, /survival /smp /hub /lobby /menu.
@@ -77,14 +79,48 @@ const troubles: { q: string; a: ReactNode }[] = [
     q: '"Failed to log in" or "Invalid session"',
     a: (
       <p>
-        Restart the Minecraft Launcher and sign in again. KasadyaCraft checks accounts with Mojang, so you need a paid Java Edition
-        account. Cracked or offline launchers can&apos;t join.
+        Paid account? Restart the Minecraft Launcher and sign in again. No paid account? The name you picked belongs to somebody who
+        has one, so it is reserved for them. Choose another name and join again.
       </p>
     ),
   },
   {
-    q: 'Can I play on Bedrock (phone or console)?',
-    a: <p>Not yet. KasadyaCraft is Java Edition only for now.</p>,
+    q: 'Do I need a paid account?',
+    a: (
+      <>
+        <p>No. Paid accounts are logged in automatically.</p>
+        <p>
+          Without one you land in a login room first. New here? Type <code className="kc-cmd-inline">/register password password</code>.
+          Back again? Type <code className="kc-cmd-inline">/login password</code>. Use at least 8 characters and a password you use
+          nowhere else. Our staff will never ask for it.
+        </p>
+      </>
+    ),
+  },
+  {
+    q: 'I forgot my password',
+    a: (
+      <p>
+        Ask a staff member in <a href={site.discord}>Discord</a> to reset your account. You can change a password you still know with{' '}
+        <code className="kc-cmd-inline">/changepassword</code>.
+      </p>
+    ),
+  },
+  {
+    q: 'Can I play on Bedrock (phone, tablet, Windows or console)?',
+    a: (
+      <>
+        <p>
+          Yes. On phones, tablets and Windows add a server with the address <strong>{site.address}</strong> and port{' '}
+          <strong>{site.bedrockPort}</strong>. You need no password. Your name gets a dot in front, like .Maria. The first time, Minecraft
+          may ask if you trust the server.
+        </p>
+        <p>
+          Xbox, PlayStation and Switch have no button to add a server. They need a helper app such as BedrockConnect. Custom dungeon
+          monsters and some icons are made for Java and may look different or not show on Bedrock.
+        </p>
+      </>
+    ),
   },
   {
     q: 'I can’t connect at all',
@@ -112,7 +148,7 @@ export default function PlayPage() {
       <PageHero
         title="How to join"
         eyebrow={`${site.edition} · ${site.versionLabel}`}
-        lead="Three steps, about two minutes. You need Minecraft: Java Edition on a paid account."
+        lead="Three steps, about two minutes. Java or Bedrock, with or without a paid account."
         icon="grass"
       >
         <div className={s.heroStatus}>

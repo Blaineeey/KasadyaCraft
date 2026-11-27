@@ -9,6 +9,8 @@ import type { WikiPage } from '@/lib/content'
  * - Essentials warps/*.yml, config.yml (teleport-delay 3, tpa-accept-cancellation 120, auto-afk 300, auto-afk-kick -1)
  * - Skript rtp.sk (/wild /rtp /randomtp /wildtp -> world, /nethertp, /endtp, 60 s cooldown), DeluxeMenus WARP/Rtp.yml (/rtpmenu)
  * - Hub: KasadyaLobby + Velocity (/survival /smp /server smp, /hub /lobby, failover to hub) per /root/launch/CHANGELOG.md
+ * - Delves row (2026-11-26): KasadyaDelves 1.0.0, world delves with gamerule keepInventory true (DelveWorld.java), started
+ *   from /dungeon (Engine.refusal only blocks combat, the Lab of Horrors, legendary weapons and the daily limits)
  */
 export const worldAndWarps: WikiPage = {
   slug: 'world-and-warps',
@@ -72,7 +74,8 @@ export const worldAndWarps: WikiPage = {
         ['The End', '`/endtp` or a portal', '5,000 blocks across', 'Off', 'Endermen, shulkers and elytra hunting.'],
         ['Plot world', '`/plot home`', 'No border', 'Off', 'Your protected base. See [Plots](/wiki/plots).'],
         ['Shopping Mall', '`/warp mall`', '30 stalls', 'On', 'Player shops. See [Player shops](/wiki/player-shops).'],
-        ['Lab of Horrors', '`/warp dungeon`', 'Instanced', 'On during a run', 'The dungeon. See [Lab of Horrors](/wiki/dungeon).'],
+        ['Lab of Horrors', '`/warp dungeon`', 'Instanced', 'On during a run', 'Our first dungeon. See [Lab of Horrors](/wiki/dungeon).'],
+        ['Delves', '`/dungeon`', 'Instanced', 'On during a run', 'Gloomhold Keep and Cinderworks. You start them from the menu, from anywhere in Survival. See [Delves](/wiki/delves).'],
       ],
     },
     {

@@ -7,6 +7,10 @@ import type { PixelIconName, Rarity } from '@/components/ui'
  * 2026-11-25 (see the INTERACTIVITY report): LuckPerms groups (plots.plot.N),
  * Essentials (starting-balance 250, warps), ToastedAFK (10 points / 1200 s),
  * ExcellentCrates (5 crates), DeluxeMenus DUNGEON/*.yml, BetterRTP, ODailyQuests.
+ * The dungeon card covers all three dungeons since KasadyaDelves 1.0.0 (2026-11-26): /dungeon opens one menu with the
+ * Lab of Horrors, Gloomhold Keep and Cinderworks, 1 to 5 players each (src/content/wiki/delve-facts.ts). It stays one card
+ * so the inventory keeps its nine slots.
+ * 2026-11-27: the tags card covers picture tags (AlonsoTags, money) plus chat colours and glow (points), see wiki/tags.ts.
  * Owner: INTERACTIVITY ENGINEER.
  */
 
@@ -68,15 +72,15 @@ export const features: Feature[] = [
   },
   {
     id: 'dungeon',
-    name: 'Lab of Horrors',
+    name: 'Dungeons',
     icon: 'boss',
     rarity: 'epic',
-    recipe: ['sword', _, 'shield', _, 'skull', _, 'potion', 'key', 'potion'],
-    flavour: 'Bring friends. Draedon is waiting.',
-    body: 'Our dungeon has rooms full of custom mobs and a boss fight with Draedon at the end. Make a party, fight through, then forge Chamber keys at the Locksmith to open the raid chests.',
-    commands: ['/warp dungeon', '/dungeon', '/locksmith', '/dungeoninfo'],
-    href: '/wiki/dungeon',
-    linkLabel: 'Dungeon guide',
+    recipe: ['sword', _, 'shield', _, 'skull', _, 'potion', 'key', 'lantern'],
+    flavour: 'Three dungeons. Three bosses. Bring friends.',
+    body: 'The Lab of Horrors, Gloomhold Keep and Cinderworks, each with a boss at the end. Type /dungeon, pick one, then go alone or bring up to 4 friends. You keep your items when you die.',
+    commands: ['/dungeon', '/dungeon codex', '/warp dungeon', '/locksmith'],
+    href: '/wiki/delves',
+    linkLabel: 'The delves',
   },
   {
     id: 'crates',
@@ -116,14 +120,14 @@ export const features: Feature[] = [
   },
   {
     id: 'tags',
-    name: 'Chat tags',
+    name: 'Tags and cosmetics',
     icon: 'tag',
     rarity: 'legendary',
     recipe: [_, 'coin', _, 'chat', 'tag', 'chat', _, 'coin', _],
     flavour: 'Show off in chat. Pure looks, no power.',
-    body: 'Pick a tag that shows next to your name. You buy tags with in-game money you earned, not real money.',
-    commands: ['/tags'],
-    href: '/wiki/rewards',
+    body: 'Pick a picture tag that shows next to your name, in chat, the tab list and above your head. Tags cost in-game money; chat colours and glow cost points. Nothing costs real money.',
+    commands: ['/tags', '/chatcolor', '/glowshop'],
+    href: '/wiki/tags',
     linkLabel: 'Tags and cosmetics',
   },
   {

@@ -43,7 +43,7 @@ export const afkPool: WikiPage = {
     {
       type: 'list',
       items: [
-        'Points buy chat colours in `/cosmetics` (✪25 each). They cannot be turned into money or items.',
+        'Points buy chat colours (`/chatcolor`, ✪250 or ✪500), glow (`/glowshop`) and Tokens or crate keys in `/pointshop` (✪25 = ⛃1). They cannot be turned into money.',
         'You are never kicked for being AFK, so the pool is safe overnight.',
         'Stay inside the area. Walk out and you stop earning until you come back.',
         '`/shop` does not work while you are in the pool.',

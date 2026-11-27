@@ -52,6 +52,10 @@ const nextConfig: NextConfig = {
       { source: '/ranks', destination: '/wiki/ranks', permanent: false },
       { source: '/commands', destination: '/wiki/commands', permanent: false },
       { source: '/dungeon', destination: '/wiki/dungeon', permanent: false },
+      // The delves (KasadyaDelves): `/dungeon delves`, `/dungeon solo gloomhold|cinderworks` in game.
+      { source: '/delves', destination: '/wiki/delves', permanent: false },
+      { source: '/gloomhold', destination: '/wiki/gloomhold-keep', permanent: false },
+      { source: '/cinderworks', destination: '/wiki/cinderworks', permanent: false },
       { source: '/shop', destination: '/store', permanent: false },
       { source: '/buy', destination: '/store', permanent: false },
       { source: '/discord', destination: DISCORD, permanent: false },

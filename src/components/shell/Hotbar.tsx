@@ -45,6 +45,7 @@ const handyPages: { label: string; href: string; icon: PixelIconName }[] = [
   { label: 'Commands', href: '/wiki/commands', icon: 'scroll' },
   { label: 'FAQ', href: '/wiki/faq', icon: 'question' },
   { label: 'Lab of Horrors', href: '/wiki/dungeon', icon: 'skull' },
+  { label: 'Delves', href: '/wiki/delves', icon: 'lantern' },
   { label: 'Ranks', href: '/wiki/ranks', icon: 'crown' },
 ]
 

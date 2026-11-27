@@ -13,6 +13,7 @@
  * Nothing else is parsed. No raw HTML.
  */
 import type { PixelIconName } from '@/components/ui/pixel-icons'
+import type { GuideArtName } from '@/components/guides/guide-art'
 import type { CalloutTone } from '@/components/ui/Callout'
 import type { Rarity, TooltipLine } from '@/components/ui/TooltipCard'
 
@@ -31,6 +32,8 @@ export interface CommandRow {
 export interface SlotItem {
   label: string
   icon?: PixelIconName
+  /** Detailed item art from src/components/guides/guide-art.ts (wins over `icon`). Original art only. */
+  art?: GuideArtName
   count?: number
   rarity?: Rarity
   lines?: TooltipLine[]
@@ -87,7 +90,7 @@ export const wikiCategoryLabels: Record<WikiCategory, string> = {
   basics: 'Getting around',
   economy: 'Money and trading',
   features: 'Features',
-  dungeon: 'Dungeon',
+  dungeon: 'Dungeons',
   ranks: 'Ranks and perks',
   rules: 'Rules',
   help: 'Help',

@@ -14,7 +14,7 @@ import { pageMetadata } from '@/lib/seo'
 export const metadata: Metadata = pageMetadata({
   title: 'KasadyaCraft Survival',
   description:
-    'KasadyaCraft Survival: free plots, player shops, daily quests and the Lab of Horrors dungeon. Minecraft Java Edition, play.kasadyacraft.com.',
+    'KasadyaCraft Survival: free plots, player shops, daily quests and three dungeons: the Lab of Horrors, Gloomhold Keep and Cinderworks. Minecraft Java and Bedrock, play.kasadyacraft.com.',
   path: '/games/minecraft',
 })
 
@@ -24,7 +24,7 @@ export default function MinecraftPage() {
       <PageHero
         title="KasadyaCraft Survival"
         eyebrow={`Minecraft · ${site.versionLabel}`}
-        lead={`${site.tagline} Plots, player shops, daily quests and a dungeon with a real boss fight. You start in the hub, then hop into Survival.`}
+        lead={`${site.tagline} Plots, player shops, daily quests and dungeons with real boss fights. You start in the hub, then hop into Survival.`}
         icon="grass"
         crumbs={[{ label: 'Games', href: '/games' }, { label: 'Minecraft' }]}
       >

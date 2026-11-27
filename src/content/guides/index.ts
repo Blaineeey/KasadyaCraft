@@ -6,6 +6,7 @@
 import type { Guide, GuideStage } from '@/lib/content'
 import { claimAPlot } from './claim-a-plot'
 import { firstDay } from './first-day'
+import { firstDelve } from './first-delve'
 import { firstDungeon } from './first-dungeon'
 import { joining } from './joining'
 import { makingMoney } from './making-money'
@@ -24,10 +25,10 @@ export const guideStageLabels: Record<GuideStage, string> = {
 export const guideStageBlurbs: Record<GuideStage, string> = {
   join: 'From the launcher to the hub to Survival.',
   'first-day': 'Find your feet, stay safe and earn your first money.',
-  'next-steps': 'Build, trade, raid the dungeon and level up.',
+  'next-steps': 'Build, trade, raid the dungeons and level up.',
 }
 
-const all: Guide[] = [joining, firstDay, safetyAndRules, makingMoney, claimAPlot, openAShop, firstDungeon, ranksAndKits]
+const all: Guide[] = [joining, firstDay, safetyAndRules, makingMoney, claimAPlot, openAShop, firstDungeon, firstDelve, ranksAndKits]
 
 /** Every guide in reading order (stage, then order). */
 export const guides: Guide[] = [...all].sort(

@@ -41,7 +41,10 @@ const STEPS: Step[] = [
           In the launcher, pick version <strong>{site.recommendedVersion}</strong> and press Play. Any 1.21.x version works,
           but {site.recommendedVersion} is the smoothest.
         </p>
-        <p className={s.small}>Bedrock (phones, consoles, Windows Bedrock) cannot join. You need a Java account.</p>
+        <p className={s.small}>
+          On Bedrock (phone, tablet, Windows)? Use the same address with port {site.bedrockPort}. No paid account? You can join too and
+          pick a password.
+        </p>
       </>
     ),
     art: (

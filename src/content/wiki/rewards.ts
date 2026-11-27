@@ -15,7 +15,7 @@ import {
   roman,
 } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
-import { voteRewards, voteSites } from '@/lib/vote'
+import { VOTE_PARTY_TEXT, VOTE_REWARD_TEXT, voteRewards, voteSites } from '@/lib/vote'
 
 /*
  * Every table below renders from src/content/facts.ts (one list per fact, shared with the guides).
@@ -83,11 +83,11 @@ export const rewards: WikiPage = {
     { type: 'h2', text: 'Voting' },
     {
       type: 'p',
-      text: `Type \`/vote\`, click a site and open the link you get in chat. The same links are on the [vote page](/vote). There are ${voteSites.length} sites, and every vote gives you **${voteRewards.keysPerVote} Vote crate key**. Keep one inventory slot free for it.`,
+      text: `Type \`/vote\`, click a site and open the link you get in chat. The same links are on the [vote page](/vote). There are ${voteSites.length} sites, and every vote gives you **${VOTE_REWARD_TEXT}**. Keep one inventory slot free for the key. Fly time works with \`/fly\` on your own plots and plots you are trusted on, see [Plots](/wiki/plots#fly-time).`,
     },
     {
       type: 'p',
-      text: `Every ${voteRewards.partyVotes} votes there is a vote party: everyone online on Survival gets ${voteRewards.partyKeys} Vote key.`,
+      text: `Every ${voteRewards.partyVotes} votes there is a vote party: ${VOTE_PARTY_TEXT}. Every hit on the piñata can drop keys, points or a snack, 5 or more hits give 25 points, and the last hit wins a key.`,
     },
     { type: 'h2', text: 'Daily quests' },
     {
@@ -132,12 +132,12 @@ export const rewards: WikiPage = {
     { type: 'h2', text: 'Chat games' },
     {
       type: 'p',
-      text: 'Every 5 to 10 minutes a quick game pops up in chat. First right answer wins cash. Details on [Chat games](/wiki/chat-games).',
+      text: 'Every 5 to 10 minutes a quick game pops up in chat. The first right answer wins $250, 5 points and 100 XP. Details on [Chat games](/wiki/chat-games).',
     },
     { type: 'h2', text: 'Tags and cosmetics' },
     {
       type: 'p',
-      text: 'Spend your earnings on looks: chat tags for money in `/tags`, chat colours for points in `/cosmetics`. See [Chat tags](/wiki/tags).',
+      text: 'Spend your earnings on looks: picture tags for money in `/tags`, chat colours and glow for points in `/chatcolor` and `/glowshop`. See [Chat tags and cosmetics](/wiki/tags).',
     },
   ],
 }

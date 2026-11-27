@@ -1,4 +1,5 @@
 import { DAILY_QUESTS_LINE, DAILY_REWARDS, TOKEN_SOURCES_TEXT, dailyRewardText } from '@/content/facts'
+import { CHAT_GAME_PRIZE } from '@/content/wiki/chat-games'
 import type { Guide } from '@/lib/content'
 import {
   AFK_POOL,
@@ -18,9 +19,11 @@ import {
  * have sell -1), EconomyShopGUI config.yml (shift-right-click-sell-all, /sellall, /sellgui enabled),
  * ODailyQuests config.yml (global mode; global_reward $1,500 + 1 diamond block + 25 Tokens) and
  * quests/global.yml (2,000 XP per quest), DailyRewards config.yml (+10/50/150 Tokens), DeluxeMenus BASIC/Playtime.yml + BASIC/Guide.yml (currencies),
- * ChatGames config.yml (eco give 20/25, chance of more), ToastedAFK config.yml, AlonsoTags tags.yml
- * ($2,500 / $7,500 / $20,000), QuickShop-Hikari config.yml, AdvancedRegionMarket regions.yml.
+ * ChatGames (2026-11-27: $250 + 5 points + 100 XP per win, see wiki/chat-games.ts), ToastedAFK config.yml, AlonsoTags tags.yml
+ * ($10,000 / $30,000 / $100,000 since 2026-11-27), QuickShop-Hikari config.yml, AdvancedRegionMarket regions.yml,
+ * InfiniteFishing (/fishmarket, ~$1.1k-$2.8k an hour, see wiki/fishing.ts), PURCHASE/Points.yml (/pointshop).
  */
+
 const lvl = (n: string) => PLAYTIME_LEVELS.find((l) => l.level === n)!
 
 export const makingMoney: Guide = {
@@ -37,7 +40,7 @@ export const makingMoney: Guide = {
   body: [
     {
       type: 'p',
-      text: `You start with **${money(STARTING_BALANCE)}**. Money buys things in \`/shop\` and in player shops, rents mall stalls and unlocks chat tags. Here is how to earn it.`,
+      text: `You start with **${money(STARTING_BALANCE)}**. Money buys things in \`/shop\` and in player shops, rents mall stalls and unlocks picture tags. Here is how to earn it.`,
     },
     { type: 'h2', text: 'Selling to the server shop' },
     {
@@ -76,6 +79,11 @@ export const makingMoney: Guide = {
       ],
     },
     { type: 'callout', tone: 'tip', text: 'Step by step, with prices and mall rent: [Open your own shop](/guides/open-a-shop).' },
+    { type: 'h2', text: 'Fishing' },
+    {
+      type: 'p',
+      text: 'Fishing is a steady way to earn: about **$1,100 an hour** with a starter rod and up to about **$2,800** with better rods. Sell your catch at `/fishmarket`, not in `/shop` (the shop pays only $1 a fish). Everything about rods and bait: [Fishing](/wiki/fishing).',
+    },
     { type: 'h2', text: 'Free money most players miss' },
     {
       type: 'table',
@@ -85,7 +93,7 @@ export const makingMoney: Guide = {
         ['`/dquests`', DAILY_QUESTS_LINE, 'Every day'],
         ['`/rewards`', `Daily: ${dailyRewardText(DAILY_REWARDS[0])}. The weekly and monthly rewards are bigger.`, 'Daily, weekly, monthly'],
         [`\`${PLAYTIME_COMMAND}\``, `${lvl('II').reward} at ${lvl('II').after}, ${lvl('III').reward} at ${lvl('III').after}, ${lvl('IV').reward} at ${lvl('IV').after}, and it keeps growing.`, 'Once per level'],
-        ['Chat games', 'Be the first to answer a chat game for $20 or more.', 'Whenever one pops up'],
+        ['Chat games', `Be the first to answer a chat game: ${money(CHAT_GAME_PRIZE.money)}, ${CHAT_GAME_PRIZE.points} points and ${CHAT_GAME_PRIZE.xp} XP.`, 'Whenever one pops up'],
         ['`/warp afk`', `${AFK_POOL.points} points for every ${AFK_POOL.minutes} minutes you stand in the AFK room.`, 'While you are AFK'],
       ],
     },
@@ -94,7 +102,7 @@ export const makingMoney: Guide = {
       type: 'list',
       items: [
         '**Money ($):** the shop, player shops, mall stalls and tags. Check it with `/bal`.',
-        '**Points:** from the AFK room, weekly and monthly rewards and playtime levels. Spend them in `/cosmetics`.',
+        '**Points:** from the AFK room, chat games, dungeon clears, weekly and monthly rewards and playtime levels. Spend them on chat colours, glow, or Tokens and keys in `/pointshop`.',
         `**Tokens:** from ${TOKEN_SOURCES_TEXT}. Spend them on ranks and crate keys in \`/purchase\`.`,
       ],
     },
@@ -103,7 +111,7 @@ export const makingMoney: Guide = {
       type: 'list',
       items: [
         `The shop sells things for 4 times what it pays (it pays ${SELL_PERCENT}%). Check player shops before you buy.`,
-        'Chat tags in `/tags` cost $2,500, $7,500 or $20,000. Nice to have, not urgent.',
+        'Picture tags in `/tags` cost $10,000, $30,000 or $100,000. Nice to have, not urgent.',
         'Mall stalls are rented by the week. Make sure your shop earns more than the rent.',
         'Before you sell something rare to the server, check the mall. Another player may pay more.',
       ],

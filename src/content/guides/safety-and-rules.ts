@@ -9,6 +9,9 @@ import { CHECKED, COMBAT_TAG_SECONDS } from './facts'
  * no land-claim plugin installed for the wild, CombatLogX config.yml (10 s tag, killed on quit),
  * Hub KasadyaLobby (all damage cancelled), LuckPerms default group (essentials.helpop, essentials.ignore,
  * essentials.pay), AxTrade (/trade), FreeCoinFlip (coinflip NPC at spawn).
+ * Chat filter (2026-11-27): LPC Pro moderation.yml (anti-spam 2 s + repeats, caps to lower case, links blocked except
+ * kasadyacraft.com, swear filter with 1 point each: 5 = 30 min mute, 10 = kick, 15 = 7 day ban, points expire after 7 days),
+ * LPC /report and /ignore. Details: wiki/chat.ts.
  */
 export const safetyAndRules: Guide = {
   slug: 'safety-and-rules',
@@ -70,7 +73,8 @@ export const safetyAndRules: Guide = {
       type: 'commands',
       items: [
         { command: '/helpop <message>', description: 'Sends your message to the staff who are online.' },
-        { command: '/ignore <name>', description: 'Hides chat from someone who is bothering you.' },
+        { command: '/report <name> <reason>', description: 'Reports a player to the staff.' },
+        { command: '/ignore <name>', description: 'Hides chat and private messages from someone who is bothering you.' },
         { command: '/rules', description: 'Opens the full rules in game.' },
       ],
     },
@@ -92,6 +96,12 @@ export const safetyAndRules: Guide = {
         'Keep chat SFW. No adult content.',
         'No offensive topics or hate speech. That includes politics, religion, violence, self-harm, terrorism, war and any kind of slur.',
       ],
+    },
+    {
+      type: 'callout',
+      tone: 'warn',
+      title: 'The chat filter is automatic',
+      text: 'Swear words are replaced with stars, links (except kasadyacraft.com) are blocked and caps are turned into lower case. Every filtered swear word adds a point that lasts 7 days: **5 points** mute you for 30 minutes, **10** kick you, **15** ban you for 7 days. More on [Chat and messages](/wiki/chat).',
     },
     { type: 'h3', text: 'Everywhere' },
     {

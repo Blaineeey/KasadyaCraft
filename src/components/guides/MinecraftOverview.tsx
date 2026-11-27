@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { MALL, PLOT, STARTING_BALANCE, WILD_SIZE, money } from '@/content/guides/facts'
+import { DELVE_RULES, DELVES } from '@/content/wiki/delve-facts'
 import Panel from '@/components/ui/Panel'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
@@ -10,7 +11,8 @@ import s from './overview.module.css'
 
 /*
  * Body of /games/minecraft: a short tour of KasadyaCraft Survival for the multi-game section.
- * Every line is a checked fact (see src/content/guides/facts.ts). Owner: STARTER-GUIDE WRITER.
+ * Every line is a checked fact (see src/content/guides/facts.ts; the delves card: src/content/wiki/delve-facts.ts).
+ * Owner: STARTER-GUIDE WRITER.
  */
 const features: { icon: PixelIconName; title: string; body: string; href: string }[] = [
   {
@@ -32,10 +34,28 @@ const features: { icon: PixelIconName; title: string; body: string; href: string
     href: '/wiki/dungeon',
   },
   {
+    icon: 'lantern',
+    title: 'The delves',
+    body: `${DELVES.gloomhold.name} (${DELVES.gloomhold.difficulty}) and ${DELVES.cinderworks.name} (${DELVES.cinderworks.difficulty}): five floors and a boss each. Solo or up to ${DELVE_RULES.maxPlayers}, open them with /dungeon.`,
+    href: '/wiki/delves',
+  },
+  {
     icon: 'quest',
     title: 'Quests and rewards',
     body: 'Daily quests, daily rewards, playtime levels, chat games and an AFK room that pays points.',
     href: '/wiki/rewards',
+  },
+  {
+    icon: 'fish',
+    title: 'Fishing',
+    body: 'Fish with rarities, rods, bait and minigames. Sell your catch at /fishmarket and join the weekly tournaments.',
+    href: '/wiki/fishing',
+  },
+  {
+    icon: 'enchant',
+    title: 'Custom enchants',
+    body: 'Simple to Fabled enchants on top of the normal ones. Buy books with XP at /enchanter and see what fits in /ae.',
+    href: '/wiki/custom-enchants',
   },
   {
     icon: 'chest',
@@ -78,7 +98,7 @@ export default function MinecraftOverview() {
             id="inside"
             eyebrow={site.motdLine}
             title="What you can do"
-            lead="A friendly survival server where you build your own place, trade with other players and team up for a real boss fight."
+            lead="A friendly survival server where you build your own place, trade with other players and team up for real boss fights."
           />
           <ul className={s.features}>
             {features.map((f) => (
@@ -142,12 +162,12 @@ export default function MinecraftOverview() {
             <div className={s.fact}>
               <dt>Version</dt>
               <dd>
-                {site.edition} {site.versionLabel.replace(/^Java\s*/, '')} ({site.recommendedVersion} recommended). No Bedrock yet.
+                {site.edition} {site.versionLabel.replace(/^Java\s*/, '')} ({site.recommendedVersion} recommended). Bedrock: port {site.bedrockPort}.
               </dd>
             </div>
             <div className={s.fact}>
               <dt>Account</dt>
-              <dd>A paid Java Edition account</dd>
+              <dd>Any. Paid accounts log in by themselves, others use /register and /login.</dd>
             </div>
             <div className={s.fact}>
               <dt>Resource pack</dt>
