@@ -10,6 +10,7 @@ import type { PixelIconName, Rarity } from '@/components/ui'
  * The dungeon card covers all three dungeons since KasadyaDelves 1.0.0 (2026-11-26): /dungeon opens one menu with the
  * Lab of Horrors, Gloomhold Keep and Cinderworks, 1 to 5 players each (src/content/wiki/delve-facts.ts). It stays one card
  * so the inventory keeps its nine slots.
+ * 2026-11-27: the tags card covers picture tags (AlonsoTags, money) plus chat colours and glow (points), see wiki/tags.ts.
  * Owner: INTERACTIVITY ENGINEER.
  */
 
@@ -119,14 +120,14 @@ export const features: Feature[] = [
   },
   {
     id: 'tags',
-    name: 'Chat tags',
+    name: 'Tags and cosmetics',
     icon: 'tag',
     rarity: 'legendary',
     recipe: [_, 'coin', _, 'chat', 'tag', 'chat', _, 'coin', _],
     flavour: 'Show off in chat. Pure looks, no power.',
-    body: 'Pick a tag that shows next to your name. You buy tags with in-game money you earned, not real money.',
-    commands: ['/tags'],
-    href: '/wiki/rewards',
+    body: 'Pick a picture tag that shows next to your name, in chat, the tab list and above your head. Tags cost in-game money; chat colours and glow cost points. Nothing costs real money.',
+    commands: ['/tags', '/chatcolor', '/glowshop'],
+    href: '/wiki/tags',
     linkLabel: 'Tags and cosmetics',
   },
   {

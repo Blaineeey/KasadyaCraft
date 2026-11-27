@@ -68,6 +68,8 @@ export type PixelIconName =
   | 'flower'
   | 'sparkle'
   | 'missing'
+  | 'fish'
+  | 'enchant'
 
 export interface PixelIconDef {
   palette: Record<string, string>
@@ -1195,6 +1197,48 @@ export const pixelIcons: Partial<Record<PixelIconName, PixelIconDef>> = {
       '................',
       '................',
       '................',
+    ],
+  },
+  fish: {
+    palette: { K, b: '#5fa8e0', B: '#2f6aa8', w: '#dff1ff', d: '#3f7fe8' },
+    rows: [
+      '................',
+      '................',
+      '................',
+      '......KKKKKK....',
+      '....KKwwwbbbKK..',
+      '.KK.KwwbbbbbbbK.',
+      '.KbKbbbbbbbbbKK.',
+      '.KbbbbbbbbbbbbbK',
+      '.KBKBbbbbbbbbbK.',
+      '.KK.KBBbbbbbbK..',
+      '....KKBBBBBBK...',
+      '......KKKKKK....',
+      '.d..d....d...d..',
+      'dddddddddddddddd',
+      '................',
+      '................',
+    ],
+  },
+  enchant: {
+    palette: { K, p: '#7a4fc9', P: '#4a2c86', g: '#e6d2ff', w: '#efe6d0', s: '#ffe27a' },
+    rows: [
+      '.............s..',
+      '..s.........sss.',
+      '.sss.........s..',
+      '..sKKKKKKKKKK...',
+      '..KppppppppppK..',
+      '..KpgppppppppK..',
+      '..KpppgppppppK..',
+      '..KppppppgpppK..',
+      '..KpppppppgppK..',
+      '..KppppppppppK..',
+      '..KPPPPPPPPPPK..',
+      '..KwwwwwwwwwwK..',
+      '..KKKKKKKKKKKK..',
+      '...........s....',
+      '..........sss...',
+      '...........s....',
     ],
   },
   missing: {

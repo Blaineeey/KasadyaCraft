@@ -22,7 +22,10 @@ import type { ContentBlock, WikiPage } from '@/lib/content'
  *   reprice (files dated 07:22). Economy balancer log in /root/launch/CHANGELOG.md (sell = 25% of buy,
  *   loop fixes, totem 3500/20)
  * - ToastedAFK denied_commands: /shop
- * - CustomFishing config: earnings-multiplier 0.25, daily limitation 2500 (balancer log)
+ * - InfiniteFishing (2026-11-26, replaced CustomFishing): /fishmarket, price = base x (weight + size) / 120, no daily cap;
+ *   about $1.1k an hour with a starter rod, about $2.8k with the Celestial rod. Details: ./fishing.ts
+ * - Points (2026-11-27): PURCHASE/Points.yml (/pointshop) 25 points = 1 Token, Vote key 500, Resource key 750; chat colours
+ *   250/500 (CHATCOLOR/Minecraft.yml), glow 500-3000 (COSMETICS/Glow.yml); Tokens no longer buy points
  * - AxTrade config: /trade, max distance 10, request expires 60 s, confirm 5 s, abort on move; currencies money, points, exp
  * - FreeCoinFlip: min 1000, tax enabled 5% (balancer log)
  * - QuickShop: cost 100, refund false, fee-for-price-change 50, tax 0.05; ARM stall prices; AlonsoTags prices
@@ -114,7 +117,8 @@ export const economy: WikiPage = {
     'coinflip',
     '/trade',
     'fish',
-    '/sellfish',
+    '/fishmarket',
+    '/pointshop',
     'prices',
     'starting money',
   ],
@@ -128,11 +132,15 @@ export const economy: WikiPage = {
       rows: [
         [
           'Money ($)',
-          'Selling raw materials, player shops, the daily quest bonus, playtime levels, chat games, the fish market',
-          'Shop items, player shops, chat tags, Mall stalls, coinflip',
+          'Selling raw materials, fishing (`/fishmarket`), player shops, the daily quest bonus, playtime levels, chat games',
+          'Shop items, player shops, picture tags, Mall stalls, coinflip',
         ],
-        ['Points (✪)', 'AFK pool, weekly and monthly rewards, playtime level V, or buy them with Tokens', 'Chat colours in `/cosmetics`, ✪25 each'],
-        ['Tokens (⛃)', TOKEN_SOURCES_TEXT, 'Ranks, crate keys and points in `/purchase`'],
+        [
+          'Points (✪)',
+          'AFK pool, chat games (5 a win), Lab of Horrors and delve clears, weekly and monthly rewards, playtime level V',
+          'Chat colours (`/chatcolor`, ✪250 or ✪500), glow (`/glowshop`, ✪500 to ✪3,000), and Tokens or crate keys in `/pointshop` (✪25 = ⛃1)',
+        ],
+        ['Tokens (⛃)', TOKEN_SOURCES_TEXT, 'Ranks and crate keys in `/purchase`. Tokens are worth the most and never turn back into points.'],
       ],
     },
     {
@@ -183,10 +191,10 @@ export const economy: WikiPage = {
       text: '`/sellall inventory` sells **everything** the shop accepts, diamonds included. Put what you want to keep in a chest first.',
     },
     { type: 'callout', tone: 'info', text: '`/shop` does not work while you stand in the AFK pool.' },
-    { type: 'h2', text: 'Fish market' },
+    { type: 'h2', text: 'Fishing' },
     {
       type: 'p',
-      text: 'Fishing pays too. `/sellfish` (or `/fishshop`) buys the fish you catch, up to **$2,500 a day**. `/fishingbag` gives you a bag for bait, hooks and rods.',
+      text: 'Fishing pays about as much as mining: roughly **$1,100 an hour** with a starter rod and up to about **$2,800** with the best rod you can fish up. Sell at `/fishmarket` (the item shop pays only $1 a fish). Rods, bait and the minigames are on [Fishing](/wiki/fishing).',
     },
     { type: 'h2', text: 'Trading with players' },
     {
@@ -212,7 +220,7 @@ export const economy: WikiPage = {
       rows: [
         ['Chest shop', '$100 to create, $50 per price change, 5% tax on every sale'],
         ['Shopping Mall stall', '$5,000 or $10,000 per 7 days'],
-        ['Chat tags', '$2,500, $7,500 or $20,000 each'],
+        ['Picture tags', '$10,000, $30,000 or $100,000 each'],
         ['Coinflip', '5% of every pot'],
         ['Chamber Keys for the dungeon', '64 diamonds or 64 emeralds, plus dungeon materials'],
       ],

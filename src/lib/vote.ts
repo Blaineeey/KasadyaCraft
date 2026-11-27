@@ -69,17 +69,29 @@ export const voteSites: readonly VoteSite[] = [
   },
 ]
 
-/** What a vote gives, from KasadyaVote config.yml. */
+/** What a vote gives, from KasadyaVote config.yml (re-checked 2026-11-27). */
 export const voteRewards = {
   /** crate key give %player% vote 1 */
   keysPerVote: 1,
-  /** Every this many votes, everyone online on Survival gets partyKeys. */
+  /** tempfly give %player% 5: minutes of fly time (Skript tempfly.sk, /fly on your own or trusted plots) */
+  flyMinutes: 5,
+  /** exp give %player% 200: experience points */
+  xpPerVote: 200,
+  /** Every this many votes, everyone online on Survival gets partyKeys and the piñata spawns. */
   partyVotes: 25,
   partyKeys: 1,
+  /** kpinata party (Skript pinata.sk): the piñata stands at /warp crates for this many minutes */
+  pinataMinutes: 5,
   /** Votes for a player who is offline wait this long, up to this many. */
   pendingDays: 30,
   pendingMax: 30,
 } as const
+
+/** "1 Vote crate key, 5 minutes of fly time and 200 XP" */
+export const VOTE_REWARD_TEXT = `${voteRewards.keysPerVote} Vote crate key, ${voteRewards.flyMinutes} minutes of fly time and ${voteRewards.xpPerVote} XP`
+
+/** "everyone online on Survival gets 1 Vote key and a piñata appears at /warp crates for 5 minutes" */
+export const VOTE_PARTY_TEXT = `everyone online on Survival gets ${voteRewards.partyKeys} Vote key and a piñata appears at \`/warp crates\` for ${voteRewards.pinataMinutes} minutes`
 
 /** "Once a day" / "Every 6 hours". */
 export function cooldownLabel(hours: number): string {

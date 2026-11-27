@@ -3,7 +3,8 @@ import type { WikiPage } from '@/lib/content'
 /*
  * Source: plugins/DeluxeMenus/gui_menus/BASIC/Rules.yml (open commands rules, aturan), read 2026-11-25.
  * Numbering and meaning kept exactly; wording lightly tidied (rule 2.1 "written PAPERs" = written books/paper).
- * Reporting: Essentials /helpop (default group has essentials.helpop), Discord from site.ts.
+ * Reporting: Essentials /helpop (default group has essentials.helpop), LPC Pro /report, Discord from site.ts.
+ * Automatic chat filter (2026-11-27): LPC Pro moderation.yml, see ./chat.ts for the numbers.
  */
 export const rules: WikiPage = {
   slug: 'rules',
@@ -12,9 +13,9 @@ export const rules: WikiPage = {
   icon: 'shield',
   category: 'rules',
   order: 1,
-  updated: '2026-11-25',
-  keywords: ['/rules', 'rules', 'ban', 'mute', 'chat', 'spam', 'hacks', 'cheats', 'x-ray', 'glitch', 'bug', 'skin', 'report', '/helpop'],
-  related: ['faq', 'commands'],
+  updated: '2026-11-27',
+  keywords: ['/rules', 'rules', 'ban', 'mute', 'chat', 'spam', 'hacks', 'cheats', 'x-ray', 'glitch', 'bug', 'skin', 'report', '/report', '/helpop', 'filter', 'swear'],
+  related: ['chat', 'faq', 'commands'],
   body: [
     {
       type: 'p',
@@ -64,14 +65,20 @@ export const rules: WikiPage = {
         ],
       ],
     },
+    {
+      type: 'callout',
+      tone: 'warn',
+      title: 'The chat filter',
+      text: 'Chat is also checked automatically. Swear words become stars and each one adds a point for 7 days: **5 points** = 30 minute mute, **10** = kick, **15** = 7 day ban. Links (except kasadyacraft.com) are blocked and caps become lower case. Details on [Chat and messages](/wiki/chat).',
+    },
     { type: 'h2', text: 'Reporting a problem' },
     {
       type: 'list',
       items: [
-        'In game, `/helpop <message>` reaches the staff who are online.',
+        'In game, `/report <player> <reason>` reports a player, and `/helpop <message>` reaches the staff who are online.',
         'For anything else, message the staff on [Discord](https://discord.gg/8DY3eXHnAg).',
         'Found a bug or a glitch? Report it on Discord and keep it to yourself (rule 2.4).',
-        'Someone bothering you? `/ignore <player>` hides their messages while staff take a look.',
+        'Someone bothering you? `/ignore <player>` hides their messages and private messages while staff take a look.',
       ],
     },
     {

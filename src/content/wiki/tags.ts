@@ -2,13 +2,16 @@ import type { WikiPage } from '@/lib/content'
 import { HEXTECH_TAG, LOCKSMITH } from './locksmith'
 
 /*
- * Sources (read-only, 2026-11-25):
- * - plugins/AlonsoTags/tags.yml (08:28): 14 tags. 13 with Permission none, Price 2500 / 7500 / 20000 (Vault money),
- *   plus `hextech` (Permission kasadya.tag.hextech, Price 0 = not for sale), unlocked only at the Lab of Horrors
- *   Locksmith (3 Hextech Crystals, or deciphering a Fabled book). See ./locksmith.ts.
- * - LuckPerms default: alonsotags.tags-menu, chatcolor.change.self, fancyglow.all_colors + fancyglow.command.gui
- * - DeluxeMenus CHATCOLOR/Minecraft.yml: each colour costs 25 PlayerPoints; BASIC/Cosmetics.yml (/cosmetics)
- * Tag names are shown in small caps in game ([ʙʟᴀᴢᴇ]); written in plain caps here.
+ * Sources (read-only, 2026-11-27):
+ * - plugins/AlonsoTags/tags.yml: 14 tags. 13 with Permission none, Price 10000 / 30000 / 100000 (Vault money):
+ *   blaze, dusk, ocean, dawn, ember 10000; venom, frostbite, shadow, phantom 30000; inferno, galaxy, eclipse, void 100000.
+ *   Plus `hextech` (Permission kasadya.tag.hextech, Price 0 = not for sale), unlocked only at the Lab of Horrors
+ *   Locksmith (3 Hextech Crystals, or deciphering a Fabled book). See ./locksmith.ts. The tags are picture tags
+ *   (resource pack glyphs), shown by TAB in the tab list and above the head, and in chat.
+ * - DeluxeMenus CHATCOLOR/Minecraft.yml (/chatcolor): 16 colours, 250 or 500 PlayerPoints each (white too); buying gives
+ *   chatcolor.color.<code>, which LPC Pro's /color menu reads, "select" opens /color.
+ * - DeluxeMenus COSMETICS/Glow.yml (/glow): 16 colours 500 or 750 points, Flashing 2000, Rainbow 3000.
+ * Tag names are written in plain caps here.
  */
 const tag = (name: string, price: string, rarity: 'uncommon' | 'rare' | 'legendary') => ({
   label: `[${name}] tag`,
@@ -33,11 +36,11 @@ const hextechTag = {
 export const tags: WikiPage = {
   slug: 'tags',
   title: 'Chat tags and cosmetics',
-  summary: `13 chat tags you buy once with in-game money in /tags, 1 dungeon-only ${HEXTECH_TAG} tag, chat colours for points and free glow colours.`,
+  summary: `13 picture tags you buy once with in-game money in /tags, 1 dungeon-only ${HEXTECH_TAG} tag, and chat colours and glow for points.`,
   icon: 'tag',
   category: 'features',
   order: 2,
-  updated: '2026-11-25',
+  updated: '2026-11-27',
   keywords: [
     '/tags',
     'tag',
@@ -52,12 +55,14 @@ export const tags: WikiPage = {
     '/chatcolor',
     'glow',
     '/fancyglow',
+    '/color',
+    '/glowshop',
   ],
   related: ['economy', 'rewards', 'afk-pool', 'dungeon-items'],
   body: [
     {
       type: 'p',
-      text: `A tag shows next to your name in chat. There are 13 tags for money and 1 dungeon-only ${HEXTECH_TAG} tag. You buy a money tag once with **in-game money**, not Tokens, in \`/tags\`, then choose which one to wear. Tags are cosmetic only: no stats, no perks.`,
+      text: `A tag is a small picture next to your name, in chat, in the tab list and above your head. There are 13 tags for money and 1 dungeon-only ${HEXTECH_TAG} tag. You buy a money tag once with **in-game money**, not Tokens, in \`/tags\`, then choose which one to wear. Tags are cosmetic only: no stats, no perks.`,
     },
     {
       type: 'slots',
@@ -65,19 +70,19 @@ export const tags: WikiPage = {
       label: 'All chat tags',
       columns: 5,
       items: [
-        tag('BLAZE', '$2,500', 'uncommon'),
-        tag('DUSK', '$2,500', 'uncommon'),
-        tag('OCEAN', '$2,500', 'uncommon'),
-        tag('DAWN', '$2,500', 'uncommon'),
-        tag('EMBER', '$2,500', 'uncommon'),
-        tag('POISON', '$7,500', 'rare'),
-        tag('ICE', '$7,500', 'rare'),
-        tag('SHADOW', '$7,500', 'rare'),
-        tag('PHANTOM', '$7,500', 'rare'),
-        tag('FIRE', '$20,000', 'legendary'),
-        tag('GALAXY', '$20,000', 'legendary'),
-        tag('ECLIPSE', '$20,000', 'legendary'),
-        tag('VOID', '$20,000', 'legendary'),
+        tag('BLAZE', '$10,000', 'uncommon'),
+        tag('DUSK', '$10,000', 'uncommon'),
+        tag('OCEAN', '$10,000', 'uncommon'),
+        tag('DAWN', '$10,000', 'uncommon'),
+        tag('EMBER', '$10,000', 'uncommon'),
+        tag('VENOM', '$30,000', 'rare'),
+        tag('FROSTBITE', '$30,000', 'rare'),
+        tag('SHADOW', '$30,000', 'rare'),
+        tag('PHANTOM', '$30,000', 'rare'),
+        tag('INFERNO', '$100,000', 'legendary'),
+        tag('GALAXY', '$100,000', 'legendary'),
+        tag('ECLIPSE', '$100,000', 'legendary'),
+        tag('VOID', '$100,000', 'legendary'),
         hextechTag,
       ],
     },
@@ -86,9 +91,9 @@ export const tags: WikiPage = {
       caption: 'Tag prices',
       head: ['Price', 'Tags'],
       rows: [
-        ['$2,500', '[BLAZE], [DUSK], [OCEAN], [DAWN], [EMBER]'],
-        ['$7,500', '[POISON], [ICE], [SHADOW], [PHANTOM]'],
-        ['$20,000', '[FIRE], [GALAXY], [ECLIPSE], [VOID]'],
+        ['$10,000', '[BLAZE], [DUSK], [OCEAN], [DAWN], [EMBER]'],
+        ['$30,000', '[VENOM], [FROSTBITE], [SHADOW], [PHANTOM]'],
+        ['$100,000', '[INFERNO], [GALAXY], [ECLIPSE], [VOID]'],
         ['Not for sale', `${HEXTECH_TAG}: dungeon only, see below`],
       ],
     },
@@ -112,17 +117,17 @@ export const tags: WikiPage = {
     { type: 'h2', text: 'Chat colours' },
     {
       type: 'p',
-      text: 'Write in red, gold, aqua and more. Open `/cosmetics` and pick Chat Color. Each colour costs **✪25 points**. White is free. Switch between the colours you own with `/chatcolor`.',
+      text: 'Write in red, gold, aqua and more. Type `/chatcolor` (or open `/cosmetics` and pick Chat Color) and buy a colour with points: the darker colours (dark red, dark green, dark aqua, dark blue, purple, white, gray, dark gray, black) cost **✪250 points**, the bright ones (red, gold, yellow, green, aqua, blue, light purple) **✪500 points**. A colour is yours for good. Click a colour you own, or type `/color`, to choose which one you write in.',
     },
     { type: 'h2', text: 'Glow' },
     {
       type: 'p',
-      text: 'A coloured glow outline around your character. Every colour is **free** for everyone. Open `/cosmetics` and pick Glow.',
+      text: 'A coloured glow outline around your character, bought once with points in `/glowshop` (or `/cosmetics`, Glow). Dark colours cost **✪500 points**, bright ones **✪750**, the Flashing glow **✪2,000** and the Rainbow glow **✪3,000**.',
     },
     {
       type: 'callout',
       tone: 'tip',
-      text: 'Need points for chat colours? The [AFK pool](/wiki/afk-pool) gives 10 every 20 minutes, and weekly `/rewards` give 50.',
+      text: 'Need points for chat colours and glow? The [AFK pool](/wiki/afk-pool) gives 10 every 20 minutes, every [chat game](/wiki/chat-games) win gives 5, weekly `/rewards` give 50 and Lab of Horrors clears pay up to 60.',
     },
   ],
 }

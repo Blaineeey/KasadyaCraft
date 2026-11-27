@@ -3,7 +3,7 @@ import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import type { PixelIconName } from '@/components/ui/pixel-icons'
 import { site } from '@/lib/site'
-import { voteRewards, voteSites } from '@/lib/vote'
+import { VOTE_REWARD_TEXT, voteSites } from '@/lib/vote'
 import s from './StorePage.module.css'
 
 const ways: { icon: PixelIconName; title: string; text: string }[] = [
@@ -12,7 +12,7 @@ const ways: { icon: PixelIconName; title: string; text: string }[] = [
   {
     icon: 'star',
     title: 'Vote for us',
-    text: `Votes help new players find us. There are ${voteSites.length} sites, and each vote gives you ${voteRewards.keysPerVote} Vote crate key.`,
+    text: `Votes help new players find us. There are ${voteSites.length} sites, and each vote gives you ${VOTE_REWARD_TEXT}.`,
   },
   { icon: 'house', title: 'Build something great', text: 'Nice builds in the plot world make everyone want to stay.' },
 ]

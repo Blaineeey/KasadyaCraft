@@ -13,8 +13,9 @@ interface Currency {
 }
 
 /* Sources: FlareTokens (tokenSources in src/lib/store.ts: /rewards, daily quests, playtime levels),
-   PlayerPoints (AFK pool 10 per 20 min, Playtime L5 500, weekly reward 50, monthly 100), Vault money
-   ($250 start). CHANGELOG economy audit + ECONOMY FIXER 2026-11-25. */
+   PlayerPoints (AFK pool 10 per 20 min, chat games 5, Lab of Horrors 40-60 per clear, delve clears, Playtime L5 500,
+   weekly reward 50, monthly 100; spent in /chatcolor, /glowshop and /pointshop: 25 points = 1 Token, never the other way),
+   Vault money ($250 start). CHANGELOG economy audit + ECONOMY FIXER 2026-11-25, re-checked 2026-11-27. */
 const currencies: Currency[] = [
   {
     symbol: '⛃',
@@ -28,7 +29,7 @@ const currencies: Currency[] = [
     ),
     spend: (
       <>
-        Ranks, crate keys and Points in <code>/purchase</code>.
+        Ranks and crate keys in <code>/purchase</code>. Tokens are worth the most and never turn back into Points.
       </>
     ),
   },
@@ -38,12 +39,12 @@ const currencies: Currency[] = [
     art: <StoreSprite shape="points" size={48} />,
     earn: (
       <>
-        The AFK pool at <code>/warp afk</code> (10 every 20 minutes), playtime and weekly rewards.
+        The AFK pool at <code>/warp afk</code> (10 every 20 minutes), chat games, dungeon clears, playtime and weekly rewards.
       </>
     ),
     spend: (
       <>
-        Chat colours in <code>/chatcolor</code>.
+        Chat colours in <code>/chatcolor</code>, glow in <code>/glowshop</code>, and Tokens or crate keys in <code>/pointshop</code> (25 Points = 1 Token).
       </>
     ),
   },
@@ -53,7 +54,7 @@ const currencies: Currency[] = [
     art: <PixelIcon name="coin" size={48} />,
     earn: (
       <>
-        Selling raw materials to <code>/shop</code>, player shops, quests and chat games. You start with $250.
+        Selling raw materials to <code>/shop</code>, fish at <code>/fishmarket</code>, player shops, quests and chat games. You start with $250.
       </>
     ),
     spend: (

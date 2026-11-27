@@ -1,4 +1,5 @@
 import type { WikiPage } from '@/lib/content'
+import { DUNGEON } from '@/content/guides/facts'
 import { HEXTECH_TAG } from './locksmith'
 
 /*
@@ -64,6 +65,10 @@ export const dungeon: WikiPage = {
         ['Time limit', '2 hours per run'],
         ['If you die', 'You respawn at the last door you reached, or inside the boss room during the fight. You keep your items and XP and cannot be hurt for 5 seconds.'],
         ['Inside', 'Adventure mode: no breaking or placing blocks, no PvP, most commands blocked. `/dungeon`, `/dungeoninfo` and `/locksmith` work.'],
+        [
+          'Points',
+          `${DUNGEON.pointsPerClear} points per clear, ${DUNGEON.firstClearBonus} more for your first clear of the day. ${DUNGEON.paidClearsPerDay} paid clears a day; later clears still count for the leaderboard.`,
+        ],
         ['Money', `No money, but the loot turns into Chamber Keys, enchanted books, crate keys and the ${HEXTECH_TAG} tag.`],
       ],
     },
@@ -72,7 +77,11 @@ export const dungeon: WikiPage = {
       type: 'steps',
       items: [
         { title: 'Go to the entrance', text: 'The Dungeon Guard and Dungeon Master NPCs wait there.', command: '/warp dungeon' },
-        { title: 'Open the dungeon menu', text: 'Talk to the Dungeon Master, or type the command and click **Lab of Horrors**. Play Solo starts a run right away. Play with Friends makes a party.', command: '/dungeon' },
+        {
+          title: 'Open the dungeon menu',
+          text: `Talk to the Dungeon Master, or type the command and click **Lab of Horrors**. Its card shows a **Today** block: paid clears used (like ■■□□□ 2/${DUNGEON.paidClearsPerDay}), supply chests looted (out of ${DUNGEON.supplyChestsPerDay}) and the points of your next clear. Play Solo starts a run right away. Play with Friends makes a party.`,
+          command: '/dungeon',
+        },
         { title: 'Fill your party', text: 'Invite a Friend, or let friends use Join a Party or Accept an Invite from the same menu. Quick Match groups you with other players. A run holds up to 5 players.' },
         { title: 'Start', text: 'Click Start Dungeon and the whole party is teleported in. Each door opens when its room is cleared.' },
       ],
@@ -115,10 +124,15 @@ export const dungeon: WikiPage = {
       tone: 'tip',
       text: 'Bring a party and give one player Lost Soul duty at 50%. The fight goes much faster.',
     },
+    { type: 'h2', text: 'Points per clear' },
+    {
+      type: 'p',
+      text: `Every clear pays **${DUNGEON.pointsPerClear} points**, and your first clear of the day pays **${DUNGEON.firstClearBonus} more** (${DUNGEON.pointsPerClear + DUNGEON.firstClearBonus} in total). You get **${DUNGEON.paidClearsPerDay} paid clears a day**. After that, clears still count for your total and the leaderboard, but give no points: the Today block in \`/dungeon\` then says the points are used up. A second boss kill within ${DUNGEON.repeatGuardMinutes} minutes of your last clear does not count. The day resets at midnight, Philippine time.`,
+    },
     { type: 'h2', text: 'Supply chests' },
     {
       type: 'p',
-      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each holds 2 or 3 stacks of ores, food or supplies, plus 1 or 2 dungeon items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book. You can loot 36 supply chests a day.',
+      text: '12 supply chests are hidden around the lab. Every player gets their own loot from each one, so nobody can steal yours. Each holds 2 or 3 stacks of ores, food or supplies, plus 1 or 2 dungeon items: mostly Key Fragments, sometimes Cobalt or Mithril Ingots, and once in a while an Undeciphered Book. You can loot 36 supply chests a day; after that they open again at midnight (Philippine time).',
     },
     { type: 'h2', text: 'Raid chests' },
     {

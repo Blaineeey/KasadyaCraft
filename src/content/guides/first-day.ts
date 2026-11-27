@@ -1,7 +1,7 @@
 import { DAILY_QUESTS_LINE, DAILY_REWARDS, dailyRewardText, shopPrice, type ShopItem } from '@/content/facts'
 import type { Guide } from '@/lib/content'
 import { site } from '@/lib/site'
-import { voteRewards, voteSites } from '@/lib/vote'
+import { VOTE_REWARD_TEXT, voteSites } from '@/lib/vote'
 import {
   CHECKED,
   PLAYTIME_COMMAND,
@@ -117,7 +117,7 @@ export const firstDay: Guide = {
       items: [
         `\`/dquests\`: ${DAILY_QUESTS_LINE}`,
         `\`/rewards\`: a daily reward (${dailyRewardText(DAILY_REWARDS[0])}), plus bigger weekly and monthly ones.`,
-        `\`/vote\`: ${voteSites.length} vote sites, ${voteRewards.keysPerVote} Vote crate key per vote. Click a site to get its link in chat, or use the [vote page](/vote).`,
+        `\`/vote\`: ${voteSites.length} vote sites. Every vote gives ${VOTE_REWARD_TEXT}. Click a site to get its link in chat, or use the [vote page](/vote).`,
         `\`${PLAYTIME_COMMAND}\`: playtime levels. Level I unlocks after ${level('I').after} and level II pays ${level('II').reward} after ${level('II').after}.`,
       ],
     },

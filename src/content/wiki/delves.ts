@@ -18,7 +18,10 @@ import {
  *   Play solo, Party "up to 4 friends", Quick join, Codex), ui/GuideMenu.java (goal, progress, tips + omen, lives and
  *   meter, Glowing floor on/off, Codex, Leave, "Lead me there" for optional rooms)
  * - core/Engine.refusal (dead, already in a delve, in combat, in the Lab of Horrors, legendary weapon "Store it first",
- *   10 starts a day, short-run wait, "All copies of this delve are in use")
+ *   starts-per-day (0 = no limit on live), run cooldown "You can start another delve in X min" (2026-11-27), short-run wait,
+ *   "All copies of this delve are in use")
+ * - ui/HubMenu.java + hub.yml (2026-11-27): every card has a Today block (paid clears, chests, next clear points), read again
+ *   each time the hub opens; Lab of Horrors numbers from %kasadyadungeon_paid% etc.
  * - core/run/RunImpl.died/lost (lives pool, "Lives left", no life lost in the vault, "You keep everything you looted"),
  *   core/listen/SessionListener (keep inventory and XP), core/listen/RulesListener + CombatListener (bans, apples, totem)
  * - core/vote/LeaveVotes.java (alone: out at once; party: all agree or everyone leaves after 2 minutes, loot restarts it)
@@ -95,7 +98,10 @@ export const delves: WikiPage = {
       head: ['What', 'Details'],
       rows: [
         ['Players', `1 to ${DELVE_RULES.maxPlayers}, Java and Bedrock`],
-        ['Cost to enter', `Free. Up to ${DELVE_RULES.startsPerDay} starts a day.`],
+        [
+          'Cost to enter',
+          `Free. ${DELVE_RULES.startsPerDay === 0 ? 'No daily limit' : `Up to ${DELVE_RULES.startsPerDay} starts a day`}, but after a run you wait ${DELVE_RULES.runCooldownMinutes} minutes before the next.`,
+        ],
         ['Time limit', `${DELVE_RULES.timeLimitMinutes} minutes per run`],
         ['Lives', `One pool for the party: ${DELVE_RULES.livesBase}, plus ${DELVE_RULES.livesPerPlayer} for each player (${livesFor(1)} alone, ${livesFor(5)} for five)`],
         [
@@ -112,7 +118,7 @@ export const delves: WikiPage = {
       items: [
         {
           title: 'Open the dungeon menu',
-          text: 'Type it anywhere in Survival. Click Gloomhold Keep or Cinderworks to see its gear, lives, rewards and your own results.',
+          text: 'Type it anywhere in Survival. Every card shows a **Today** block: how many paid clears and supply chests you have used today (filled boxes, like ■■□ 2/3) and the points of your next clear. Click Gloomhold Keep or Cinderworks to see its gear, lives, rewards and your own results.',
           command: '/dungeon',
         },
         {
@@ -231,7 +237,7 @@ export const delves: WikiPage = {
     { type: 'h2', text: 'Rewards' },
     {
       type: 'p',
-      text: `Beat the boss and the vault opens for **${R.vaultMinutes} minutes**. Points, crate keys, special gear and the vault come with a **paid clear**: you get **${R.paidClearsPerDay} paid clears a day**, both delves together. After that a clear still gives you a rank, your best time and chest loot.`,
+      text: `Beat the boss and the vault opens for **${R.vaultMinutes} minutes**. Points, crate keys, special gear and the vault come with a **paid clear**: you get **${R.paidClearsPerDay} paid clears a day**, both delves together. After that a clear still gives you a rank, your best time and chest loot. The Today block in \`/dungeon\` shows how many you have left; when they are used up it says **Points used up** and the next clear gives no points (rank and leaderboard only).`,
     },
     {
       type: 'table',
@@ -345,6 +351,7 @@ export const delves: WikiPage = {
         'Armour wears slower in the delves: at most 1 point per piece per hit, and only on about half of the hits. Weapons wear as usual.',
         `Bedrock players deal ${DELVE_RULES.bedrockDealtPercent}% more damage and take ${DELVE_RULES.bedrockTakenPercent}% less, to make up for touch controls. Boss floor warnings last ${DELVE_RULES.floorWarningSecondsBedrock} seconds instead of ${DELVE_RULES.floorWarningSeconds} when a Bedrock player is in the run.`,
         `If nobody in the party moves or acts for ${DELVE_RULES.idleWarnMinutes} minutes, you get a warning. At ${DELVE_RULES.idleEndMinutes} minutes the run ends.`,
+        `When a run ends (cleared, lost or left), you wait **${DELVE_RULES.runCooldownMinutes} minutes** before you can start another delve. Try earlier and the chat tells you how many minutes are left.`,
         `${DELVE_RULES.shortRunLimit} runs in a row that end before floor 3 is done mean a ${DELVE_RULES.shortRunCooldownMinutes} minute wait before your next start.`,
       ],
     },

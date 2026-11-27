@@ -70,7 +70,7 @@ const FRONT = [
   'kkkkkkkkkkkkkkkkkkkk',
 ]
 
-const { keysPerVote, partyVotes, partyKeys } = voteRewards
+const { keysPerVote, flyMinutes, xpPerVote, partyVotes, partyKeys } = voteRewards
 
 function keys(n: number) {
   return `${n} Vote crate key${n === 1 ? '' : 's'}`
@@ -79,7 +79,8 @@ function keys(n: number) {
 /** One per click, then around again. All from src/lib/vote.ts. */
 const FACTS: readonly ToastInput[] = [
   { icon: 'key', title: `Every vote gives you ${keys(keysPerVote)}.` },
-  { icon: 'firework', title: `Every ${partyVotes} votes, everyone online on Survival gets ${keys(partyKeys)}.` },
+  { icon: 'clock', title: `Every vote also gives ${flyMinutes} minutes of fly time and ${xpPerVote} XP.` },
+  { icon: 'firework', title: `Every ${partyVotes} votes, everyone online on Survival gets ${keys(partyKeys)} and a piñata appears.` },
   { icon: 'chest', title: 'Open your keys at /warp crates.' },
 ]
 

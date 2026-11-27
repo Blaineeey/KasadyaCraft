@@ -20,6 +20,9 @@ import type { WikiPage } from '@/lib/content'
  *   gsit.sit/lay/layback/bellyflop/spin/crawl = false; VIP gsit.sit, VIP+ gsit.lay/layback/bellyflop/spin, MVP gsit.crawl
  *   (matches the Ranks.yml lore). Still free: click-sitting on stairs/slabs/carpets (GSit.SitClick) and /sit toggle.
  * /store is NOT used here: Skript store.sk owns that label ("store coming soon"). /purchase opens the Tokens menu.
+ * 2026-11-27: InfiniteFishing replaced CustomFishing (/sellfish, /fishshop, /fishingbag are gone); /ae (AdvancedEnchantments menu);
+ * chat is LPC Pro (/msg aliases via /commands.yml, /ignore, /report, /color; /msgtoggle disabled; /unignore /emoji /toggle untested);
+ * /chatcolor is the DeluxeMenus colour shop, /glowshop the glow shop; /fly + /tempfly = vote fly time on own or trusted plots.
  */
 export const commands: WikiPage = {
   slug: 'commands',
@@ -28,8 +31,8 @@ export const commands: WikiPage = {
   icon: 'scroll',
   category: 'basics',
   order: 4,
-  updated: '2026-11-25',
-  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve'],
+  updated: '2026-11-27',
+  keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve', '/fish', '/ae', '/fly', '/msg'],
   related: ['world-and-warps', 'ranks', 'economy', 'faq'],
   body: [
     {
@@ -97,13 +100,13 @@ export const commands: WikiPage = {
         { command: '/sellgui', description: 'A window to drop items in and sell them.' },
         { command: '/sellall inventory', description: 'Sell everything sellable in your inventory. Careful!' },
         { command: '/sellall hand', description: 'Sell the stack in your hand.' },
-        { command: '/sellfish', description: 'The fish market. `/fishshop` works too.' },
-        { command: '/fishingbag', description: 'Your bag for bait, hooks and rods.' },
+        { command: '/fishmarket', description: 'Sell your fish. Pays far more than `/sell`. See [Fishing](/wiki/fishing).' },
         { command: '/trade <player>', description: 'Safe trade window. Stand within 10 blocks.' },
         { command: '/coinflip <amount> <heads|tails>', description: 'Bet money against another player. Minimum $1,000. `/cf` for short.' },
         { command: '/points', description: 'Your points.' },
         { command: '/tokens', description: 'Your Tokens.' },
-        { command: '/purchase', description: 'The Tokens menu: ranks, keys and points.' },
+        { command: '/purchase', description: 'The Tokens menu: ranks and keys.' },
+        { command: '/pointshop', description: 'Spend points: Tokens (25 points each) or crate keys.' },
         { command: '/ranks', description: 'The rank menu.' },
         { command: '/keys', description: 'Buy crate keys with Tokens.' },
       ],
@@ -118,9 +121,35 @@ export const commands: WikiPage = {
         { command: '/plot trust <player>', description: 'Let a friend build, even while you are offline.' },
         { command: '/plot add <player>', description: 'Let a friend build while you are online.' },
         { command: '/plot deny <player>', description: 'Ban someone from your plot.' },
+        { command: '/fly', description: 'Use your vote fly time, on your own plots and plots you are trusted on.' },
+        { command: '/tempfly', description: 'How much fly time you have left.' },
       ],
     },
-    { type: 'p', text: 'All plot commands are on [Plots](/wiki/plots).' },
+    { type: 'p', text: 'All plot commands, and how fly time works, are on [Plots](/wiki/plots).' },
+    { type: 'h2', text: 'Fishing' },
+    {
+      type: 'commands',
+      items: [
+        { command: '/fish', description: 'The fishing menu.' },
+        { command: '/fishguide', description: 'The full fishing guide: fish, rods, bait, augments.' },
+        { command: '/fishmarket', description: 'Sell your fish.' },
+        { command: '/ifevaluator', description: 'Reveal unknown fish before you sell them (free).' },
+        { command: '/ifcatalog', description: 'Every fish you caught.' },
+        { command: '/fishtopscore', description: 'This week\u2019s fish top. `/ifleaderboard` shows the all-time top.' },
+        { command: '/ifparty', description: 'Fishing parties (not dungeon parties).' },
+      ],
+    },
+    { type: 'h2', text: 'Custom enchants' },
+    {
+      type: 'commands',
+      items: [
+        { command: '/ae', description: 'The custom enchants menu with the Enchant Guide and Build Ideas. `/enchants` works too.' },
+        { command: '/enchanter', description: 'Buy enchant books with XP. `/e` and `/ce` work too.' },
+        { command: '/tinkerer', description: 'Trade books for Magic Dust and XP.' },
+        { command: '/alchemist', description: 'Combine books and dust.' },
+      ],
+    },
+    { type: 'p', text: 'How books, scrolls and dust work: [Custom enchants](/wiki/custom-enchants).' },
     { type: 'h2', text: 'Player shops' },
     {
       type: 'commands',
@@ -140,9 +169,11 @@ export const commands: WikiPage = {
         { command: '/rewards', description: 'Daily, weekly and monthly rewards.' },
         { command: '/levels', description: 'Playtime levels and their rewards.' },
         { command: '/kit starter', description: 'The starter kit, once a day.' },
-        { command: '/tags', description: 'Buy and wear chat tags.' },
+        { command: '/tags', description: 'Buy and wear picture tags.' },
         { command: '/cosmetics', description: 'Chat colours, glow and tags.' },
-        { command: '/chatcolor', description: 'Pick a chat colour you unlocked.' },
+        { command: '/chatcolor', description: 'Buy chat colours with points.' },
+        { command: '/color', description: 'Pick which chat colour you write in.' },
+        { command: '/glowshop', description: 'Buy a glow colour with points.' },
         { command: '/paint', description: 'Draw pixel art, look at your paintings and show them to friends. See [Painting](/wiki/painting).' },
       ],
     },
@@ -205,17 +236,18 @@ export const commands: WikiPage = {
     {
       type: 'commands',
       items: [
-        { command: '/msg <player> <message>', description: 'Private message. `/w` and `/tell` work too.' },
-        { command: '/r <message>', description: 'Reply to your last private message.' },
-        { command: '/ignore <player>', description: 'Hide messages from a player. Run it again to undo.' },
+        { command: '/msg <player> <message>', description: 'Private message with a bell sound. `/tell`, `/w`, `/whisper`, `/m` and `/t` work too.' },
+        { command: '/r <message>', description: 'Reply to your last private message. `/reply` works too.' },
+        { command: '/ignore <player>', description: 'Hide chat and private messages from a player.' },
         { command: '/mail send <player> <message>', description: 'Leave a message for someone who is offline.' },
         { command: '/mail read', description: 'Read your mail.' },
-        { command: '/msgtoggle', description: 'Turn private messages off or on.' },
+        { command: '/report <player> <reason>', description: 'Report a player to the staff.' },
         { command: '/helpop <message>', description: 'Message the staff who are online.' },
         { command: '/afk', description: 'Mark yourself as away.' },
         { command: '/list', description: 'Who is online.' },
       ],
     },
+    { type: 'p', text: 'Mentions (`@name`), `[item]` and the chat filter: [Chat and messages](/wiki/chat).' },
     { type: 'h2', text: 'Just for fun' },
     {
       type: 'commands',

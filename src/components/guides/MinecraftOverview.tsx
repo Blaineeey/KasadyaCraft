@@ -46,6 +46,18 @@ const features: { icon: PixelIconName; title: string; body: string; href: string
     href: '/wiki/rewards',
   },
   {
+    icon: 'fish',
+    title: 'Fishing',
+    body: 'Fish with rarities, rods, bait and minigames. Sell your catch at /fishmarket and join the weekly tournaments.',
+    href: '/wiki/fishing',
+  },
+  {
+    icon: 'enchant',
+    title: 'Custom enchants',
+    body: 'Simple to Fabled enchants on top of the normal ones. Buy books with XP at /enchanter and see what fits in /ae.',
+    href: '/wiki/custom-enchants',
+  },
+  {
     icon: 'chest',
     title: 'Crates',
     body: 'Open crates at spawn with keys from kits, daily rewards and the token shop.',

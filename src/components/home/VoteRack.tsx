@@ -35,7 +35,7 @@ export default function VoteRack() {
           </h2>
           <p className={s.lead}>
             KasadyaCraft is on {voteSites.length} server lists. Each vote gives you {keysPerVote}&nbsp;Vote crate{' '}
-            {keysPerVote === 1 ? 'key' : 'keys'}, and every list has its own timer.
+            {keysPerVote === 1 ? 'key' : 'keys'} plus {voteRewards.flyMinutes} minutes of fly time, and every list has its own timer.
           </p>
         </div>
         <PixelButton href="/vote" variant="gold" size="lg" icon="star">
@@ -63,7 +63,7 @@ export default function VoteRack() {
         <PixelIcon name="firework" size={32} />
         <span>
           <strong>Vote party:</strong> every {partyVotes} votes, everyone online on Survival gets{' '}
-          {partyKeys === 1 ? 'a Vote key' : `${partyKeys} Vote keys`}.
+          {partyKeys === 1 ? 'a Vote key' : `${partyKeys} Vote keys`}, and a piñata appears at /warp crates.
         </span>
       </p>
     </div>

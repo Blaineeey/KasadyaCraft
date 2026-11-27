@@ -225,6 +225,8 @@ export const PLAYTIME_LEVELS = PLAYTIME_LADDER.slice(0, 5).map((l) => ({
  * Lab of Horrors. MythicDungeons groups/LabOfHorrors/{general,stages,lootchests}.yml,
  * MythicMobs mobs/LabOfHorrors/*.yml, skills/LabOfHorrors/locksmith.yml, droptables/LabOfHorrors/loh.yml.
  * Monster counts are the kill objectives of each stage.
+ * Points and daily caps: plugins/KasadyaDungeon/config.yml (re-read 2026-11-27): points-per-clear 40, first-clear-bonus 20,
+ * paid-clears-per-day 5, repeat-guard-minutes 5, loot.chests-per-day 36 (reset at midnight Asia/Manila).
  */
 export const DUNGEON = {
   minPlayers: 1,
@@ -235,6 +237,11 @@ export const DUNGEON = {
   discipleHealth: 1000,
   bossHealth: 2048,
   roomMonsters: [21, 13, 13, 13, 9, 11, 21],
+  pointsPerClear: 40,
+  firstClearBonus: 20,
+  paidClearsPerDay: 5,
+  repeatGuardMinutes: 5,
+  supplyChestsPerDay: 36,
 } as const
 
 export interface Ingredient {

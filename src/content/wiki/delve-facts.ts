@@ -5,9 +5,10 @@ import type { PixelIconName } from '@/components/ui/pixel-icons'
  * gloomhold-keep, cinderworks, commands and faq wiki pages, the first-delve guide and the home and
  * /games/minecraft cards, so a retune means one edit here. Not a wiki page itself (index.ts does not list it).
  *
- * Sources (read-only, 2026-11-26, plugin resources in the KasadyaDelves jar):
+ * Sources (read-only, 2026-11-26, plugin resources in the KasadyaDelves jar; live config.yml re-read 2026-11-27):
  * - config.yml: max-players 5, respawn-delay-seconds 10, protection-seconds 5, rejoin-seconds 300,
- *   time-limit-seconds 2700, idle warn 360 / end 480, starts-per-day 10, short-runs limit 3 / cooldown 600,
+ *   time-limit-seconds 2700, idle warn 360 / end 480, starts-per-day 0 (no limit, live), run-cooldown-seconds 300 (live, since
+ *   2026-11-27: wait after a run ends or after leaving one), short-runs limit 3 / cooldown 600,
  *   party-leave seconds 120, start-countdown-seconds 8, slots-per-map 3, bedrock damage-dealt 1.12 / damage-taken 0.92,
  *   max-armor-wear 1, armor-wear-chance 0.5, commands-inside, blocked-items (AltarSMP legendary weapons), dungeon-hub true
  * - balance.json rules: lives base 2 + per_player 3, golden_apple_cooldown_s 30, totems_per_run 1, Strength clamped to I
@@ -22,7 +23,7 @@ import type { PixelIconName } from '@/components/ui/pixel-icons'
  * The owner can retune config.yml, rewards.yml and loot.yml: re-read them before every release.
  */
 
-export const DELVES_CHECKED = '2026-11-26'
+export const DELVES_CHECKED = '2026-11-27'
 
 export type DelveId = 'gloomhold' | 'cinderworks'
 export type DelveRank = 'S' | 'A' | 'B' | 'C'
@@ -38,7 +39,10 @@ export const DELVE_RULES = {
   timeLimitMinutes: 45,
   idleWarnMinutes: 6,
   idleEndMinutes: 8,
-  startsPerDay: 10,
+  /** 0 = no daily limit (starts-per-day 0 on live). */
+  startsPerDay: 0,
+  /** run-cooldown-seconds 300: wait after a run ends (cleared, lost or left) before the next start. */
+  runCooldownMinutes: 5,
   shortRunLimit: 3,
   shortRunCooldownMinutes: 10,
   leaveVoteMinutes: 2,

@@ -17,7 +17,7 @@ import s from './vote.module.css'
  * Sites and rewards: src/lib/vote.ts (mirrors KasadyaVote config.yml). Crate contents and the
  * Token price: src/lib/store.ts. Numbers are never typed by hand here.
  */
-const { keysPerVote, partyVotes, partyKeys, pendingDays, pendingMax } = voteRewards
+const { keysPerVote, flyMinutes, xpPerVote, partyVotes, partyKeys, pinataMinutes, pendingDays, pendingMax } = voteRewards
 const total = voteSites.length
 
 function count(n: number, name: string) {
@@ -26,7 +26,7 @@ function count(n: number, name: string) {
 
 export const metadata: Metadata = pageMetadata({
   title: 'Vote',
-  description: `Vote for ${site.name} on ${total} server list sites. Every vote gives you ${count(keysPerVote, 'Vote crate key')}, and every ${partyVotes} votes everyone online on Survival gets ${count(partyKeys, 'Vote key')}.`,
+  description: `Vote for ${site.name} on ${total} server list sites. Every vote gives you ${count(keysPerVote, 'Vote crate key')}, ${flyMinutes} minutes of fly time and ${xpPerVote} XP. Every ${partyVotes} votes everyone online on Survival gets ${count(partyKeys, 'Vote key')} and a piñata appears.`,
   path: '/vote',
 })
 
@@ -48,7 +48,7 @@ const STEPS: { icon: PixelIconName; title: string; text: ReactNode }[] = [
     title: 'Come online on Survival',
     text: (
       <>
-        Your key arrives there. Keep one inventory slot free. Open keys at <code className="kc-cmd-inline">/warp crates</code>.
+        Your key, fly time and XP arrive there. Keep one inventory slot free. Open keys at <code className="kc-cmd-inline">/warp crates</code>, fly with <code className="kc-cmd-inline">/fly</code> on your plot.
         If you are offline, votes wait up to {pendingDays} days, {pendingMax} at most.
       </>
     ),
@@ -75,7 +75,7 @@ export default function VotePage() {
         icon="chest"
         lead={
           <>
-            Every vote gives you {count(keysPerVote, 'Vote crate key')} on Survival. Use all {total} sites, or type{' '}
+            Every vote gives you {count(keysPerVote, 'Vote crate key')}, {flyMinutes} minutes of fly time and {xpPerVote} XP on Survival. Use all {total} sites, or type{' '}
             <code className="kc-cmd-inline">/vote</code> in game for the same list.
           </>
         }
@@ -130,7 +130,7 @@ export default function VotePage() {
                   Vote party
                 </h2>
                 <p>
-                  Every {partyVotes} votes, everyone online on Survival gets {count(partyKeys, 'Vote key')}.
+                  Every {partyVotes} votes, everyone online on Survival gets {count(partyKeys, 'Vote key')}, and a piñata appears at <code className="kc-cmd-inline">/warp crates</code> for {pinataMinutes} minutes. Every hit can drop keys, points or a snack, and the last hit wins a key.
                 </p>
               </div>
             </section>

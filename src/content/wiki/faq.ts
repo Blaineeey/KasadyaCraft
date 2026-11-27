@@ -3,7 +3,7 @@ import { VERSIONS } from '@/content/guides/facts'
 import { DELVE_RULES, DELVES, livesFor } from '@/content/wiki/delve-facts'
 import type { WikiPage } from '@/lib/content'
 import { site } from '@/lib/site'
-import { voteRewards, voteSites } from '@/lib/vote'
+import { VOTE_PARTY_TEXT, VOTE_REWARD_TEXT, voteRewards, voteSites } from '@/lib/vote'
 
 /*
  * Answers summarise facts verified for the other wiki pages (see their source notes) plus:
@@ -17,6 +17,8 @@ import { voteRewards, voteSites } from '@/lib/vote'
  *   the delves from KasadyaDelves 1.0.0 (./delve-facts.ts: lives, gear, difficulty, config.yml bedrock factors,
  *   RunImpl.telegraphTicks 30 / 40 ticks, API rule 11: everything a player needs works with fake blocks, particles,
  *   boss bar, action bar, chat and menus). Monster counts scale with the party (balance.json waves_by_party).
+ * - 2026-11-27: fly time (tempfly.sk + KasadyaPlotFly, see ./plots.ts), fishing (./fishing.ts), chat filter (./chat.ts),
+ *   delve run cooldown 5 minutes (./delve-facts.ts)
  */
 const G = DELVES.gloomhold
 const C = DELVES.cinderworks
@@ -29,7 +31,7 @@ export const faq: WikiPage = {
   category: 'help',
   order: 1,
   updated: FACTS_CHECKED,
-  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo'],
+  keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo', 'fly', 'fishing', 'muted', 'filter'],
   related: ['features', 'commands', 'rules', 'world-and-warps'],
   body: [
     { type: 'h2', text: 'Joining' },
@@ -91,6 +93,11 @@ export const faq: WikiPage = {
       type: 'p',
       text: 'You need Silk Touch on a diamond or netherite pickaxe. Anything else destroys it. See [Spawners](/wiki/spawners).',
     },
+    { type: 'h3', text: 'Can I fly?' },
+    {
+      type: 'p',
+      text: `Yes, on your own plots and plots where you are trusted. Every vote gives ${voteRewards.flyMinutes} minutes of fly time (you can save up to 8 hours), and \`/fly\` turns it on. Time only runs while you are in the air, and flying stops the moment you leave the plot. See [Plots](/wiki/plots#fly-time).`,
+    },
     { type: 'h3', text: 'Do I lose my gear if I die in a dungeon?' },
     {
       type: 'p',
@@ -112,6 +119,11 @@ export const faq: WikiPage = {
       text: `Yes. The delves are built so you can play them on Bedrock: everything you need is shown with blocks, particles, the boss bar, the action bar, chat and menus. To make up for touch controls, Bedrock players deal ${DELVE_RULES.bedrockDealtPercent}% more damage and take ${DELVE_RULES.bedrockTakenPercent}% less in the delves, and boss floor warnings last ${DELVE_RULES.floorWarningSecondsBedrock} seconds instead of ${DELVE_RULES.floorWarningSeconds} when a Bedrock player is in the run.`,
     },
     { type: 'h2', text: 'Money and ranks' },
+    { type: 'h3', text: 'Is fishing worth it?' },
+    {
+      type: 'p',
+      text: 'Yes: about $1,100 an hour with a starter rod and up to about $2,800 with better rods. Sell at `/fishmarket`, not in `/shop`. See [Fishing](/wiki/fishing).',
+    },
     { type: 'h3', text: 'Why will the shop not buy my diamond sword?' },
     {
       type: 'p',
@@ -127,17 +139,22 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'Can I vote for rewards?' },
     {
       type: 'p',
-      text: `Yes. There are **${voteSites.length} vote sites** and every vote gives you **${voteRewards.keysPerVote} Vote crate key**. Type \`/vote\` and click a site to get its link in chat, or open the [vote page](/vote). Use your exact Minecraft name on the site and keep one inventory slot free. If you are offline, your vote waits up to ${voteRewards.pendingDays} days.`,
+      text: `Yes. There are **${voteSites.length} vote sites** and every vote gives you **${VOTE_REWARD_TEXT}**. Type \`/vote\` and click a site to get its link in chat, or open the [vote page](/vote). Use your exact Minecraft name on the site and keep one inventory slot free. If you are offline, your vote waits up to ${voteRewards.pendingDays} days.`,
     },
     {
       type: 'p',
-      text: `Every ${voteRewards.partyVotes} votes there is a vote party: everyone online on Survival gets ${voteRewards.partyKeys} Vote key.`,
+      text: `Every ${voteRewards.partyVotes} votes there is a vote party: ${VOTE_PARTY_TEXT}.`,
     },
     { type: 'h2', text: 'Help' },
     { type: 'h3', text: 'How do I report a player or a bug?' },
     {
       type: 'p',
-      text: 'Use `/helpop <message>` in game, or message staff on [Discord](https://discord.gg/8DY3eXHnAg). Keep bugs to yourself until they are fixed. See [rules](/wiki/rules).',
+      text: 'Use `/report <player> <reason>` or `/helpop <message>` in game, or message staff on [Discord](https://discord.gg/8DY3eXHnAg). Keep bugs to yourself until they are fixed. See [rules](/wiki/rules).',
+    },
+    { type: 'h3', text: 'Why did my message change, or why am I muted?' },
+    {
+      type: 'p',
+      text: 'The chat filter fixes caps, blocks links and replaces swear words with stars. Each swear word adds a point for 7 days, and 5 points mean a 30 minute mute. See [Chat and messages](/wiki/chat).',
     },
     { type: 'h3', text: 'Where do I find all the commands?' },
     { type: 'p', text: 'On [Commands](/wiki/commands), or type `/menu` in game.' },
