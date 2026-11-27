@@ -280,7 +280,7 @@ function HeadlessCheckout({ lines }: { lines: ListLine[] }) {
         <p className={s.small}>In game only (not on the web store): {gameOnly.map((l) => l.item.name).join(', ')}.</p>
       ) : null}
       <label htmlFor={inputId} className={s.label}>
-        Your Java username
+        Your Minecraft username
       </label>
       <input
         id={inputId}
@@ -294,7 +294,7 @@ function HeadlessCheckout({ lines }: { lines: ListLine[] }) {
         aria-invalid={username.length > 0 && !USERNAME_RE.test(username.trim())}
       />
       <p id={hintId} className={s.small}>
-        Exactly as it shows in game. Your items go to this player.
+        Exactly as it shows in game. On Bedrock, start with the dot (like .Steve). Your items go to this player.
       </p>
       <PixelButton type="submit" variant="gold" icon="coin" block disabled={busy || sellable.length === 0}>
         {busy ? 'Opening checkout...' : 'Checkout on Tebex'}

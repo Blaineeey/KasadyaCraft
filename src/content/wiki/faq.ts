@@ -3,6 +3,7 @@ import { VERSIONS } from '@/content/guides/facts'
 import { DELVE_RULES, DELVES, livesFor } from '@/content/wiki/delve-facts'
 import type { WikiPage } from '@/lib/content'
 import { site } from '@/lib/site'
+import { CHECKOUT_MODE } from '@/lib/store'
 import { VOTE_PARTY_TEXT, VOTE_REWARD_TEXT, voteRewards, voteSites } from '@/lib/vote'
 
 /*
@@ -140,7 +141,13 @@ export const faq: WikiPage = {
       text: `With Tokens, in \`/ranks\`. You earn them from ${TOKEN_SOURCES_TEXT}. You buy ranks in order, VIP first. See [Ranks](/wiki/ranks).`,
     },
     { type: 'h3', text: 'Can I buy ranks with real money?' },
-    { type: 'p', text: 'Not yet. There is no web store today. The [store page](/store) explains what you can get in game.' },
+    {
+      type: 'p',
+      text:
+        CHECKOUT_MODE !== 'off'
+          ? 'Yes. On the [store page](/store), add a rank to your list and check out on Tebex. You can also get every rank in game with Tokens.'
+          : 'Not yet. When the web store opens, ranks will be on the [store page](/store). Until then you get them in game with Tokens.',
+    },
     { type: 'h3', text: 'Can I vote for rewards?' },
     {
       type: 'p',
