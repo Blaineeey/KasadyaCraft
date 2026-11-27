@@ -4,7 +4,7 @@
  * Owner: STORE ENGINEER.
  */
 import type { TooltipLine } from '@/components/ui/TooltipCard'
-import { formatPrice, getRank, type StoreItem } from '@/lib/store'
+import { formatPrice, getRank, webPrice, type StoreItem } from '@/lib/store'
 
 export function itemTooltipLines(item: StoreItem): TooltipLine[] {
   const lines: TooltipLine[] = []
@@ -28,6 +28,10 @@ export function itemTooltipLines(item: StoreItem): TooltipLine[] {
 
   if (item.status === 'coming-soon') lines.push({ text: 'Not available yet', color: 'red' })
   else if (item.status === 'free') lines.push({ text: 'Free for everyone', color: 'green' })
+  else if (item.status === 'web') {
+    const wp = webPrice(item.web)
+    lines.push(wp ? { text: `${formatPrice(wp)} on the web store`, color: 'yellow' } : { text: 'Web store only, opening soon', color: 'red' })
+  }
   else lines.push({ text: `${item.priceFrom ? 'From ' : ''}${formatPrice(item.price)} in game`, color: 'yellow' })
 
   return lines
@@ -37,5 +41,6 @@ export function itemTooltipLines(item: StoreItem): TooltipLine[] {
 export function statusLabel(item: StoreItem): string {
   if (item.status === 'coming-soon') return 'Coming soon'
   if (item.status === 'free') return 'Free'
+  if (item.status === 'web') return webPrice(item.web) ? 'Web store' : 'Coming soon'
   return 'In game now'
 }

@@ -6,6 +6,38 @@ The site code for this already exists (`src/components/store/checkout.ts`). It t
 
 Checked 2026-11-28 against the Tebex docs (Minecraft Java Edition page, Headless API).
 
+## Status (2026-11-28)
+
+Done in the Tebex dashboard (project "KasadyaCraft", 1933155, Minecraft: Offline, USD, Plus plan trial):
+- Categories: **Ranks** (Cumulative: an upgrade costs only the difference; lower-priced ranks are hidden after a
+  purchase) and **Crate Keys**. The default empty "Packages" category can be deleted.
+- Packages (game server "KasadyaCraft", command runs only while the player is online):
+
+  | Package | Id | Price | Command |
+  | --- | --- | --- | --- |
+  | VIP | 7839629 | $2.99 | `lp user {username} parent add vip` |
+  | VIP+ | 7839637 | $4.99 | `lp user {username} parent add vip+` |
+  | MVP | 7839641 | $6.99 | `lp user {username} parent add mvp` |
+  | MVP+ | 7839645 | $9.99 | `lp user {username} parent add mvp+` |
+  | MVP++ | 7839647 | $12.99 | `lp user {username} parent add mvp++` |
+  | Cardael Crate Key | 7839657 | $0.99 | `crate key give {username} cardael 1` (needs 1 free inventory slot) |
+
+- Storefront "KasadyaCraft Store" created (In-Game template), **not published**: our own site is the shop.
+- Public Token (safe to share): `15fmr-ebbd77a1b266e0b5ef612dc23e61bab29b150304`. Headless API checked: all six
+  packages and prices come back, baskets work, CORS allows the site.
+- Site: ids filled in `src/lib/store.ts`, placeholders off. Tested locally with the token: Buy now -> list ->
+  Checkout on Tebex opened pay.tebex.io with VIP $2.99 (not paid).
+
+Still for the owner:
+1. Checkout Settings: customer support email.
+2. Link Wallet (payouts).
+3. Replace the game server secret (the old one is in latest.log) and run `tebex secret <new>` in the panel console.
+4. Optional: Checkout Settings > Test Mode, buy one Cardael key with the test method to see the key arrive and how a
+   quantity above 1 is delivered, then remove the test payment.
+5. Submit for Review (Continue setup page). Until Tebex approves, checkout only takes test payments.
+6. After approval: Vercel env `NEXT_PUBLIC_TEBEX_PUBLIC_TOKEN` = the Public Token, redeploy. That switches on the
+   web prices and Buy buttons.
+
 ## 1. Owner: create the store (creator.tebex.io)
 
 1. Create the Tebex account and webstore. **Game type: Minecraft: Offline.** Our Bedrock players join with a dot in

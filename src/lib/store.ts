@@ -18,8 +18,9 @@
  * - Real-money prices (`web.price`): the site never shows a price while `placeholder: true`.
  *   2026-11-28 the owner chose Tebex and asked for "very affordable" prices on ranks VIP to MVP++
  *   and the Cardael crate key (the first key sold for real money). Then: US dollars, VIP $2.99, Cardael
- *   key $0.99 each (owner); VIP+ $4.99, MVP $6.99, MVP+ $9.99, MVP++ $12.99 (Claude, same line). Flip
- *   `placeholder` to false once each Tebex package exists with the same price (docs/TEBEX_SETUP.md).
+ *   key $0.99 each (owner); VIP+ $4.99, MVP $6.99, MVP+ $9.99, MVP++ $12.99 (Claude, same line).
+ *   Tebex packages created 2026-11-28 with these prices (ids below, checked through the Headless API).
+ *   Web prices still only show once NEXT_PUBLIC_TEBEX_PUBLIC_TOKEN is set (docs/TEBEX_SETUP.md).
  *
  * FACTS CHECKED 2026-11-25 (read-only) on the Survival server:
  * - plugins/DeluxeMenus/gui_menus/PURCHASE/{Menu,Ranks,Keys,Points}.yml
@@ -182,7 +183,8 @@ export interface StoreItem {
   perks?: string[]
   /** Exactly how a player gets it, e.g. 'In game: /purchase > Keys'. */
   howToGet: string
-  status: 'in-game' | 'coming-soon' | 'free'
+  /** 'web': sold only on the web store (Tebex), nothing to buy in game, e.g. the Cardael crate key. */
+  status: 'in-game' | 'coming-soon' | 'free' | 'web'
   /** For ranks: link the Rank record. */
   rankId?: RankId
   /* ---- added by the STORE ENGINEER ---- */
@@ -367,7 +369,7 @@ const vip = buildRank({
       { name: "Bottles o' enchanting", count: 4, sprite: { shape: 'xpbottle' } },
     ],
   },
-  web: { tebexPackageId: null, price: { PHP: 169, USD: 2.99 }, placeholder: true },
+  web: { tebexPackageId: '7839629', price: { PHP: 169, USD: 2.99 }, placeholder: false },
 })
 
 const vipPlus = buildRank(
@@ -414,7 +416,7 @@ const vipPlus = buildRank(
         { name: 'Resource crate key', sprite: { shape: 'key', tone: 'resource' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 289, USD: 4.99 }, placeholder: true },
+    web: { tebexPackageId: '7839637', price: { PHP: 289, USD: 4.99 }, placeholder: false },
   },
   vip,
 )
@@ -457,7 +459,7 @@ const mvp = buildRank(
         { name: 'Resource crate key', sprite: { shape: 'key', tone: 'resource' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 399, USD: 6.99 }, placeholder: true },
+    web: { tebexPackageId: '7839641', price: { PHP: 399, USD: 6.99 }, placeholder: false },
   },
   vipPlus,
 )
@@ -505,7 +507,7 @@ const mvpPlus = buildRank(
         { name: 'Epic crate key', sprite: { shape: 'key', tone: 'epic' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 579, USD: 9.99 }, placeholder: true },
+    web: { tebexPackageId: '7839645', price: { PHP: 579, USD: 9.99 }, placeholder: false },
   },
   mvp,
 )
@@ -552,7 +554,7 @@ const mvpPlusPlus = buildRank(
         { name: 'Trim crate key', sprite: { shape: 'key', tone: 'trim' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 749, USD: 12.99 }, placeholder: true },
+    web: { tebexPackageId: '7839647', price: { PHP: 749, USD: 12.99 }, placeholder: false },
   },
   mvpPlus,
 )
@@ -816,7 +818,7 @@ const keyItems: StoreItem[] = [
     rarity: 'epic',
     price: null,
     howToGet: 'On the web store. Open the Cardael crate at /warp crates.',
-    status: 'coming-soon',
+    status: 'web',
     sprite: { shape: 'key', tone: 'cardael' },
     commands: ['/warp crates'],
     contents: [
@@ -828,7 +830,7 @@ const keyItems: StoreItem[] = [
     odds: 'Each tool about 9.7%, each armour piece or the shield about 5.5%, each bow, crossbow, sword, staff or spear about 3.4%, each hammer, scythe, mace, trident or wings about 1.4%.',
     packSizes: [1],
     maxQuantity: 64,
-    web: { tebexPackageId: null, price: { PHP: 55, USD: 0.99 }, placeholder: true },
+    web: { tebexPackageId: '7839657', price: { PHP: 55, USD: 0.99 }, placeholder: false },
   },
 ]
 
