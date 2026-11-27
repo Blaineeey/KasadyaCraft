@@ -1,13 +1,11 @@
 import {
   formatPrice,
+  itemsIn,
   PLAYTIME_MENU,
-  ranks,
   tokenMilestones,
-  tokenPace,
   tokensFirstDay,
   tokensFirstRewards,
   tokensFromPlaytime,
-  tokensToReach,
   tokenSources,
 } from '@/lib/store'
 import StoreSprite from './StoreSprite'
@@ -19,10 +17,11 @@ const tokens = (amount: number) => formatPrice({ currency: 'tokens', amount })
  * Where Tokens come from, rendered from tokenSources in src/lib/store.ts:
  * the repeat claims (/rewards and daily quests) as advancement cards, then the
  * one-off playtime ladder on an XP-style track. Owner: STORE ENGINEER.
+ * Since 2026-11-28 Tokens no longer buy ranks (web store only): they buy crate keys in /keys.
  */
 export default function TokenLadder() {
-  const cheapest = ranks[0]
-  const top = ranks[ranks.length - 1]
+  // Key prices in Tokens, from the /keys items in src/lib/store.ts (web-only keys have no Token price).
+  const keyPrices = itemsIn('keys').flatMap((k) => (k.price?.currency === 'tokens' ? [k.price.amount] : []))
   const repeats = tokenSources.filter((t) => t.repeats)
   let running = 0
 
@@ -69,9 +68,11 @@ export default function TokenLadder() {
           go up. Open them with <code>{PLAYTIME_MENU}</code>.
         </p>
         <p>
-          Play most days and {cheapest.name} ({formatPrice(cheapest.price)}) is yours in about {tokenPace.vipAfter}. Going all
-          the way to {top.name} costs {tokens(tokensToReach(top.id))} in total, so the top ranks are a long grind. Take your
-          time.
+          Spend your Tokens on crate keys in <code>/keys</code>, which is also inside <code>/purchase</code>.
+          {keyPrices.length > 0
+            ? ` A key costs ${tokens(Math.min(...keyPrices))} to ${tokens(Math.max(...keyPrices))}.`
+            : null}{' '}
+          Points turn into Tokens too, in <code>/pointshop</code>.
         </p>
       </div>
     </div>

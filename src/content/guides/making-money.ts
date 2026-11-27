@@ -3,7 +3,6 @@ import { CHAT_GAME_PRIZE } from '@/content/wiki/chat-games'
 import type { Guide } from '@/lib/content'
 import {
   AFK_POOL,
-  CHECKED,
   MALL,
   PLAYTIME_COMMAND,
   PLAYTIME_LEVELS,
@@ -34,7 +33,7 @@ export const makingMoney: Guide = {
   stage: 'first-day',
   order: 3,
   minutes: 5,
-  updated: CHECKED,
+  updated: '2026-11-28',
   next: 'claim-a-plot',
   related: ['economy', 'player-shops', 'rewards'],
   body: [
@@ -103,7 +102,7 @@ export const makingMoney: Guide = {
       items: [
         '**Money ($):** the shop, player shops, mall stalls and tags. Check it with `/bal`.',
         '**Points:** from the AFK room, chat games, dungeon clears, weekly and monthly rewards and playtime levels. Spend them on chat colours, glow, or Tokens and keys in `/pointshop`.',
-        `**Tokens:** from ${TOKEN_SOURCES_TEXT}. Spend them on ranks and crate keys in \`/purchase\`.`,
+        `**Tokens:** from ${TOKEN_SOURCES_TEXT}. Spend them on crate keys in \`/keys\`, also inside \`/purchase\`.`,
       ],
     },
     { type: 'h2', text: 'Spending tips' },

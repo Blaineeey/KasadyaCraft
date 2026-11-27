@@ -7,7 +7,11 @@ import PixelIcon from '@/components/ui/PixelIcon'
 import type { PixelIconName } from '@/components/ui/pixel-icons'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { site } from '@/lib/site'
+import { CHECKOUT_MODE } from '@/lib/store'
 import s from './overview.module.css'
+
+/** Ranks are sold only on the web store since 2026-11-28; it shows "opening soon" until the checkout is on. */
+const RANKS_SOLD = `sold on our web store${CHECKOUT_MODE === 'off' ? ', which is opening soon' : ''}`
 
 /*
  * Body of /games/minecraft: a short tour of KasadyaCraft Survival for the multi-game section.
@@ -78,7 +82,7 @@ const features: { icon: PixelIconName; title: string; body: string; href: string
   {
     icon: 'crown',
     title: 'Ranks',
-    body: 'VIP to MVP++, bought with Tokens you earn by playing. More plots, homes and handy commands.',
+    body: `VIP to MVP++, ${RANKS_SOLD}. More plots, homes and handy commands.`,
     href: '/wiki/ranks',
   },
   {
@@ -179,7 +183,7 @@ export default function MinecraftOverview() {
             </div>
             <div className={s.fact}>
               <dt>Cost</dt>
-              <dd>Free to play. Ranks are bought with in-game Tokens.</dd>
+              <dd>Free to play. Ranks are {RANKS_SOLD}.</dd>
             </div>
             <div className={s.fact}>
               <dt>Community</dt>

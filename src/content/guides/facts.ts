@@ -61,14 +61,14 @@ export const MALL = {
 } as const
 
 /**
- * Rank ladder. Prices: DeluxeMenus gui_menus/PURCHASE/Ranks.yml (FlareTokens, each rank needs the one before).
+ * Rank ladder. No prices here: since 2026-11-28 ranks are sold only on the web store (US dollars, any
+ * order, Tokens no longer buy them). The dollar prices live in src/lib/store.ts (`web` on each rank).
  * Plots: LuckPerms plots.plot.N. Homes: Essentials sethome-multiple. Mall stalls: ARM Limits.
  * Kit cooldowns: Essentials kits.yml delay.
  */
 export interface RankStep {
   id: RankId | 'member'
   name: string
-  tokens: number | null
   plots: number
   homes: number
   stalls: number
@@ -77,12 +77,12 @@ export interface RankStep {
 }
 
 export const RANK_LADDER: RankStep[] = [
-  { id: 'member', name: 'Member', tokens: null, plots: 1, homes: 1, stalls: 1, kit: 'starter', kitEvery: '24 hours' },
-  { id: 'vip', name: 'VIP', tokens: 1000, plots: 2, homes: 2, stalls: 2, kit: 'vip', kitEvery: '24 hours' },
-  { id: 'vip-plus', name: 'VIP+', tokens: 2000, plots: 3, homes: 4, stalls: 2, kit: 'vip+', kitEvery: '2 days' },
-  { id: 'mvp', name: 'MVP', tokens: 2500, plots: 4, homes: 6, stalls: 3, kit: 'mvp', kitEvery: '3 days' },
-  { id: 'mvp-plus', name: 'MVP+', tokens: 3000, plots: 5, homes: 8, stalls: 4, kit: 'mvp+', kitEvery: '5 days' },
-  { id: 'mvp-plus-plus', name: 'MVP++', tokens: 3500, plots: 6, homes: 10, stalls: 5, kit: 'mvp++', kitEvery: '7 days' },
+  { id: 'member', name: 'Member', plots: 1, homes: 1, stalls: 1, kit: 'starter', kitEvery: '24 hours' },
+  { id: 'vip', name: 'VIP', plots: 2, homes: 2, stalls: 2, kit: 'vip', kitEvery: '24 hours' },
+  { id: 'vip-plus', name: 'VIP+', plots: 3, homes: 4, stalls: 2, kit: 'vip+', kitEvery: '2 days' },
+  { id: 'mvp', name: 'MVP', plots: 4, homes: 6, stalls: 3, kit: 'mvp', kitEvery: '3 days' },
+  { id: 'mvp-plus', name: 'MVP+', plots: 5, homes: 8, stalls: 4, kit: 'mvp+', kitEvery: '5 days' },
+  { id: 'mvp-plus-plus', name: 'MVP++', plots: 6, homes: 10, stalls: 5, kit: 'mvp++', kitEvery: '7 days' },
 ]
 
 /**

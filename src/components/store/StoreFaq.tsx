@@ -1,19 +1,10 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { site } from '@/lib/site'
-import {
-  CHECKOUT_MODE,
-  formatPrice,
-  PLAYTIME_MENU,
-  ranks,
-  tokenPace,
-  tokenSources,
-  tokensToReach,
-  type TokenSource,
-} from '@/lib/store'
+import { CHECKOUT_MODE, formatPrice, PLAYTIME_MENU, tokenSources, type TokenSource } from '@/lib/store'
 import s from './StorePage.module.css'
 
-const top = ranks[ranks.length - 1]
+const webOpen = CHECKOUT_MODE !== 'off'
 const tokens = (amount: number) => formatPrice({ currency: 'tokens', amount })
 const earn = (id: TokenSource['id']) => tokens(tokenSources.find((t) => t.id === id)?.tokens ?? 0)
 
@@ -21,27 +12,29 @@ const earn = (id: TokenSource['id']) => tokens(tokenSources.find((t) => t.id ===
  * OWNER PLACEHOLDERS in this file (search for "PLACEHOLDER"):
  * - web store delivery wording (depends on the Tebex package settings)
  * - refund policy (must be written by the owner before real-money sales open)
+ * Ranks are sold only on the web store since 2026-11-28 (src/lib/store.ts header). Every answer must read
+ * right with the checkout open and with it off (store waiting for Tebex approval: "opening soon").
  */
 const faqs: { q: string; a: ReactNode }[] = [
   {
     q: 'Can I pay with real money?',
-    a:
-      CHECKOUT_MODE !== 'off' ? (
-        <>
-          Yes, for the items marked with a web price. Add them to your list, type your username and press{' '}
-          <strong>Checkout on Tebex</strong>. Tebex is our payment partner: you pay on their page and we never see your card
-          details. Everything else is still bought in game with Tokens, Points or money you earn by playing.
-        </>
-      ) : (
-        <>
-          Not yet. There is no web store today, so nothing on this page costs real money. You buy everything in game with
-          Tokens, Points or money you earn by playing. When the web store opens we will say so in{' '}
-          <a href={site.discord} target="_blank" rel="noopener noreferrer">
-            Discord
-          </a>{' '}
-          and you will be able to buy on this page too.
-        </>
-      ),
+    a: webOpen ? (
+      <>
+        Yes. Ranks and the Cardael crate key are sold on our web store, in US dollars. Add them to your list, type your
+        username and press <strong>Checkout on Tebex</strong>. Tebex is our payment partner: you pay on their page and we
+        never see your card details. Everything else is bought in game with Tokens, Points or money you earn by playing.
+      </>
+    ) : (
+      <>
+        Soon. Ranks and the Cardael crate key are sold on our web store, which is opening soon. Prices are in US dollars.
+        Everything else is bought in game with Tokens, Points or money you earn by playing. When the web store opens we will
+        say so in{' '}
+        <a href={site.discord} target="_blank" rel="noopener noreferrer">
+          Discord
+        </a>{' '}
+        and you will be able to buy on this page.
+      </>
+    ),
   },
   {
     q: 'How do I get Tokens?',
@@ -49,9 +42,8 @@ const faqs: { q: string; a: ReactNode }[] = [
       <>
         By playing. <code>/rewards</code> pays {earn('daily')} a day, {earn('weekly')} a week and {earn('monthly')} a month.
         Finish all three daily quests in <code>/dquests</code> for {earn('quests')} more. Playtime levels in{' '}
-        <code>{PLAYTIME_MENU}</code> add {earn('playtime')} in total as your hours go up. Play most days and {ranks[0].name}{' '}
-        takes about {tokenPace.vipAfter}. Your balance shows at the top of <code>/ranks</code>, and you spend Tokens in{' '}
-        <code>/purchase</code>.
+        <code>{PLAYTIME_MENU}</code> add {earn('playtime')} in total as your hours go up. You can also turn Points into Tokens in{' '}
+        <code>/pointshop</code>. Spend Tokens on crate keys in <code>/keys</code>, which is also inside <code>/purchase</code>.
       </>
     ),
   },
@@ -59,12 +51,11 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'Is this pay-to-win?',
     a: (
       <>
-        Every rank can be bought with Tokens you earn by playing, so nobody has to pay for one.{' '}
-        {CHECKOUT_MODE !== 'off'
-          ? 'The web store also sells ranks and the Cardael crate key, for players who want to support the server.'
-          : 'When the web store opens it will also sell ranks and the Cardael crate key, for players who want to support the server.'}{' '}
-        Each rank&rsquo;s perks are listed on this page, so you can see exactly what you get before you buy. Cosmetics like
-        tags, chat colours and glow are looks only.
+        Ranks are bought with real money on our web store{webOpen ? '' : ', which is opening soon'}. Tokens no longer buy
+        them. A rank gives real perks: more plots, homes and stalls, extra commands and a rank kit. Every perk is listed on
+        this page, so you can see exactly what you get before you buy. Crate keys can still be earned: the Tokens you get
+        from playing buy every key in <code>/keys</code>. The Cardael crate key is the exception: it is sold only on the web
+        store. Cosmetics like tags, chat colours and glow are looks only.
       </>
     ),
   },
@@ -72,11 +63,10 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'When do I get what I bought?',
     a: (
       <>
-        In game it is instant: click it in the menu and it is yours (ranks even get a firework). Your rank shows in the hub and
-        in Survival. {/* PLACEHOLDER: confirm once Tebex packages exist */}
-        {CHECKOUT_MODE !== 'off' ? 'Web store purchases' : 'When the web store opens, purchases will'} arrive in Survival
-        automatically for the username you type at checkout.
-        Bedrock players type their name with the dot in front, like <code>.Steve</code>.
+        In game it is instant: click it in the menu and it is yours. {/* PLACEHOLDER: confirm once Tebex packages exist */}
+        {webOpen ? 'Web store purchases, ranks included, arrive' : 'When the web store opens, purchases (ranks included) will arrive'}{' '}
+        in Survival automatically for the username you type at checkout. Bedrock players type their name with the dot in
+        front, like <code>.Steve</code>. Your rank shows in the hub and in Survival.
       </>
     ),
   },
@@ -92,18 +82,20 @@ const faqs: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'Do ranks expire?',
-    a: <>No. A rank you buy in <code>/ranks</code> is yours for good.</>,
+    a: (
+      <>
+        No. Ranks are permanent. A rank you already own stays yours, even one you bought with Tokens before ranks moved to the
+        web store.
+      </>
+    ),
   },
   {
     q: 'Can I skip straight to MVP++?',
     a: (
       <>
-        With Tokens, no: ranks go in order (VIP, VIP+, MVP, MVP+, then MVP++) and the menu only lets you buy the next one. Going
-        all the way from no rank to {top.name} costs {formatPrice({ currency: 'tokens', amount: tokensToReach(top.id) })} in
-        total.
-        {CHECKOUT_MODE !== 'off'
-          ? ` On the web store, yes: every rank includes the ones below it, and if you bought a lower rank there before, you only pay the difference.`
-          : null}
+        Yes. On our web store{webOpen ? '' : ', which is opening soon,'} you can buy any rank directly, no need to buy the ones
+        below it first. Every rank includes everything in the ranks below it. Bought a lower rank on the web store before? Then
+        a higher one costs only the difference.
       </>
     ),
   },

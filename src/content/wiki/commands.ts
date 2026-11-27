@@ -19,7 +19,8 @@ import type { WikiPage } from '@/lib/content'
  * - GSit poses are rank perks since the GAMEPLAY FIXER round 2 (CHANGELOG 06:17-06:48, LP export 07:25): default has
  *   gsit.sit/lay/layback/bellyflop/spin/crawl = false; VIP gsit.sit, VIP+ gsit.lay/layback/bellyflop/spin, MVP gsit.crawl
  *   (matches the Ranks.yml lore). Still free: click-sitting on stairs/slabs/carpets (GSit.SitClick) and /sit toggle.
- * /store is NOT used here: Skript store.sk owns that label ("store coming soon"). /purchase opens the Tokens menu.
+ * /store is NOT listed: since 2026-11-28 it only links to the web store (opening soon while it waits for Tebex
+ * approval). /purchase is the Tokens menu (crate keys) plus the rank showcase; ranks are sold only on the web store.
  * 2026-11-27: InfiniteFishing replaced CustomFishing (/sellfish, /fishshop, /fishingbag are gone); /ae (AdvancedEnchantments menu);
  * chat is LPC Pro (/msg aliases via /commands.yml, /ignore, /report, /color; /msgtoggle disabled; /unignore /emoji /toggle untested);
  * /chatcolor is the DeluxeMenus colour shop, /glowshop the glow shop; /fly + /tempfly = vote fly time on own or trusted plots.
@@ -31,7 +32,7 @@ export const commands: WikiPage = {
   icon: 'scroll',
   category: 'basics',
   order: 4,
-  updated: '2026-11-27',
+  updated: '2026-11-28',
   keywords: ['commands', 'help', '/menu', '/help', 'list', 'cmd', 'how do i', '/dungeon', 'delve', '/fish', '/ae', '/fly', '/msg', '/ah'],
   related: ['world-and-warps', 'ranks', 'economy', 'faq'],
   body: [
@@ -105,9 +106,9 @@ export const commands: WikiPage = {
         { command: '/coinflip <amount> <heads|tails>', description: 'Bet money against another player. Minimum $1,000. `/cf` for short.' },
         { command: '/points', description: 'Your points.' },
         { command: '/tokens', description: 'Your Tokens.' },
-        { command: '/purchase', description: 'The Tokens menu: ranks and keys.' },
+        { command: '/purchase', description: 'The Tokens menu: crate keys, and the list of ranks.' },
         { command: '/pointshop', description: 'Spend points: Tokens (25 points each) or crate keys.' },
-        { command: '/ranks', description: 'The rank menu.' },
+        { command: '/ranks', description: 'See every rank, its perks and its price. Ranks are sold on the web store.' },
         { command: '/keys', description: 'Buy crate keys with Tokens.' },
       ],
     },

@@ -4,7 +4,7 @@
  * Owner: STORE ENGINEER.
  */
 import type { TooltipLine } from '@/components/ui/TooltipCard'
-import { formatPrice, getRank, webPrice, type StoreItem } from '@/lib/store'
+import { CHECKOUT_MODE, formatPrice, getRank, listPrice, type StoreItem } from '@/lib/store'
 
 export function itemTooltipLines(item: StoreItem): TooltipLine[] {
   const lines: TooltipLine[] = []
@@ -14,7 +14,6 @@ export function itemTooltipLines(item: StoreItem): TooltipLine[] {
     for (const perk of rank.perks) {
       lines.push(perk.startsWith('Everything in') ? { text: perk, color: 'gold' } : { text: perk, color: 'gray' })
     }
-    if (rank.requires) lines.push({ text: `Needs ${getRank(rank.requires)?.name} first`, color: 'red' })
   } else if (item.chips?.length) {
     lines.push({ text: item.summary, color: 'gray' })
     lines.push({ text: item.chips.map((c) => c.label).join(' '), color: 'white' })
@@ -29,8 +28,11 @@ export function itemTooltipLines(item: StoreItem): TooltipLine[] {
   if (item.status === 'coming-soon') lines.push({ text: 'Not available yet', color: 'red' })
   else if (item.status === 'free') lines.push({ text: 'Free for everyone', color: 'green' })
   else if (item.status === 'web') {
-    const wp = webPrice(item.web)
-    lines.push(wp ? { text: `${formatPrice(wp)} on the web store`, color: 'yellow' } : { text: 'Web store only, opening soon', color: 'red' })
+    // Web-only items (ranks, the Cardael key) show their decided price even before the checkout opens.
+    const lp = listPrice(item.web)
+    if (lp) lines.push({ text: `${formatPrice(lp)} on our web store`, color: 'yellow' })
+    if (CHECKOUT_MODE === 'off') lines.push({ text: lp ? 'Web store opening soon' : 'Web store only, opening soon', color: 'red' })
+    else if (!lp) lines.push({ text: 'Web store only', color: 'yellow' })
   }
   else lines.push({ text: `${item.priceFrom ? 'From ' : ''}${formatPrice(item.price)} in game`, color: 'yellow' })
 
@@ -41,6 +43,6 @@ export function itemTooltipLines(item: StoreItem): TooltipLine[] {
 export function statusLabel(item: StoreItem): string {
   if (item.status === 'coming-soon') return 'Coming soon'
   if (item.status === 'free') return 'Free'
-  if (item.status === 'web') return webPrice(item.web) ? 'Web store' : 'Coming soon'
+  if (item.status === 'web') return CHECKOUT_MODE === 'off' ? 'Coming soon' : 'Web store'
   return 'In game now'
 }

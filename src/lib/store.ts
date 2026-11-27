@@ -6,10 +6,15 @@
  * freely, do not rename or remove existing ones.
  *
  * HONESTY RULES (non-negotiable):
- * - There is NO web payment provider today. In game, /purchase (aliases /buy,
- *   /beli, /tokenshop) opens a FlareTokens menu: ranks, keys and points are
- *   bought with Tokens. NEVER tell players to type /store: Skript store.sk owns
- *   that label and only answers "Our store is coming soon!".
+ * - RANKS ARE WEB-ONLY since 2026-11-28 (owner decision): VIP to MVP++ are sold ONLY on the web
+ *   store (Tebex), in US dollars. Tokens no longer buy ranks, so ranks have no in-game `price`.
+ *   In game, /ranks (also /purchase > Ranks) is only a showcase: each rank's perks and dollar
+ *   price, and clicking a rank sends the web store link. On the web store any rank can be bought
+ *   directly; every rank includes the ranks below it; the Tebex Ranks category is cumulative, so
+ *   after a lower web rank a higher one costs only the difference. Ranks already owned stay owned
+ *   (ranks are permanent). /store in game now links to the web store.
+ * - /purchase (aliases /buy, /beli, /tokenshop) no longer sells ranks for Tokens: Tokens buy every
+ *   crate key in /keys (also inside /purchase). Points buy Tokens and keys in /pointshop.
  * - Tokens come from /rewards (daily 10, weekly 50, monthly 150), all 3 daily
  *   quests (25) and the playtime ladder (/levels, 850 in total). See
  *   tokenSources below (CHANGELOG, ECONOMY FIXER ~04:40-05:00, 2026-11-25).
@@ -20,7 +25,10 @@
  *   and the Cardael crate key (the first key sold for real money). Then: US dollars, VIP $2.99, Cardael
  *   key $0.99 each (owner); VIP+ $4.99, MVP $6.99, MVP+ $9.99, MVP++ $12.99 (Claude, same line).
  *   Tebex packages created 2026-11-28 with these prices (ids below, checked through the Headless API).
- *   Web prices still only show once NEXT_PUBLIC_TEBEX_PUBLIC_TOKEN is set (docs/TEBEX_SETUP.md).
+ *   The checkout only works once NEXT_PUBLIC_TEBEX_PUBLIC_TOKEN is set (docs/TEBEX_SETUP.md); until
+ *   then CHECKOUT_MODE is 'off' and every text must say the web store is opening soon.
+ *   listPrice() shows a decided price (ranks, Cardael key) with "on our web store" wording in both
+ *   modes; webPrice() only returns it while the checkout is open (buy buttons, totals).
  *
  * FACTS CHECKED 2026-11-25 (read-only) on the Survival server:
  * - plugins/DeluxeMenus/gui_menus/PURCHASE/{Menu,Ranks,Keys,Points}.yml
@@ -154,6 +162,7 @@ export interface Rank {
   /** Brand/rarity colour token for the rank, e.g. 'var(--chat-green)'. */
   color: string
   order: number
+  /** In-game price. null for every rank since 2026-11-28: ranks are sold only on the web store (`web`). */
   price: Price | null
   /** Perk lines, short and concrete ("2 plots", "/nv night vision"). Built from the fields below. */
   perks: string[]
@@ -164,7 +173,10 @@ export interface Rank {
   tagline: string
   rarity: Rarity
   sprite: SpriteRef
-  /** The rank you must own before the /ranks menu lets you buy this one. */
+  /**
+   * UNUSED since 2026-11-28: the Tokens menu made you buy ranks in order. On the web store any
+   * rank can be bought directly, so no rank sets this. Kept only for the type contract.
+   */
   requires?: RankId
   limits: RankLimits
   /** Commands this rank ADDS (it also keeps everything from the ranks below). */
@@ -183,7 +195,7 @@ export interface StoreItem {
   perks?: string[]
   /** Exactly how a player gets it, e.g. 'In game: /purchase > Keys'. */
   howToGet: string
-  /** 'web': sold only on the web store (Tebex), nothing to buy in game, e.g. the Cardael crate key. */
+  /** 'web': sold only on the web store (Tebex), nothing to buy in game: every rank and the Cardael crate key. */
   status: 'in-game' | 'coming-soon' | 'free' | 'web'
   /** For ranks: link the Rank record. */
   rankId?: RankId
@@ -231,7 +243,10 @@ export const storeCategories: StoreCategory[] = [
   {
     id: 'ranks',
     name: 'Ranks',
-    blurb: 'VIP to MVP++. More plots, homes and stalls, handy commands and a kit.',
+    blurb:
+      CHECKOUT_MODE === 'off'
+        ? 'VIP to MVP++, sold on our web store, which is opening soon. More plots, homes and stalls, handy commands and a kit.'
+        : 'VIP to MVP++, sold on our web store. More plots, homes and stalls, handy commands and a kit.',
     icon: 'crown',
     sprite: { shape: 'banner5' },
   },
@@ -327,7 +342,8 @@ function buildRank(input: RankInput, below?: Rank): Rank {
 }
 
 /*
- * Prices: PURCHASE/Ranks.yml (`ft remove <player> N` in each buy item).
+ * Prices: real money only since 2026-11-28 (`web` on each rank, Tebex package ids). `price` is null:
+ * PURCHASE/Ranks.yml is a showcase now and no longer takes Tokens. No `requires`: any order on the web store.
  * Limits: plots = LuckPerms plots.plot.N, homes = Essentials sethome-multiple,
  * stalls = AdvancedRegionMarket Limits.<group>.total.
  * Commands: LuckPerms nodes of that group only. Perks the old menu lists but
@@ -337,7 +353,7 @@ function buildRank(input: RankInput, below?: Rank): Rank {
  * GSit poses ARE rank perks (GAMEPLAY FIXER round 2, LP export 07:25; Ranks.yml lore):
  * VIP gsit.sit, VIP+ gsit.lay + layback + bellyflop + spin, MVP gsit.crawl.
  *
- * WEB PRICES BELOW ARE PLACEHOLDERS FOR THE OWNER (never shown while placeholder: true).
+ * WEB PRICES BELOW ARE THE OWNER'S (2026-11-28, placeholder: false), see the header.
  */
 const vip = buildRank({
   id: 'vip',
@@ -345,7 +361,7 @@ const vip = buildRank({
   prefix: '[VIP]',
   color: 'var(--chat-green)',
   order: 1,
-  price: { currency: 'tokens', amount: 1000 },
+  price: null,
   tagline: 'Your first rank. A second plot, a second home and a crafting table in your pocket.',
   rarity: 'uncommon',
   sprite: { shape: 'banner1' },
@@ -379,11 +395,10 @@ const vipPlus = buildRank(
     prefix: '[VIP+]',
     color: 'var(--chat-green)',
     order: 2,
-    price: { currency: 'tokens', amount: 2000 },
+    price: null,
     tagline: 'Workbenches on demand, /back after a bad fall, and a diamond armour kit.',
     rarity: 'uncommon',
     sprite: { shape: 'banner2' },
-    requires: 'vip',
     limits: { plots: 3, homes: 4, stalls: 2 },
     commands: [
       { command: '/anvil', description: 'Anvil anywhere' },
@@ -428,11 +443,10 @@ const mvp = buildRank(
     prefix: '[MVP]',
     color: 'var(--chat-aqua)',
     order: 3,
-    price: { currency: 'tokens', amount: 2500 },
+    price: null,
     tagline: 'Six homes, four plots, /repair and /condense, and an enchanted diamond kit.',
     rarity: 'rare',
     sprite: { shape: 'banner3' },
-    requires: 'vip-plus',
     limits: { plots: 4, homes: 6, stalls: 3 },
     commands: [
       { command: '/loom', description: 'Loom anywhere' },
@@ -471,11 +485,10 @@ const mvpPlus = buildRank(
     prefix: '[MVP+]',
     color: 'var(--chat-aqua)',
     order: 4,
-    price: { currency: 'tokens', amount: 3000 },
+    price: null,
     tagline: 'Fly on plots and in the Mall, wear anything as a hat, carry your ender chest, and a Protection IV diamond kit.',
     rarity: 'epic',
     sprite: { shape: 'banner4' },
-    requires: 'mvp',
     limits: { plots: 5, homes: 8, stalls: 4 },
     commands: [
       { command: '/stonecutter', description: 'Stonecutter anywhere' },
@@ -519,11 +532,10 @@ const mvpPlusPlus = buildRank(
     prefix: '[MVP++]',
     color: 'var(--chat-gold)',
     order: 5,
-    price: { currency: 'tokens', amount: 3500 },
+    price: null,
     tagline: 'The top rank. Ten homes, six plots, your own weather and a netherite kit every week.',
     rarity: 'legendary',
     sprite: { shape: 'banner5' },
-    requires: 'mvp-plus',
     limits: { plots: 6, homes: 10, stalls: 5 },
     commands: [
       { command: '/clear', description: 'Empty your inventory' },
@@ -564,16 +576,6 @@ export const ranks: Rank[] = [vip, vipPlus, mvp, mvpPlus, mvpPlusPlus]
 
 export function getRank(id: RankId): Rank | undefined {
   return ranks.find((r) => r.id === id)
-}
-
-/** Tokens needed to go from no rank to `id`, buying every rank on the way (the menu requires that). */
-export function tokensToReach(id: RankId): number {
-  let total = 0
-  for (const r of ranks) {
-    if (r.price?.currency === 'tokens') total += r.price.amount
-    if (r.id === id) break
-  }
-  return total
 }
 
 /* ------------------------------------------------------------------------ */
@@ -641,13 +643,23 @@ export const tokensFirstDay = tokensFirstRewards + sourceTokens('quests')
 
 /**
  * ECONOMY FIXER pace estimate (CHANGELOG ~04:40-05:00): an active daily player earns about 47 Tokens a
- * day and reaches VIP (1,000) around day 15 to 18, playtime levels V and XI included.
+ * day, playtime levels V and XI included. (The old "VIP after 2 to 2.5 weeks" went away on 2026-11-28:
+ * Tokens no longer buy ranks.)
  */
-export const tokenPace = { perDay: 47, vipAfter: '2 to 2.5 weeks' } as const
+export const tokenPace = { perDay: 47 } as const
 
 /* ------------------------------------------------------------------------ */
 /* Store items                                                              */
 /* ------------------------------------------------------------------------ */
+
+/*
+ * Ranks are web-only (2026-11-28): no in-game price, nothing to buy in game. /ranks in game only shows
+ * the ranks, their perks and their dollar price, and a click sends the web store link.
+ */
+const rankHow =
+  CHECKOUT_MODE === 'off'
+    ? 'On our web store, which is opening soon. You will be able to buy any rank directly, and each one includes everything in the ranks below it. In game, /ranks shows every rank, its perks and its price.'
+    : 'On our web store, right here on this page. You can buy any rank directly, and each one includes everything in the ranks below it. Bought a lower rank on the web store before? Then you only pay the difference. In game, /ranks shows every rank, its perks and its price.'
 
 const rankItems: StoreItem[] = ranks.map((r) => ({
   id: `rank-${r.id}`,
@@ -656,15 +668,13 @@ const rankItems: StoreItem[] = ranks.map((r) => ({
   summary: r.tagline,
   icon: 'crown',
   rarity: r.rarity,
-  price: r.price,
+  price: null,
   perks: r.perks,
-  howToGet: r.requires
-    ? `In game: type /ranks (or /purchase, then Ranks) and pay with Tokens. You need ${getRank(r.requires)?.name} first.`
-    : 'In game: type /ranks (or /purchase, then Ranks) and pay with Tokens.',
-  status: 'in-game',
+  howToGet: rankHow,
+  status: 'web',
   rankId: r.id,
   sprite: r.sprite,
-  commands: ['/ranks', '/purchase'],
+  commands: ['/ranks'],
   maxQuantity: 1,
   web: r.web,
 }))
@@ -1018,7 +1028,18 @@ export function priceLabel(price: Price | null): string {
   }
 }
 
-/** A real-money price we may show: only with a web store AND a non-placeholder price. */
+/**
+ * The decided real-money price of a web listing, whatever CHECKOUT_MODE is (null only while the
+ * listing is a placeholder). For web-only items (ranks, the Cardael key) shown with "on our web
+ * store" wording, plus "opening soon" while CHECKOUT_MODE is 'off'. Use webPrice() for anything that
+ * needs the checkout to be open (buy buttons, totals).
+ */
+export function listPrice(web?: WebListing): Price | null {
+  if (!web || web.placeholder) return null
+  return { currency: 'real', amount: web.price[STORE_CURRENCY], code: STORE_CURRENCY }
+}
+
+/** A real-money price you can pay right now: only with a web store AND a non-placeholder price. */
 export function webPrice(web: WebListing | undefined): Price | null {
   if (!web || web.placeholder || CHECKOUT_MODE === 'off') return null
   return { currency: 'real', amount: web.price[STORE_CURRENCY], code: STORE_CURRENCY }

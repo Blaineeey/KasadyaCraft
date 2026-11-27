@@ -1,5 +1,6 @@
 import { DAILY_QUEST_BONUS, DAILY_QUESTS, count } from '@/content/facts'
 import type { WikiPage } from '@/lib/content'
+import { CHECKOUT_MODE } from '@/lib/store'
 import { VOTE_REWARD_TEXT, voteSites } from '@/lib/vote'
 import { CHAT_GAME_PRIZE } from './chat-games'
 import { DELVE_RULES, DELVES } from './delve-facts'
@@ -10,6 +11,7 @@ import { DELVE_RULES, DELVES } from './delve-facts'
  * The delves section: KasadyaDelves 1.0.0 data, 2026-11-26 (see ./delve-facts.ts).
  * 2026-11-27: fishing (InfiniteFishing), custom enchants (AdvancedEnchantments), chat (LPC Pro), vote fly time on plots,
  * chat game prize, picture tags and point prices for colours and glow (see ./fishing.ts, ./custom-enchants.ts, ./chat.ts, ./tags.ts).
+ * 2026-11-28: ranks are sold only on the web store ("opening soon" while CHECKOUT_MODE is off); Tokens buy crate keys.
  */
 export const features: WikiPage = {
   slug: 'features',
@@ -18,7 +20,7 @@ export const features: WikiPage = {
   icon: 'star',
   category: 'basics',
   order: 1,
-  updated: '2026-11-27',
+  updated: '2026-11-28',
   keywords: ['overview', 'features', 'what to do', 'survival', 'hub', 'start', 'new player'],
   related: ['world-and-warps', 'plots', 'economy', 'fishing', 'custom-enchants', 'dungeon', 'delves', 'rewards', 'faq'],
   body: [
@@ -99,7 +101,7 @@ export const features: WikiPage = {
     { type: 'h2', text: 'Ranks and Tokens' },
     {
       type: 'p',
-      text: 'Ranks (VIP up to MVP++) give extra plots, homes, mall stalls, handy commands and a kit. They are paid with **Tokens** in game. There is no real-money store yet. Details on [Ranks](/wiki/ranks).',
+      text: `Ranks (VIP up to MVP++) give extra plots, homes, mall stalls, handy commands and a kit. They are sold on our web store${CHECKOUT_MODE === 'off' ? ', which is opening soon' : ''}. **Tokens**, which you earn by playing, buy crate keys in \`/keys\`. Details on [Ranks](/wiki/ranks).`,
     },
     { type: 'h2', text: 'Looking good' },
     {

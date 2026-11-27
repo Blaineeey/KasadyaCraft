@@ -1,14 +1,16 @@
 import TableFrame from '@/components/content/TableFrame'
 import Callout from '@/components/ui/Callout'
 import { LOCKSMITH } from '@/content/wiki/locksmith'
-import { formatPrice, priceLabel, storeItems, webPrice } from '@/lib/store'
+import { CHECKOUT_MODE, formatPrice, listPrice, priceLabel, storeItems } from '@/lib/store'
 import s from './WikiData.module.css'
 
 /*
  * Crate key prices and other sources for /wiki/crates. Renders ONLY from src/lib/store.ts
  * (storeItems, category 'keys') so prices live in one place. Owner: WIKI WRITER.
+ * Web-only keys (Cardael) show their decided dollar price (listPrice), with "opening soon" while
+ * CHECKOUT_MODE is 'off', the same way ranks do.
  */
-const COL_PRICE = 'Price in Tokens'
+const COL_PRICE = 'Price'
 const COL_OTHER = 'Other ways to get it'
 
 /*
@@ -82,8 +84,8 @@ export default function CrateKeyPrices() {
                         each
                         {packs ? <span className={s.sub}>{packs}</span> : null}
                       </>
-                    ) : webPrice(k.web) ? (
-                      `Web store only: ${formatPrice(webPrice(k.web)!)}`
+                    ) : listPrice(k.web) ? (
+                      `Web store only: ${formatPrice(listPrice(k.web))}${CHECKOUT_MODE === 'off' ? ' (opening soon)' : ''}`
                     ) : k.web ? (
                       'Web store only (opening soon)'
                     ) : (

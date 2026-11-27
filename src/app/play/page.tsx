@@ -14,6 +14,7 @@ import PixelIcon from '@/components/ui/PixelIcon'
 import SectionHeading from '@/components/ui/SectionHeading'
 import { STARTING_BALANCE, VERSIONS, money } from '@/content/guides/facts'
 import { site } from '@/lib/site'
+import { CHECKOUT_MODE } from '@/lib/store'
 import { pageMetadata } from '@/lib/seo'
 import s from './play.module.css'
 
@@ -135,8 +136,8 @@ const troubles: { q: string; a: ReactNode }[] = [
     q: 'Does it cost anything?',
     a: (
       <p>
-        No. Joining and playing are free. Ranks are bought with Tokens you earn in game, see{' '}
-        <Link href="/guides/ranks-and-kits">Ranks and kits</Link>.
+        No. Joining and playing are free. Ranks are optional extras, sold on our web store
+        {CHECKOUT_MODE === 'off' ? ', which is opening soon' : ''}. See <Link href="/guides/ranks-and-kits">Ranks and kits</Link>.
       </p>
     ),
   },

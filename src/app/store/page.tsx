@@ -24,8 +24,9 @@ import { pageMetadata } from '@/lib/seo'
  */
 export const metadata: Metadata = pageMetadata({
   title: 'Store',
-  description:
-    'Ranks, crate keys and cosmetics on KasadyaCraft: what each one really gives you and how to get it in game with Tokens, Points or money.',
+  description: `What every rank, crate key and cosmetic on KasadyaCraft really gives you. Ranks are sold on our web store${
+    CHECKOUT_MODE === 'off' ? ', opening soon' : ''
+  }. Most keys and all cosmetics cost Tokens, Points or money in game.`,
   path: '/store',
 })
 
@@ -42,8 +43,8 @@ export default function StorePage() {
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Store' }]}
         lead={
           webOpen
-            ? 'Get ranks, keys and cosmetics in game with Tokens, Points or money, or on our web store. Tap any item to see exactly what it gives you.'
-            : 'For now everything here is bought in game, with Tokens, Points or money you earn by playing. No real money yet. Tap any item to see exactly what it gives you and where to get it.'
+            ? 'Ranks and the Cardael crate key are sold on our web store. Everything else is bought in game with Tokens, Points or money you earn by playing. Tap any item to see exactly what it gives you.'
+            : 'Ranks and the Cardael crate key are sold on our web store, which is opening soon. Everything else is bought in game with Tokens, Points or money you earn by playing. Tap any item to see exactly what it gives you and where to get it.'
         }
       >
         <PixelButton href="#browse" variant="gold" icon="chest">
@@ -66,20 +67,22 @@ export default function StorePage() {
                 <PixelIcon name="lantern" size={24} />
                 {webOpen ? (
                   <span>
-                    <strong>Web store: open.</strong> You can also buy on{' '}
+                    <strong>Web store: open.</strong> Buy ranks and the Cardael crate key right here
                     {STORE_CHECKOUT_URL ? (
-                      <a href={STORE_CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-                        our Tebex store
-                      </a>
-                    ) : (
-                      'our web store'
-                    )}
-                    .
+                      <>
+                        {' '}
+                        or on{' '}
+                        <a href={STORE_CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+                          our Tebex store
+                        </a>
+                      </>
+                    ) : null}
+                    . Crate keys for Tokens are in <code>/keys</code> in game.
                   </span>
                 ) : (
                   <span>
-                    <strong>Web store: opening soon.</strong> Until then, open <code>/purchase</code> in game, or go
-                    straight to <code>/ranks</code> or <code>/keys</code>.
+                    <strong>Web store: opening soon.</strong> Ranks and the Cardael crate key are sold there. Crate keys for
+                    Tokens are in <code>/keys</code> in game, also inside <code>/purchase</code>.
                   </span>
                 )}
               </div>

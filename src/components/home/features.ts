@@ -125,7 +125,7 @@ export const features: Feature[] = [
     rarity: 'legendary',
     recipe: [_, 'coin', _, 'chat', 'tag', 'chat', _, 'coin', _],
     flavour: 'Show off in chat. Pure looks, no power.',
-    body: 'Pick a picture tag that shows next to your name, in chat, the tab list and above your head. Tags cost in-game money; chat colours and glow cost points. Nothing costs real money.',
+    body: 'Pick a picture tag that shows next to your name, in chat, the tab list and above your head. Tags cost in-game money; chat colours and glow cost points. None of them cost real money.',
     commands: ['/tags', '/chatcolor', '/glowshop'],
     href: '/wiki/tags',
     linkLabel: 'Tags and cosmetics',

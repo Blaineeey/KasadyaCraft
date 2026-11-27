@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react'
 import ItemTooltip from '@/components/ui/ItemTooltip'
-import { getRank, priceLabel, webPrice, type StoreItem } from '@/lib/store'
+import { CHECKOUT_MODE, getRank, listPrice, priceLabel, type StoreItem } from '@/lib/store'
 import { itemTooltipLines, statusLabel } from './itemLines'
 import PriceTag from './PriceTag'
 import StoreSprite from './StoreSprite'
@@ -24,6 +24,17 @@ export default function PackageTile({ item }: { item: StoreItem }) {
   const full = canList && inList >= item.maxQuantity
   const plate = rank ? rank.prefix : rarityName[item.rarity]
   const style = { '--item-color': rank?.color ?? `var(--rarity-${item.rarity})` } as CSSProperties
+  // Web-only items (ranks, the Cardael key): the decided dollar price shows even while the web store is not open yet.
+  const webOnly = item.status === 'web' ? listPrice(item.web) : null
+  const soon = CHECKOUT_MODE === 'off' ? ', opening soon' : ''
+  const priceText =
+    item.status === 'free'
+      ? 'free'
+      : item.status === 'web'
+        ? webOnly
+          ? `${priceLabel(webOnly)} on our web store${soon}`
+          : `web store only${soon}`
+        : priceLabel(item.price)
 
   return (
     <li className={s.tile} style={style} data-status={item.status}>
@@ -38,7 +49,7 @@ export default function PackageTile({ item }: { item: StoreItem }) {
           className={s.slotButton}
           onClick={() => openItem(item.id)}
           aria-haspopup="dialog"
-          aria-label={`${item.name}, ${item.status === 'free' ? 'free' : item.status === 'web' ? (webPrice(item.web) ? `${priceLabel(webPrice(item.web))} on the web store` : 'web store, opening soon') : priceLabel(item.price)}. Show details`}
+          aria-label={`${item.name}, ${priceText}. Show details`}
         >
           <span className={s.slot}>
             <StoreSprite shape={item.sprite.shape} tone={item.sprite.tone} size={48} />
@@ -55,8 +66,8 @@ export default function PackageTile({ item }: { item: StoreItem }) {
       <div className={s.tileFoot}>
         {item.status === 'in-game' ? (
           <PriceTag price={item.price} from={item.priceFrom} size="sm" className={s.tilePrice} />
-        ) : item.status === 'web' && webPrice(item.web) ? (
-          <PriceTag price={webPrice(item.web)} size="sm" className={s.tilePrice} />
+        ) : webOnly ? (
+          <PriceTag price={webOnly} size="sm" className={s.tilePrice} />
         ) : (
           <span className={s.statusChip}>{statusLabel(item)}</span>
         )}
