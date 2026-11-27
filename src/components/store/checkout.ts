@@ -8,7 +8,10 @@
  *   POST /api/accounts/{token}/baskets         { username, complete_url, cancel_url, complete_auto_redirect }
  *   POST /api/baskets/{basketIdent}/packages   { package_id, quantity }
  *   -> data.links.checkout
- * Minecraft stores need the player's Java username on the basket.
+ * Minecraft stores need the player's username on the basket.
+ * Bedrock players join through Geyser/Floodgate with a "." in front of their name
+ * (live usercache.json, 2026-11-28), so the Tebex store must be the "Minecraft: Offline"
+ * type and the plugin config needs server.proxy: true (Tebex docs, Geyser support).
  * Every failure returns a message; callers fall back to the store link or Discord.
  *
  * Owner: STORE ENGINEER.
@@ -17,8 +20,11 @@ import { STORE_CHECKOUT_URL, TEBEX_PUBLIC_TOKEN, type StoreItem } from '@/lib/st
 
 const API = 'https://headless.tebex.io/api'
 
-/** Java Edition usernames: 3 to 16 letters, digits or underscores. */
-export const USERNAME_RE = /^[A-Za-z0-9_]{3,16}$/
+/**
+ * Java usernames: 3 to 16 letters, digits or underscores.
+ * Bedrock (Floodgate) names: a dot, then the gamertag with spaces as _, 16 characters in all.
+ */
+export const USERNAME_RE = /^(?:[A-Za-z0-9_]{3,16}|\.[A-Za-z0-9_]{1,15})$/
 
 export interface CheckoutLine {
   item: StoreItem
@@ -51,7 +57,11 @@ export async function startTebexCheckout(lines: CheckoutLine[], username: string
   const fallbackUrl = STORE_CHECKOUT_URL
   if (!TEBEX_PUBLIC_TOKEN) return { ok: false, message: 'The web store is not set up yet.', fallbackUrl }
   if (!USERNAME_RE.test(username)) {
-    return { ok: false, message: 'Type your exact Java username (3 to 16 letters, numbers or _).', fallbackUrl }
+    return {
+      ok: false,
+      message: 'Type your username exactly as it shows in game. On Bedrock it starts with a dot, like .Steve.',
+      fallbackUrl,
+    }
   }
   const sellable = tebexLines(lines)
   if (sellable.length === 0) {

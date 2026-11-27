@@ -15,8 +15,11 @@
  *   tokenSources below (CHANGELOG, ECONOMY FIXER ~04:40-05:00, 2026-11-25).
  * - Never build a fake checkout, never collect payment details, never invent
  *   prices. Every in-game price below comes from a config (cited per item).
- * - Real-money prices (`web.price`) are PLACEHOLDERS for the owner. The site
- *   never shows a price while `placeholder: true`.
+ * - Real-money prices (`web.price`): the site never shows a price while `placeholder: true`.
+ *   2026-11-28 the owner chose Tebex and asked for "very affordable" prices on ranks VIP to MVP++
+ *   and the Cardael crate key (the first key sold for real money). Then: US dollars, VIP $2.99, Cardael
+ *   key $0.99 each (owner); VIP+ $4.99, MVP $6.99, MVP+ $9.99, MVP++ $12.99 (Claude, same line). Flip
+ *   `placeholder` to false once each Tebex package exists with the same price (docs/TEBEX_SETUP.md).
  *
  * FACTS CHECKED 2026-11-25 (read-only) on the Survival server:
  * - plugins/DeluxeMenus/gui_menus/PURCHASE/{Menu,Ranks,Keys,Points}.yml
@@ -38,7 +41,7 @@
  *                                   web.tebexPackageId filled in) the shopping list
  *                                   builds a real Tebex basket and sends the player
  *                                   to Tebex's own checkout.
- *   NEXT_PUBLIC_STORE_CURRENCY      'PHP' (default) or 'USD': which web price to show.
+ *   NEXT_PUBLIC_STORE_CURRENCY      'USD' (default, the owner's choice 2026-11-28) or 'PHP'.
  * With none of them set there is no Buy button: the package window shows a disabled
  * "Web store: soon" button with the reason next to it (how to get it in game + Discord).
  */
@@ -70,7 +73,7 @@ export const STORE_CHECKOUT_URL: string | null = httpsUrl(process.env.NEXT_PUBLI
 export const TEBEX_PUBLIC_TOKEN: string | null = process.env.NEXT_PUBLIC_TEBEX_PUBLIC_TOKEN?.trim() || null
 
 export type WebCurrency = 'PHP' | 'USD'
-export const STORE_CURRENCY: WebCurrency = process.env.NEXT_PUBLIC_STORE_CURRENCY === 'USD' ? 'USD' : 'PHP'
+export const STORE_CURRENCY: WebCurrency = process.env.NEXT_PUBLIC_STORE_CURRENCY === 'PHP' ? 'PHP' : 'USD'
 
 /**
  * off      = no web store: a disabled "Web store: soon" button + how to get it in game + Discord.
@@ -364,7 +367,7 @@ const vip = buildRank({
       { name: "Bottles o' enchanting", count: 4, sprite: { shape: 'xpbottle' } },
     ],
   },
-  web: { tebexPackageId: null, price: { PHP: 149, USD: 2.99 }, placeholder: true },
+  web: { tebexPackageId: null, price: { PHP: 169, USD: 2.99 }, placeholder: true },
 })
 
 const vipPlus = buildRank(
@@ -411,7 +414,7 @@ const vipPlus = buildRank(
         { name: 'Resource crate key', sprite: { shape: 'key', tone: 'resource' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 299, USD: 5.49 }, placeholder: true },
+    web: { tebexPackageId: null, price: { PHP: 289, USD: 4.99 }, placeholder: true },
   },
   vip,
 )
@@ -454,7 +457,7 @@ const mvp = buildRank(
         { name: 'Resource crate key', sprite: { shape: 'key', tone: 'resource' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 449, USD: 7.99 }, placeholder: true },
+    web: { tebexPackageId: null, price: { PHP: 399, USD: 6.99 }, placeholder: true },
   },
   vipPlus,
 )
@@ -502,7 +505,7 @@ const mvpPlus = buildRank(
         { name: 'Epic crate key', sprite: { shape: 'key', tone: 'epic' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 599, USD: 10.99 }, placeholder: true },
+    web: { tebexPackageId: null, price: { PHP: 579, USD: 9.99 }, placeholder: true },
   },
   mvp,
 )
@@ -549,7 +552,7 @@ const mvpPlusPlus = buildRank(
         { name: 'Trim crate key', sprite: { shape: 'key', tone: 'trim' } },
       ],
     },
-    web: { tebexPackageId: null, price: { PHP: 799, USD: 13.99 }, placeholder: true },
+    web: { tebexPackageId: null, price: { PHP: 749, USD: 12.99 }, placeholder: true },
   },
   mvpPlus,
 )
@@ -798,6 +801,34 @@ const keyItems: StoreItem[] = [
     alsoFrom: ['Playtime level XXVII'],
     packSizes: [1],
     maxQuantity: 64,
+  },
+  {
+    // Cardael crate (2026-11-28): ExcellentCrates crates/cardael_crate.yml + keys/cardael.yml, 20 COMMAND rewards
+    // `nexo give %player_name% plny_cardael_set_<item> 1`, weight 10 each. Rarities: 5 common, 5 uncommon, 5 rare,
+    // 5 legendary. The crate is a barrier at spawn -47,69,43 inside a vanilla item_display (tag kc_cardael_crate) with the chest model. Web store only (Tebex command `crate key give {username} cardael 1`); not in /keys.
+    // Stats from Nexo items/cardael/plny_cardael_set.yml: armour ARMOR 2/6/5/2 (iron values), weapons and tools
+    // keep their netherite base. No pack textures on the site: the sprite is our own key in a Cardael blue.
+    id: 'key-cardael',
+    category: 'keys',
+    name: 'Cardael crate key',
+    summary: 'Animated Cardael weapons, tools and armour. Every reward is a Cardael item.',
+    icon: 'key',
+    rarity: 'epic',
+    price: null,
+    howToGet: 'On the web store. Open the Cardael crate at /warp crates.',
+    status: 'coming-soon',
+    sprite: { shape: 'key', tone: 'cardael' },
+    commands: ['/warp crates'],
+    contents: [
+      'Cardael pickaxe, axe, shovel, hoe or fishing rod (tools as strong as netherite)',
+      'Cardael helmet, chestplate, leggings, boots or shield (armour as strong as iron)',
+      'Cardael bow, crossbow, sword, staff or spear',
+      'Cardael hammer, scythe, mace, trident or wings',
+    ],
+    odds: 'Each tool about 9.7%, each armour piece or the shield about 5.5%, each bow, crossbow, sword, staff or spear about 3.4%, each hammer, scythe, mace, trident or wings about 1.4%.',
+    packSizes: [1],
+    maxQuantity: 64,
+    web: { tebexPackageId: null, price: { PHP: 55, USD: 0.99 }, placeholder: true },
   },
 ]
 

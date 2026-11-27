@@ -25,6 +25,7 @@ export type SpriteTone =
   | 'trim'
   | 'epic'
   | 'spawner'
+  | 'cardael'
   | 'vip'
   | 'mvp'
   | 'mvpgold'
@@ -47,6 +48,7 @@ export const spriteTones: Record<SpriteTone, Abc> = {
   trim: { a: '#ff9a1f', b: '#b8630a', c: '#ffd08a' },
   epic: { a: '#e8203a', b: '#8a1426', c: '#ff8a9a' },
   spawner: { a: '#9b4a8f', b: '#5e2457', c: '#d79ad0' },
+  cardael: { a: '#5ad1ff', b: '#1f7fb8', c: '#d2f3ff' },
   // rank banners use the in-game prefix colours (&a green, &b aqua, &6 gold)
   vip: { a: '#55ff55', b: '#24a83a', c: '#c4ffc4' },
   mvp: { a: '#55ffff', b: '#1fa2b0', c: '#d0ffff' },

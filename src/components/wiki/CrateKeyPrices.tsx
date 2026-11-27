@@ -1,7 +1,7 @@
 import TableFrame from '@/components/content/TableFrame'
 import Callout from '@/components/ui/Callout'
 import { LOCKSMITH } from '@/content/wiki/locksmith'
-import { formatPrice, priceLabel, storeItems } from '@/lib/store'
+import { formatPrice, priceLabel, storeItems, webPrice } from '@/lib/store'
 import s from './WikiData.module.css'
 
 /*
@@ -82,6 +82,10 @@ export default function CrateKeyPrices() {
                         each
                         {packs ? <span className={s.sub}>{packs}</span> : null}
                       </>
+                    ) : webPrice(k.web) ? (
+                      `Web store only: ${formatPrice(webPrice(k.web)!)}`
+                    ) : k.web ? (
+                      'Web store only (opening soon)'
                     ) : (
                       'Not sold yet'
                     )}

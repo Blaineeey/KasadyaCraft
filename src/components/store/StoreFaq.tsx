@@ -1,7 +1,16 @@
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { site } from '@/lib/site'
-import { formatPrice, PLAYTIME_MENU, ranks, tokenPace, tokenSources, tokensToReach, type TokenSource } from '@/lib/store'
+import {
+  CHECKOUT_MODE,
+  formatPrice,
+  PLAYTIME_MENU,
+  ranks,
+  tokenPace,
+  tokenSources,
+  tokensToReach,
+  type TokenSource,
+} from '@/lib/store'
 import s from './StorePage.module.css'
 
 const top = ranks[ranks.length - 1]
@@ -16,16 +25,23 @@ const earn = (id: TokenSource['id']) => tokens(tokenSources.find((t) => t.id ===
 const faqs: { q: string; a: ReactNode }[] = [
   {
     q: 'Can I pay with real money?',
-    a: (
-      <>
-        Not yet. There is no web store today, so nothing on this page costs real money. You buy everything in game with Tokens,
-        Points or money you earn by playing. When the web store opens we will say so in{' '}
-        <a href={site.discord} target="_blank" rel="noopener noreferrer">
-          Discord
-        </a>{' '}
-        and you will be able to buy on this page too.
-      </>
-    ),
+    a:
+      CHECKOUT_MODE !== 'off' ? (
+        <>
+          Yes, for the items marked with a web price. Add them to your list, type your username and press{' '}
+          <strong>Checkout on Tebex</strong>. Tebex is our payment partner: you pay on their page and we never see your card
+          details. Everything else is still bought in game with Tokens, Points or money you earn by playing.
+        </>
+      ) : (
+        <>
+          Not yet. There is no web store today, so nothing on this page costs real money. You buy everything in game with
+          Tokens, Points or money you earn by playing. When the web store opens we will say so in{' '}
+          <a href={site.discord} target="_blank" rel="noopener noreferrer">
+            Discord
+          </a>{' '}
+          and you will be able to buy on this page too.
+        </>
+      ),
   },
   {
     q: 'How do I get Tokens?',
@@ -43,13 +59,12 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'Is this pay-to-win?',
     a: (
       <>
-        Today ranks and keys are bought with Tokens you earn by playing, not with real money. Before anything is sold for real
-        money, every perk will follow Mojang&rsquo;s{' '}
-        <a href="https://www.minecraft.net/en-us/usage-guidelines" target="_blank" rel="noopener noreferrer">
-          Minecraft Usage Guidelines
-        </a>
-        : real money can get you looks and convenience, never an unfair edge over players who do not pay. Cosmetics like tags,
-        chat colours and glow are looks only.
+        Every rank can be bought with Tokens you earn by playing, so nobody has to pay for one.{' '}
+        {CHECKOUT_MODE !== 'off'
+          ? 'The web store also sells ranks and the Cardael crate key, for players who want to support the server.'
+          : 'When the web store opens it will also sell ranks and the Cardael crate key, for players who want to support the server.'}{' '}
+        Each rank&rsquo;s perks are listed on this page, so you can see exactly what you get before you buy. Cosmetics like
+        tags, chat colours and glow are looks only.
       </>
     ),
   },
@@ -58,8 +73,10 @@ const faqs: { q: string; a: ReactNode }[] = [
     a: (
       <>
         In game it is instant: click it in the menu and it is yours (ranks even get a firework). Your rank shows in the hub and
-        in Survival. {/* PLACEHOLDER: confirm once Tebex packages exist */}When the web store opens, purchases will arrive in
-        game automatically for the Java username you type at checkout.
+        in Survival. {/* PLACEHOLDER: confirm once Tebex packages exist */}
+        {CHECKOUT_MODE !== 'off' ? 'Web store purchases' : 'When the web store opens, purchases will'} arrive in Survival
+        automatically for the username you type at checkout.
+        Bedrock players type their name with the dot in front, like <code>.Steve</code>.
       </>
     ),
   },
