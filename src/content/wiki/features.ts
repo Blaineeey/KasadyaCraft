@@ -52,7 +52,7 @@ export const features: WikiPage = {
     },
     {
       type: 'p',
-      text: 'Run chest shops on your plot or rent a stall in the Shopping Mall (`/warp mall`). See [Player shops](/wiki/player-shops).',
+      text: 'Run chest shops on your plot or rent a stall in the Shopping Mall (`/warp mall`). Everything the Mall sells can be bought from anywhere with `/ah`. See [Player shops](/wiki/player-shops).',
     },
     { type: 'h2', text: 'Free stuff for playing' },
     {
