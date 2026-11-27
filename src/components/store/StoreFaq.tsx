@@ -98,8 +98,12 @@ const faqs: { q: string; a: ReactNode }[] = [
     q: 'Can I skip straight to MVP++?',
     a: (
       <>
-        No, ranks go in order: VIP, VIP+, MVP, MVP+, then MVP++. The menu only lets you buy the next one. Going all the way from
-        no rank to {top.name} costs {formatPrice({ currency: 'tokens', amount: tokensToReach(top.id) })} in total.
+        With Tokens, no: ranks go in order (VIP, VIP+, MVP, MVP+, then MVP++) and the menu only lets you buy the next one. Going
+        all the way from no rank to {top.name} costs {formatPrice({ currency: 'tokens', amount: tokensToReach(top.id) })} in
+        total.
+        {CHECKOUT_MODE !== 'off'
+          ? ` On the web store, yes: every rank includes the ones below it, and if you bought a lower rank there before, you only pay the difference.`
+          : null}
       </>
     ),
   },

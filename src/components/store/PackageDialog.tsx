@@ -105,10 +105,12 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
             {rank ? <span className={s.prefix}>{rank.prefix}</span> : null}
             {item.status === 'in-game' ? (
               <PriceTag price={item.price} from={item.priceFrom} size="lg" className={s.bigPrice} />
+            ) : item.status === 'web' && realPrice ? (
+              <PriceTag price={realPrice} size="lg" className={s.bigPrice} />
             ) : (
               <span className={s.status}>{statusLabel(item)}</span>
             )}
-            {realPrice ? <span className={s.webPrice}>or {formatPrice(realPrice)} on the web store</span> : null}
+            {realPrice && item.status !== 'web' ? <span className={s.webPrice}>or {formatPrice(realPrice)} on the web store</span> : null}
             <p className={s.summary}>{item.summary}</p>
           </div>
         </div>
@@ -222,7 +224,7 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
         ) : null}
 
         {/* Only packages with a web listing (ranks, keys) get a Buy button. Tags, colours and Points are in-game only. */}
-        {item.status === 'in-game' && canList && item.web ? (
+        {(item.status === 'in-game' || item.status === 'web') && canList && item.web ? (
           CHECKOUT_MODE === 'link' && sellsOnWeb(item) ? (
             <PixelButton variant="gold" icon="coin" href={packageUrl(item) ?? site.discord} external>
               Buy on the web store
@@ -253,8 +255,8 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
                 Web store: soon
               </PixelButton>
               <p id="store-item-soon-note" className={s.soonNote}>
-                No real money yet.{' '}
-                {item.commands?.[0] ? (
+                {item.status === 'web' ? <>This one is sold only on the web store, which opens soon.</> : <>No real money yet.</>}{' '}
+                {item.status === 'web' ? null : item.commands?.[0] ? (
                   <>
                     Get it in game right now: type <code>{item.commands[0]}</code> in Survival.
                   </>

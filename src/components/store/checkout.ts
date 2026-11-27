@@ -89,7 +89,7 @@ export async function startTebexCheckout(lines: CheckoutLine[], username: string
     for (const line of sellable) {
       const added = await postJson(
         `${API}/baskets/${encodeURIComponent(ident)}/packages`,
-        { package_id: line.item.web!.tebexPackageId, quantity: line.quantity },
+        { package_id: Number(line.item.web!.tebexPackageId) || line.item.web!.tebexPackageId, quantity: line.quantity },
         controller.signal,
       )
       checkout = added.data?.links?.checkout ?? checkout

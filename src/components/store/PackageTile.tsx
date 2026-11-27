@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react'
 import ItemTooltip from '@/components/ui/ItemTooltip'
-import { getRank, priceLabel, type StoreItem } from '@/lib/store'
+import { getRank, priceLabel, webPrice, type StoreItem } from '@/lib/store'
 import { itemTooltipLines, statusLabel } from './itemLines'
 import PriceTag from './PriceTag'
 import StoreSprite from './StoreSprite'
@@ -38,7 +38,7 @@ export default function PackageTile({ item }: { item: StoreItem }) {
           className={s.slotButton}
           onClick={() => openItem(item.id)}
           aria-haspopup="dialog"
-          aria-label={`${item.name}, ${item.status === 'free' ? 'free' : priceLabel(item.price)}. Show details`}
+          aria-label={`${item.name}, ${item.status === 'free' ? 'free' : item.status === 'web' ? (webPrice(item.web) ? `${priceLabel(webPrice(item.web))} on the web store` : 'web store, opening soon') : priceLabel(item.price)}. Show details`}
         >
           <span className={s.slot}>
             <StoreSprite shape={item.sprite.shape} tone={item.sprite.tone} size={48} />
@@ -55,6 +55,8 @@ export default function PackageTile({ item }: { item: StoreItem }) {
       <div className={s.tileFoot}>
         {item.status === 'in-game' ? (
           <PriceTag price={item.price} from={item.priceFrom} size="sm" className={s.tilePrice} />
+        ) : item.status === 'web' && webPrice(item.web) ? (
+          <PriceTag price={webPrice(item.web)} size="sm" className={s.tilePrice} />
         ) : (
           <span className={s.statusChip}>{statusLabel(item)}</span>
         )}

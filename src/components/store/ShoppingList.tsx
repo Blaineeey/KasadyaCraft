@@ -6,7 +6,7 @@ import Command from '@/components/ui/Command'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import { site } from '@/lib/site'
-import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, getRank, priceLabel, sellsOnWeb } from '@/lib/store'
+import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, getRank, priceLabel, sellsOnWeb, webPrice } from '@/lib/store'
 import { startTebexCheckout, tebexLines, USERNAME_RE } from './checkout'
 import PriceTag from './PriceTag'
 import StoreSprite from './StoreSprite'
@@ -76,7 +76,8 @@ export default function ShoppingList() {
 
   const totals = listTotals(lines)
   const realTotal = webTotal(lines)
-  const missingRanks = rankWarnings(lines)
+  // Web ranks need no order (Tebex Ranks category is cumulative and each rank keeps the ones below), so only warn for Tokens.
+  const missingRanks = CHECKOUT_MODE === 'off' ? rankWarnings(lines) : []
 
   return (
     <dialog ref={ref} className={[s.dialog, s.drawer].join(' ')} aria-labelledby="store-list-title" onClose={onClose}>
@@ -169,7 +170,7 @@ function ListRow({
       <div className={s.lineText}>
         <span className={s.lineName}>{item.name}</span>
         <span className={s.lineMeta}>
-          {item.price ? formatPrice(item.price) : ''}
+          {item.price ? formatPrice(item.price) : webPrice(item.web) ? formatPrice(webPrice(item.web)) : ''}
           {stack ? ' each' : ''}
           {!sellsOnWeb(item) && CHECKOUT_MODE !== 'off' ? ' · in game only' : ''}
         </span>
