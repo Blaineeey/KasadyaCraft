@@ -6,7 +6,7 @@ import Command from '@/components/ui/Command'
 import PixelButton from '@/components/ui/PixelButton'
 import PixelIcon from '@/components/ui/PixelIcon'
 import { site } from '@/lib/site'
-import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, getRank, priceLabel, sellsOnWeb, webPrice } from '@/lib/store'
+import { CHECKOUT_MODE, STORE_CHECKOUT_URL, formatPrice, listPrice, priceLabel, sellsOnWeb } from '@/lib/store'
 import { startTebexCheckout, tebexLines, USERNAME_RE } from './checkout'
 import PriceTag from './PriceTag'
 import StoreSprite from './StoreSprite'
@@ -76,8 +76,8 @@ export default function ShoppingList() {
 
   const totals = listTotals(lines)
   const realTotal = webTotal(lines)
-  // Web ranks need no order (Tebex Ranks category is cumulative and each rank keeps the ones below), so only warn for Tokens.
-  const missingRanks = CHECKOUT_MODE === 'off' ? rankWarnings(lines) : []
+  // Ranks and the Cardael key are web-only: an all-web list has no in-game total to show.
+  const hasGameItems = lines.some((l) => l.item.status !== 'web')
 
   return (
     <dialog ref={ref} className={[s.dialog, s.drawer].join(' ')} aria-labelledby="store-list-title" onClose={onClose}>
@@ -105,38 +105,33 @@ export default function ShoppingList() {
                 ))}
               </ul>
 
-              {missingRanks.length > 0 ? (
-                <p className={s.needs}>
-                  <PixelIcon name="warning" size={16} />
-                  <span>
-                    Ranks are bought in order. {missingRanks.join(' ')} Already own it? Then you are fine.
-                  </span>
-                </p>
+              {hasGameItems || realTotal ? (
+                <dl className={s.totals}>
+                  {hasGameItems ? (
+                    <div>
+                      <dt>Total in game</dt>
+                      <dd>
+                        {totals.length === 0 ? (
+                          'Nothing with a fixed price'
+                        ) : (
+                          totals.map((t, i) => (
+                            <span key={t.currency} className={s.totalPart}>
+                              {i > 0 ? <span aria-hidden="true"> + </span> : null}
+                              <PriceTag price={t} size="md" />
+                            </span>
+                          ))
+                        )}
+                      </dd>
+                    </div>
+                  ) : null}
+                  {realTotal ? (
+                    <div>
+                      <dt>On the web store</dt>
+                      <dd>{formatPrice(realTotal)}</dd>
+                    </div>
+                  ) : null}
+                </dl>
               ) : null}
-
-              <dl className={s.totals}>
-                <div>
-                  <dt>Total in game</dt>
-                  <dd>
-                    {totals.length === 0 ? (
-                      'Nothing with a fixed price'
-                    ) : (
-                      totals.map((t, i) => (
-                        <span key={t.currency} className={s.totalPart}>
-                          {i > 0 ? <span aria-hidden="true"> + </span> : null}
-                          <PriceTag price={t} size="md" />
-                        </span>
-                      ))
-                    )}
-                  </dd>
-                </div>
-                {realTotal ? (
-                  <div>
-                    <dt>On the web store</dt>
-                    <dd>{formatPrice(realTotal)}</dd>
-                  </div>
-                ) : null}
-              </dl>
 
               <CheckoutPanel lines={lines} />
 
@@ -162,6 +157,8 @@ function ListRow({
 }) {
   const { item, quantity } = line
   const stack = item.maxQuantity > 1
+  // Web-only items (ranks, the Cardael key) show their decided dollar price, even before the web store opens.
+  const shown = item.price ?? listPrice(item.web)
   return (
     <li className={s.line}>
       <span className={s.lineSlot}>
@@ -170,8 +167,9 @@ function ListRow({
       <div className={s.lineText}>
         <span className={s.lineName}>{item.name}</span>
         <span className={s.lineMeta}>
-          {item.price ? formatPrice(item.price) : webPrice(item.web) ? formatPrice(webPrice(item.web)) : ''}
-          {stack ? ' each' : ''}
+          {shown ? formatPrice(shown) : ''}
+          {shown && stack ? ' each' : ''}
+          {item.status === 'web' && CHECKOUT_MODE === 'off' ? ' · web store, opening soon' : ''}
           {!sellsOnWeb(item) && CHECKOUT_MODE !== 'off' ? ' · in game only' : ''}
         </span>
       </div>
@@ -201,19 +199,11 @@ function ListRow({
   )
 }
 
-/** "MVP needs MVP+ ..." hints for ranks whose previous rank is not on the list. */
-function rankWarnings(lines: ListLine[]): string[] {
-  const onList = new Set(lines.map((l) => l.item.rankId).filter(Boolean))
-  const out: string[] = []
-  for (const l of lines) {
-    const rank = l.item.rankId ? getRank(l.item.rankId) : undefined
-    if (rank?.requires && !onList.has(rank.requires)) out.push(`${rank.name} needs ${getRank(rank.requires)?.name} first.`)
-  }
-  return out
-}
-
 function CheckoutPanel({ lines }: { lines: ListLine[] }) {
-  const commands = Array.from(new Set(lines.map((l) => l.item.commands?.[0]).filter((c): c is string => !!c)))
+  // Web-only items (ranks, the Cardael key) cannot be bought in game, so they get no menu to open.
+  const webOnly = lines.filter((l) => l.item.status === 'web')
+  const gameLines = lines.filter((l) => l.item.status !== 'web')
+  const commands = Array.from(new Set(gameLines.map((l) => l.item.commands?.[0]).filter((c): c is string => !!c)))
 
   if (CHECKOUT_MODE === 'link' && STORE_CHECKOUT_URL) {
     return (
@@ -233,18 +223,28 @@ function CheckoutPanel({ lines }: { lines: ListLine[] }) {
       <p className={s.soonTitle}>
         <PixelIcon name="lantern" size={24} /> The web store is opening soon
       </p>
-      <p>Good news: you can buy everything on this list in game today.</p>
-      <ol className={s.steps}>
-        <li>
-          Join <strong>{site.address}</strong> and hop into Survival.
-        </li>
-        <li>Open the right menu:</li>
-      </ol>
-      <div className={s.commands}>
-        {commands.map((c) => (
-          <Command key={c} command={c} />
-        ))}
-      </div>
+      {webOnly.length > 0 ? (
+        <p>
+          {webOnly.map((l) => l.item.name).join(', ')} {webOnly.length === 1 ? 'is' : 'are'} sold only on the web store, so{' '}
+          {webOnly.length === 1 ? 'it waits' : 'they wait'} until it opens.
+        </p>
+      ) : null}
+      {gameLines.length > 0 ? (
+        <>
+          <p>Good news: you can buy {webOnly.length > 0 ? 'the rest of this list' : 'everything on this list'} in game today.</p>
+          <ol className={s.steps}>
+            <li>
+              Join <strong>{site.address}</strong> and hop into Survival.
+            </li>
+            <li>Open the right menu:</li>
+          </ol>
+          <div className={s.commands}>
+            {commands.map((c) => (
+              <Command key={c} command={c} />
+            ))}
+          </div>
+        </>
+      ) : null}
       <p className={s.small}>Want to hear the day the web store opens? We announce it in Discord first.</p>
       <PixelButton variant="discord" icon="chat" href={site.discord}>
         Join the Discord

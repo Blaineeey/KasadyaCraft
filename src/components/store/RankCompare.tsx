@@ -3,15 +3,15 @@
 import { useId, useState, type CSSProperties } from 'react'
 import PixelIcon from '@/components/ui/PixelIcon'
 import {
+  CHECKOUT_MODE,
   defaultLimits,
   everyoneCommands,
   everyoneExtras,
   formatPrice,
-  getRank,
+  listPrice,
   priceLabel,
   ranks,
   starterKit,
-  tokensToReach,
   type Rank,
   type RankId,
   type RankLimits,
@@ -26,7 +26,9 @@ const limitRows: { key: keyof RankLimits; label: string }[] = [
 ]
 
 const rankStyle = (r: Rank) => ({ '--rank': r.color }) as CSSProperties
-const tokens = (amount: number) => formatPrice({ currency: 'tokens', amount })
+/** Ranks are sold only on the web store (2026-11-28): the decided dollar price, shown even before the store opens. */
+const rankPrice = (r: Rank) => listPrice(r.web)
+const storeOff = CHECKOUT_MODE === 'off'
 
 function Yes() {
   return (
@@ -47,7 +49,7 @@ function No() {
 }
 
 /**
- * Every rank compared, built from src/lib/store.ts.
+ * Every rank compared, built from src/lib/store.ts. Prices are web store prices (ranks are web-only).
  * - Phones (below 720px): a rank picker. Pick VIP to MVP++ and see that rank's perks,
  *   with what is NEW compared to the rank below marked.
  * - Wider screens: the full table. Commands are folded into one group per rank (the group
@@ -57,7 +59,10 @@ function No() {
 export default function RankCompare() {
   return (
     <div className={s.compare}>
-      <p className={s.compareLead}>Each rank keeps everything from the ranks before it.</p>
+      <p className={s.compareLead}>
+        Each rank keeps everything from the ranks before it. Ranks are sold on our web store
+        {storeOff ? ', which is opening soon' : ''}, and you can buy any rank directly.
+      </p>
       <RankPicker />
       <RankTable />
       <p className={s.footnote}>
@@ -82,7 +87,7 @@ function RankPicker() {
   const below = index > 0 ? ranks[index - 1] : undefined
   const prevLimits = below?.limits ?? defaultLimits
   const kept = ranks.slice(0, index).flatMap((r) => r.commands.map((c) => ({ ...c, from: r.name })))
-  const needs = rank.requires ? getRank(rank.requires) : undefined
+  const price = rankPrice(rank)
 
   return (
     <div className={s.picker}>
@@ -114,19 +119,17 @@ function RankPicker() {
             <h3 id={`${uid}-title`} className={s.pickName}>
               {rank.name}
             </h3>
-            <p className={s.pickPrice}>
-              <span aria-hidden="true">{formatPrice(rank.price)}</span>
-              <span className="kc-sr-only">{priceLabel(rank.price)}</span>
-            </p>
+            {price ? (
+              <p className={s.pickPrice}>
+                <span aria-hidden="true">{formatPrice(price)}</span>
+                <span className="kc-sr-only">{priceLabel(price)}</span>
+              </p>
+            ) : null}
+            <p className={s.pickNeeds}>{storeOff ? 'On our web store, opening soon' : 'On our web store'}</p>
           </div>
         </header>
 
         <p className={s.pickTagline}>{rank.tagline}</p>
-        {needs ? (
-          <p className={s.pickNeeds}>
-            Needs {needs.name} first. From no rank: {tokens(tokensToReach(rank.id))} in total.
-          </p>
-        ) : null}
 
         <ul className={s.pickStats} aria-label={`${rank.name} limits`}>
           {limitRows.map((row) => {
@@ -235,24 +238,26 @@ function RankTable() {
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Price in game</th>
+              <th scope="row">
+                Price on our web store
+                {storeOff ? <span className={s.colSub}>opening soon</span> : null}
+              </th>
               <td>Free</td>
-              {ranks.map((r) => (
-                <td key={r.id} className={s.num}>
-                  {formatPrice(r.price)}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <th scope="row">Total from no rank</th>
-              <td>
-                <No />
-              </td>
-              {ranks.map((r) => (
-                <td key={r.id} className={s.num}>
-                  {tokens(tokensToReach(r.id))}
-                </td>
-              ))}
+              {ranks.map((r) => {
+                const price = rankPrice(r)
+                return (
+                  <td key={r.id} className={s.num}>
+                    {price ? (
+                      <>
+                        <span aria-hidden="true">{formatPrice(price)}</span>
+                        <span className="kc-sr-only">{priceLabel(price)}</span>
+                      </>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                )
+              })}
             </tr>
             {limitRows.map((row) => (
               <tr key={row.key}>

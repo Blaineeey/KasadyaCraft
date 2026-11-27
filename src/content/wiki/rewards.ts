@@ -2,7 +2,6 @@ import {
   DAILY_QUEST_BONUS,
   DAILY_QUESTS,
   DAILY_REWARDS,
-  FACTS_CHECKED,
   PLAYTIME_KEY_LEVELS,
   PLAYTIME_LADDER,
   PLAYTIME_TOKEN_LEVELS,
@@ -39,7 +38,7 @@ export const rewards: WikiPage = {
   icon: 'gift',
   category: 'features',
   order: 1,
-  updated: FACTS_CHECKED,
+  updated: '2026-11-28',
   keywords: [
     '/dquests',
     '/quests',
@@ -122,7 +121,7 @@ export const rewards: WikiPage = {
     },
     {
       type: 'p',
-      text: `Levels ${tokenLevels} pay **${count(PLAYTIME_TOKENS)} Tokens** in total. You also earn them from \`/rewards\` (${TOKEN_SOURCES.daily} a day, ${TOKEN_SOURCES.weekly} a week, ${TOKEN_SOURCES.monthly} a month) and the daily quest bonus (${TOKEN_SOURCES.quests} a day). Spend them on ranks and keys in \`/purchase\`.`,
+      text: `Levels ${tokenLevels} pay **${count(PLAYTIME_TOKENS)} Tokens** in total. You also earn them from \`/rewards\` (${TOKEN_SOURCES.daily} a day, ${TOKEN_SOURCES.weekly} a week, ${TOKEN_SOURCES.monthly} a month) and the daily quest bonus (${TOKEN_SOURCES.quests} a day). Spend them on crate keys in \`/keys\`, also inside \`/purchase\`.`,
     },
     { type: 'h2', text: 'AFK pool' },
     {

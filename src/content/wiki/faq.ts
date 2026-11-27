@@ -1,4 +1,3 @@
-import { FACTS_CHECKED, TOKEN_SOURCES_TEXT } from '@/content/facts'
 import { VERSIONS } from '@/content/guides/facts'
 import { DELVE_RULES, DELVES, livesFor } from '@/content/wiki/delve-facts'
 import type { WikiPage } from '@/lib/content'
@@ -20,6 +19,8 @@ import { VOTE_PARTY_TEXT, VOTE_REWARD_TEXT, voteRewards, voteSites } from '@/lib
  *   boss bar, action bar, chat and menus). Monster counts scale with the party (balance.json waves_by_party).
  * - 2026-11-27: fly time (tempfly.sk + KasadyaPlotFly, see ./plots.ts), fishing (./fishing.ts), chat filter (./chat.ts),
  *   delve run cooldown 5 minutes (./delve-facts.ts)
+ * - 2026-11-28: ranks are sold only on the web store, in US dollars, any rank directly, upgrades cost the difference;
+ *   /ranks is a showcase; Tokens no longer buy ranks (src/lib/store.ts header). "Opening soon" while CHECKOUT_MODE is off.
  */
 const G = DELVES.gloomhold
 const C = DELVES.cinderworks
@@ -31,7 +32,7 @@ export const faq: WikiPage = {
   icon: 'question',
   category: 'help',
   order: 1,
-  updated: FACTS_CHECKED,
+  updated: '2026-11-28',
   keywords: ['faq', 'questions', 'help', 'bedrock', 'version', 'cracked', 'resource pack', 'pvp', 'keep inventory', 'combat log', 'vote', 'real money', 'dungeon', 'delve', 'solo', 'fly', 'fishing', 'muted', 'filter', '/ah', 'auction'],
   related: ['features', 'commands', 'rules', 'world-and-warps'],
   body: [
@@ -138,15 +139,18 @@ export const faq: WikiPage = {
     { type: 'h3', text: 'How do I get a rank?' },
     {
       type: 'p',
-      text: `With Tokens, in \`/ranks\`. You earn them from ${TOKEN_SOURCES_TEXT}. You buy ranks in order, VIP first. See [Ranks](/wiki/ranks).`,
+      text:
+        CHECKOUT_MODE !== 'off'
+          ? 'On our web store: open the [store page](/store), add a rank to your list and check out. You can buy any rank directly, and each one includes the ranks below it. In game, `/ranks` shows every rank and its price. See [Ranks](/wiki/ranks).'
+          : 'Ranks are sold on our web store, which is opening soon. You will be able to buy any rank directly, and each one includes the ranks below it. In game, `/ranks` shows every rank and its price. See [Ranks](/wiki/ranks).',
     },
     { type: 'h3', text: 'Can I buy ranks with real money?' },
     {
       type: 'p',
       text:
         CHECKOUT_MODE !== 'off'
-          ? 'Yes. On the [store page](/store), add a rank to your list and check out on Tebex. You can also get every rank in game with Tokens.'
-          : 'Not yet. When the web store opens, ranks will be on the [store page](/store). Until then you get them in game with Tokens.',
+          ? 'Yes, and that is the only way now: Tokens no longer buy ranks. Prices are in US dollars on the [store page](/store). Bought a lower rank on the web store before? Then a higher one costs only the difference.'
+          : 'Yes, and that is the only way now: Tokens no longer buy ranks. Ranks are sold on our web store, which is opening soon. Prices are in US dollars on the [store page](/store).',
     },
     { type: 'h3', text: 'Can I vote for rewards?' },
     {

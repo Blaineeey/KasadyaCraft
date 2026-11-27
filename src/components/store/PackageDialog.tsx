@@ -14,9 +14,9 @@ import {
   formatPrice,
   getRank,
   getStoreItem,
+  listPrice,
   packageUrl,
   sellsOnWeb,
-  tokensToReach,
   webPrice,
   type StoreItem,
 } from '@/lib/store'
@@ -76,8 +76,9 @@ export default function PackageDialog() {
 function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void }) {
   const { add, quantityOf, setListOpen } = useStore()
   const rank = item.rankId ? getRank(item.rankId) : undefined
-  const needs = rank?.requires ? getRank(rank.requires) : undefined
   const realPrice = webPrice(item.web)
+  // Web-only items (ranks, the Cardael key) show their decided price even before the checkout opens.
+  const webOnlyPrice = item.status === 'web' ? listPrice(item.web) : null
   const inList = quantityOf(item.id)
   const canList = item.maxQuantity > 0
   const full = canList && inList >= item.maxQuantity
@@ -105,25 +106,19 @@ function ItemDetail({ item, onClose }: { item: StoreItem; onClose: () => void })
             {rank ? <span className={s.prefix}>{rank.prefix}</span> : null}
             {item.status === 'in-game' ? (
               <PriceTag price={item.price} from={item.priceFrom} size="lg" className={s.bigPrice} />
-            ) : item.status === 'web' && realPrice ? (
-              <PriceTag price={realPrice} size="lg" className={s.bigPrice} />
+            ) : webOnlyPrice ? (
+              <PriceTag price={webOnlyPrice} size="lg" className={s.bigPrice} />
             ) : (
               <span className={s.status}>{statusLabel(item)}</span>
             )}
-            {realPrice && item.status !== 'web' ? <span className={s.webPrice}>or {formatPrice(realPrice)} on the web store</span> : null}
+            {webOnlyPrice ? (
+              <span className={s.webPrice}>{CHECKOUT_MODE === 'off' ? 'On our web store, opening soon' : 'On our web store'}</span>
+            ) : realPrice && item.status !== 'web' ? (
+              <span className={s.webPrice}>or {formatPrice(realPrice)} on the web store</span>
+            ) : null}
             <p className={s.summary}>{item.summary}</p>
           </div>
         </div>
-
-        {needs ? (
-          <p className={s.needs}>
-            <PixelIcon name="warning" size={16} />
-            <span>
-              You need <strong>{needs.name}</strong> before the menu lets you buy {rank?.name}. From no rank at all, reaching{' '}
-              {rank?.name} costs {formatPrice({ currency: 'tokens', amount: tokensToReach(rank!.id) })} in total.
-            </span>
-          </p>
-        ) : null}
 
         <div className={s.cols}>
           <section className={s.block} aria-labelledby="store-item-what">

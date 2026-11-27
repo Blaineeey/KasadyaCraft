@@ -1,6 +1,5 @@
 import {
   DAILY_QUEST_BONUS,
-  FACTS_CHECKED,
   LIVE_SHOP_SECTIONS,
   TOKEN_SOURCES_TEXT,
   joinAnd,
@@ -102,7 +101,7 @@ export const economy: WikiPage = {
   icon: 'coin',
   category: 'economy',
   order: 1,
-  updated: FACTS_CHECKED,
+  updated: '2026-11-28',
   keywords: [
     '/shop',
     '/sell',
@@ -140,7 +139,7 @@ export const economy: WikiPage = {
           'AFK pool, chat games (5 a win), Lab of Horrors and delve clears, weekly and monthly rewards, playtime level V',
           'Chat colours (`/chatcolor`, ✪250 or ✪500), glow (`/glowshop`, ✪500 to ✪3,000), and Tokens or crate keys in `/pointshop` (✪25 = ⛃1)',
         ],
-        ['Tokens (⛃)', TOKEN_SOURCES_TEXT, 'Ranks and crate keys in `/purchase`. Tokens are worth the most and never turn back into points.'],
+        ['Tokens (⛃)', TOKEN_SOURCES_TEXT, 'Crate keys in `/keys`, also inside `/purchase`. Tokens are worth the most and never turn back into points.'],
       ],
     },
     {

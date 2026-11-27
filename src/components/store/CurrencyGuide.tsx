@@ -15,7 +15,8 @@ interface Currency {
 /* Sources: FlareTokens (tokenSources in src/lib/store.ts: /rewards, daily quests, playtime levels),
    PlayerPoints (AFK pool 10 per 20 min, chat games 5, Lab of Horrors 40-60 per clear, delve clears, Playtime L5 500,
    weekly reward 50, monthly 100; spent in /chatcolor, /glowshop and /pointshop: 25 points = 1 Token, never the other way),
-   Vault money ($250 start). CHANGELOG economy audit + ECONOMY FIXER 2026-11-25, re-checked 2026-11-27. */
+   Vault money ($250 start). CHANGELOG economy audit + ECONOMY FIXER 2026-11-25, re-checked 2026-11-27.
+   2026-11-28: Tokens no longer buy ranks (ranks are sold only on the web store), only crate keys. */
 const currencies: Currency[] = [
   {
     symbol: '⛃',
@@ -29,7 +30,8 @@ const currencies: Currency[] = [
     ),
     spend: (
       <>
-        Ranks and crate keys in <code>/purchase</code>. Tokens are worth the most and never turn back into Points.
+        Crate keys in <code>/keys</code>, also inside <code>/purchase</code>. Tokens are worth the most and never turn back
+        into Points.
       </>
     ),
   },
